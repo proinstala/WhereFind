@@ -1,0 +1,176 @@
+
+/* 
+    Created on : 5 jul 2024, 21:39:07
+    Author     : David
+*/
+
+/*
+Color Principal	    #FFA500	255, 165, 0
+Color Secundario    #005FA5	0, 95, 165
+Color de Fondo	    #FFFFFF	255, 255, 255
+Texto Principal	    #333333	51, 51, 51
+Texto Secundario	#666666	102, 102, 102
+Color de Énfasis	#FF4500	255, 69, 0
+Fondo Secundario	#F5F5F5	245, 245, 245
+Bordes/Líneas	    #CCCCCC	204, 204, 204
+
+*/
+
+:root {
+    /*
+    --fuenteHeading: 'PT Sans', sans-serif;
+    --fuenteParrafos: 'Open Sans', sans-serif;
+    */
+    --primario: #FFA500;
+    --secundario: #005FA5;
+    --fondo_primario: #FFFFFF;
+    
+    --texto_principal: #333333;
+    --texto_secundario: #666666;
+    --enfasis: #FF4500;
+    --fondo_secundario: #F5F5F5;
+    --bordes_lineas: #CCCCCC;
+
+    --negro: #000000;
+    --blanco: #FFFFFF;
+
+    
+}
+html, body {
+    margin: 0;
+    padding: 0;
+    /*height: 100vh;*/
+    /*overflow: hidden;*/ /* Evita la barra de desplazamiento */
+}
+
+html {
+    box-sizing: border-box; /*Configuracion para tamaño de cajas*/
+    font-size: 62.5%; /*Ajuste para REM. 1rem = 10px */
+}
+*, *:before, *:after {
+    box-sizing: inherit; /*Configuracion para tamaño de cajas*/
+}
+body {
+    font-size: 16px; /*Ajuste para REM, ahora 1 rem es 10px (1rem = 10px) */
+    /* font-family: var(--fuenteParrafos); */
+    /*line-height: 2;*/
+    font-family: Arial, sans-serif;
+}
+
+
+/*Experimental: animaciones de transicion.  */
+@view-transition {
+    navigation: auto;
+}
+::view-transition-old(almacen_contenedor) {
+    animation-name: scaleOut;
+}
+::view-transition-new(almacen_contenedor) {
+    animation-name: scaleIn;
+}
+.almacen_contenedor {
+    view-transition-name: almacen_contenedor;
+}
+.almcen_card {
+    view-transition-name: almacen_contenedor;
+}
+
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+@keyframes scaleOut {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+/** Globales **/
+a {
+    /*text-decoration: none;*/
+    color: var(--texto_secundario)
+}
+h1, h2, h3, h4 {
+    /*font-family: var(--fuenteHeading);*/
+    line-height: 1.2;
+    color: var(--texto_principal);
+    margin: 1rem 0;
+}
+h1 {
+    font-size: 4.8rem;
+}
+h2 {
+    font-size: 4rem;
+}
+h3 {
+    font-size: 3.2rem;
+}
+h4 {
+    font-size: 2.8rem;
+}
+img {
+    max-width: 100%;
+}
+p {
+    line-height: 1.5;
+    color: var(--texto_secundario)
+}
+
+/** Utilidades **/
+.no-margin {
+    margin:0;
+}
+.no-padding {
+    padding: 0;
+}
+.centrar-texto {
+    text-align: center;
+}
+.negrita {
+    font-weight: 700;
+}
+
+
+.transparente {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+
+.contenedor__general {
+    height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+    margin: 0;
+    background: var(--primario);
+}
+
+@media (max-width: 800px) {
+    .contenedor__general {
+        height: auto;
+        overflow: auto;
+    }
+}
+.contenedor {
+    height: 100%;
+    display: grid;
+    margin: 0 2rem;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto; /* Barra superior, contenido, barra inferior */
+}
+
+
+
+

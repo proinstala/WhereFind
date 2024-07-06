@@ -1,0 +1,23 @@
+
+/* 
+    Created on : 6 jul 2024, 17:40:14
+    Author     : David
+*/
+
+
+.contenedor__grid--3c {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
+}
+
+
+.seccion {
+    display: flex;
+    background-color: white;
+    border-radius: 1.5rem;
+    padding: 1rem;
+    margin-top: 2rem;
+}
+
+

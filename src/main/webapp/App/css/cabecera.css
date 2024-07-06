@@ -1,0 +1,101 @@
+
+/* 
+    Created on : 6 jul 2024, 17:51:57
+    Author     : David
+*/
+
+.cabecera, .barra__inferior {
+    padding: 1rem;
+    color: var(--blanco);
+    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    height: 10rem;
+}
+
+.cabecera {
+    border-bottom: 3px solid var(--blanco);
+}
+
+.btn__configuracion {
+    width: 6rem;
+    cursor: pointer;
+    display: flex;
+}
+
+.btn__configuracion--imagen {
+    transition: transform 0.7s ease;
+  
+}
+
+.btn__configuracion--imagen:hover {
+    transform: rotate(-90deg);
+}
+
+.contenedor__menu {
+    width: 5rem;
+    background-color: aqua;
+    justify-self: center;
+}
+
+.contenedor__usuario {
+    justify-self: right;
+    width: 8rem;
+    background-color: var(--blanco);
+    /* margin-left: auto; */
+    border-radius: 4.5rem;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    padding-right: 0.5rem;
+    gap: 2rem;
+    white-space: nowrap; /* Evita el salto de línea */
+    overflow: hidden;
+    flex-direction: row-reverse;
+}
+
+.contenedor__usuario:hover {
+    width: 35rem; 
+}
+
+.imagen__usuario {
+    display: inline-block;
+    min-width: 70px;
+    max-width: 70px;
+    height: 70px;
+    border-radius: 70%;
+    border: 3px solid var(--texto_principal);
+    overflow: hidden; /* Oculta cualquier contenido que se desborde */
+    position: relative;
+}
+.imagen__usuario img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+
+.btn_prueba {
+    display: inline-block;
+    min-width: 70px;
+    max-width: 70px;
+    height: 70px;
+    transition: opacity 0.5s ease-in-out;
+    border-radius: 70%;
+    cursor: pointer;
+}
+
+.contenedor__usuario .btn_prueba:not(:first-child) {
+    opacity: 0;
+    
+}
+
+.contenedor__usuario:hover .btn_prueba:not(:first-child) {
+    opacity: 1;
+    
+}

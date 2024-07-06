@@ -1,0 +1,142 @@
+
+/* 
+    Created on : 5 jul 2024, 21:36:55
+    Author     : David
+*/
+
+.contenedor__general--login {
+    overflow: hidden;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    background: #FFA500; /* Naranja */
+}
+
+@media (max-width: 800px) {
+    .contenedor__general--login {
+        height: auto;
+        background: #FFA500; /* Fondo degradado para pantallas más pequeñas */
+        overflow: auto;
+    }
+}
+
+.login {
+    width: 800px;
+    height: 600px;
+    margin: 50px;
+    border-radius: 1.5rem;
+    background-color: var(--blanco);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 800px) {
+    .login {
+        height: 100%;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+}
+
+.login__izquierda {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--blanco);
+    border-radius: 1.5rem 0 0 1.5rem;
+}
+.login__derecha {
+    background-color: var(--fondo_secundario);
+    border-radius: 0 1.5rem 1.5rem 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5rem;
+}
+.login__img {
+    width: 12rem;
+}
+
+.login__titulo {
+    text-align: center;
+    margin: 5rem 0 2rem 0;
+}
+.login__titulo-saludo {
+    text-align: center;
+    margin: 0 0 2rem 0;
+}
+.login__input {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    gap: 1rem;
+    margin: 2.5rem 0; 
+    position: relative; /* Asegura que el posicionamiento absoluto sea relativo a este contenedor */
+}
+
+.login__input input {
+    border: none; /* Elimina todos los bordes */
+    border-bottom: 0.2rem solid var(--texto_principal); /* Agrega un borde inferior */
+    padding: 0.5rem 0.1rem; /* Ajusta el espaciado */
+    font-size: 1.5rem; /* Ajusta el tamaño del texto */
+    outline: none; /* Elimina el borde de enfoque predeterminado */
+    color: var(--negro);
+}
+
+.login__input input:focus {
+    border-bottom-color: var(--primario);; /* Cambia el color del borde inferior cuando está enfocado */
+}
+
+.login__input label {
+    font-weight: 700;
+    color: var(--texto_principal);
+}
+
+.login__btn {
+    height: 4rem;
+    background-color: var(--secundario);
+    border: 0.1rem solid #CCCCCC; 
+    border-radius: 0.3rem;
+    color: white;
+}
+
+.login__btn:hover {
+    cursor: pointer;
+    background-color: var(--primario);
+    font-weight: 700;
+}
+
+.login__imagen {
+    width: 30%;
+}
+
+.login__descripcion {
+    text-align: left;
+}
+
+.login__enlaces {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+}
+
+.login__enlaces-enlace {
+    font-size: 1.3rem;
+    color: var(--secundario);
+}
+.login__enlaces-enlace:hover {
+    color: var(--primario);
+    font-weight: 700;
+}
+
+label.error {
+    position: absolute; /* Coloca los mensajes de error en posición absoluta */
+    color: red !important;
+    font-size: 1.1rem !important;
+    margin-top: 65px; /* Ajusta el margen superior para separar del input */
+}
