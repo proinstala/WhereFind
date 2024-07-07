@@ -7,6 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="App/css/normalize.css">
     <link rel="stylesheet" href="App/css/general.css">
-    <title>Login</title>
+    <title><%= request.getParameter("titleweb")%></title>
 </head>
 <body>

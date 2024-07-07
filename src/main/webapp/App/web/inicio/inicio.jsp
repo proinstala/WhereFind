@@ -4,7 +4,11 @@
     Author     : David
 --%>
 
-<%@ include file="../shared/head.jsp" %>
+<jsp:include page="../shared/head.jsp" >
+    <jsp:param name="titleweb" value="Inicio" />
+</jsp:include>
+
+
 <link href="App/css/inicio.css" rel="stylesheet" type="text/css"/>
 
 <body>
