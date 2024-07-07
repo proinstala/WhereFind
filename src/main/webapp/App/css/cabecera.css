@@ -1,5 +1,5 @@
 
-/* 
+/*
     Created on : 6 jul 2024, 17:51:57
     Author     : David
 */
@@ -25,7 +25,7 @@
 
 .btn__configuracion--imagen {
     transition: transform 0.7s ease;
-  
+
 }
 
 .btn__configuracion--imagen:hover {
@@ -52,10 +52,11 @@
     white-space: nowrap; /* Evita el salto de línea */
     overflow: hidden;
     flex-direction: row-reverse;
+    position: fixed;
 }
 
 .contenedor__usuario:hover {
-    width: 35rem; 
+    width: 35rem;
 }
 
 .imagen__usuario {
@@ -92,10 +93,10 @@
 
 .contenedor__usuario .btn_prueba:not(:first-child) {
     opacity: 0;
-    
+
 }
 
 .contenedor__usuario:hover .btn_prueba:not(:first-child) {
     opacity: 1;
-    
+
 }
