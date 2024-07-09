@@ -4,10 +4,10 @@
 + Crear clase UserDto
 + Crear interface para poder gestionar las peticiones de acceso a datos
 + Crear Gestor Persistencia para acceder, guardar los datos de la app
-- Crear base de datos WhereFindData
-- Crear tabla Users
-- Crear en la tabla Users varios usuarios
-- Crear archivo sql con todas las sentencias necesarias para la gestion de usuarios
++ Crear base de datos WhereFindData
++ Crear tabla Users
++ Crear en la tabla Users varios usuarios
++ Crear archivo sql con todas las sentencias necesarias para la gestion de usuarios
 - Crear Clase de persistencia basada en mysql
 - Poder hacer login
 - Que recuerde (SESSION) al usuario logueado
