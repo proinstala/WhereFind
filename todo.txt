@@ -1,3 +1,14 @@
 + Crear head y foot para contener todo el head del html y la parte final del body
 + Tanto head como food admitan parámetros para poder decidir que cargar
 + Añadir al head un parámetro para poder cambiar el title del sitio
++ Crear clase UserDto
+- Crear interface para poder gestionar las peticiones de acceso a datos
+- Crear Gestor Persistencia para acceder, guardar los datos de la app
+- Crear Clase de persistencia basada en mysql
+- Crear base de datos WhereFindData
+- Crear tabla Users
+- Crear en la tabla Users varios usuarios
+- Poder hacer login
+- Que recuerde (SESSION) al usuario logueado
+- Poder hacer logout
+- Separar login de index.jsp
