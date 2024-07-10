@@ -2,7 +2,7 @@ package io.proinstala.wherefind.infraestructure.data;
 
 import java.util.List;
 
-import io.proinstala.wherefind.shared.dto.UserDTO;
+import io.proinstala.wherefind.shared.dtos.UserDTO;
 
 public interface IGestorPersistencia {
 

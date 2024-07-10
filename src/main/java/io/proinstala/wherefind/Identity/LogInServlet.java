@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import io.proinstala.wherefind.shared.dto.UserDTO;
+import io.proinstala.wherefind.shared.dtos.UserDTO;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 
