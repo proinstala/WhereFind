@@ -8,7 +8,7 @@
 + Crear tabla Users
 + Crear en la tabla Users varios usuarios
 + Crear archivo sql con todas las sentencias necesarias para la gestion de usuarios
-- Crear Clase de persistencia basada en mysql
++ Crear Clase de persistencia basada en mysql
 - La Clase de persistencia basada en mysql que no cierre conexiones y pueda reutilizarlas
 - Poder hacer login
 - Que recuerde (SESSION) al usuario logueado

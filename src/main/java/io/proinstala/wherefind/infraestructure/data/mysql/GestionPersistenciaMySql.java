@@ -1,7 +1,7 @@
 package io.proinstala.wherefind.infraestructure.data.mysql;
 
 import io.proinstala.wherefind.infraestructure.data.IGestorPersistencia;
-import io.proinstala.wherefind.shared.Dto.UserDto;
+import io.proinstala.wherefind.shared.dto.UserDto;
 
 import java.util.ArrayList;
 import java.util.List;

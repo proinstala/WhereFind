@@ -7,7 +7,7 @@
 
 
 <%@ page import="io.proinstala.wherefind.infraestructure.data.*" %>
-<%@ page import="io.proinstala.wherefind.shared.Dto.*" %>
+<%@ page import="io.proinstala.wherefind.shared.dto.*" %>
 <%@ page import="java.util.List" %>
 
 <%

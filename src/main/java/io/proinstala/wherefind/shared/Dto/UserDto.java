@@ -1,4 +1,4 @@
-package io.proinstala.wherefind.shared.Dto;
+package io.proinstala.wherefind.shared.dto;
 
 public class UserDto {
     private int id;

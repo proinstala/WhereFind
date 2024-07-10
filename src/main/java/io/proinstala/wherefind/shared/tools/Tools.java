@@ -1,6 +1,6 @@
 package io.proinstala.wherefind.shared.tools;
 
-import io.proinstala.wherefind.shared.Dto.UserDto;
+import io.proinstala.wherefind.shared.dto.UserDto;
 
 public class Tools {
 
