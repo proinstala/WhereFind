@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import io.proinstala.wherefind.shared.dto.UserDto;
+import io.proinstala.wherefind.shared.dto.UserDTO;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 
@@ -19,7 +19,7 @@ public class LogInServlet extends HttpServlet {
         String nombreUsuario = request.getParameter("nombreUsuario");
         String passwordUsuario = request.getParameter("passwordUsuario");
 
-        UserDto usuario = UserSession.Login(nombreUsuario, passwordUsuario, request);
+        UserDTO usuario = UserSession.Login(nombreUsuario, passwordUsuario, request);
 
         if (usuario != null)
         {

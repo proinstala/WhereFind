@@ -15,3 +15,8 @@
 + Separar login de index.jsp
 - La Clase de persistencia basada en mysql que no cierre conexiones y pueda reutilizarlas
 - Poder hacer login con datos de mysql
++ Renombrar la clase UserDto.java a UserDTO.java
+- Usar anotaciones para crear las clases DTO
+- Renombrar el paquete de dto a minúsculas
+- Métodos de UserSession poner primer caracter en minúsculas
+- Que el index.jsp muestre el contenido de inicio.jsp

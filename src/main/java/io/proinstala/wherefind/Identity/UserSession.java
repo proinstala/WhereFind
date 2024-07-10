@@ -1,17 +1,17 @@
 package io.proinstala.wherefind.Identity;
 
 import java.io.IOException;
-import io.proinstala.wherefind.shared.dto.UserDto;
+import io.proinstala.wherefind.shared.dto.UserDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 public class UserSession {
 
-    public static UserDto Login(String userName, String password, HttpServletRequest request)
+    public static UserDTO Login(String userName, String password, HttpServletRequest request)
     {
         // TODO: Conectar con mysql
-        UserDto userActual = new UserDto(userName, password, "Admin");
+        UserDTO userActual = new UserDTO(userName, password, "Admin");
 
         if (userActual != null)
         {
@@ -51,15 +51,15 @@ public class UserSession {
         }
     }
 
-    public static UserDto GetUserLogin(HttpServletRequest request)
+    public static UserDTO GetUserLogin(HttpServletRequest request)
     {
         HttpSession session = request.getSession();
-        return (UserDto)session.getAttribute("user");
+        return (UserDTO)session.getAttribute("user");
     }
 
     public static void RedireccionarIsUserNotLogIn(HttpServletRequest request, HttpServletResponse response)
     {
-        UserDto userActual = GetUserLogin(request);
+        UserDTO userActual = GetUserLogin(request);
         if (userActual == null) {
             Redireccionar(response, request.getContextPath()+"/login.jsp");
         }

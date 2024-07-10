@@ -2,7 +2,7 @@ package io.proinstala.wherefind.infraestructure.data;
 
 import java.util.List;
 
-import io.proinstala.wherefind.shared.dto.UserDto;
+import io.proinstala.wherefind.shared.dto.UserDTO;
 
 public interface IGestorPersistencia {
 
@@ -11,21 +11,21 @@ public interface IGestorPersistencia {
     // --------------------------------------
 
     // Añade un nuevo usuario
-    public UserDto UsersAdd(UserDto usuario);
+    public UserDTO UsersAdd(UserDTO usuario);
 
     // Actualiza los datos de un usuario existente
-    public boolean UsersUpdate(UserDto usuario);
+    public boolean UsersUpdate(UserDTO usuario);
 
     // Elimina un usuario existente
-    public boolean UsersDelete(UserDto usuario);
+    public boolean UsersDelete(UserDTO usuario);
 
     // Obtiene los datos de un usuario existente con su Id
-    public UserDto UsersGetUserById(int id);
+    public UserDTO UsersGetUserById(int id);
 
     // Obtiene los datos de un usuario existente
-    public UserDto UsersGetUser(String userName, String password);
+    public UserDTO UsersGetUser(String userName, String password);
 
     // Obtiene la lista de todos los usuarios existentes
-    public List<UserDto> UsersGetAll();
+    public List<UserDTO> UsersGetAll();
 
 }

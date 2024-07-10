@@ -1,7 +1,7 @@
 package io.proinstala.wherefind.infraestructure.data.mysql;
 
 import io.proinstala.wherefind.infraestructure.data.IGestorPersistencia;
-import io.proinstala.wherefind.shared.dto.UserDto;
+import io.proinstala.wherefind.shared.dto.UserDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,10 +58,10 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
     }
 
 
-    private static UserDto getUserFromResultSet(ResultSet resultSet)
+    private static UserDTO getUserFromResultSet(ResultSet resultSet)
     {
         try {
-            UserDto resultado = new UserDto(
+            UserDTO resultado = new UserDTO(
                     resultSet.getInt("Id"),
                     resultSet.getString("UserName"),
                     resultSet.getString("Password"),
@@ -79,7 +79,7 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
 
 
     @Override
-    public UserDto UsersAdd(UserDto usuario) {
+    public UserDTO UsersAdd(UserDTO usuario) {
         // Para recoger el numero de filas afectadas
         try
         {
@@ -110,7 +110,7 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
     }
 
     @Override
-    public boolean UsersUpdate(UserDto usuario) {
+    public boolean UsersUpdate(UserDTO usuario) {
 
         // Para recoger el numero de filas afectadas
         int rowAfectadas = 0;
@@ -143,7 +143,7 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
     }
 
     @Override
-    public boolean UsersDelete(UserDto usuario) {
+    public boolean UsersDelete(UserDTO usuario) {
         // Para recoger el numero de filas afectadas
         int rowAfectadas = 0;
         try
@@ -173,9 +173,9 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
     }
 
     @Override
-    public UserDto UsersGetUser(String userName, String password) {
+    public UserDTO UsersGetUser(String userName, String password) {
 
-        UserDto resultado = null;
+        UserDTO resultado = null;
         try
         {
             // Se crea la conexion
@@ -211,8 +211,8 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
     }
 
     @Override
-    public List<UserDto> UsersGetAll() {
-        List<UserDto> resultado = new ArrayList<UserDto>();
+    public List<UserDTO> UsersGetAll() {
+        List<UserDTO> resultado = new ArrayList<UserDTO>();
         try
         {
             // Se crea la conexion
@@ -227,7 +227,7 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
             // Recupera la lista
             while(resultSet.next())
             {
-                UserDto userActual = getUserFromResultSet(resultSet);
+                UserDTO userActual = getUserFromResultSet(resultSet);
                 if (userActual != null) {
                     resultado.add(userActual);
                 }
@@ -247,9 +247,9 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
     }
 
     @Override
-    public UserDto UsersGetUserById(int id) {
+    public UserDTO UsersGetUserById(int id) {
 
-        UserDto resultado = null;
+        UserDTO resultado = null;
         try
         {
             // Se crea la conexion

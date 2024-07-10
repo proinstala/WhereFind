@@ -15,7 +15,7 @@
     IGestorPersistencia gestor = gestionGlobal.getGestorPersistencia();
 
     // Crea un nuevo usuario
-    UserDto userTemporal = new UserDto("manolo", "password", "dddddddddd");
+    UserDTO userTemporal = new UserDTO("manolo", "password", "dddddddddd");
     userTemporal = gestor.UsersAdd(userTemporal);
 
     if(userTemporal != null)
@@ -27,7 +27,7 @@
     }
 
     // Crea un nuevo usuario para eliminarlo
-    UserDto userTemporalBorrar = gestor.UsersAdd(new UserDto("paraBorrar", "borrar", "User"));
+    UserDTO userTemporalBorrar = gestor.UsersAdd(new UserDTO("paraBorrar", "borrar", "User"));
 
     if(userTemporalBorrar != null)
     {
@@ -36,15 +36,15 @@
     }
 
     // Lista todos los usuarios
-    List<UserDto> listadoUsuarios = gestor.UsersGetAll();
+    List<UserDTO> listadoUsuarios = gestor.UsersGetAll();
     int total = listadoUsuarios.size();
 
     // Obtiene datos individuales de usuarios
-    UserDto datosDavid = gestor.UsersGetUser("david", "123");
-    UserDto datosJuanma = gestor.UsersGetUser("juanma", "123");
-    UserDto datosJuanmaError = gestor.UsersGetUser("juanma", "12300000000000000");
-    UserDto datosUserById = gestor.UsersGetUserById(3);
-    UserDto datosUserByIdError = gestor.UsersGetUserById(-3333);
+    UserDTO datosDavid = gestor.UsersGetUser("david", "123");
+    UserDTO datosJuanma = gestor.UsersGetUser("juanma", "123");
+    UserDTO datosJuanmaError = gestor.UsersGetUser("juanma", "12300000000000000");
+    UserDTO datosUserById = gestor.UsersGetUserById(3);
+    UserDTO datosUserByIdError = gestor.UsersGetUserById(-3333);
 
     String resultadoUserDavid = Tools.getMensajeResultado(datosDavid);
     String resultadoUserJuanma = Tools.getMensajeResultado(datosJuanma);
@@ -64,7 +64,7 @@
     </tr>
 
     <%
-    for (UserDto user : listadoUsuarios) {
+    for (UserDTO user : listadoUsuarios) {
         out.println("<tr><td>"+user.getId()+"</td> <td>"+user.getUserName()+"</td> <td>"+user.getPassword()+"</td> <td>"+user.getRol()+"</td> </tr>");
     }
     %>

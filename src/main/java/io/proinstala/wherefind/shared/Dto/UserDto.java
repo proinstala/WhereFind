@@ -1,21 +1,21 @@
 package io.proinstala.wherefind.shared.dto;
 
-public class UserDto {
+public class UserDTO {
     private int id;
     private String userName;
     private String password;
     private String rol;
 
-    public UserDto() {
+    public UserDTO() {
     }
 
-    public UserDto(String userName, String password, String rol) {
+    public UserDTO(String userName, String password, String rol) {
         this.userName = userName;
         this.password = password;
         this.rol = rol;
     }
 
-    public UserDto(int id, String userName, String password, String rol) {
+    public UserDTO(int id, String userName, String password, String rol) {
         this.id = id;
         this.userName = userName;
         this.password = password;
