@@ -81,7 +81,6 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
     @Override
     public UserDto UsersAdd(UserDto usuario) {
         // Para recoger el numero de filas afectadas
-        int rowAfectadas = 0;
         try
         {
             // Se crea la conexion
@@ -96,7 +95,7 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
             sentencia.setString(3, usuario.getRol());
 
             // Ejecuto la sentencia preparada
-            rowAfectadas = sentencia.executeUpdate();
+            sentencia.executeUpdate();
 
             // Cerramos todo lo que hemos usado
             sentencia.close();
