@@ -37,6 +37,8 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
     // Obtiene un usuario en concreto que coincidan su username y su password
     private static final String SQL_SELECT_GET_USER_BY_ID = "SELECT Id, UserName, AES_DECRYPT(Password, '"+ KEY_SECRET_ENCODE + "') AS Password, Rol FROM WhereFindData.Users WHERE IsDelete = FALSE AND Id=?;";
 
+    // Obtiene un usuario en concreto que coincidan su username y su password
+    private static final String SQL_INSERT_NEW_USER = "INSERT INTO WhereFindData.Users (UserName, Password, Rol, IsDelete) VALUES(?, AES_ENCRYPT(?,'|--Where-Find--|'), ?, 0);";
 
     public GestionPersistenciaMySql()
     {
@@ -70,7 +72,39 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
 
     @Override
     public boolean UsersAdd(UserDto usuario) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // Para recoger el numero de filas afectadas
+        int rowAfectadas = 0;
+        try
+        {
+            // Se crea la conexion
+            Connection conexion  = DriverManager.getConnection(URL, USER, PASSWORD);
+
+            // Preparo un PreparedStatement con la sentencia necesaria para saber el numero de filas
+            PreparedStatement sentencia = conexion.prepareStatement(SQL_INSERT_NEW_USER);
+
+            // Le paso los parametros al PreparedStatement
+            //INSERT INTO WhereFindData.Users (UserName, Password, Rol, IsDelete) VALUES(?, AES_ENCRYPT(?,'|--Where-Find--|'), ?, 0);";
+            sentencia.setString(1, usuario.getUserName());
+            sentencia.setString(2, usuario.getPassword());
+            sentencia.setString(3, usuario.getRol());
+
+            // Ejecuto la sentencia preparada
+            rowAfectadas = sentencia.executeUpdate();
+
+            // Cerramos todo lo que hemos usado
+            sentencia.close();
+            conexion.close();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        return rowAfectadas > 0;
+
+
+
+
     }
 
     @Override

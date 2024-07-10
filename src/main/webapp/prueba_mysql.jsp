@@ -14,6 +14,10 @@
     GestionPersistencia gestionGlobal = new GestionPersistencia();
     IGestorPersistencia gestor = gestionGlobal.getGestorPersistencia();
 
+    UserDto userTemporal = new UserDto("manolo", "password", "dddddddddd");
+    gestor.UsersAdd(userTemporal);
+
+
     List<UserDto> listadoUsuarios = gestor.UsersGetAll();
     int total = listadoUsuarios.size();
 
