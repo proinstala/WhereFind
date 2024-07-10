@@ -19,11 +19,11 @@ public class LogInServlet extends HttpServlet {
         String nombreUsuario = request.getParameter("nombreUsuario");
         String passwordUsuario = request.getParameter("passwordUsuario");
 
-        UserDTO usuario = UserSession.Login(nombreUsuario, passwordUsuario, request);
+        UserDTO usuario = UserSession.login(nombreUsuario, passwordUsuario, request);
 
         if (usuario != null)
         {
-            UserSession.Redireccionar(request, response, "App/web/inicio/inicio.jsp", "login.jsp");
+            UserSession.redireccionar(request, response, "App/web/inicio/inicio.jsp", "login.jsp");
         }
     }
 }

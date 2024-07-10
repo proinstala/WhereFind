@@ -1,6 +1,6 @@
 <%
     // Si no se está logueado se manda al usuario al login.jsp
-    UserSession.RedireccionarIsUserNotLogIn(request, response);
+    UserSession.redireccionarIsUserNotLogIn(request, response);
 %>
 
 <jsp:include page="App/web/shared/head.jsp" >
@@ -13,7 +13,7 @@
 <%@ include file="App/web/cabecera/cabecera.jsp" %>
 
 <%
-    UserDTO usuarioActual = UserSession.GetUserLogin(request);
+    UserDTO usuarioActual = UserSession.getUserLogin(request);
     if (usuarioActual != null)
     {
         out.println("<h1>Bienvenido " + usuarioActual.getUserName() + "</h1>");

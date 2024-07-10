@@ -15,6 +15,6 @@ public class LogOutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        UserSession.LogOut(request, response);
+        UserSession.logOut(request, response);
     }
 }

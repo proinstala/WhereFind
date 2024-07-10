@@ -7,7 +7,7 @@
 <%@page import="io.proinstala.wherefind.identidad.UserSession"%>
 <%
     // Si no se está logueado se manda al usuario al login.jsp
-    UserSession.RedireccionarIsUserNotLogIn(request, response);
+    UserSession.redireccionarIsUserNotLogIn(request, response);
 %>
 
 
