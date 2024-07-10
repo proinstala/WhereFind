@@ -21,12 +21,14 @@
     UserDto datosDavid = gestor.UsersGetUser("david", "123");
     UserDto datosJuanma = gestor.UsersGetUser("juanma", "123");
     UserDto datosJuanmaError = gestor.UsersGetUser("juanma", "12300000000000000");
-
+    UserDto datosUserById = gestor.UsersGetUserById(3);
+    UserDto datosUserByIdError = gestor.UsersGetUserById(-3333);
 
     String resultadoUserDavid = Tools.getMensajeResultado(datosDavid);
     String resultadoUserJuanma = Tools.getMensajeResultado(datosJuanma);
     String resultadoUserJuanmaError = Tools.getMensajeResultado(datosJuanmaError);
-
+    String resultadoUserById = Tools.getMensajeResultado(datosUserById);
+    String resultadoUserByIdError = Tools.getMensajeResultado(datosUserByIdError);
 %>
 
 
@@ -52,8 +54,10 @@
 <%= resultadoUserJuanmaError %>
 <hr/>
 <%= resultadoUserJuanma %>
-
-
+<hr/>
+<%= resultadoUserById %>
+<hr/>
+<%= resultadoUserByIdError %>
 
 
 

@@ -34,6 +34,10 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
     // Obtiene un usuario en concreto que coincidan su username y su password
     private static final String SQL_SELECT_GET_USER = "SELECT Id, UserName, AES_DECRYPT(Password, '"+ KEY_SECRET_ENCODE + "') AS Password, Rol FROM WhereFindData.Users WHERE IsDelete = FALSE AND UserName=? AND Password=AES_ENCRYPT(?,'"+ KEY_SECRET_ENCODE + "');";
 
+    // Obtiene un usuario en concreto que coincidan su username y su password
+    private static final String SQL_SELECT_GET_USER_BY_ID = "SELECT Id, UserName, AES_DECRYPT(Password, '"+ KEY_SECRET_ENCODE + "') AS Password, Rol FROM WhereFindData.Users WHERE IsDelete = FALSE AND Id=?;";
+
+
     public GestionPersistenciaMySql()
     {
         try {
@@ -57,7 +61,6 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
             return resultado;
 
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -139,6 +142,43 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
                 if (userActual != null) {
                     resultado.add(userActual);
                 }
+            }
+
+            // Cerramos todo lo que hemos usado
+            resultSet.close();
+            sentencia.close();
+            conexion.close();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        return resultado;
+    }
+
+    @Override
+    public UserDto UsersGetUserById(int id) {
+
+        UserDto resultado = null;
+        try
+        {
+            // Se crea la conexion
+            Connection conexion  = DriverManager.getConnection(URL, USER, PASSWORD);
+
+            // Preparo un PreparedStatement con la sentencia necesaria para saber el numero de filas
+            PreparedStatement sentencia = conexion.prepareStatement(SQL_SELECT_GET_USER_BY_ID);
+
+            // Le paso los parametros al PreparedStatement
+            sentencia.setInt(1, id);
+
+            // Se ejecuta la query y nos devuelve un resultado
+            ResultSet resultSet = sentencia.executeQuery();
+
+            // Recupera la lista
+            if (resultSet.next())
+            {
+                resultado = getUserFromResultSet(resultSet);
             }
 
             // Cerramos todo lo que hemos usado

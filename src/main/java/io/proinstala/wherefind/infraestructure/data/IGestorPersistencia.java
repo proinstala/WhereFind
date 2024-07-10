@@ -19,6 +19,9 @@ public interface IGestorPersistencia {
     // Elimina un usuario existente
     public boolean UsersDelete(UserDto usuario);
 
+    // Obtiene los datos de un usuario existente con su Id
+    public UserDto UsersGetUserById(int id);
+
     // Obtiene los datos de un usuario existente
     public UserDto UsersGetUser(String userName, String password);
 
