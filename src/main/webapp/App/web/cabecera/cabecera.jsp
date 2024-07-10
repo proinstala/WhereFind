@@ -14,7 +14,7 @@
             <img class="btn__configuracion--imagen" src="App/img/gear_white.svg" alt="icono configuración">
         </div>
         <div class="contenedor__menu">
-
+            <a href="index.jsp">Index</a>
         </div>
         <div class="contenedor__usuario">
             <div class="imagen__usuario">
@@ -22,6 +22,6 @@
             </div>
             <button class="btn_prueba">1</button>
             <button class="btn_prueba">config</button>
-            <button class="btn_prueba">cerrar</button>
+            <a href="logout"><button class="btn_prueba">cerrar</button></a>
         </div>
 </div>

@@ -4,6 +4,13 @@
     Author     : David
 --%>
 
+<%@page import="io.proinstala.wherefind.Identity.UserSession"%>
+<%
+    // Si no se está logueado se manda al usuario al login.jsp
+    UserSession.RedireccionarIsUserNotLogIn(request, response);
+%>
+
+
 <jsp:include page="../shared/head.jsp" >
     <jsp:param name="titleweb" value="Inicio" />
 </jsp:include>

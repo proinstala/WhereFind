@@ -1,22 +1,22 @@
 
 $(document).ready(function () {
-    
+
     validarFormulario("#frmLogin");
-    
+
 });
 
 function validarFormulario(nombreForm) {
     $(nombreForm).validate({
         rules: {
             nombreUsuario: {
-                required: true, 
+                required: true,
                 maxlength: 5
             },
             passwordUsuario: {
-                required: true, 
+                required: true,
                 maxlength: 60
             }
-            
+
         },//Fin de reglas ----------------
         messages: {
             nombreUsuario: {
@@ -28,16 +28,16 @@ function validarFormulario(nombreForm) {
             }
         },//Fin de msg  ------------------
 
-        submitHandler: function () {
-            console.log(getDatosForm());
-            window.location = "App/web/inicio/inicio.jsp";
-        },
+        // submitHandler: function () {
+        //     console.log(getDatosForm());
+        //     window.location = "App/web/inicio/inicio.jsp";
+        // },
        // Función error de respuesta
         errorPlacement: function (error, element) {
             error.insertAfter(element); // Esto colocará el mensaje de error después del elemento con error
-            
+
         },
-        complete: function () {            
+        complete: function () {
             //window.location.reload(true);
         }
     });//Fin Validate
