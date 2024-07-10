@@ -8,19 +8,41 @@ import java.util.List;
 import java.sql.*;
 
 public class GestionPersistenciaMySql implements IGestorPersistencia {
-
+    //---------------------------------------------
     // Cadena de conexión
+    //---------------------------------------------
     private static final String URL = "jdbc:mysql://localhost:3306/WhereFindData";
+    // ?useSSL=false
 
+    //---------------------------------------------
     // Datos de conexión a la bbdd
+    //---------------------------------------------
     private static final String USER     = "root";
-    private static final String PASSWORD = "";
+    private static final String PASSWORD = "12345";
 
+    //---------------------------------------------
     // Clave para codificar los passwords
+    //---------------------------------------------
     private static final String KEY_SECRET_ENCODE = "|--Where-Find--|";
 
+    //---------------------------------------------
     // Sentencias para trabajar con mysql
-    private static final String SQL_SELECT_ALL_USERS   = "SELECT Id, UserName, AES_DECRYPT(Password, '"+KEY_SECRET_ENCODE+"') AS Password, Rol FROM WhereFindData.Users WHERE IsDelete = FALSE;";
+    //---------------------------------------------
+    // Obtiene toda la lista de usuarios
+    private static final String SQL_SELECT_ALL_USERS = "SELECT Id, UserName, AES_DECRYPT(Password, '" + KEY_SECRET_ENCODE + "') AS Password, Rol FROM WhereFindData.Users WHERE IsDelete = FALSE;";
+
+    // Obtiene un usuario en concreto que coincidan su username y su password
+    private static final String SQL_SELECT_GET_USER = "SELECT Id, UserName, AES_DECRYPT(Password, '"+ KEY_SECRET_ENCODE + "') AS Password, Rol FROM WhereFindData.Users WHERE IsDelete = FALSE AND UserName='?' AND Password=AES_ENCRYPT('?','"+ KEY_SECRET_ENCODE + "');";
+
+    public GestionPersistenciaMySql()
+    {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private static UserDto getUserFromResultSet(ResultSet resultSet)
     {
@@ -60,10 +82,41 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
 
     @Override
     public UserDto UsersGetUser(String userName, String password) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        UserDto resultado = null;
+        // try
+        // {
+        //     // Se crea la conexion
+        //     Connection conexion  = DriverManager.getConnection(URL, USER, PASSWORD);
+
+        //     // Preparo un PreparedStatement con la sentencia necesaria para saber el numero de filas
+        //     PreparedStatement sentencia = conexion.prepareStatement(SQL_SELECT_GET_USER);
+
+        //     // Le paso los parametros al PreparedStatement
+        //     sentencia.setString(1, userName);
+        //     sentencia.setString(2, password);
+
+        //     // Se ejecuta la query y nos devuelve un resultado
+        //     ResultSet resultSet = sentencia.executeQuery();
+
+        //     // Recupera la lista
+        //     if (resultSet.next())
+        //     {
+        //         resultado = getUserFromResultSet(resultSet);
+        //     }
+
+        //     // Cerramos todo lo que hemos usado
+        //     resultSet.close();
+        //     sentencia.close();
+        //     conexion.close();
+        // }
+        // catch (SQLException e)
+        // {
+        //     e.printStackTrace();
+        // }
+
+        return resultado;
     }
-
-
 
     @Override
     public List<UserDto> UsersGetAll() {

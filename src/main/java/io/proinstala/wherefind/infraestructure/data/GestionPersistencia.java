@@ -6,7 +6,6 @@ public class GestionPersistencia {
     private IGestorPersistencia gestorPersistencia;
 
     public GestionPersistencia() {
-        //TODO: Crear el gestor de persistencia
         this.gestorPersistencia = new GestionPersistenciaMySql();
     }
 

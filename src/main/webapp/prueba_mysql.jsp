@@ -15,6 +15,9 @@
     int total = listadoUsuarios.size();
 
 
+    UserDto datosDavid = gestor.UsersGetUser("david", "123");
+    UserDto datosJuanmaErroneo = gestor.UsersGetUser("juanma", "12300000000000000");
+
 %>
 
 
@@ -33,6 +36,36 @@
     %>
 
 </table>
+
+<hr/>
+
+<%
+    if(datosDavid==null)  {
+%>
+        <b>No he encontrado al uuario david o los datos introducidos son incorrectos</b> <br/>
+<%
+    } else {
+%>
+        out.println("<b>"+user.getUserName()+" : </b> <span>"+user.getPassword()+"</span> <span>"+user.getRol()+"</span> <br/>");
+<%
+    }
+%>
+
+<hr/>
+
+<%
+    if(datosJuanmaErroneo==null)  {
+%>
+        <b>No he encontrado al uuario juanma o los datos introducidos son incorrectos</b> <br/>
+<%
+    } else {
+%>
+        out.println("<b>"+user.getUserName()+" : </b> <span>"+user.getPassword()+"</span> <span>"+user.getRol()+"</span> <br/>");
+<%
+    }
+%>
+
+
 
 
 <%@ include file="App/web/shared/foot.jsp" %>
