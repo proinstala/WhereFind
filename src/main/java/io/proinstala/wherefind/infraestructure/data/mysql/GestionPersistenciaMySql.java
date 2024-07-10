@@ -43,6 +43,10 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
     // Actualiza el rol y el password a un usuario
     private static final String SQL_UPDATE_USER = "UPDATE WhereFindData.Users SET Rol=?, Password=AES_ENCRYPT(?, '"+ KEY_SECRET_ENCODE + "') WHERE Id=?;";
 
+    // Marca a un usuario como eliminado
+    private static final String SQL_DELETE_USER = "UPDATE WhereFindData.Users SET IsDelete=True WHERE Id=?;";
+
+
 
     public GestionPersistenciaMySql()
     {
@@ -127,7 +131,6 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
             // Ejecuto la sentencia preparada
             rowAfectadas = sentencia.executeUpdate();
 
-            System.out.println("rowAfectadas : " + rowAfectadas);
             // Cerramos todo lo que hemos usado
             sentencia.close();
             conexion.close();
@@ -142,7 +145,32 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
 
     @Override
     public boolean UsersDelete(UserDto usuario) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // Para recoger el numero de filas afectadas
+        int rowAfectadas = 0;
+        try
+        {
+            // Se crea la conexion
+            Connection conexion  = DriverManager.getConnection(URL, USER, PASSWORD);
+
+            // Preparo un PreparedStatement con la sentencia necesaria para saber el numero de filas
+            PreparedStatement sentencia = conexion.prepareStatement(SQL_DELETE_USER);
+
+            // Le paso los parametros al PreparedStatement
+            sentencia.setInt(1, usuario.getId());
+
+            // Ejecuto la sentencia preparada
+            rowAfectadas = sentencia.executeUpdate();
+
+            // Cerramos todo lo que hemos usado
+            sentencia.close();
+            conexion.close();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        return rowAfectadas > 0;
     }
 
     @Override

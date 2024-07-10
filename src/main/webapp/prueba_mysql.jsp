@@ -26,6 +26,14 @@
         gestor.UsersUpdate(userTemporal);
     }
 
+    // Crea un nuevo usuario para eliminarlo
+    UserDto userTemporalBorrar = gestor.UsersAdd(new UserDto("paraBorrar", "borrar", "User"));
+
+    if(userTemporalBorrar != null)
+    {
+        // Elimina el usuario
+        gestor.UsersDelete(userTemporalBorrar);
+    }
 
     // Lista todos los usuarios
     List<UserDto> listadoUsuarios = gestor.UsersGetAll();
