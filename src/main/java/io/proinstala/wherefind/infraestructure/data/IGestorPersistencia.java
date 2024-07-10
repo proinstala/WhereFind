@@ -11,21 +11,21 @@ public interface IGestorPersistencia {
     // --------------------------------------
 
     // Añade un nuevo usuario
-    public UserDTO UsersAdd(UserDTO usuario);
+    public UserDTO usersAdd(UserDTO usuario);
 
     // Actualiza los datos de un usuario existente
-    public boolean UsersUpdate(UserDTO usuario);
+    public boolean usersUpdate(UserDTO usuario);
 
     // Elimina un usuario existente
-    public boolean UsersDelete(UserDTO usuario);
+    public boolean usersDelete(UserDTO usuario);
 
     // Obtiene los datos de un usuario existente con su Id
-    public UserDTO UsersGetUserById(int id);
+    public UserDTO usersGetUserById(int id);
 
     // Obtiene los datos de un usuario existente
-    public UserDTO UsersGetUser(String userName, String password);
+    public UserDTO usersGetUser(String userName, String password);
 
     // Obtiene la lista de todos los usuarios existentes
-    public List<UserDTO> UsersGetAll();
+    public List<UserDTO> usersGetAll();
 
 }

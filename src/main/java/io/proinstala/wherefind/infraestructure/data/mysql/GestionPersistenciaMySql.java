@@ -79,7 +79,7 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
 
 
     @Override
-    public UserDTO UsersAdd(UserDTO usuario) {
+    public UserDTO usersAdd(UserDTO usuario) {
         // Para recoger el numero de filas afectadas
         try
         {
@@ -106,11 +106,11 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
             e.printStackTrace();
         }
 
-        return UsersGetUser(usuario.getUserName(), usuario.getPassword());
+        return usersGetUser(usuario.getUserName(), usuario.getPassword());
     }
 
     @Override
-    public boolean UsersUpdate(UserDTO usuario) {
+    public boolean usersUpdate(UserDTO usuario) {
 
         // Para recoger el numero de filas afectadas
         int rowAfectadas = 0;
@@ -143,7 +143,7 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
     }
 
     @Override
-    public boolean UsersDelete(UserDTO usuario) {
+    public boolean usersDelete(UserDTO usuario) {
         // Para recoger el numero de filas afectadas
         int rowAfectadas = 0;
         try
@@ -173,7 +173,7 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
     }
 
     @Override
-    public UserDTO UsersGetUser(String userName, String password) {
+    public UserDTO usersGetUser(String userName, String password) {
 
         UserDTO resultado = null;
         try
@@ -211,7 +211,7 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
     }
 
     @Override
-    public List<UserDTO> UsersGetAll() {
+    public List<UserDTO> usersGetAll() {
         List<UserDTO> resultado = new ArrayList<UserDTO>();
         try
         {
@@ -247,7 +247,7 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
     }
 
     @Override
-    public UserDTO UsersGetUserById(int id) {
+    public UserDTO usersGetUserById(int id) {
 
         UserDTO resultado = null;
         try
