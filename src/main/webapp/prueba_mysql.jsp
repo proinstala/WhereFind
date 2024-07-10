@@ -14,14 +14,24 @@
     GestionPersistencia gestionGlobal = new GestionPersistencia();
     IGestorPersistencia gestor = gestionGlobal.getGestorPersistencia();
 
+    // Crea un nuevo usuario
     UserDto userTemporal = new UserDto("manolo", "password", "dddddddddd");
-    gestor.UsersAdd(userTemporal);
+    userTemporal = gestor.UsersAdd(userTemporal);
+
+    if(userTemporal != null)
+    {
+        // Actualiza el usuario
+        userTemporal.setPassword("nuevo");
+        userTemporal.setRol("User");
+        gestor.UsersUpdate(userTemporal);
+    }
 
 
+    // Lista todos los usuarios
     List<UserDto> listadoUsuarios = gestor.UsersGetAll();
     int total = listadoUsuarios.size();
 
-
+    // Obtiene datos individuales de usuarios
     UserDto datosDavid = gestor.UsersGetUser("david", "123");
     UserDto datosJuanma = gestor.UsersGetUser("juanma", "123");
     UserDto datosJuanmaError = gestor.UsersGetUser("juanma", "12300000000000000");
@@ -39,6 +49,7 @@
 <h1>Usuarios  <%= total %></h1>
 <table border="1">
     <tr>
+        <th>Id</th>
         <th>Nombre</th>
         <th>Password</th>
         <th>Rol</th>
@@ -46,7 +57,7 @@
 
     <%
     for (UserDto user : listadoUsuarios) {
-        out.println("<tr><td>"+user.getUserName()+"</td> <td>"+user.getPassword()+"</td> <td>"+user.getRol()+"</td> </tr>");
+        out.println("<tr><td>"+user.getId()+"</td> <td>"+user.getUserName()+"</td> <td>"+user.getPassword()+"</td> <td>"+user.getRol()+"</td> </tr>");
     }
     %>
 

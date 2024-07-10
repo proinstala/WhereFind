@@ -11,7 +11,7 @@ public interface IGestorPersistencia {
     // --------------------------------------
 
     // Añade un nuevo usuario
-    public boolean UsersAdd(UserDto usuario);
+    public UserDto UsersAdd(UserDto usuario);
 
     // Actualiza los datos de un usuario existente
     public boolean UsersUpdate(UserDto usuario);

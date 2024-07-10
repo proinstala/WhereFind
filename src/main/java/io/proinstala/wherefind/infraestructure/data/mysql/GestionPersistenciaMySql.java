@@ -37,8 +37,12 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
     // Obtiene un usuario en concreto que coincidan su username y su password
     private static final String SQL_SELECT_GET_USER_BY_ID = "SELECT Id, UserName, AES_DECRYPT(Password, '"+ KEY_SECRET_ENCODE + "') AS Password, Rol FROM WhereFindData.Users WHERE IsDelete = FALSE AND Id=?;";
 
-    // Obtiene un usuario en concreto que coincidan su username y su password
-    private static final String SQL_INSERT_NEW_USER = "INSERT INTO WhereFindData.Users (UserName, Password, Rol, IsDelete) VALUES(?, AES_ENCRYPT(?,'|--Where-Find--|'), ?, 0);";
+    // Añada un nuevo user
+    private static final String SQL_INSERT_NEW_USER = "INSERT INTO WhereFindData.Users (UserName, Password, Rol, IsDelete) VALUES(?, AES_ENCRYPT(?,'"+ KEY_SECRET_ENCODE + "'), ?, 0);";
+
+    // Actualiza el rol y el password a un usuario
+    private static final String SQL_UPDATE_USER = "UPDATE WhereFindData.Users SET Rol=?, Password=AES_ENCRYPT(?, '"+ KEY_SECRET_ENCODE + "') WHERE Id=?;";
+
 
     public GestionPersistenciaMySql()
     {
@@ -71,7 +75,7 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
 
 
     @Override
-    public boolean UsersAdd(UserDto usuario) {
+    public UserDto UsersAdd(UserDto usuario) {
         // Para recoger el numero de filas afectadas
         int rowAfectadas = 0;
         try
@@ -83,7 +87,6 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
             PreparedStatement sentencia = conexion.prepareStatement(SQL_INSERT_NEW_USER);
 
             // Le paso los parametros al PreparedStatement
-            //INSERT INTO WhereFindData.Users (UserName, Password, Rol, IsDelete) VALUES(?, AES_ENCRYPT(?,'|--Where-Find--|'), ?, 0);";
             sentencia.setString(1, usuario.getUserName());
             sentencia.setString(2, usuario.getPassword());
             sentencia.setString(3, usuario.getRol());
@@ -100,16 +103,41 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
             e.printStackTrace();
         }
 
-        return rowAfectadas > 0;
-
-
-
-
+        return UsersGetUser(usuario.getUserName(), usuario.getPassword());
     }
 
     @Override
     public boolean UsersUpdate(UserDto usuario) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        // Para recoger el numero de filas afectadas
+        int rowAfectadas = 0;
+        try
+        {
+            // Se crea la conexion
+            Connection conexion  = DriverManager.getConnection(URL, USER, PASSWORD);
+
+            // Preparo un PreparedStatement con la sentencia necesaria para saber el numero de filas
+            PreparedStatement sentencia = conexion.prepareStatement(SQL_UPDATE_USER);
+
+            // Le paso los parametros al PreparedStatement
+            sentencia.setString(1, usuario.getRol());
+            sentencia.setString(2, usuario.getPassword());
+            sentencia.setInt(3, usuario.getId());
+
+            // Ejecuto la sentencia preparada
+            rowAfectadas = sentencia.executeUpdate();
+
+            System.out.println("rowAfectadas : " + rowAfectadas);
+            // Cerramos todo lo que hemos usado
+            sentencia.close();
+            conexion.close();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        return rowAfectadas > 0;
     }
 
     @Override
