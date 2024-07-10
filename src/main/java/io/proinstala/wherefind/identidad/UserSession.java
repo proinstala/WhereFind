@@ -1,4 +1,4 @@
-package io.proinstala.wherefind.Identity;
+package io.proinstala.wherefind.identidad;
 
 import java.io.IOException;
 import io.proinstala.wherefind.shared.dtos.UserDTO;
