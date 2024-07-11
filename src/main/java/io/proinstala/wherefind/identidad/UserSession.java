@@ -11,7 +11,7 @@ public class UserSession {
     public static UserDTO login(String userName, String password, HttpServletRequest request)
     {
         // TODO: Conectar con mysql
-        UserDTO userActual = new UserDTO(userName, password, "Admin");
+        UserDTO userActual = new UserDTO(-1, userName, password, "Admin");
 
         if (userActual != null)
         {

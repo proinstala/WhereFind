@@ -6,12 +6,12 @@
     <version>1.0</version>
     <packaging>war</packaging>
     <name>WhereFind-1.0</name>
-    
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jakartaee>10.0.0</jakartaee>
     </properties>
-    
+
     <dependencies>
         <dependency>
             <groupId>jakarta.platform</groupId>
@@ -19,17 +19,26 @@
             <version>${jakartaee}</version>
             <scope>provided</scope>
         </dependency>
-        
-        
+
+
         <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <version>8.0.33</version>
-        </dependency>        
-        
-    </dependencies>
-    
+        </dependency>
+
+        <!-- En caso de que NetBeans marque error hacer lo que indican en el siguiente enlace :-->
+        <!-- https://stackoverflow.com/a/49939549 -->
+        <!-- Pero bajando de versión a la 1.18.32 -->
+	<dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.34</version>
+            <scope>provided</scope>
+	</dependency>
+</dependencies>
+
     <build>
         <plugins>
             <plugin>
