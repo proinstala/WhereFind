@@ -23,7 +23,7 @@ public class LogInServlet extends HttpServlet {
 
         if (usuario != null)
         {
-            UserSession.redireccionar(request, response, "App/web/inicio/inicio.jsp", "login.jsp");
+            UserSession.redireccionar(request, response, "index.jsp", "login.jsp");
         }
     }
 }

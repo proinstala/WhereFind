@@ -17,6 +17,6 @@
 + Renombrar el paquete de dto a minúsculas
 + Métodos de UserSession poner primer caracter en minúsculas
 + Usar anotaciones para crear las clases DTO
++ Que el index.jsp muestre el contenido de inicio.jsp
 - La Clase de persistencia basada en mysql que no cierre conexiones y pueda reutilizarlas
 - Poder hacer login con datos de mysql
-- Que el index.jsp muestre el contenido de inicio.jsp

@@ -4,18 +4,6 @@
     Author     : David
 --%>
 
-<%@page import="io.proinstala.wherefind.identidad.UserSession"%>
-<%
-    // Si no se está logueado se manda al usuario al login.jsp
-    UserSession.redireccionarIsUserNotLogIn(request, response);
-%>
-
-
-<jsp:include page="../shared/head.jsp" >
-    <jsp:param name="titleweb" value="Inicio" />
-</jsp:include>
-
-
 <link href="App/css/inicio.css" rel="stylesheet" type="text/css"/>
 
 <body>
@@ -47,5 +35,3 @@
     </div>
 
     <script src="js/principal.js"></script>
-
-<%@ include file="../shared/foot.jsp" %>
