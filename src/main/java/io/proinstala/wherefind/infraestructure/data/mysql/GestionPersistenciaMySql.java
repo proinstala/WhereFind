@@ -5,20 +5,23 @@ import io.proinstala.wherefind.shared.dtos.UserDTO;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.sql.DataSource;
 import java.sql.*;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 public class GestionPersistenciaMySql implements IGestorPersistencia {
     //---------------------------------------------
-    // Cadena de conexión
+    // Cadena de conexión  - Ahora está definido en src\main\webapp\META-INF\context.xml
     //---------------------------------------------
-    private static final String URL = "jdbc:mysql://localhost:3306/WhereFindData";
-    // ?useSSL=false
+    // private static final String URL = "jdbc:mysql://localhost:3306/WhereFindData";
 
     //---------------------------------------------
-    // Datos de conexión a la bbdd
+    // Datos de conexión a la bbdd - Ahora está definido en src\main\webapp\META-INF\context.xml
     //---------------------------------------------
-    private static final String USER     = "root";
-    private static final String PASSWORD = "12345";
+    //private static final String USER     = "root";
+    //private static final String PASSWORD = "12345";
 
     //---------------------------------------------
     // Clave para codificar los passwords
@@ -57,12 +60,28 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
         }
     }
 
+    private Connection getConnection()
+    {
+        try {
+            Context initContext;
+            initContext = new InitialContext();
+            Context envContext = (Context) initContext.lookup("java:comp/env");
+            DataSource ds = (DataSource) envContext.lookup("jdbc/WhereFindData");
+            return ds.getConnection();
+        }
+        catch (NamingException | SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     private static UserDTO getUserFromResultSet(ResultSet resultSet)
     {
         try {
             UserDTO resultado = new UserDTO(
-                    resultSet.getInt("Id"),
+                resultSet.getInt("Id"),
                     resultSet.getString("UserName"),
                     resultSet.getString("Password"),
                     resultSet.getString("Rol")
@@ -84,7 +103,7 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
         try
         {
             // Se crea la conexion
-            Connection conexion  = DriverManager.getConnection(URL, USER, PASSWORD);
+            Connection conexion  = getConnection();
 
             // Preparo un PreparedStatement con la sentencia necesaria para saber el numero de filas
             PreparedStatement sentencia = conexion.prepareStatement(SQL_INSERT_NEW_USER);
@@ -117,7 +136,7 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
         try
         {
             // Se crea la conexion
-            Connection conexion  = DriverManager.getConnection(URL, USER, PASSWORD);
+            Connection conexion  = getConnection();
 
             // Preparo un PreparedStatement con la sentencia necesaria para saber el numero de filas
             PreparedStatement sentencia = conexion.prepareStatement(SQL_UPDATE_USER);
@@ -149,7 +168,7 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
         try
         {
             // Se crea la conexion
-            Connection conexion  = DriverManager.getConnection(URL, USER, PASSWORD);
+            Connection conexion  = getConnection();
 
             // Preparo un PreparedStatement con la sentencia necesaria para saber el numero de filas
             PreparedStatement sentencia = conexion.prepareStatement(SQL_DELETE_USER);
@@ -179,7 +198,7 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
         try
         {
             // Se crea la conexion
-            Connection conexion  = DriverManager.getConnection(URL, USER, PASSWORD);
+            Connection conexion  = getConnection();
 
             // Preparo un PreparedStatement con la sentencia necesaria para saber el numero de filas
             PreparedStatement sentencia = conexion.prepareStatement(SQL_SELECT_GET_USER);
@@ -216,7 +235,7 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
         try
         {
             // Se crea la conexion
-            Connection conexion  = DriverManager.getConnection(URL, USER, PASSWORD);
+            Connection conexion  = getConnection();
 
             // Preparo un PreparedStatement con la sentencia necesaria para saber el numero de filas
             PreparedStatement sentencia = conexion.prepareStatement(SQL_SELECT_ALL_USERS);
@@ -253,7 +272,7 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
         try
         {
             // Se crea la conexion
-            Connection conexion  = DriverManager.getConnection(URL, USER, PASSWORD);
+            Connection conexion  = getConnection();
 
             // Preparo un PreparedStatement con la sentencia necesaria para saber el numero de filas
             PreparedStatement sentencia = conexion.prepareStatement(SQL_SELECT_GET_USER_BY_ID);

@@ -1,2 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/WhereFind"/>
+<Context path="/WhereFind">
+    <Resource
+        name="jdbc/WhereFindData"
+        auth="Container"
+        type="javax.sql.DataSource"
+        maxActive="100"
+        maxIdle="30"
+        maxWait="10000"
+        driverClassName="com.mysql.cj.jdbc.Driver"
+        url="jdbc:mysql://localhost:3306/WhereFindData"
+        username="root"
+        password="12345"
+    />
+</Context>

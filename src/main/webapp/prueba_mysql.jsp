@@ -15,7 +15,7 @@
     IGestorPersistencia gestor = gestionGlobal.getGestorPersistencia();
 
     // Crea un nuevo usuario
-    UserDTO userTemporal = new UserDTO("manolo", "password", "dddddddddd");
+    UserDTO userTemporal = new UserDTO(-1, "manolo", "password", "dddddddddd");
     userTemporal = gestor.usersAdd(userTemporal);
 
     if(userTemporal != null)
@@ -27,7 +27,7 @@
     }
 
     // Crea un nuevo usuario para eliminarlo
-    UserDTO userTemporalBorrar = gestor.usersAdd(new UserDTO("paraBorrar", "borrar", "User"));
+    UserDTO userTemporalBorrar = gestor.usersAdd(new UserDTO(-1, "paraBorrar", "borrar", "User"));
 
     if(userTemporalBorrar != null)
     {
