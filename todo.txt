@@ -18,5 +18,11 @@
 + Métodos de UserSession poner primer caracter en minúsculas
 + Usar anotaciones para crear las clases DTO
 + Que el index.jsp muestre el contenido de inicio.jsp
-- La Clase de persistencia basada en mysql que no cierre conexiones y pueda reutilizarlas
-- Poder hacer login con datos de mysql
++ La Clase de persistencia basada en mysql que no cierre conexiones y pueda reutilizarlas
++ Poder hacer login con datos de mysql
+- Al fallar un login que lo avise en pantalla
+- Revisar como poder mejorar la clase persistencia use el patrón singlenton
+- Al registrar un usuario que el nombre sea insensible a mayúsculas y minúsculas
+- Poder registrar usuarios
+- Poder recuperar la contraseña de los usuarios
+- Poder destionar los usuarios con un usuario Admin

@@ -1,6 +1,9 @@
 package io.proinstala.wherefind.identidad;
 
 import java.io.IOException;
+
+import io.proinstala.wherefind.infraestructure.data.GestionPersistencia;
+import io.proinstala.wherefind.infraestructure.data.IGestorPersistencia;
 import io.proinstala.wherefind.shared.dtos.UserDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,8 +13,12 @@ public class UserSession {
 
     public static UserDTO login(String userName, String password, HttpServletRequest request)
     {
-        // TODO: Conectar con mysql
-        UserDTO userActual = new UserDTO(-1, userName, password, "Admin");
+        // Conecta con el Gestor de Permanencia
+        GestionPersistencia gestionGlobal = new GestionPersistencia();
+        IGestorPersistencia gestor = gestionGlobal.getGestorPersistencia();
+
+        // Obtiene los datos del usuario
+        UserDTO userActual = gestor.usersGetUser(userName, password);
 
         if (userActual != null)
         {

@@ -25,5 +25,9 @@ public class LogInServlet extends HttpServlet {
         {
             UserSession.redireccionar(request, response, "index.jsp", "login.jsp");
         }
+        else
+        {
+            UserSession.redireccionar(response, "login.jsp");
+        }
     }
 }
