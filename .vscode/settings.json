@@ -1,0 +1,7 @@
+{
+    // La uri que contiene el proyecto
+    "Tomcat.Proyecto" : "WhereFind",
+
+    // La url en la que se encuentra el servidor web tomcat
+    "Tomcat.Url" : "http://localhost:8080/${config:Tomcat.Proyecto}/",
+}

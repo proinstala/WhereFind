@@ -1,0 +1,32 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type"           : "shell",
+			"command"        : "${config:maven.executable.path} clean -f ${workspaceFolder}/pom.xml",
+			"problemMatcher" : [],
+			"label"          : "mavenClean"
+		},
+
+		{
+			"type"           : "shell",
+			"command"        : "${config:maven.executable.path} compile -f ${workspaceFolder}/pom.xml",
+			"problemMatcher" : [],
+			"label"          : "mavenCompile"
+		},
+
+		{
+			"type"           : "shell",
+			"command"        : "${config:maven.executable.path} install -f ${workspaceFolder}/pom.xml",
+			"problemMatcher" : [],
+			"label"          : "mavenInstall"
+		},
+
+		{
+			"type"           : "shell",
+			"command"        : "${config:maven.executable.path} clean install -f ${workspaceFolder}/pom.xml",
+			"problemMatcher" : [],
+			"label"          : "mavenCleanInstall"
+		},
+	]
+}
