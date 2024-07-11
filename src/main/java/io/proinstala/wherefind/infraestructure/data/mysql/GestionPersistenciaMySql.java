@@ -80,15 +80,12 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
     private static UserDTO getUserFromResultSet(ResultSet resultSet)
     {
         try {
-            UserDTO resultado = new UserDTO(
+            return new UserDTO(
                 resultSet.getInt("Id"),
                     resultSet.getString("UserName"),
                     resultSet.getString("Password"),
                     resultSet.getString("Rol")
             );
-
-            return resultado;
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -231,7 +228,7 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
 
     @Override
     public List<UserDTO> usersGetAll() {
-        List<UserDTO> resultado = new ArrayList<UserDTO>();
+        List<UserDTO> resultado = new ArrayList<>();
         try
         {
             // Se crea la conexion
