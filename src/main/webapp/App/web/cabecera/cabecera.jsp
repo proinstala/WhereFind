@@ -22,6 +22,6 @@
             </div>
             <button class="btn_prueba">1</button>
             <button class="btn_prueba">config</button>
-            <a href="logout"><button class="btn_prueba">cerrar</button></a>
+            <a href="api/identidad/logout"><button class="btn_prueba">cerrar</button></a>
         </div>
 </div>

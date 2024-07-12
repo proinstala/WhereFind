@@ -1,5 +1,5 @@
 
-/* 
+/*
     Created on : 5 jul 2024, 21:39:07
     Author     : David
 */
@@ -24,7 +24,7 @@ Bordes/Líneas	    #CCCCCC	204, 204, 204
     --primario: #FFA500;
     --secundario: #005FA5;
     --fondo_primario: #FFFFFF;
-    
+
     --texto_principal: #333333;
     --texto_secundario: #666666;
     --enfasis: #FF4500;
@@ -34,7 +34,7 @@ Bordes/Líneas	    #CCCCCC	204, 204, 204
     --negro: #000000;
     --blanco: #FFFFFF;
 
-    
+
 }
 html, body {
     margin: 0;
@@ -173,4 +173,12 @@ p {
 
 
 
-
+#info-error {
+    width: 287px !important;
+    border: 2px solid rgba(255, 0, 0, 0.95);
+    display: none;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: rgba(255, 0, 0, 0.05);
+    font-weight: 500;
+}

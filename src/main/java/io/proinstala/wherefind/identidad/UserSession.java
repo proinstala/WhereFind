@@ -37,7 +37,7 @@ public class UserSession {
             session.removeAttribute("user");
         }
 
-        redireccionar(response, "index.jsp");
+        redireccionar(response, request.getContextPath()+"/index.jsp");
     }
 
     public static void redireccionar(HttpServletRequest request, HttpServletResponse response, String uri, String uriNotLogin)

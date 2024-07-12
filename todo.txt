@@ -21,8 +21,12 @@
 + La Clase de persistencia basada en mysql que no cierre conexiones y pueda reutilizarlas
 + Poder hacer login con datos de mysql
 - Al fallar un login que lo avise en pantalla
-- Revisar como poder mejorar la clase persistencia use el patrón singlenton
+- Revisar como poder mejorar la clase persistencia, que use el patrón singlenton
 - Al registrar un usuario que el nombre sea insensible a mayúsculas y minúsculas
 - Poder registrar usuarios
 - Poder recuperar la contraseña de los usuarios
 - Poder destionar los usuarios con un usuario Admin
+- Al hacer logout y volver atras muestra la parte que solo se debe mostrar estando logeado
+- http://localhost:8080/WhereFind/js/principal.js net::ERR_ABORTED 404 (Not Found)
+- Bloquear el acceso a partes de la api no definidas o que requieren otro tipo de entrada
+- Disenar el cuadro que muestra los errores
