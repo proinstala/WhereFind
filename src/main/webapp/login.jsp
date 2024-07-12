@@ -62,7 +62,7 @@
             <!-- Parte derecha -->
             <div class="login__derecha">
                 <h1 class="login__titulo-saludo">Bienvenido a WhereFind</h1>
-                <p class="login__descripcion">Organiza, cataloga y encuentra tus art√≠culos de manera r√°pida y eficiente.</p>
+                <p class="login__descripcion">Organiza, cataloga y encuentra tus artÌ≠culos de manera r·pida y eficiente.</p>
                 <div class="login__imagen">
                     <img src="App/img/caja.png" alt="caja carton">
                 </div>
