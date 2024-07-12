@@ -77,6 +77,8 @@ function loginSubmit(event) {
     request.onerror = () => {
         mostrarError("No se ha podido realizar la acción por un error en el servidor.");
     }
+    
+    return false;
 }
 
 function mostrarError(msg) {
