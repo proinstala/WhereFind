@@ -13,9 +13,7 @@
 <link rel="stylesheet" href="App/css/index.css">
 
     <div class="contenedor__general--login">
-
         <div class="login">
-
             <!-- Parte izquierda -->
             <form class="login__izquierda" name="frmLogin" id="frmLogin" >
                 <h1 class="login__titulo">Login</h1>
@@ -38,27 +36,6 @@
                 </div>
             </form>
 
-            <!-- Parte izquierda
-            <div class="login__izquierda">
-                <h1 class="login__titulo">Login</h1>
-                <img class="login__img" src="App/img/user2.svg" alt="logo usuario">
-
-                <div class="login__input">
-                    <label for="nombreUsuario">Usuario</label>
-                    <input class="input-underline" type="text" id="nombreUsuario" placeholder="Introduce tu nombre de usuario">
-                </div>
-                <div class="login__input">
-                    <label for="passwordUsuario">Password</label>
-                    <input class="input-underline" type="password" id="passwordUsuario" placeholder="Introduce tu password">
-                </div>
-                <div class="login__input">
-                    <button class="login__btn">ENTRAR</button>
-                </div>
-
-            </div>
-            -->
-
-
             <!-- Parte derecha -->
             <div class="login__derecha">
                 <h1 class="login__titulo-saludo">Bienvenido a WhereFind</h1>
@@ -74,7 +51,6 @@
             </div>
 
         </div>
-
     </div>
 
     <script src="App/js/code.jquery.com_jquery-3.7.1.min.js" type="text/javascript"></script>

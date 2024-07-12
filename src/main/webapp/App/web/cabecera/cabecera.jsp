@@ -21,7 +21,8 @@
                 <img class="imagen__usuario--imagen" src="App/img/indiana_jones.jpeg" alt="foto usuario">
             </div>
             <button class="btn_prueba">1</button>
-            <button class="btn_prueba">config</button>
+            <button class="btn_prueba las la-microchip">config</button>
+            <i class="las la-microchip"></i>
             <a href="api/identidad/logout"><button class="btn_prueba">cerrar</button></a>
         </div>
 </div>
