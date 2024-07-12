@@ -14,7 +14,7 @@
             <img class="btn__configuracion--imagen" src="App/img/gear_white.svg" alt="icono configuración">
         </div>
         <div class="contenedor__menu">
-            <a href="index.jsp">Index</a>
+            <a href="index.jsp">Pulsa aquí</a>
         </div>
         <div class="contenedor__usuario">
             <div class="imagen__usuario">

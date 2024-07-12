@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="io.proinstala.wherefind.identidad.UserSession"%>
 <%
     // Si no se está logueado se manda al usuario al login.jsp

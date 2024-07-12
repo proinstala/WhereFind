@@ -4,7 +4,7 @@
     Author     : David
 --%>
 
-
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="App/web/shared/head.jsp" >
     <jsp:param name="titleweb" value="Login" />
 </jsp:include>
@@ -62,7 +62,7 @@
             <!-- Parte derecha -->
             <div class="login__derecha">
                 <h1 class="login__titulo-saludo">Bienvenido a WhereFind</h1>
-                <p class="login__descripcion">Organiza, cataloga y encuentra tus artí­culos de manera rápida y eficiente.</p>
+                <p class="login__descripcion">Organiza, cataloga y encuentra tus artÃ­Â­culos de manera rÃ¡pida y eficiente.</p>
                 <div class="login__imagen">
                     <img src="App/img/caja.png" alt="caja carton">
                 </div>
