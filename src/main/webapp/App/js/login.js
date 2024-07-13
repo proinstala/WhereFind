@@ -1,4 +1,6 @@
 
+import { mostrarMensajeAcceso } from './alertasSweetAlert2.mjs';
+
 $(document).ready(function () {
 
     const form = document.getElementById("frmLogin");
@@ -32,7 +34,7 @@ function validarFormulario(nombreForm) {
         },//Fin de msg  ------------------
 
         submitHandler: function () {
-            solicitudLogin("api/identidad/login", getDatosForm());
+            solicitudLoginF("api/identidad/login", getDatosForm());
         },
        // Función error de respuesta
         errorPlacement: function (error, element) {
@@ -45,19 +47,13 @@ function validarFormulario(nombreForm) {
     });//Fin Validate
 }
 
+/**
+ * Obtiene los datos del formulario.
+ *
+ * @returns {string} - Los datos del formulario serializados.
+ */
 function getDatosForm() {
-    //const data = new FormData($("#frmLogin")[0]);
-    
-    /*
-    const formData = $("#frmLogin").serializeArray();
-    let data = {};
-    $(formData).each(function(index, obj){
-        data[obj.name] = obj.value;
-    });
-    */
-   
     const formData = $("#frmLogin").serialize();
-
     return formData;
 }
 
@@ -100,7 +96,12 @@ function mostrarError(msg) {
     }
 }
 
-
+/**
+ * Realiza una solicitud de login utilizando jQuery AJAX.
+ *
+ * @param {string} url - La URL a la que se enviará la solicitud.
+ * @param {string} data - Los datos a enviar en la solicitud.
+ */
 function solicitudLogin(url, data) {
     $.ajax({
         url: url,
@@ -136,29 +137,77 @@ function solicitudLogin(url, data) {
 }
 
 
+/**
+ * Realiza una solicitud de login utilizando fetch.
+ *
+ * @param {string} url - La URL a la que se enviará la solicitud.
+ * @param {string} data - Los datos a enviar en la solicitud.
+ */
+async function solicitudLoginF(url, data) {
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: data
+        });
 
-function mostrarMensajeAcceso(titulo="titulo", contenido="contenido", icon="success", callback) {
-    Swal.fire({
-        title: titulo,
-        html: `<span class="swal-contenido">${contenido}</span>`,
-        icon: icon,
-        confirmButtonText: 'Aceptar',
-        width: '40%',
-        timer: 2000,
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
-        customClass: {
-            title: 'swal-titulo',
-            confirmButton: 'swal-boton',
-            popup: 'custom-icon' 
+        const result = await response.json();
+
+        if (result.isError === 1) {
+            mostrarMensajeAcceso("Acceso Denegado", result.result, "error");
+        } else {
+            const acceso = () => window.location.replace(result.result);
+            mostrarMensajeAcceso("Bienvenido", "Acceso Permitido.", "success", acceso);
         }
-    }).then((result) => {
-        if (result.isConfirmed) {
-            const selectedValue = result.value;
-            console.log('value:', selectedValue);
-        }
-     
-        if (typeof callback === "function") {
-            callback();
-        }
-    });;
+    } catch (error) {
+        console.error("Error:", error);
+        mostrarMensajeAcceso("Error", "No se ha podido realizar la acción por un error en el servidor.", "error");
+    } finally {
+        console.log("complete");
+    }
 }
+
+
+/**
+ * Realiza una solicitud de login utilizando fetch.
+ *
+ * @param {string} url - La URL a la que se enviará la solicitud.
+ * @param {string} data - Los datos a enviar en la solicitud.
+ */
+function solicitudLoginF2(url, data) {
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: data
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(response => {
+        if (response.isError === 1) {
+            mostrarMensajeAcceso("Acceso Denegado", response.result, "error");
+        } else {
+            const acceso = () => window.location.replace(response.result);
+            mostrarMensajeAcceso("Bienvenido", "Acceso Permitido.", "success", acceso);
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        mostrarMensajeAcceso("Error", "No se ha podido realizar la acción por un error en el servidor.", "error");
+    })
+    .finally(() => {
+        console.log("complete");
+    });
+}
+
