@@ -1,6 +1,6 @@
-package io.proinstala.wherefind.infraestructure.data.mysql;
+package io.proinstala.wherefind.infraestructure.data.services;
 
-import io.proinstala.wherefind.infraestructure.data.IGestorPersistencia;
+import io.proinstala.wherefind.infraestructure.data.interfaces.IUserService;
 import io.proinstala.wherefind.shared.dtos.UserDTO;
 
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-public class GestionPersistenciaMySql implements IGestorPersistencia {
+public class UserServiceMySql implements IUserService {
     //---------------------------------------------
     // Cadena de conexión  - Ahora está definido en src\main\webapp\META-INF\context.xml
     //---------------------------------------------
@@ -51,7 +51,7 @@ public class GestionPersistenciaMySql implements IGestorPersistencia {
 
 
 
-    public GestionPersistenciaMySql()
+    public UserServiceMySql()
     {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

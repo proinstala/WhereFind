@@ -1,14 +1,10 @@
-package io.proinstala.wherefind.infraestructure.data;
+package io.proinstala.wherefind.infraestructure.data.interfaces;
 
 import java.util.List;
 
 import io.proinstala.wherefind.shared.dtos.UserDTO;
 
-public interface IGestorPersistencia {
-
-    // --------------------------------------
-    // Gestion de Usuarios
-    // --------------------------------------
+public interface IUserService {
 
     // Añade un nuevo usuario
     public UserDTO usersAdd(UserDTO usuario);
@@ -27,5 +23,4 @@ public interface IGestorPersistencia {
 
     // Obtiene la lista de todos los usuarios existentes
     public List<UserDTO> usersGetAll();
-
 }

@@ -1,3 +1,4 @@
+<%@page import="io.proinstala.wherefind.infraestructure.data.interfaces.IUserService"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="io.proinstala.wherefind.shared.tools.Tools"%>
 
@@ -11,8 +12,7 @@
 <%@ page import="java.util.List" %>
 
 <%
-    GestionPersistencia gestionGlobal = new GestionPersistencia();
-    IGestorPersistencia gestor = gestionGlobal.getGestorPersistencia();
+    IUserService gestor = GestionPersistencia.getUserService();
 
     // Crea un nuevo usuario
     UserDTO userTemporal = new UserDTO(-1, "manolo", "password", "dddddddddd");

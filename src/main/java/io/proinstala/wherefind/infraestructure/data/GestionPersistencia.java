@@ -1,19 +1,10 @@
 package io.proinstala.wherefind.infraestructure.data;
 
-import io.proinstala.wherefind.infraestructure.data.mysql.GestionPersistenciaMySql;
+import io.proinstala.wherefind.infraestructure.data.interfaces.IUserService;
+import io.proinstala.wherefind.infraestructure.data.services.UserServiceMySql;
 
 public class GestionPersistencia {
-    private IGestorPersistencia gestorPersistencia;
-
-    public GestionPersistencia() {
-        this.gestorPersistencia = new GestionPersistenciaMySql();
-    }
-
-    public GestionPersistencia(IGestorPersistencia gestorPersistencia) {
-        this.gestorPersistencia = gestorPersistencia;
-    }
-
-    public IGestorPersistencia getGestorPersistencia() {
-        return gestorPersistencia;
+    public static IUserService getUserService() {
+        return new UserServiceMySql();
     }
 }
