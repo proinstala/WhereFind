@@ -2,7 +2,7 @@
 $(document).ready(function () {
 
     const form = document.getElementById("frmLogin");
-    form.addEventListener("submit", loginSubmit);
+    //form.addEventListener("submit", loginSubmit);
 
     validarFormulario("#frmLogin");
 });
@@ -31,9 +31,9 @@ function validarFormulario(nombreForm) {
             }
         },//Fin de msg  ------------------
 
-        // submitHandler: function () {
-        //     console.log("submitHandler");
-        // },
+        submitHandler: function () {
+            solicitudLogin("api/identidad/login", getDatosForm());
+        },
        // Función error de respuesta
         errorPlacement: function (error, element) {
             error.insertAfter(element); // Esto colocará el mensaje de error después del elemento con error
@@ -46,8 +46,19 @@ function validarFormulario(nombreForm) {
 }
 
 function getDatosForm() {
-    const data = new FormData($("#frmLogin")[0]);
-    return data;
+    //const data = new FormData($("#frmLogin")[0]);
+    
+    /*
+    const formData = $("#frmLogin").serializeArray();
+    let data = {};
+    $(formData).each(function(index, obj){
+        data[obj.name] = obj.value;
+    });
+    */
+   
+    const formData = $("#frmLogin").serialize();
+
+    return formData;
 }
 
 function loginSubmit(event) {
@@ -57,7 +68,7 @@ function loginSubmit(event) {
 
     let request = new XMLHttpRequest();
     request.open("POST", "api/identidad/login");
-    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     request.send(formData);
 
     request.onload = () => {
@@ -87,4 +98,67 @@ function mostrarError(msg) {
         msgError.innerHTML = msg;
         msgError.style.display = "block";
     }
+}
+
+
+function solicitudLogin(url, data) {
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: data,
+        //Antes del envio
+        beforeSend: function () {
+            
+        },
+        success: function (response) {
+            //debugger;
+            //console.log(response);
+
+            if(response.isError === 1) {
+                mostrarMensajeAcceso("Acceso Denegado ", response.result, "error");
+            } else {
+                const acceso = () => window.location.replace(response.result);
+                mostrarMensajeAcceso("Bienvenido", "Acceso Permitido.", "success", acceso);
+            }
+        },
+        //Funcion error de respuesta    
+        error: function (jqXHR, textStatus, errorThrown) {
+            //errorAjax(jqXHR, textStatus, errorThrown, urlServlet);
+            console.log("error -----------!!!!!!");
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+        },
+        complete: function () {
+           
+        }
+    });
+}
+
+
+
+function mostrarMensajeAcceso(titulo="titulo", contenido="contenido", icon="success", callback) {
+    Swal.fire({
+        title: titulo,
+        html: `<span class="swal-contenido">${contenido}</span>`,
+        icon: icon,
+        confirmButtonText: 'Aceptar',
+        width: '40%',
+        timer: 2000,
+
+        customClass: {
+            title: 'swal-titulo',
+            confirmButton: 'swal-boton',
+            popup: 'custom-icon' 
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const selectedValue = result.value;
+            console.log('value:', selectedValue);
+        }
+     
+        if (typeof callback === "function") {
+            callback();
+        }
+    });;
 }

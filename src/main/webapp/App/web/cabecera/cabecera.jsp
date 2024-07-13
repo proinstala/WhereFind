@@ -22,7 +22,11 @@
             </div>
             <button class="btn_prueba">1</button>
             <button class="btn_prueba las la-microchip">config</button>
+            
+            <!-- muestra
             <i class="las la-microchip"></i>
+            -->
+            
             <a href="api/identidad/logout"><button class="btn_prueba">cerrar</button></a>
         </div>
 </div>

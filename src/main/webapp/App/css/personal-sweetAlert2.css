@@ -1,0 +1,35 @@
+
+/* 
+    Created on : 13 jul 2024, 10:47:46
+    Author     : David
+*/
+
+/* Sweet Alert 2 */
+.swal-container {
+   width: 100%;
+}
+
+.swal-titulo {
+    font-size: 4rem;
+    color: #8E64A6;
+}
+
+.swal-boton {
+    font-size: 2rem !important;
+    background-color: #3e3d4d !important;
+}
+
+.swal-contenido {
+    font-size: 2rem;
+}
+
+.html_swal {
+    font-size: 3rem;
+    color: rgb(10, 104, 104);
+}
+
+.custom-icon .swal2-icon.swal2-success,
+.custom-icon .swal2-icon.swal2-error {
+    font-size: 2rem; /* tamaño para icono de success */
+}
+

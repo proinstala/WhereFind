@@ -11,8 +11,6 @@ import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 
 
-
-
 @WebServlet(urlPatterns = IdentidadController.BASE_API_IDENTIDAD + "/*")
 public class IdentidadController  extends BaseHttpServlet {
 
