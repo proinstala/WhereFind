@@ -57,7 +57,7 @@ public class IdentidadController  extends BaseHttpServlet {
 
         switch(actionController.actionType()){
             case ActionType.LOGOUT :
-                identidadServicio.logOut(request, response);
+                identidadServicio.logOut(actionController.server());
                 break;
             default:
                 System.out.println("Accion no permitida");
@@ -76,7 +76,7 @@ public class IdentidadController  extends BaseHttpServlet {
 
         switch(actionController.actionType()){
             case ActionType.LOGIN :
-                identidadServicio.logIn(request, response);
+                identidadServicio.logIn(actionController.server());
                 break;
             default:
                 System.out.println("Accion no permitida");
