@@ -14,13 +14,12 @@ const mostrarMensajeAcceso = (titulo = "titulo", contenido = "contenido", icon =
         html: `<span class="swal-contenido">${contenido}</span>`,
         icon: icon,
         confirmButtonText: 'Aceptar',
-        width: '40%',
         timer: 2000,
 
         customClass: {
             title: 'swal-titulo',
             confirmButton: 'swal-boton',
-            popup: 'custom-icon'
+            popup: 'custom-popup'
         }
     }).then((result) => {
         if (result.isConfirmed) {

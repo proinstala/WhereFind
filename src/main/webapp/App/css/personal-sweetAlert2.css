@@ -28,8 +28,17 @@
     color: rgb(10, 104, 104);
 }
 
-.custom-icon .swal2-icon.swal2-success,
-.custom-icon .swal2-icon.swal2-error {
+.custom-popup {
+    width: 40%!important;
+}
+@media (max-width: 800px) {
+    .custom-popup {
+        width: 80%!important;
+    }
+}
+
+.custom-popup .swal2-icon.swal2-success,
+.custom-popup .swal2-icon.swal2-error {
     font-size: 2rem; /* tamaño para icono de success */
 }
 

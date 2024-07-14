@@ -9,9 +9,9 @@ Color Principal	    #FFA500	255, 165, 0
 Color Secundario    #005FA5	0, 95, 165
 Color de Fondo	    #FFFFFF	255, 255, 255
 Texto Principal	    #333333	51, 51, 51
-Texto Secundario	#666666	102, 102, 102
-Color de Énfasis	#FF4500	255, 69, 0
-Fondo Secundario	#F5F5F5	245, 245, 245
+Texto Secundario    #666666	102, 102, 102
+Color de Énfasis    #FF4500	255, 69, 0
+Fondo Secundario    #F5F5F5	245, 245, 245
 Bordes/Líneas	    #CCCCCC	204, 204, 204
 
 */
@@ -23,18 +23,18 @@ Bordes/Líneas	    #CCCCCC	204, 204, 204
     */
     --primario: #FFA500;
     --secundario: #005FA5;
+    
     --fondo_primario: #FFFFFF;
+    --fondo_secundario: #F5F5F5;
 
     --texto_principal: #333333;
     --texto_secundario: #666666;
+    
     --enfasis: #FF4500;
-    --fondo_secundario: #F5F5F5;
     --bordes_lineas: #CCCCCC;
 
     --negro: #000000;
     --blanco: #FFFFFF;
-
-
 }
 html, body {
     margin: 0;
