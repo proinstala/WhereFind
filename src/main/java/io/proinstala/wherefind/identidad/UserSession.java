@@ -18,7 +18,7 @@ public class UserSession {
         IUserService gestor = GestionPersistencia.getUserService();
 
         // Obtiene los datos del usuario
-        UserDTO userActual = gestor.usersGetUser(userName, password);
+        UserDTO userActual = gestor.getUser(userName, password);
 
         if (userActual != null)
         {

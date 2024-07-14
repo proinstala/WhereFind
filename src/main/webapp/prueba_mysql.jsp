@@ -16,35 +16,35 @@
 
     // Crea un nuevo usuario
     UserDTO userTemporal = new UserDTO(-1, "manolo", "password", "dddddddddd");
-    userTemporal = gestor.usersAdd(userTemporal);
+    userTemporal = gestor.add(userTemporal);
 
     if(userTemporal != null)
     {
         // Actualiza el usuario
         userTemporal.setPassword("nuevo");
         userTemporal.setRol("User");
-        gestor.usersUpdate(userTemporal);
+        gestor.update(userTemporal);
     }
 
     // Crea un nuevo usuario para eliminarlo
-    UserDTO userTemporalBorrar = gestor.usersAdd(new UserDTO(-1, "paraBorrar", "borrar", "User"));
+    UserDTO userTemporalBorrar = gestor.add(new UserDTO(-1, "paraBorrar", "borrar", "User"));
 
     if(userTemporalBorrar != null)
     {
         // Elimina el usuario
-        gestor.usersDelete(userTemporalBorrar);
+        gestor.delete(userTemporalBorrar);
     }
 
     // Lista todos los usuarios
-    List<UserDTO> listadoUsuarios = gestor.usersGetAll();
+    List<UserDTO> listadoUsuarios = gestor.getAllUsers();
     int total = listadoUsuarios.size();
 
     // Obtiene datos individuales de usuarios
-    UserDTO datosDavid = gestor.usersGetUser("david", "123");
-    UserDTO datosJuanma = gestor.usersGetUser("juanma", "123");
-    UserDTO datosJuanmaError = gestor.usersGetUser("juanma", "12300000000000000");
-    UserDTO datosUserById = gestor.usersGetUserById(3);
-    UserDTO datosUserByIdError = gestor.usersGetUserById(-3333);
+    UserDTO datosDavid = gestor.getUser("david", "123");
+    UserDTO datosJuanma = gestor.getUser("juanma", "123");
+    UserDTO datosJuanmaError = gestor.getUser("juanma", "12300000000000000");
+    UserDTO datosUserById = gestor.getUserById(3);
+    UserDTO datosUserByIdError = gestor.getUserById(-3333);
 
     String resultadoUserDavid = Tools.getMensajeResultado(datosDavid);
     String resultadoUserJuanma = Tools.getMensajeResultado(datosJuanma);

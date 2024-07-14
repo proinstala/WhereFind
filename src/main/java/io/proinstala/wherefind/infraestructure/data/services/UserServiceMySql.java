@@ -95,7 +95,7 @@ public class UserServiceMySql implements IUserService {
 
 
     @Override
-    public UserDTO usersAdd(UserDTO usuario) {
+    public UserDTO add(UserDTO usuario) {
         // Para recoger el numero de filas afectadas
         try
         {
@@ -122,11 +122,11 @@ public class UserServiceMySql implements IUserService {
             e.printStackTrace();
         }
 
-        return usersGetUser(usuario.getUserName(), usuario.getPassword());
+        return getUser(usuario.getUserName(), usuario.getPassword());
     }
 
     @Override
-    public boolean usersUpdate(UserDTO usuario) {
+    public boolean update(UserDTO usuario) {
 
         // Para recoger el numero de filas afectadas
         int rowAfectadas = 0;
@@ -159,7 +159,7 @@ public class UserServiceMySql implements IUserService {
     }
 
     @Override
-    public boolean usersDelete(UserDTO usuario) {
+    public boolean delete(UserDTO usuario) {
         // Para recoger el numero de filas afectadas
         int rowAfectadas = 0;
         try
@@ -189,7 +189,7 @@ public class UserServiceMySql implements IUserService {
     }
 
     @Override
-    public UserDTO usersGetUser(String userName, String password) {
+    public UserDTO getUser(String userName, String password) {
 
         UserDTO resultado = null;
         try
@@ -227,7 +227,7 @@ public class UserServiceMySql implements IUserService {
     }
 
     @Override
-    public List<UserDTO> usersGetAll() {
+    public List<UserDTO> getAllUsers() {
         List<UserDTO> resultado = new ArrayList<>();
         try
         {
@@ -263,7 +263,7 @@ public class UserServiceMySql implements IUserService {
     }
 
     @Override
-    public UserDTO usersGetUserById(int id) {
+    public UserDTO getUserById(int id) {
 
         UserDTO resultado = null;
         try

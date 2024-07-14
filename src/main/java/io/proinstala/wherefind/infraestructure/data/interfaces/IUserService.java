@@ -7,20 +7,20 @@ import io.proinstala.wherefind.shared.dtos.UserDTO;
 public interface IUserService {
 
     // Añade un nuevo usuario
-    public UserDTO usersAdd(UserDTO usuario);
+    public UserDTO add(UserDTO usuario);
 
     // Actualiza los datos de un usuario existente
-    public boolean usersUpdate(UserDTO usuario);
+    public boolean update(UserDTO usuario);
 
     // Elimina un usuario existente
-    public boolean usersDelete(UserDTO usuario);
+    public boolean delete(UserDTO usuario);
 
     // Obtiene los datos de un usuario existente con su Id
-    public UserDTO usersGetUserById(int id);
+    public UserDTO getUserById(int id);
 
     // Obtiene los datos de un usuario existente
-    public UserDTO usersGetUser(String userName, String password);
+    public UserDTO getUser(String userName, String password);
 
     // Obtiene la lista de todos los usuarios existentes
-    public List<UserDTO> usersGetAll();
+    public List<UserDTO> getAllUsers();
 }
