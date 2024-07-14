@@ -32,4 +32,4 @@
 + Diseñar el cuadro que muestra los errores
 - Securizar api para tener que estar logueado
 - Securizar api para tener que estar logueado como admin
-- Al devolver el user en el login que no devuelva el password
++ Al devolver el user en el login que no devuelva el password

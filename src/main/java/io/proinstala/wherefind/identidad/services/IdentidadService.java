@@ -29,6 +29,8 @@ public class IdentidadService extends BaseService {
 
         if (usuario != null)
         {
+            // Se vacía el password por motivos de seguridad
+            usuario.setPassword("");
             //resultado = "{\"iserror\":0,\"result\":\""+ request.getContextPath()+"/index.jsp" + "\"}";
             resultado = gson.toJson(new ResponseDTO(0, server.request().getContextPath() + "/index.jsp", usuario));
 
