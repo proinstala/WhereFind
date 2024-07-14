@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import io.proinstala.wherefind.infraestructure.data.GestionPersistencia;
 import io.proinstala.wherefind.infraestructure.data.interfaces.IUserService;
+import io.proinstala.wherefind.shared.controllers.actions.ActionServer;
 import io.proinstala.wherefind.shared.dtos.UserDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -11,7 +12,7 @@ import jakarta.servlet.http.HttpSession;
 
 public class UserSession {
 
-    public static UserDTO login(String userName, String password, HttpServletRequest request)
+    public static UserDTO login(String userName, String password, ActionServer server)
     {
         // Conecta con el Gestor de Permanencia
         IUserService gestor = GestionPersistencia.getUserService();
@@ -21,28 +22,28 @@ public class UserSession {
 
         if (userActual != null)
         {
-            HttpSession session = request.getSession();
+            HttpSession session = server.request().getSession();
             session.setAttribute("user", userActual);
         }
 
         return userActual;
     }
 
-    public static void logOut(HttpServletRequest request, HttpServletResponse response)
+    public static void logOut(ActionServer server)
     {
-        HttpSession session = request.getSession(false);
+        HttpSession session = server.request().getSession(false);
         if (session != null)
         {
             session.removeAttribute("user");
         }
 
-        redireccionar(response, request.getContextPath()+"/index.jsp");
+        redireccionar(server.response(), server.request().getContextPath()+"/index.jsp");
     }
 
-    public static void redireccionar(HttpServletRequest request, HttpServletResponse response, String uri, String uriNotLogin)
+    public static void redireccionar(ActionServer server, String uri, String uriNotLogin)
     {
-        String finalUri = (getUserLogin(request) == null) ? uriNotLogin : uri;
-        redireccionar(response, finalUri);
+        String finalUri = (getUserLogin(server.request()) == null) ? uriNotLogin : uri;
+        redireccionar(server.response(), finalUri);
     }
 
     public static void redireccionar(HttpServletResponse response, String uri)
@@ -63,11 +64,11 @@ public class UserSession {
         return (UserDTO)session.getAttribute("user");
     }
 
-    public static void redireccionarIsUserNotLogIn(HttpServletRequest request, HttpServletResponse response)
+    public static void redireccionarIsUserNotLogIn(ActionServer server)
     {
-        UserDTO userActual = getUserLogin(request);
+        UserDTO userActual = getUserLogin(server.request());
         if (userActual == null) {
-            redireccionar(response, request.getContextPath()+"/login.jsp");
+            redireccionar(server.response(), server.request().getContextPath()+"/login.jsp");
         }
     }
 }

@@ -14,7 +14,7 @@ public class IdentidadService extends BaseService {
 
     public void logOut(ActionServer server)
     {
-        UserSession.logOut(server.request(), server.response());
+        UserSession.logOut(server);
     }
 
     public void logIn(ActionServer server)
@@ -22,7 +22,7 @@ public class IdentidadService extends BaseService {
         String nombreUsuario = server.request().getParameter("nombreUsuario");
         String passwordUsuario = server.request().getParameter("passwordUsuario");
 
-        UserDTO usuario = UserSession.login(nombreUsuario, passwordUsuario, server.request());
+        UserDTO usuario = UserSession.login(nombreUsuario, passwordUsuario, server);
 
         Gson gson = new GsonBuilder().create();
         String resultado;
