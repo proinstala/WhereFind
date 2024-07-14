@@ -9,8 +9,8 @@
 <body>
     <div class="contenedor__general">
         <div class="contenedor">
+            
             <%@ include file="../cabecera/cabecera.jsp" %>
-
 
             <div class="contenedor__grid--3c">
                 <div class="seccion">
@@ -24,8 +24,6 @@
                 </div>
 
             </div>
-
-
 
             <div class="barra__inferior">
                 <p>hola</p>

@@ -9,10 +9,7 @@
     <jsp:param name="titleweb" value="Login" />
 </jsp:include>
 
-
-<link rel="stylesheet" href="App/css/index.css">
-<link rel="stylesheet" href="App/css/lib/sweetalert2.css" type="text/css"/>
-<link rel="stylesheet" href="App/css/personal-sweetAlert2.css" type="text/css"/>
+    <link rel="stylesheet" href="App/css/login.css">
 
     <div class="contenedor__general--login">
         <div class="login">
@@ -55,9 +52,7 @@
         </div>
     </div>
 
-    <script src="App/js/lib/code.jquery.com_jquery-3.7.1.min.js" type="text/javascript"></script>
-    <script src="App/js/lib/jquery.validate.js" type="text/javascript"></script>
-    <script src="App/js/lib/sweetalert2.js" type="text/javascript"></script>
+    
     <!-- comment <script src="App/js/login.js" type="text/javascript"></script> -->
     <script src="App/js/login.js" type="module"></script>
 
