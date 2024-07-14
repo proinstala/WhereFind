@@ -4,9 +4,9 @@ package io.proinstala.wherefind.identidad.controllers;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
 import io.proinstala.wherefind.identidad.services.IdentidadService;
 import io.proinstala.wherefind.shared.controllers.BaseHttpServlet;
+import io.proinstala.wherefind.shared.controllers.actions.ActionController;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 
@@ -18,34 +18,64 @@ public class IdentidadController  extends BaseHttpServlet {
 
     private final IdentidadService identidadServicio = new IdentidadService();
 
+    enum ActionType {
+        ERROR,
+        LOGOUT,
+        LOGIN
+    }
+
+    @Override
+    protected String getBaseApi()
+    {
+        return BASE_API_IDENTIDAD;
+    }
+
+    @Override
+    protected Object getActionType(String action)
+    {
+        if (action != "") {
+            action = action.toUpperCase();
+            for (ActionType accion : ActionType.values()) {
+                if (action.equals(accion.name())) {
+                    return accion;
+                }
+            }
+        }
+
+        return ActionType.ERROR;
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Obtiene el EndPoint que debe usar
-        String endPoint = getAction(request, BASE_API_IDENTIDAD);
-        System.out.println("EndPoint GET : " + endPoint);
+        // Obtiene la información de la petición a la API
+        ActionController actionController = getActionController(request, response);
 
-        switch(endPoint){
-            case "/logout":
+        // Imprime en la salida del servidor el EndPoint
+        System.out.println("EndPoint GET : " + actionController.parametros()[0]);
+
+        switch(actionController.actionType()){
+            case ActionType.LOGOUT :
                 identidadServicio.logOut(request, response);
                 break;
             default:
                 System.out.println("Accion no permitida");
         }
-
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Obtiene el EndPoint que debe usar
-        String endPoint = getAction(request, BASE_API_IDENTIDAD);
-        System.out.println("EndPoint POST : " + endPoint);
+        // Obtiene la información de la petición a la API
+        ActionController actionController = getActionController(request, response);
 
-        switch(endPoint){
-            case "/login":
+        // Imprime en la salida del servidor el EndPoint
+        System.out.println("EndPoint POST : " + actionController.parametros()[0]);
+
+        switch(actionController.actionType()){
+            case ActionType.LOGIN :
                 identidadServicio.logIn(request, response);
                 break;
             default:

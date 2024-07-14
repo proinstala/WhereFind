@@ -29,4 +29,7 @@
 - Al hacer logout y volver atras muestra la parte que solo se debe mostrar estando logeado
 - http://localhost:8080/WhereFind/js/principal.js net::ERR_ABORTED 404 (Not Found)
 - Bloquear el acceso a partes de la api no definidas o que requieren otro tipo de entrada
-- Diseñar el cuadro que muestra los errores
++ Diseñar el cuadro que muestra los errores
+- Securizar api para tener que estar logueado
+- Securizar api para tener que estar logueado como admin
+- Al devolver el user en el login que no devuelva el password
