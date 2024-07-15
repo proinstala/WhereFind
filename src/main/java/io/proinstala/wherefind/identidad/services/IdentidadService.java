@@ -10,6 +10,7 @@ import io.proinstala.wherefind.shared.controllers.actions.ActionController;
 import io.proinstala.wherefind.shared.controllers.actions.ActionServer;
 import io.proinstala.wherefind.shared.dtos.UserDTO;
 import io.proinstala.wherefind.shared.services.BaseService;
+import io.proinstala.wherefind.shared.textos.LocaleApp;
 
 public class IdentidadService extends BaseService {
 
@@ -60,7 +61,7 @@ public class IdentidadService extends BaseService {
         }
         else
         {
-            response = getResponseError("Usuario no encontrado o los datos introducidos son incorrectos.");
+            response = getResponseError(LocaleApp.ERROR_USUARIO_NO_ENCONTRADO);
         }
 
         responseJson(server.response(), response);
@@ -87,17 +88,17 @@ public class IdentidadService extends BaseService {
                 }
                 else
                 {
-                    response = getResponseError("Se ha producido un error.");
+                    response = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
                 }
             }
             else
             {
-                response = getResponseError("El parámetro no es correcto.");
+                response = getResponseError(LocaleApp.ERROR_PARAMETRO_NO_CORRECTO);
             }
         }
         else
         {
-            response = getResponseError("Faltan parámetros para poder realizar la acción solicitada.");
+            response = getResponseError(LocaleApp.ERROR_FALTAN_PARAMETROS);
         }
 
         responseJson(actionController.server().response(), response);
@@ -119,7 +120,7 @@ public class IdentidadService extends BaseService {
         }
         else
         {
-            response = getResponseError("Se ha producido un error.", new ArrayList<>());
+            response = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR, new ArrayList<>());
         }
 
         responseJson(actionController.server().response(), response);
@@ -145,26 +146,26 @@ public class IdentidadService extends BaseService {
 
                     if (gestor.delete(userActual))
                     {
-                        response = getResponseOk("Se ha eliminado el usuario correctamente", userActual);
+                        response = getResponseOk(LocaleApp.INFO_DELETE_USER, userActual);
                     }
                     else
                     {
-                        response = getResponseError("Se ha producido un error.");
+                        response = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
                     }
                 }
                 else
                 {
-                    response = getResponseError("Se ha producido un error.");
+                    response = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
                 }
             }
             else
             {
-                response = getResponseError("El parámetro no es correcto.");
+                response = getResponseError(LocaleApp.ERROR_PARAMETRO_NO_CORRECTO);
             }
         }
         else
         {
-            response = getResponseError("Faltan parámetros para poder realizar la acción solicitada.");
+            response = getResponseError(LocaleApp.ERROR_FALTAN_PARAMETROS);
         }
 
         responseJson(actionController.server().response(), response);
@@ -195,26 +196,26 @@ public class IdentidadService extends BaseService {
                     if (gestor.update(userActual))
                     {
                         userActual.setPassword("");
-                        response = getResponseOk("Se ha modificado el usuario correctamente", userActual);
+                        response = getResponseOk(LocaleApp.INFO_UPDATE_USER, userActual);
                     }
                     else
                     {
-                        response = getResponseError("Se ha producido un error.");
+                        response = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
                     }
                 }
                 else
                 {
-                    response = getResponseError("Se ha producido un error.");
+                    response = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
                 }
             }
             else
             {
-                response = getResponseError("El parámetro no es correcto.");
+                response = getResponseError(LocaleApp.ERROR_PARAMETRO_NO_CORRECTO);
             }
         }
         else
         {
-            response = getResponseError("Faltan parámetros para poder realizar la acción solicitada.");
+            response = getResponseError(LocaleApp.ERROR_FALTAN_PARAMETROS);
         }
 
         responseJson(actionController.server().response(), response);
@@ -239,16 +240,16 @@ public class IdentidadService extends BaseService {
             if (userActual != null)
             {
                 userActual.setPassword("");
-                response = getResponseOk("Se ha creado el usuario correctamente", userActual);
+                response = getResponseOk(LocaleApp.INFO_CREATE_USER, userActual);
             }
             else
             {
-                response = getResponseError("Se ha producido un error.");
+                response = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
             }
         }
         else
         {
-            response = getResponseError("Se ha producido un error.");
+            response = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
         }
 
         responseJson(actionController.server().response(), response);

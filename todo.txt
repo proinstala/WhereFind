@@ -36,3 +36,6 @@
 + Renombar los nombres de los métodos de IUserService (usersAdd, usersUpdate, usersDelete, usersGetUserById, usersGetUser, usersGetAll)
 + Crear método en IdentidadService para gestionar los errores, solo pasando un string con el errores
 + Crear método en BaseService para gestionar json
++ Eliminar las string hardcodeadas de IdentidadService referente a los mensaje de las acciones
+- Eliminar las string hardcodeadas de IdentidadService referente a los parametros de las requests
+- Que el servidor notifique que la base de datos no es accesible en vez de producir una excepción
