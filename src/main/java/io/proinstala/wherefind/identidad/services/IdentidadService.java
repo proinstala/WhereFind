@@ -7,8 +7,6 @@ import io.proinstala.wherefind.shared.controllers.actions.ActionController;
 import io.proinstala.wherefind.shared.controllers.actions.ActionServer;
 import io.proinstala.wherefind.shared.dtos.UserDTO;
 import io.proinstala.wherefind.shared.services.BaseService;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 public class IdentidadService extends BaseService {
 
@@ -42,7 +40,6 @@ public class IdentidadService extends BaseService {
 
         UserDTO usuario = UserSession.login(nombreUsuario, passwordUsuario, server);
 
-        Gson gson = new GsonBuilder().create();
         //String resultado;
         ResponseDTO response;
 
@@ -58,14 +55,13 @@ public class IdentidadService extends BaseService {
             response = getResponseError("Usuario no encontrado o los datos introducidos son incorrectos.");
         }
 
-        responseJson(server.response(), gson.toJson(response));
+        responseJson(server.response(), response);
     }
 
 
     public void getUser(ActionController actionController)
     {
         ResponseDTO response;
-        Gson gson = new GsonBuilder().create();
 
         if (actionController.parametros().length > 1) {
             int id = actionController.getIntFromParametros(1);
@@ -96,6 +92,6 @@ public class IdentidadService extends BaseService {
             response = getResponseError("Faltan parámetros para poder realizar la acción solicitada.");
         }
 
-        responseJson(actionController.server().response(), gson.toJson(response));
+        responseJson(actionController.server().response(), response);
     }
 }
