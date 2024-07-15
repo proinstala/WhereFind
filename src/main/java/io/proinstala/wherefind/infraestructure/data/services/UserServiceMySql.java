@@ -13,38 +13,22 @@ import javax.naming.NamingException;
 
 public class UserServiceMySql implements IUserService {
     //---------------------------------------------
-    // Cadena de conexión  - Ahora está definido en src\main\webapp\META-INF\context.xml
-    //---------------------------------------------
-    // private static final String URL = "jdbc:mysql://localhost:3306/WhereFindData";
-
-    //---------------------------------------------
-    // Datos de conexión a la bbdd - Ahora está definido en src\main\webapp\META-INF\context.xml
-    //---------------------------------------------
-    //private static final String USER     = "root";
-    //private static final String PASSWORD = "12345";
-
-    //---------------------------------------------
-    // Clave para codificar los passwords
-    //---------------------------------------------
-    private static final String KEY_SECRET_ENCODE = "|--Where-Find--|";
-
-    //---------------------------------------------
     // Sentencias para trabajar con mysql
     //---------------------------------------------
     // Obtiene toda la lista de usuarios
-    private static final String SQL_SELECT_ALL_USERS = "SELECT Id, UserName, AES_DECRYPT(Password, '" + KEY_SECRET_ENCODE + "') AS Password, Rol FROM WhereFindData.Users WHERE IsDelete = FALSE;";
+    private static final String SQL_SELECT_ALL_USERS = "SELECT Id, UserName, DECRYPT_DATA_BASE64(Password) AS Password, Rol FROM WhereFindData.Users WHERE IsDelete = FALSE;";
 
     // Obtiene un usuario en concreto que coincidan su username y su password
-    private static final String SQL_SELECT_GET_USER = "SELECT Id, UserName, AES_DECRYPT(Password, '"+ KEY_SECRET_ENCODE + "') AS Password, Rol FROM WhereFindData.Users WHERE IsDelete = FALSE AND UserName=? AND Password=AES_ENCRYPT(?,'"+ KEY_SECRET_ENCODE + "');";
+    private static final String SQL_SELECT_GET_USER = "SELECT Id, UserName, DECRYPT_DATA_BASE64(Password) AS Password, Rol FROM WhereFindData.Users WHERE IsDelete = FALSE AND UserName=? AND Password=ENCRYPT_DATA_BASE64(?);";
 
     // Obtiene un usuario en concreto que coincidan su username y su password
-    private static final String SQL_SELECT_GET_USER_BY_ID = "SELECT Id, UserName, AES_DECRYPT(Password, '"+ KEY_SECRET_ENCODE + "') AS Password, Rol FROM WhereFindData.Users WHERE IsDelete = FALSE AND Id=?;";
+    private static final String SQL_SELECT_GET_USER_BY_ID = "SELECT Id, UserName, DECRYPT_DATA_BASE64(Password) AS Password, Rol FROM WhereFindData.Users WHERE IsDelete = FALSE AND Id=?;";
 
     // Añada un nuevo user
-    private static final String SQL_INSERT_NEW_USER = "INSERT INTO WhereFindData.Users (UserName, Password, Rol, IsDelete) VALUES(?, AES_ENCRYPT(?,'"+ KEY_SECRET_ENCODE + "'), ?, 0);";
+    private static final String SQL_INSERT_NEW_USER = "INSERT INTO WhereFindData.Users (UserName, Password, Rol, IsDelete) VALUES(?, ENCRYPT_DATA_BASE64(?), ?, 0);";
 
     // Actualiza el rol y el password a un usuario
-    private static final String SQL_UPDATE_USER = "UPDATE WhereFindData.Users SET Rol=?, Password=AES_ENCRYPT(?, '"+ KEY_SECRET_ENCODE + "') WHERE Id=?;";
+    private static final String SQL_UPDATE_USER = "UPDATE WhereFindData.Users SET Rol=?, Password=ENCRYPT_DATA_BASE64(?) WHERE Id=?;";
 
     // Marca a un usuario como eliminado
     private static final String SQL_DELETE_USER = "UPDATE WhereFindData.Users SET IsDelete=True WHERE Id=?;";
@@ -194,6 +178,7 @@ public class UserServiceMySql implements IUserService {
         UserDTO resultado = null;
         try
         {
+            System.out.println("username = " + userName);
             // Se crea la conexion
             Connection conexion  = getConnection();
 
