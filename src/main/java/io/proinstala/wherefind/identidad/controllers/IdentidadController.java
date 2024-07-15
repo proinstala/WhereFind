@@ -21,7 +21,8 @@ public class IdentidadController  extends BaseHttpServlet {
     enum ActionType {
         ERROR,
         LOGOUT,
-        LOGIN
+        LOGIN,
+        USER
     }
 
     @Override
@@ -57,6 +58,13 @@ public class IdentidadController  extends BaseHttpServlet {
         identidadServicio.logIn(actionController.server());
     }
 
+    // EndPoint - GETT : /api/identidad/user/{id}
+    protected void apiGetUser(ActionController actionController)
+    {
+        identidadServicio.getUser(actionController);
+    }
+
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -71,6 +79,9 @@ public class IdentidadController  extends BaseHttpServlet {
         switch(actionController.actionType()){
             case ActionType.LOGOUT :
                 apiLogOut(actionController);
+                break;
+            case ActionType.USER:
+                apiGetUser(actionController);
                 break;
             default:
                 System.out.println("Accion no permitida");

@@ -1,6 +1,9 @@
 package io.proinstala.wherefind.identidad.services;
 
 import io.proinstala.wherefind.identidad.UserSession;
+import io.proinstala.wherefind.infraestructure.data.GestionPersistencia;
+import io.proinstala.wherefind.infraestructure.data.interfaces.IUserService;
+import io.proinstala.wherefind.shared.controllers.actions.ActionController;
 import io.proinstala.wherefind.shared.controllers.actions.ActionServer;
 import io.proinstala.wherefind.shared.dtos.UserDTO;
 import io.proinstala.wherefind.shared.services.BaseService;
@@ -44,4 +47,42 @@ public class IdentidadService extends BaseService {
         responseJson(server.response(), resultado);
     }
 
+    public void getUser(ActionController actionController)
+    {
+        String resultado;
+
+        Gson gson = new GsonBuilder().create();
+
+        if (actionController.parametros().length > 1) {
+            int id = actionController.getIntFromParametros(1);
+            if (id > -1)
+            {
+                // Conecta con el Gestor de Permanencia
+                IUserService gestor = GestionPersistencia.getUserService();
+
+                // Obtiene los datos del usuario
+                UserDTO userActual = gestor.getUserById(id);
+
+                if (userActual != null)
+                {
+                    resultado = gson.toJson(new ResponseDTO(0, "OK.", userActual));
+                }
+                else
+                {
+                    resultado = gson.toJson(new ResponseDTO(1, "Se ha producido un error.", new UserDTO()));
+                }
+            }
+            else
+            {
+
+                resultado = gson.toJson(new ResponseDTO(1, "El parámetro no es correcto.", new UserDTO()));
+            }
+        }
+        else
+        {
+            resultado = gson.toJson(new ResponseDTO(1, "Faltan parámetros para poder realizar la acción solicitada.", new UserDTO()));
+        }
+
+        responseJson(actionController.server().response(), resultado);
+    }
 }

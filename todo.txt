@@ -34,4 +34,5 @@
 - Bloquear el acceso a partes de la api no definidas o que requieren otro tipo de entrada
 + Al devolver el user en el login que no devuelva el password
 + Renombar los nombres de los métodos de IUserService (usersAdd, usersUpdate, usersDelete, usersGetUserById, usersGetUser, usersGetAll)
-
+- Crear método en IdentidadService para gestionar los errores, solo pasando un string con el errores
+- Crear método en BaseService para gestionar json
