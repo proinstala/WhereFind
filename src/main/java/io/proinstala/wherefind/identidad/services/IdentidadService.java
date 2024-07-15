@@ -10,6 +10,7 @@ import io.proinstala.wherefind.shared.controllers.actions.ActionController;
 import io.proinstala.wherefind.shared.controllers.actions.ActionServer;
 import io.proinstala.wherefind.shared.dtos.UserDTO;
 import io.proinstala.wherefind.shared.services.BaseService;
+import io.proinstala.wherefind.shared.textos.ConstParametros;
 import io.proinstala.wherefind.shared.textos.LocaleApp;
 
 public class IdentidadService extends BaseService {
@@ -44,8 +45,8 @@ public class IdentidadService extends BaseService {
 
     public void logIn(ActionServer server)
     {
-        String nombreUsuario   = server.getRequestParameter("nombreUsuario", "");
-        String passwordUsuario = server.getRequestParameter("passwordUsuario", "");
+        String nombreUsuario   = server.getRequestParameter(ConstParametros.PARAM_USUARIO_NOMBRE, "");
+        String passwordUsuario = server.getRequestParameter(ConstParametros.PARAM_USUARIO_PASSWORD, "");
 
         UserDTO usuario = UserSession.login(nombreUsuario, passwordUsuario, server);
 
@@ -187,8 +188,8 @@ public class IdentidadService extends BaseService {
 
                 if (userActual != null)
                 {
-                    String passwordUsuario = actionController.server().getRequestParameter("passwordUsuario", userActual.getPassword());
-                    String rolUsuario = actionController.server().getRequestParameter("rolUsuario", userActual.getRol());
+                    String passwordUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_PASSWORD, userActual.getPassword());
+                    String rolUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_ROL, userActual.getRol());
 
                     userActual.setPassword(passwordUsuario);
                     userActual.setRol(rolUsuario);
@@ -225,8 +226,8 @@ public class IdentidadService extends BaseService {
     {
         ResponseDTO response;
 
-        String nombreUsuario   = actionController.server().getRequestParameter("nombreUsuario", "");
-        String passwordUsuario = actionController.server().getRequestParameter("passwordUsuario", "");
+        String nombreUsuario   = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_NOMBRE, "");
+        String passwordUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_PASSWORD, "");
 
 
         if (nombreUsuario != "" && passwordUsuario != "" )

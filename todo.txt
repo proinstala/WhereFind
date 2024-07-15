@@ -21,6 +21,13 @@
 + La Clase de persistencia basada en mysql que no cierre conexiones y pueda reutilizarlas
 + Poder hacer login con datos de mysql
 + Al fallar un login que lo avise en pantalla
++ Diseñar el cuadro que muestra los errores
++ Al devolver el user en el login que no devuelva el password
++ Renombar los nombres de los métodos de IUserService (usersAdd, usersUpdate, usersDelete, usersGetUserById, usersGetUser, usersGetAll)
++ Crear método en IdentidadService para gestionar los errores, solo pasando un string con el errores
++ Crear método en BaseService para gestionar json
++ Eliminar las string hardcodeadas de IdentidadService referente a los mensaje de las acciones
++ Eliminar las string hardcodeadas de IdentidadService referente a los parametros de las requests
 - Revisar como poder mejorar la clase persistencia, que use el patrón singlenton
 - Al registrar un usuario que el nombre sea insensible a mayúsculas y minúsculas
 - Poder registrar usuarios
@@ -28,14 +35,7 @@
 - Poder gestionar los usuarios con un usuario Admin
 - Al hacer logout y volver atras muestra la parte que solo se debe mostrar estando logeado
 - http://localhost:8080/WhereFind/js/principal.js net::ERR_ABORTED 404 (Not Found)
-+ Diseñar el cuadro que muestra los errores
 - Securizar api para tener que estar logueado
 - Securizar api para tener que estar logueado como admin
 - Bloquear el acceso a partes de la api no definidas o que requieren otro tipo de entrada
-+ Al devolver el user en el login que no devuelva el password
-+ Renombar los nombres de los métodos de IUserService (usersAdd, usersUpdate, usersDelete, usersGetUserById, usersGetUser, usersGetAll)
-+ Crear método en IdentidadService para gestionar los errores, solo pasando un string con el errores
-+ Crear método en BaseService para gestionar json
-+ Eliminar las string hardcodeadas de IdentidadService referente a los mensaje de las acciones
-- Eliminar las string hardcodeadas de IdentidadService referente a los parametros de las requests
 - Que el servidor notifique que la base de datos no es accesible en vez de producir una excepción
