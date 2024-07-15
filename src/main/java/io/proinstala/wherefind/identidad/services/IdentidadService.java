@@ -1,5 +1,8 @@
 package io.proinstala.wherefind.identidad.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.proinstala.wherefind.identidad.UserSession;
 import io.proinstala.wherefind.infraestructure.data.GestionPersistencia;
 import io.proinstala.wherefind.infraestructure.data.interfaces.IUserService;
@@ -20,12 +23,17 @@ public class IdentidadService extends BaseService {
 
     protected ResponseDTO getResponseError(String mensaje)
     {
-        return createResponseDTO(1, mensaje, new UserDTO());
+        return getResponseError(mensaje, new UserDTO());
     }
 
-    protected ResponseDTO getResponseOk(String mensaje, UserDTO user)
+    protected ResponseDTO getResponseError(String mensaje, Object objecto)
     {
-        return createResponseDTO(0, mensaje, user);
+        return createResponseDTO(1, mensaje, objecto);
+    }
+
+    protected ResponseDTO getResponseOk(String mensaje, Object objecto)
+    {
+        return createResponseDTO(0, mensaje, objecto);
     }
 
     public void logOut(ActionServer server)
@@ -91,6 +99,29 @@ public class IdentidadService extends BaseService {
         {
             response = getResponseError("Faltan parámetros para poder realizar la acción solicitada.");
         }
+
+        responseJson(actionController.server().response(), response);
+    }
+
+    public void getUsers(ActionController actionController)
+    {
+        ResponseDTO response;
+
+        // Conecta con el Gestor de Permanencia
+        IUserService gestor = GestionPersistencia.getUserService();
+
+        // Obtiene la lista de usuarios
+        List<UserDTO> listado = gestor.getAllUsers();
+
+        if (listado != null)
+        {
+            response = getResponseOk("OK", listado);
+        }
+        else
+        {
+            response = getResponseError("Se ha producido un error.", new ArrayList<>());
+        }
+
 
         responseJson(actionController.server().response(), response);
     }
