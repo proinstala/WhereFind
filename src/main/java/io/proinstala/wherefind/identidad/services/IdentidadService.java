@@ -122,6 +122,50 @@ public class IdentidadService extends BaseService {
             response = getResponseError("Se ha producido un error.", new ArrayList<>());
         }
 
+        responseJson(actionController.server().response(), response);
+    }
+
+    public void deleteUser(ActionController actionController)
+    {
+        ResponseDTO response;
+
+        if (actionController.parametros().length > 1) {
+            int id = actionController.getIntFromParametros(1);
+            if (id > -1)
+            {
+                // Conecta con el Gestor de Permanencia
+                IUserService gestor = GestionPersistencia.getUserService();
+
+                // Obtiene los datos del usuario
+                UserDTO userActual = gestor.getUserById(id);
+
+                if (userActual != null)
+                {
+                    userActual.setPassword("");
+
+                    if (gestor.delete(userActual))
+                    {
+                        response = getResponseOk("Se ha eliminado el usuario correctamente", userActual);
+                    }
+                    else
+                    {
+                        response = getResponseError("Se ha producido un error.");
+                    }
+                }
+                else
+                {
+                    response = getResponseError("Se ha producido un error.");
+                }
+            }
+            else
+            {
+                response = getResponseError("El parámetro no es correcto.");
+            }
+        }
+        else
+        {
+            response = getResponseError("Faltan parámetros para poder realizar la acción solicitada.");
+        }
 
         responseJson(actionController.server().response(), response);
     }

@@ -24,6 +24,7 @@ public class IdentidadController  extends BaseHttpServlet {
         LOGIN,
         USER,
         USERS,
+        DELETE
     }
 
     @Override
@@ -71,6 +72,11 @@ public class IdentidadController  extends BaseHttpServlet {
         identidadServicio.getUsers(actionController);
     }
 
+    // EndPoint - GET : /api/identidad/delete/{id}
+    protected void apiDeleteUser(ActionController actionController)
+    {
+        identidadServicio.deleteUser(actionController);
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -118,4 +124,26 @@ public class IdentidadController  extends BaseHttpServlet {
                 System.out.println("Accion no permitida");
         }
     }
+
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Obtiene la información de la petición a la API
+        ActionController actionController = getActionController(request, response);
+
+        // Imprime en la salida del servidor el EndPoint
+        System.out.println("EndPoint PUT : " + actionController.parametros()[0]);
+
+        switch(actionController.actionType()){
+
+            case ActionType.DELETE :
+                apiDeleteUser(actionController);
+                break;
+
+            default:
+                System.out.println("Accion no permitida");
+        }
+    }
+
 }
