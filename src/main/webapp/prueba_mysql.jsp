@@ -65,7 +65,7 @@
 
     <%
     for (UserDTO user : listadoUsuarios) {
-        out.println("<tr><td>"+user.getId()+"</td> <td>"+user.getUserName()+"</td> <td>"+user.getPassword()+"</td> <td>"+user.getRol()+"</td> </tr>");
+        out.println("<tr><td>"+user.getId()+"</td> <td>"+user.getNombre()+"</td> <td>"+user.getPassword()+"</td> <td>"+user.getRol()+"</td> </tr>");
     }
     %>
 

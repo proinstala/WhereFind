@@ -16,22 +16,22 @@ public class UserServiceMySql implements IUserService {
     // Sentencias para trabajar con mysql
     //---------------------------------------------
     // Obtiene toda la lista de usuarios
-    private static final String SQL_SELECT_ALL_USERS = "SELECT Id, UserName, DECRYPT_DATA_BASE64(Password) AS Password, Rol FROM WhereFindData.Users WHERE IsDelete = FALSE;";
+    private static final String SQL_SELECT_ALL_USERS = "SELECT id, nombre, DECRYPT_DATA_BASE64(password) AS password, rol FROM USER WHERE activo = TRUE;";
 
-    // Obtiene un usuario en concreto que coincidan su username y su password
-    private static final String SQL_SELECT_GET_USER = "SELECT Id, UserName, DECRYPT_DATA_BASE64(Password) AS Password, Rol FROM WhereFindData.Users WHERE IsDelete = FALSE AND UserName=? AND Password=ENCRYPT_DATA_BASE64(?);";
+    // Obtiene un usuario en concreto que coincidan su nombre y su password
+    private static final String SQL_SELECT_GET_USER = "SELECT id, nombre, DECRYPT_DATA_BASE64(password) AS password, rol FROM USER WHERE activo = TRUE AND nombre=? AND password=ENCRYPT_DATA_BASE64(?);";
 
-    // Obtiene un usuario en concreto que coincidan su username y su password
-    private static final String SQL_SELECT_GET_USER_BY_ID = "SELECT Id, UserName, DECRYPT_DATA_BASE64(Password) AS Password, Rol FROM WhereFindData.Users WHERE IsDelete = FALSE AND Id=?;";
+    // Obtiene un usuario en concreto que coincidan su nombre y su password
+    private static final String SQL_SELECT_GET_USER_BY_ID = "SELECT id, nombre, DECRYPT_DATA_BASE64(password) AS password, rol FROM USER WHERE activo = TRUE AND id=?;";
 
     // Añada un nuevo user
-    private static final String SQL_INSERT_NEW_USER = "INSERT INTO WhereFindData.Users (UserName, Password, Rol, IsDelete) VALUES(?, ENCRYPT_DATA_BASE64(?), ?, 0);";
+    private static final String SQL_INSERT_NEW_USER = "INSERT INTO USER (nombre, password, rol, activo) VALUES(?, ENCRYPT_DATA_BASE64(?), ?, 1);";
 
     // Actualiza el rol y el password a un usuario
-    private static final String SQL_UPDATE_USER = "UPDATE WhereFindData.Users SET Rol=?, Password=ENCRYPT_DATA_BASE64(?) WHERE Id=?;";
+    private static final String SQL_UPDATE_USER = "UPDATE USER SET rol=?, password=ENCRYPT_DATA_BASE64(?) WHERE id=?;";
 
     // Marca a un usuario como eliminado
-    private static final String SQL_DELETE_USER = "UPDATE WhereFindData.Users SET IsDelete=True WHERE Id=?;";
+    private static final String SQL_DELETE_USER = "UPDATE USER SET activo=false WHERE id=?;";
 
 
 
@@ -50,7 +50,7 @@ public class UserServiceMySql implements IUserService {
             Context initContext;
             initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup("java:comp/env");
-            DataSource ds = (DataSource) envContext.lookup("jdbc/WhereFindData");
+            DataSource ds = (DataSource) envContext.lookup("jdbc/WHERE_FIND_DATA");
             return ds.getConnection();
         }
         catch (NamingException | SQLException e)
@@ -65,10 +65,10 @@ public class UserServiceMySql implements IUserService {
     {
         try {
             return new UserDTO(
-                resultSet.getInt("Id"),
-                    resultSet.getString("UserName"),
-                    resultSet.getString("Password"),
-                    resultSet.getString("Rol")
+                resultSet.getInt("id"),
+                    resultSet.getString("nombre"),
+                    resultSet.getString("password"),
+                    resultSet.getString("rol")
             );
         } catch (SQLException e) {
             e.printStackTrace();
@@ -90,7 +90,7 @@ public class UserServiceMySql implements IUserService {
             PreparedStatement sentencia = conexion.prepareStatement(SQL_INSERT_NEW_USER);
 
             // Le paso los parametros al PreparedStatement
-            sentencia.setString(1, usuario.getUserName());
+            sentencia.setString(1, usuario.getNombre());
             sentencia.setString(2, usuario.getPassword());
             sentencia.setString(3, usuario.getRol());
 
@@ -106,7 +106,7 @@ public class UserServiceMySql implements IUserService {
             e.printStackTrace();
         }
 
-        return getUser(usuario.getUserName(), usuario.getPassword());
+        return getUser(usuario.getNombre(), usuario.getPassword());
     }
 
     @Override

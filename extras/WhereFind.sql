@@ -1,7 +1,7 @@
 -- Crea la base de datos
-CREATE DATABASE IF NOT EXISTS `WhereFindData`;
+CREATE DATABASE IF NOT EXISTS `WHERE_FIND_DATA`;
 
-use `WhereFindData`;
+use `WHERE_FIND_DATA`;
 
 
 DROP FUNCTION IF EXISTS ENCRYPT_DATA_BASE64;
@@ -58,39 +58,39 @@ DELIMITER ;
 
 
 
--- Crea la tabla Users
-CREATE TABLE IF NOT EXISTS WhereFindData.Users (
-	Id INT auto_increment NOT NULL,
-	UserName varchar(100) NOT NULL,
-	Password TEXT NOT NULL,
-    Rol varchar(100) NOT NULL,
-	IsDelete BOOL DEFAULT FALSE NOT NULL,
+-- Crea la tabla USER
+CREATE TABLE IF NOT EXISTS USER (
+	id INT auto_increment NOT NULL,
+	nombre varchar(100) NOT NULL,
+	password TEXT NOT NULL,
+    rol varchar(100) NOT NULL,
+	activo BOOL DEFAULT TRUE NOT NULL,
     PRIMARY KEY (id),
-    CONSTRAINT UC_UserName UNIQUE (UserName)
+    CONSTRAINT UC_NOMBRE UNIQUE (nombre)
 );
 
--- Se crea el index en la columna Username para un mejor rendimiento
-CREATE INDEX Users_UserName_IDX USING BTREE ON WhereFindData.Users (UserName);
+-- Se crea el index en la columna nombre para un mejor rendimiento
+CREATE INDEX USER_NOMBRE_IDX USING BTREE ON USER (nombre);
 
 -- Crea un usuarios de prueba
-INSERT INTO WhereFindData.Users (UserName, Password, Rol, IsDelete) VALUES('david', ENCRYPT_DATA_BASE64('123'), 'Admin', 0);
-INSERT INTO WhereFindData.Users (UserName, Password, Rol, IsDelete) VALUES('juanma', ENCRYPT_DATA_BASE64('123'), 'Admin', 0);
-INSERT INTO WhereFindData.Users (UserName, Password, Rol, IsDelete) VALUES('user_normal', ENCRYPT_DATA_BASE64('123'), 'User', 0);
-INSERT INTO WhereFindData.Users (UserName, Password, Rol, IsDelete) VALUES('otro_user', ENCRYPT_DATA_BASE64('123'), 'User', 0);
+INSERT INTO USER (nombre, password, rol, activo) VALUES('david', ENCRYPT_DATA_BASE64('123'), 'Admin', 1);
+INSERT INTO USER (nombre, password, rol, activo) VALUES('juanma', ENCRYPT_DATA_BASE64('123'), 'Admin', 1);
+INSERT INTO USER (nombre, password, rol, activo) VALUES('user_normal', ENCRYPT_DATA_BASE64('123'), 'User', 1);
+INSERT INTO USER (nombre, password, rol, activo) VALUES('otro_user', ENCRYPT_DATA_BASE64('123'), 'User', 1);
 
 -- Listar todos los usuarios
-SELECT Id, UserName, DECRYPT_DATA_BASE64(Password) AS Password, Rol FROM WhereFindData.Users WHERE IsDelete = FALSE;
+SELECT id, nombre, DECRYPT_DATA_BASE64(password) AS password, rol FROM USER WHERE activo = TRUE;
 
 -- Obtener un usuario
-SELECT Id, UserName, DECRYPT_DATA_BASE64(Password) AS Password, Rol FROM WhereFindData.Users WHERE IsDelete = FALSE AND UserName='david' AND Password=ENCRYPT_DATA_BASE64('123');
+SELECT id, nombre, DECRYPT_DATA_BASE64(password) AS password, rol FROM USER WHERE activo = TRUE AND nombre='david' AND password=ENCRYPT_DATA_BASE64('123');
 
 -- Eliminar el usuario (4) otro_user
-UPDATE WhereFindData.Users SET IsDelete=True WHERE Id=4;
+UPDATE USER SET activo=FALSE WHERE id=4;
 
 -- Actualiza los datos del usuario user_normal, en este ejemplo solo el password
-UPDATE WhereFindData.Users SET Password=ENCRYPT_DATA_BASE64('321') WHERE Id=3;
+UPDATE USER SET password=ENCRYPT_DATA_BASE64('321') WHERE id=3;
 
 -- Muestra todos los usuarios incluso los eliminados
-SELECT Id, UserName, DECRYPT_DATA_BASE64(Password) AS Password, Rol, IsDelete  FROM WhereFindData.Users;
+SELECT id, nombre, DECRYPT_DATA_BASE64(password) AS password, rol, activo FROM USER;
 
 
