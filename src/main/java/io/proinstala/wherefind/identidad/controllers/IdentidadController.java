@@ -24,7 +24,8 @@ public class IdentidadController  extends BaseHttpServlet {
         LOGIN,
         USER,
         USERS,
-        DELETE
+        DELETE,
+        UPDATE
     }
 
     @Override
@@ -72,11 +73,18 @@ public class IdentidadController  extends BaseHttpServlet {
         identidadServicio.getUsers(actionController);
     }
 
-    // EndPoint - GET : /api/identidad/delete/{id}
+    // EndPoint - PUT : /api/identidad/delete/{id}
     protected void apiDeleteUser(ActionController actionController)
     {
         identidadServicio.deleteUser(actionController);
     }
+
+    // EndPoint - PUT : /api/identidad/update/{id}
+    protected void apiUpdateUser(ActionController actionController)
+    {
+        identidadServicio.updateUser(actionController);
+    }
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -139,6 +147,10 @@ public class IdentidadController  extends BaseHttpServlet {
 
             case ActionType.DELETE :
                 apiDeleteUser(actionController);
+                break;
+
+            case ActionType.UPDATE :
+                apiUpdateUser(actionController);
                 break;
 
             default:

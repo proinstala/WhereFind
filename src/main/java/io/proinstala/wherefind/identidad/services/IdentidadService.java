@@ -169,4 +169,62 @@ public class IdentidadService extends BaseService {
 
         responseJson(actionController.server().response(), response);
     }
+
+
+
+
+
+    public void updateUser(ActionController actionController)
+    {
+        ResponseDTO response;
+
+        if (actionController.parametros().length > 1) {
+            int id = actionController.getIntFromParametros(1);
+            if (id > -1)
+            {
+                // Conecta con el Gestor de Permanencia
+                IUserService gestor = GestionPersistencia.getUserService();
+
+                // Obtiene los datos del usuario
+                UserDTO userActual = gestor.getUserById(id);
+
+                if (userActual != null)
+                {
+                    String passwordUsuario = actionController.server().getRequestParameter("passwordUsuario", userActual.getPassword());
+                    String rolUsuario = actionController.server().getRequestParameter("rolUsuario", userActual.getRol());
+
+                    userActual.setPassword(passwordUsuario);
+                    userActual.setRol(rolUsuario);
+
+                    if (gestor.update(userActual))
+                    {
+                        userActual.setPassword("");
+                        response = getResponseOk("Se ha modificado el usuario correctamente", userActual);
+                    }
+                    else
+                    {
+                        response = getResponseError("Se ha producido un error.");
+                    }
+                }
+                else
+                {
+                    response = getResponseError("Se ha producido un error.");
+                }
+            }
+            else
+            {
+                response = getResponseError("El parámetro no es correcto.");
+            }
+        }
+        else
+        {
+            response = getResponseError("Faltan parámetros para poder realizar la acción solicitada.");
+        }
+
+        responseJson(actionController.server().response(), response);
+    }
+
+
+
+
 }
