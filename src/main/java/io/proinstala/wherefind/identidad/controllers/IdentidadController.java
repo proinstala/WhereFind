@@ -7,6 +7,7 @@ import java.io.IOException;
 import io.proinstala.wherefind.identidad.services.IdentidadService;
 import io.proinstala.wherefind.shared.controllers.BaseHttpServlet;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
+import io.proinstala.wherefind.shared.textos.LocaleApp;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 
@@ -116,7 +117,7 @@ public class IdentidadController  extends BaseHttpServlet {
                 break;
 
             default:
-                System.out.println("Accion no permitida");
+                responseError403(actionController.server().response(), LocaleApp.ERROR_ACCION_NO_PERMITIDA);
         }
     }
 
@@ -141,7 +142,7 @@ public class IdentidadController  extends BaseHttpServlet {
                 break;
 
             default:
-                System.out.println("Accion no permitida");
+                responseError403(actionController.server().response(), LocaleApp.ERROR_ACCION_NO_PERMITIDA);
         }
     }
 
@@ -166,7 +167,7 @@ public class IdentidadController  extends BaseHttpServlet {
                 break;
 
             default:
-                System.out.println("Accion no permitida");
+                responseError403(actionController.server().response(), LocaleApp.ERROR_ACCION_NO_PERMITIDA);
         }
     }
 

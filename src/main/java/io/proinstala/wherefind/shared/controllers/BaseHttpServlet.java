@@ -1,5 +1,7 @@
 package io.proinstala.wherefind.shared.controllers;
 
+import java.io.IOException;
+
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
 import io.proinstala.wherefind.shared.controllers.actions.ActionServer;
 import jakarta.servlet.http.HttpServlet;
@@ -43,5 +45,18 @@ public class BaseHttpServlet extends HttpServlet {
         System.out.println("Tipo : " + actionType);
 
         return new ActionController(fullUri, uriApi, actionType, parametros, new ActionServer(request, response));
+    }
+
+    protected void responseError403(HttpServletResponse response, String mensaje)
+    {
+        //response.setHeader("X-Error-Message", mensaje);
+        try
+        {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, mensaje);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 }

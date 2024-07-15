@@ -6,6 +6,7 @@ public class LocaleApp {
     public static final String ERROR_USUARIO_NO_ENCONTRADO    = "Usuario no encontrado o los datos introducidos son incorrectos.";
     public static final String ERROR_PARAMETRO_NO_CORRECTO    = "El parámetro no es correcto.";
     public static final String ERROR_FALTAN_PARAMETROS        = "Faltan parámetros para poder realizar la acción solicitada.";
+    public static final String ERROR_ACCION_NO_PERMITIDA      = "Acción no permitida.";
 
     // Mensajes de información
     public static final String INFO_CREATE_USER               = "Se ha creado el usuario correctamente.";
