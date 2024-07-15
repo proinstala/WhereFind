@@ -15,6 +15,21 @@ public class IdentidadService extends BaseService {
     //Registro (record) para representar la estructura de la respuesta JSON
     record ResponseDTO(int isError, String result, Object user) {}
 
+    protected ResponseDTO createResponseDTO(int isError, String mensaje, Object objecto)
+    {
+        return new ResponseDTO(isError, mensaje, objecto);
+    }
+
+    protected ResponseDTO getResponseError(String mensaje)
+    {
+        return createResponseDTO(1, mensaje, new UserDTO());
+    }
+
+    protected ResponseDTO getResponseOk(String mensaje, UserDTO user)
+    {
+        return createResponseDTO(0, mensaje, user);
+    }
+
     public void logOut(ActionServer server)
     {
         UserSession.logOut(server);
@@ -28,29 +43,28 @@ public class IdentidadService extends BaseService {
         UserDTO usuario = UserSession.login(nombreUsuario, passwordUsuario, server);
 
         Gson gson = new GsonBuilder().create();
-        String resultado;
+        //String resultado;
+        ResponseDTO response;
 
         if (usuario != null)
         {
             // Se vacía el password por motivos de seguridad
             usuario.setPassword("");
-            //resultado = "{\"iserror\":0,\"result\":\""+ request.getContextPath()+"/index.jsp" + "\"}";
-            resultado = gson.toJson(new ResponseDTO(0, server.request().getContextPath() + "/index.jsp", usuario));
+            response = getResponseOk(server.request().getContextPath() + "/index.jsp", usuario);
 
         }
         else
         {
-            //resultado = "{\"iserror\":1,\"result\":\"Usuario no encontrado o los datos introducidos son incorrectos.\"}";
-            resultado = gson.toJson(new ResponseDTO(1, "Usuario no encontrado o los datos introducidos son incorrectos.", new UserDTO()));
+            response = getResponseError("Usuario no encontrado o los datos introducidos son incorrectos.");
         }
 
-        responseJson(server.response(), resultado);
+        responseJson(server.response(), gson.toJson(response));
     }
+
 
     public void getUser(ActionController actionController)
     {
-        String resultado;
-
+        ResponseDTO response;
         Gson gson = new GsonBuilder().create();
 
         if (actionController.parametros().length > 1) {
@@ -65,24 +79,23 @@ public class IdentidadService extends BaseService {
 
                 if (userActual != null)
                 {
-                    resultado = gson.toJson(new ResponseDTO(0, "OK.", userActual));
+                    response = getResponseOk("OK", userActual);
                 }
                 else
                 {
-                    resultado = gson.toJson(new ResponseDTO(1, "Se ha producido un error.", new UserDTO()));
+                    response = getResponseError("Se ha producido un error.");
                 }
             }
             else
             {
-
-                resultado = gson.toJson(new ResponseDTO(1, "El parámetro no es correcto.", new UserDTO()));
+                response = getResponseError("El parámetro no es correcto.");
             }
         }
         else
         {
-            resultado = gson.toJson(new ResponseDTO(1, "Faltan parámetros para poder realizar la acción solicitada.", new UserDTO()));
+            response = getResponseError("Faltan parámetros para poder realizar la acción solicitada.");
         }
 
-        responseJson(actionController.server().response(), resultado);
+        responseJson(actionController.server().response(), gson.toJson(response));
     }
 }
