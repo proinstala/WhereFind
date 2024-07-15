@@ -45,6 +45,19 @@ public class IdentidadController  extends BaseHttpServlet {
         return ActionType.ERROR;
     }
 
+    // EndPoint - GET :  /api/identidad/logout
+    protected void apiLogOut(ActionController actionController)
+    {
+        identidadServicio.logOut(actionController.server());
+    }
+
+    // EndPoint - POST : /api/identidad/login
+    protected void apiLogIn(ActionController actionController)
+    {
+        identidadServicio.logIn(actionController.server());
+    }
+
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -57,7 +70,7 @@ public class IdentidadController  extends BaseHttpServlet {
 
         switch(actionController.actionType()){
             case ActionType.LOGOUT :
-                identidadServicio.logOut(actionController.server());
+                apiLogOut(actionController);
                 break;
             default:
                 System.out.println("Accion no permitida");
@@ -76,7 +89,7 @@ public class IdentidadController  extends BaseHttpServlet {
 
         switch(actionController.actionType()){
             case ActionType.LOGIN :
-                identidadServicio.logIn(actionController.server());
+                apiLogIn(actionController);
                 break;
             default:
                 System.out.println("Accion no permitida");
