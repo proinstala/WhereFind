@@ -25,7 +25,8 @@ public class IdentidadController  extends BaseHttpServlet {
         USER,
         USERS,
         DELETE,
-        UPDATE
+        UPDATE,
+        CREATE
     }
 
     @Override
@@ -85,6 +86,11 @@ public class IdentidadController  extends BaseHttpServlet {
         identidadServicio.updateUser(actionController);
     }
 
+    // EndPoint - POST : /api/identidad/create
+    protected void apiCreateUser(ActionController actionController)
+    {
+        identidadServicio.createUser(actionController);
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -125,9 +131,15 @@ public class IdentidadController  extends BaseHttpServlet {
         System.out.println("EndPoint POST : " + actionController.parametros()[0]);
 
         switch(actionController.actionType()){
+
             case ActionType.LOGIN :
                 apiLogIn(actionController);
                 break;
+
+            case ActionType.CREATE :
+                apiCreateUser(actionController);
+                break;
+
             default:
                 System.out.println("Accion no permitida");
         }

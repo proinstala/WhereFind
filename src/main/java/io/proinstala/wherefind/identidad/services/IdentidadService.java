@@ -170,10 +170,6 @@ public class IdentidadService extends BaseService {
         responseJson(actionController.server().response(), response);
     }
 
-
-
-
-
     public void updateUser(ActionController actionController)
     {
         ResponseDTO response;
@@ -224,7 +220,37 @@ public class IdentidadService extends BaseService {
         responseJson(actionController.server().response(), response);
     }
 
+    public void createUser(ActionController actionController)
+    {
+        ResponseDTO response;
+
+        String nombreUsuario   = actionController.server().getRequestParameter("nombreUsuario", "");
+        String passwordUsuario = actionController.server().getRequestParameter("passwordUsuario", "");
 
 
+        if (nombreUsuario != "" && passwordUsuario != "" )
+        {
+            // Conecta con el Gestor de Permanencia
+            IUserService gestor = GestionPersistencia.getUserService();
 
+            // Crea los datos del usuario
+            UserDTO userActual = gestor.add(new UserDTO(-1, nombreUsuario, passwordUsuario, "User"));
+
+            if (userActual != null)
+            {
+                userActual.setPassword("");
+                response = getResponseOk("Se ha creado el usuario correctamente", userActual);
+            }
+            else
+            {
+                response = getResponseError("Se ha producido un error.");
+            }
+        }
+        else
+        {
+            response = getResponseError("Se ha producido un error.");
+        }
+
+        responseJson(actionController.server().response(), response);
+    }
 }
