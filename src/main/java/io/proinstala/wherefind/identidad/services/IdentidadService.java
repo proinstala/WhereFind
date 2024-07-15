@@ -43,8 +43,8 @@ public class IdentidadService extends BaseService {
 
     public void logIn(ActionServer server)
     {
-        String nombreUsuario = server.request().getParameter("nombreUsuario");
-        String passwordUsuario = server.request().getParameter("passwordUsuario");
+        String nombreUsuario   = server.getRequestParameter("nombreUsuario", "");
+        String passwordUsuario = server.getRequestParameter("passwordUsuario", "");
 
         UserDTO usuario = UserSession.login(nombreUsuario, passwordUsuario, server);
 
