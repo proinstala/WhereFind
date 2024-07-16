@@ -47,16 +47,26 @@ public class BaseHttpServlet extends HttpServlet {
         return new ActionController(fullUri, uriApi, actionType, parametros, new ActionServer(request, response));
     }
 
-    protected void responseError403(HttpServletResponse response, String mensaje)
+    protected void responseError(HttpServletResponse response, int error, String mensaje)
     {
-        //response.setHeader("X-Error-Message", mensaje);
         try
         {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, mensaje);
+            response.sendError(error, mensaje);
         }
         catch (IOException e)
         {
             e.printStackTrace();
         }
     }
+
+    protected void responseError403(HttpServletResponse response, String mensaje)
+    {
+        responseError(response, HttpServletResponse.SC_FORBIDDEN, mensaje);
+    }
+
+    protected void responseError404(HttpServletResponse response, String mensaje)
+    {
+        responseError(response, HttpServletResponse.SC_NOT_FOUND, mensaje);
+    }
+
 }
