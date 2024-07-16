@@ -35,6 +35,7 @@ public class UserSession {
         if (session != null)
         {
             session.removeAttribute("user");
+            session.invalidate();
         }
 
         redireccionar(server.response(), server.request().getContextPath()+"/index.jsp");
@@ -66,9 +67,20 @@ public class UserSession {
 
     public static void redireccionarIsUserNotLogIn(ActionServer server)
     {
+        // Se desactiva la cache del navegador para esta página
+        disableCacheWebBrowser(server);
+
         UserDTO userActual = getUserLogin(server.request());
         if (userActual == null) {
             redireccionar(server.response(), server.request().getContextPath()+"/login.jsp");
         }
+    }
+
+    public static void disableCacheWebBrowser(ActionServer server)
+    {
+        server.response().setHeader("Cache-Control", "no-cache");
+        server.response().setHeader("Cache-Control", "no-store");
+        server.response().setHeader("Pragma", "no-cache");
+        server.response().setDateHeader("Expires", -1);
     }
 }
