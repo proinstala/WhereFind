@@ -1,7 +1,7 @@
 import { solicitudPost } from './comunes.mjs';
 
 $(document).ready(function () {
-    validarFormulario("#frmLogin");
+    validarFormulario("#frmUser");
 });
 
 function validarFormulario(nombreForm) {
@@ -14,7 +14,20 @@ function validarFormulario(nombreForm) {
             passwordUsuario: {
                 required: true,
                 maxlength: 60
-            }
+            },
+            nombreRealUsuario: {
+                required: true,
+                maxlength: 100
+            },
+            apellidoRealUsuario: {
+                required: true,
+                maxlength: 100
+            },
+            emailUsuario: {
+                required: true,
+                email: true
+            },
+
 
         },//Fin de reglas ----------------
         messages: {
@@ -25,11 +38,26 @@ function validarFormulario(nombreForm) {
             passwordUsuario: {
                 required: "Debe introducir el password de usuario.",
                 maxlength: "Longitud máx 60 caracteres."
-            }
+            },
+            nombreRealUsuario: {
+                required: "Debe introducir su nombre.",
+                maxlength: "Longitud máx 60 caracteres."
+            },
+            apellidoRealUsuario: {
+                required: "Debe introducir sus apellidos.",
+                maxlength: "Longitud máx 60 caracteres."
+            },
+            emailUsuario: {
+                required: "Debe introducir su email.",
+                email: "Debe introducir un email válido."
+            },
+
+
+
         },//Fin de msg  ------------------
 
         submitHandler: function () {
-            solicitudPost("api/identidad/login", nombreForm);
+            solicitudPost("api/identidad/create", nombreForm);
         },
        // Función error de respuesta
         errorPlacement: function (error, element) {

@@ -4,6 +4,10 @@ CREATE DATABASE IF NOT EXISTS `WHERE_FIND_DATA`;
 use `WHERE_FIND_DATA`;
 
 
+-- Elimina las tablas
+DROP TABLE IF EXISTS WHERE_FIND_DATA.`USER`;
+
+-- Elimina las funciones
 DROP FUNCTION IF EXISTS ENCRYPT_DATA_BASE64;
 DROP FUNCTION IF EXISTS DECRYPT_DATA_BASE64;
 
@@ -61,28 +65,32 @@ DELIMITER ;
 -- Crea la tabla USER
 CREATE TABLE IF NOT EXISTS USER (
 	id INT auto_increment NOT NULL,
-	nombre varchar(100) NOT NULL,
+	user_name varchar(100) NOT NULL,
 	password TEXT NOT NULL,
     rol varchar(100) NOT NULL,
 	activo BOOL DEFAULT TRUE NOT NULL,
+    nombre varchar(100) NOT NULL,
+    apellidos varchar(100) NOT NULL,
+    email varchar(200) NOT NULL,
     PRIMARY KEY (id),
-    CONSTRAINT UC_NOMBRE UNIQUE (nombre)
+    CONSTRAINT UC_NOMBRE UNIQUE (user_name),
+    CONSTRAINT UC_EMAIL UNIQUE (email)
 );
 
--- Se crea el index en la columna nombre para un mejor rendimiento
-CREATE INDEX USER_NOMBRE_IDX USING BTREE ON USER (nombre);
+-- Se crea el index en la columna user_name para un mejor rendimiento
+CREATE INDEX USER_NOMBRE_IDX USING BTREE ON USER (user_name);
 
 -- Crea un usuarios de prueba
-INSERT INTO USER (nombre, password, rol, activo) VALUES('david', ENCRYPT_DATA_BASE64('123'), 'Admin', 1);
-INSERT INTO USER (nombre, password, rol, activo) VALUES('juanma', ENCRYPT_DATA_BASE64('123'), 'Admin', 1);
-INSERT INTO USER (nombre, password, rol, activo) VALUES('user_normal', ENCRYPT_DATA_BASE64('123'), 'User', 1);
-INSERT INTO USER (nombre, password, rol, activo) VALUES('otro_user', ENCRYPT_DATA_BASE64('123'), 'User', 1);
+INSERT INTO USER (user_name, password, rol, activo, nombre, apellidos, email) VALUES('david', ENCRYPT_DATA_BASE64('123'), 'Admin', 1, 'David', 'Jiménez Alonso', 'david@email.es');
+INSERT INTO USER (user_name, password, rol, activo, nombre, apellidos, email) VALUES('juanma', ENCRYPT_DATA_BASE64('123'), 'Admin', 1, 'Juan Manuel', 'Soltero Sánchez', 'juanma@email.es');
+INSERT INTO USER (user_name, password, rol, activo, nombre, apellidos, email) VALUES('user_normal', ENCRYPT_DATA_BASE64('123'), 'User', 1, 'User', 'Normal', 'user_normal@email.es');
+INSERT INTO USER (user_name, password, rol, activo, nombre, apellidos, email) VALUES('otro_user', ENCRYPT_DATA_BASE64('123'), 'User', 1, 'Otro', 'User', 'otro_user@email.es');
 
 -- Listar todos los usuarios
-SELECT id, nombre, DECRYPT_DATA_BASE64(password) AS password, rol FROM USER WHERE activo = TRUE;
+SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email FROM USER WHERE activo = TRUE;
 
 -- Obtener un usuario
-SELECT id, nombre, DECRYPT_DATA_BASE64(password) AS password, rol FROM USER WHERE activo = TRUE AND nombre='david' AND password=ENCRYPT_DATA_BASE64('123');
+SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email FROM USER WHERE activo = TRUE AND user_name='david' AND password=ENCRYPT_DATA_BASE64('123');
 
 -- Eliminar el usuario (4) otro_user
 UPDATE USER SET activo=FALSE WHERE id=4;
@@ -91,6 +99,9 @@ UPDATE USER SET activo=FALSE WHERE id=4;
 UPDATE USER SET password=ENCRYPT_DATA_BASE64('321') WHERE id=3;
 
 -- Muestra todos los usuarios incluso los eliminados
-SELECT id, nombre, DECRYPT_DATA_BASE64(password) AS password, rol, activo FROM USER;
+SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, activo, nombre, apellidos, email FROM USER;
 
 
+
+-- Agregar un usuario existente cambiando en el user name y en el email mayúsculas y minúsculas
+-- INSERT INTO USER (user_name, password, rol, activo, nombre, apellidos, email) VALUES('USER_Normal', ENCRYPT_DATA_BASE64('123'), 'User', 1, 'User', 'Normal', 'useR_Normal@email.es');

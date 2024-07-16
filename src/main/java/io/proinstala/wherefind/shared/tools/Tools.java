@@ -9,8 +9,21 @@ public class Tools {
         if(usuario==null)  {
             return "<b>No se ha encontrado el usuario o los datos introducidos son incorrectos</b> <br/>";
         } else {
-            return "<b>"+usuario.getNombre()+" : </b> <span>"+usuario.getPassword()+"</span> <span>"+usuario.getRol()+"</span> <br/>";
+            return "<b>"+usuario.getUserName()+" : </b> <span>"+usuario.getPassword()+"</span> <span>"+usuario.getRol()+"</span> <br/>";
         }
     }
+
+    public static void wait(int ms)
+    {
+        try
+        {
+            Thread.sleep(ms);
+        }
+        catch(InterruptedException ex)
+        {
+            Thread.currentThread().interrupt();
+        }
+    }
+
 
 }

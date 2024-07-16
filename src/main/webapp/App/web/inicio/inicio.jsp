@@ -9,7 +9,7 @@
 <body>
     <div class="contenedor__general">
         <div class="contenedor">
-            
+
             <%@ include file="../cabecera/cabecera.jsp" %>
 
             <div class="contenedor__grid--3c">
@@ -32,4 +32,4 @@
         </div>
     </div>
 
-    <script src="js/principal.js"></script>
+    <%-- <script src="js/principal.js"></script> --%>

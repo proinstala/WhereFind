@@ -31,7 +31,7 @@
 
 .contenedor__inicio--config:hover {
     transform: rotate(-90deg);
-    
+
     #svg-gear {
         fill: var(--secundario);
     }
@@ -54,7 +54,7 @@
     color: var(--secundario);
     cursor: pointer;
     transform: scale(1.2);
-    
+
 }
 
 .contenedor__usuario {
@@ -129,6 +129,8 @@
     border-radius: 7rem;
     border: 2px solid var(--texto_principal);
     background-color: var(--fondo_secundario);
+    overflow-x: hidden;
+    text-overflow: ellipsis;
 }
 
 .info_user p {
@@ -144,4 +146,8 @@
 .contenedor__usuario:hover .btn_prueba:not(:first-child) {
     opacity: 1;
 
+}
+
+#rolUser {
+    font-weight: bold;
 }
