@@ -83,4 +83,27 @@ public class UserSession {
         server.response().setHeader("Pragma", "no-cache");
         server.response().setDateHeader("Expires", -1);
     }
+
+
+    public static String getLoginUserFullName(HttpServletRequest request)
+    {
+        UserDTO userActual = getUserLogin(request);
+        if (userActual != null) {
+            return userActual.getNombre() + " " + userActual.getApellidos();
+        }
+
+        return "n/a";
+    }
+
+    public static String getLoginUserRol(HttpServletRequest request)
+    {
+        UserDTO userActual = getUserLogin(request);
+        if (userActual != null) {
+            return userActual.getRol();
+        }
+
+        return "n/a";
+    }
+
+
 }
