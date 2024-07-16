@@ -29,7 +29,7 @@
 + Eliminar las string hardcodeadas de IdentidadService referente a los mensaje de las acciones
 + Eliminar las string hardcodeadas de IdentidadService referente a los parametros de las requests
 - Revisar como poder mejorar la clase persistencia, que use el patrón singlenton
-- Al registrar un usuario que el nombre sea insensible a mayúsculas y minúsculas
++ Al registrar un usuario que el nombre sea insensible a mayúsculas y minúsculas
 - Poder registrar usuarios
 - Poder recuperar la contraseña de los usuarios
 - Poder gestionar los usuarios con un usuario Admin

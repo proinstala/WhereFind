@@ -102,3 +102,6 @@ UPDATE USER SET password=ENCRYPT_DATA_BASE64('321') WHERE id=3;
 SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, activo FROM USER;
 
 
+
+-- Agregar un usuario existente cambiando en el user name y en el email mayúsculas y minúsculas
+-- INSERT INTO USER (user_name, password, rol, activo, nombre, apellidos, email) VALUES('USER_Normal', ENCRYPT_DATA_BASE64('123'), 'User', 1, 'User', 'Normal', 'useR_Normal@email.es');
