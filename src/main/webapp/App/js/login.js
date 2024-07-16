@@ -163,8 +163,8 @@ async function solicitudLoginF(url, data) {
             mostrarMensajeAcceso("Acceso Denegado", result.result, "error");
         } else {
             const acceso = () => window.location.replace(result.result);
-            console.log(result);
-            //mostrarMensajeAcceso(`Bienvenido ${result.user.userName}`, "Acceso Permitido.", "success", acceso);
+            //console.log(result);
+            mostrarMensajeAcceso(`Bienvenido ${result.user.nombre}`, "Acceso Permitido.", "success", acceso);
         }
     } catch (error) {
         console.error("Error:", error);
