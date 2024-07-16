@@ -35,8 +35,8 @@
 + Poder registrar usuarios
 + Poder registrar usuarios - Validar email
 + Bloquear la UI al enviar datos a la api mientras se espera la respuesta
++ En la alerta de bienvenida muestre el nombre real del usuario
 - Revisar como poder mejorar la clase persistencia, que use el patrón singlenton
-- En la alerta de bienvenida muestre el nombre real del usuario
 - Poder recuperar la contraseña de los usuarios
 - Poder gestionar los usuarios con un usuario Admin
 - Securizar api para tener que estar logueado

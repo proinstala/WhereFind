@@ -46,7 +46,7 @@ function solicitudPostJQuery(url, data, idForm) {
                 mostrarMensajeAcceso("Acceso Denegado ", response.result, "error");
             } else {
                 const acceso = () => window.location.replace(response.result);
-                mostrarMensajeAcceso(`Bienvenido ${response.user.userName}`, "Acceso Permitido.", "success", (response.isUrl)? acceso : null);
+                mostrarMensajeAcceso(`Bienvenido ${response.user.nombre}`, "Acceso Permitido.", "success", (response.isUrl)? acceso : null);
             }
         },
         //Funcion error de respuesta
@@ -92,7 +92,7 @@ async function solicitudPostFetchAsync(url, data, idForm) {
             mostrarMensajeAcceso("Acceso Denegado", result.result, "error");
         } else {
             const acceso = () => window.location.replace(result.result);
-            mostrarMensajeAcceso(`Bienvenido ${result.user.userName}`, "Acceso Permitido.", "success", (result.isUrl)? acceso : null);
+            mostrarMensajeAcceso(`Bienvenido ${result.user.nombre}`, "Acceso Permitido.", "success", (result.isUrl)? acceso : null);
         }
     } catch (error) {
         console.error("Error:", error);
@@ -132,7 +132,7 @@ function solicitudPostFetch(url, data, idForm) {
             mostrarMensajeAcceso("Acceso Denegado", response.result, "error");
         } else {
             const acceso = () => window.location.replace(response.result);
-            mostrarMensajeAcceso(`Bienvenido ${response.user.userName}`, "Acceso Permitido.", "success", (response.isUrl)? acceso : null);
+            mostrarMensajeAcceso(`Bienvenido ${response.user.nombre}`, "Acceso Permitido.", "success", (response.isUrl)? acceso : null);
         }
     })
     .catch(error => {
