@@ -244,7 +244,7 @@ public class IdentidadService extends BaseService {
             if (userActual != null)
             {
                 userActual.setPassword("");
-                response = getResponseOk(LocaleApp.INFO_CREATE_USER, userActual, 0);
+                response = getResponseOk(actionController.server().request().getContextPath() + "/index.jsp", userActual, 1);
             }
             else
             {
