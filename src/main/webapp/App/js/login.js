@@ -1,5 +1,5 @@
 
-import { mostrarMensajeAcceso } from './alertasSweetAlert2.mjs';
+import { mostrarMensajeAcceso, mostrarLoading } from './alertasSweetAlert2.mjs';
 
 $(document).ready(function () {
 
@@ -223,6 +223,10 @@ function solicitudLoginF2(url, data) {
 
 function formDisable(disabled) {
     console.log("formDisable : " + disabled);
+
+    if (disabled) {
+        mostrarLoading();
+    }
 
     $("label, button, input, select, option, textarea", "#frmLogin").prop('disabled', disabled);
 }
