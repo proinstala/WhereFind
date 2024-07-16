@@ -41,19 +41,16 @@ function solicitudPostJQuery(url, data, idForm) {
 
         },
         success: function (response) {
-            //debugger;
-            //console.log(response);
 
             if(response.isError === 1) {
                 mostrarMensajeAcceso("Acceso Denegado ", response.result, "error");
             } else {
                 const acceso = () => window.location.replace(response.result);
-                mostrarMensajeAcceso("Bienvenido", "Acceso Permitido.", "success", acceso);
+                mostrarMensajeAcceso(`Bienvenido ${response.user.userName}`, "Acceso Permitido.", "success", (response.isUrl)? acceso : null);
             }
         },
         //Funcion error de respuesta
         error: function (jqXHR, textStatus, errorThrown) {
-            //errorAjax(jqXHR, textStatus, errorThrown, urlServlet);
             console.log("error -----------!!!!!!");
             console.log(jqXHR);
             console.log(textStatus);
@@ -95,8 +92,7 @@ async function solicitudPostFetchAsync(url, data, idForm) {
             mostrarMensajeAcceso("Acceso Denegado", result.result, "error");
         } else {
             const acceso = () => window.location.replace(result.result);
-            //console.log(result);
-            mostrarMensajeAcceso(`Bienvenido ${result.user.userName}`, "Acceso Permitido.", "success", acceso);
+            mostrarMensajeAcceso(`Bienvenido ${result.user.userName}`, "Acceso Permitido.", "success", (result.isUrl)? acceso : null);
         }
     } catch (error) {
         console.error("Error:", error);
@@ -136,7 +132,7 @@ function solicitudPostFetch(url, data, idForm) {
             mostrarMensajeAcceso("Acceso Denegado", response.result, "error");
         } else {
             const acceso = () => window.location.replace(response.result);
-            mostrarMensajeAcceso("Bienvenido", "Acceso Permitido.", "success", acceso);
+            mostrarMensajeAcceso(`Bienvenido ${response.user.userName}`, "Acceso Permitido.", "success", (response.isUrl)? acceso : null);
         }
     })
     .catch(error => {

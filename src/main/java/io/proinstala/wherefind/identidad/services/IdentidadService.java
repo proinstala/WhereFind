@@ -16,11 +16,11 @@ import io.proinstala.wherefind.shared.textos.LocaleApp;
 public class IdentidadService extends BaseService {
 
     //Registro (record) para representar la estructura de la respuesta JSON
-    record ResponseDTO(int isError, String result, Object user) {}
+    record ResponseDTO(int isError, int isUrl, String result, Object user) {}
 
-    protected ResponseDTO createResponseDTO(int isError, String mensaje, Object objecto)
+    protected ResponseDTO createResponseDTO(int isError, int isUrl, String mensaje, Object objecto)
     {
-        return new ResponseDTO(isError, mensaje, objecto);
+        return new ResponseDTO(isError, isUrl, mensaje, objecto);
     }
 
     protected ResponseDTO getResponseError(String mensaje)
@@ -30,12 +30,12 @@ public class IdentidadService extends BaseService {
 
     protected ResponseDTO getResponseError(String mensaje, Object objecto)
     {
-        return createResponseDTO(1, mensaje, objecto);
+        return createResponseDTO(1, 0, mensaje, objecto);
     }
 
-    protected ResponseDTO getResponseOk(String mensaje, Object objecto)
+    protected ResponseDTO getResponseOk(String mensaje, Object objecto, int isUrl)
     {
-        return createResponseDTO(0, mensaje, objecto);
+        return createResponseDTO(0, isUrl, mensaje, objecto);
     }
 
     public void logOut(ActionServer server)
@@ -45,7 +45,7 @@ public class IdentidadService extends BaseService {
 
     public void logIn(ActionServer server)
     {
-        String nombreUsuario   = server.getRequestParameter(ConstParametros.PARAM_USUARIO_NOMBRE, "");
+        String nombreUsuario   = server.getRequestParameter(ConstParametros.PARAM_USUARIO_USERNAME, "");
         String passwordUsuario = server.getRequestParameter(ConstParametros.PARAM_USUARIO_PASSWORD, "");
 
         UserDTO usuario = UserSession.login(nombreUsuario, passwordUsuario, server);
@@ -57,7 +57,7 @@ public class IdentidadService extends BaseService {
         {
             // Se vacía el password por motivos de seguridad
             usuario.setPassword("");
-            response = getResponseOk(server.request().getContextPath() + "/index.jsp", usuario);
+            response = getResponseOk(server.request().getContextPath() + "/index.jsp", usuario, 1);
 
         }
         else
@@ -85,7 +85,7 @@ public class IdentidadService extends BaseService {
 
                 if (userActual != null)
                 {
-                    response = getResponseOk("OK", userActual);
+                    response = getResponseOk("OK", userActual, 0);
                 }
                 else
                 {
@@ -117,7 +117,7 @@ public class IdentidadService extends BaseService {
 
         if (listado != null)
         {
-            response = getResponseOk("OK", listado);
+            response = getResponseOk("OK", listado, 0);
         }
         else
         {
@@ -147,7 +147,7 @@ public class IdentidadService extends BaseService {
 
                     if (gestor.delete(userActual))
                     {
-                        response = getResponseOk(LocaleApp.INFO_DELETE_USER, userActual);
+                        response = getResponseOk(LocaleApp.INFO_DELETE_USER, userActual, 0);
                     }
                     else
                     {
@@ -197,7 +197,7 @@ public class IdentidadService extends BaseService {
                     if (gestor.update(userActual))
                     {
                         userActual.setPassword("");
-                        response = getResponseOk(LocaleApp.INFO_UPDATE_USER, userActual);
+                        response = getResponseOk(LocaleApp.INFO_UPDATE_USER, userActual, 0);
                     }
                     else
                     {
@@ -226,8 +226,11 @@ public class IdentidadService extends BaseService {
     {
         ResponseDTO response;
 
-        String nombreUsuario   = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_NOMBRE, "");
-        String passwordUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_PASSWORD, "");
+        String nombreUsuario       = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_USERNAME, "");
+        String passwordUsuario     = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_PASSWORD, "");
+        String nombreRealUsuario   = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_NOMBRE, "");
+        String apellidoRealUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_APELLIDOS, "");
+        String emailUsuario        = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_EMAIL, "");
 
 
         if (nombreUsuario != "" && passwordUsuario != "" )
@@ -236,12 +239,12 @@ public class IdentidadService extends BaseService {
             IUserService gestor = GestionPersistencia.getUserService();
 
             // Crea los datos del usuario
-            UserDTO userActual = gestor.add(new UserDTO(-1, nombreUsuario, passwordUsuario, "User"));
+            UserDTO userActual = gestor.add(new UserDTO(-1, nombreUsuario, passwordUsuario, "User", nombreRealUsuario, apellidoRealUsuario, emailUsuario));
 
             if (userActual != null)
             {
                 userActual.setPassword("");
-                response = getResponseOk(LocaleApp.INFO_CREATE_USER, userActual);
+                response = getResponseOk(LocaleApp.INFO_CREATE_USER, userActual, 0);
             }
             else
             {

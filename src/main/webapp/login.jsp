@@ -52,7 +52,6 @@
         </div>
     </div>
 
-    <!-- comment <script src="App/js/login.js" type="text/javascript"></script> -->
     <script src="App/js/comunes.mjs" type="module"></script>
     <script src="App/js/login.js" type="module"></script>
 
