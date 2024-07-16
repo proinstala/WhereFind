@@ -1,21 +1,17 @@
-<%--
-    Document   : index
-    Created on : 5 jul 2024, 21:09:53
-    Author     : David
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <jsp:include page="App/web/shared/head.jsp" >
-    <jsp:param name="titleweb" value="Login" />
+    <jsp:param name="titleweb" value="Registrar" />
 </jsp:include>
 
     <link rel="stylesheet" href="App/css/login.css">
+    <link rel="stylesheet" href="App/css/registrar.css">
 
     <div class="contenedor__general--login">
-        <div class="login">
+        <div class="login registrar">
             <!-- Parte izquierda -->
-            <form class="login__izquierda" name="frmLogin" id="frmLogin" >
-                <h1 class="login__titulo">Login</h1>
+            <form class="login__izquierda" name="frmUser" id="frmUser" >
+                <h1 class="login__titulo">Registrar</h1>
                 <img class="login__img" src="App/img/user2.svg" alt="logo usuario">
 
                 <div class="info-error" id="info-error">
@@ -26,12 +22,29 @@
                     <label for="nombreUsuario">Usuario</label>
                     <input class="input-underline" type="text" name="nombreUsuario" id="nombreUsuario" placeholder="Introduce tu nombre de usuario">
                 </div>
+
+                <div class="login__input">
+                    <label for="nombreRealUsuario">Nombre</label>
+                    <input class="input-underline" type="text" name="nombreRealUsuario" id="nombreRealUsuario" placeholder="Introduce tu nombre">
+                </div>
+
+                <div class="login__input">
+                    <label for="apellidoRealUsuario">Apellidos</label>
+                    <input class="input-underline" type="text" name="apellidoRealUsuario" id="apellidoRealUsuario" placeholder="Introduce tus apellidos">
+                </div>
+
+                <div class="login__input">
+                    <label for="emailUsuario">Email</label>
+                    <input class="input-underline" type="text" name="emailUsuario" id="emailUsuario" placeholder="Introduce tu email">
+                </div>
+
                 <div class="login__input">
                     <label for="passwordUsuario">Password</label>
                     <input class="input-underline" type="password" name="passwordUsuario" id="passwordUsuario" placeholder="Introduce tu password">
                 </div>
+
                 <div class="login__input">
-                    <button class="login__btn" type="submit">ENTRAR</button>
+                    <button class="login__btn" type="submit">REGISTRAR</button>
                 </div>
             </form>
 
@@ -44,7 +57,7 @@
                 </div>
 
                 <div class="login__enlaces">
-                    <a class="login__enlaces-enlace" href="registrar.jsp">Crear usuario</a>
+                    <a class="login__enlaces-enlace" href="login.jsp">Login</a>
                     <a class="login__enlaces-enlace" href="#">He olvidado mi password</a>
                 </div>
             </div>
@@ -52,8 +65,10 @@
         </div>
     </div>
 
-    <!-- comment <script src="App/js/login.js" type="text/javascript"></script> -->
+
     <script src="App/js/comunes.mjs" type="module"></script>
-    <script src="App/js/login.js" type="module"></script>
+    <script src="App/js/registrar.js" type="module"></script>
 
 <%@ include file="App/web/shared/foot.jsp" %>
+
+

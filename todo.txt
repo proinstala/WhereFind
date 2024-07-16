@@ -34,7 +34,8 @@
 + Bloquear el acceso a partes de la api no definidas o que requieren otro tipo de entrada
 - Revisar como poder mejorar la clase persistencia, que use el patrón singlenton
 - Poder registrar usuarios
-- Poder registrar usuarios - Validar email
++ Poder registrar usuarios - Validar email
+- En la alerta de bienvenida muestre el nombre real del usuario
 - Poder recuperar la contraseña de los usuarios
 - Poder gestionar los usuarios con un usuario Admin
 - Securizar api para tener que estar logueado

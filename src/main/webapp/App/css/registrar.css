@@ -1,0 +1,8 @@
+
+.contenedor__general--login {
+    overflow-y: scroll;
+}
+
+.registrar {
+    height: auto !important;
+}

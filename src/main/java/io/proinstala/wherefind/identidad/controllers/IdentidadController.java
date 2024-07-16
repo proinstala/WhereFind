@@ -133,7 +133,7 @@ public class IdentidadController  extends BaseHttpServlet {
 
 
         //TODO: Eliminar solo es para testear una api lenta
-        //Tools.wait(5000);
+        Tools.wait(5000);
 
         switch(actionController.actionType()){
 
