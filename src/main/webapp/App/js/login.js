@@ -84,7 +84,7 @@ function loginSubmit(event) {
     request.onerror = () => {
         mostrarError("No se ha podido realizar la acción por un error en el servidor.");
     }
-    
+
     return false;
 }
 
@@ -109,7 +109,7 @@ function solicitudLogin(url, data) {
         data: data,
         //Antes del envio
         beforeSend: function () {
-            
+
         },
         success: function (response) {
             //debugger;
@@ -122,7 +122,7 @@ function solicitudLogin(url, data) {
                 mostrarMensajeAcceso("Bienvenido", "Acceso Permitido.", "success", acceso);
             }
         },
-        //Funcion error de respuesta    
+        //Funcion error de respuesta
         error: function (jqXHR, textStatus, errorThrown) {
             //errorAjax(jqXHR, textStatus, errorThrown, urlServlet);
             console.log("error -----------!!!!!!");
@@ -131,7 +131,7 @@ function solicitudLogin(url, data) {
             console.log(errorThrown);
         },
         complete: function () {
-           
+
         }
     });
 }
@@ -163,8 +163,8 @@ async function solicitudLoginF(url, data) {
             mostrarMensajeAcceso("Acceso Denegado", result.result, "error");
         } else {
             const acceso = () => window.location.replace(result.result);
-            console.log(result);
-            //mostrarMensajeAcceso(`Bienvenido ${result.user.userName}`, "Acceso Permitido.", "success", acceso);
+            //console.log(result);
+            mostrarMensajeAcceso(`Bienvenido ${result.user.userName}`, "Acceso Permitido.", "success", acceso);
         }
     } catch (error) {
         console.error("Error:", error);
