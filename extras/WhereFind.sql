@@ -81,16 +81,16 @@ CREATE TABLE IF NOT EXISTS USER (
 CREATE INDEX USER_NOMBRE_IDX USING BTREE ON USER (user_name);
 
 -- Crea un usuarios de prueba
-INSERT INTO USER (user_name, password, rol, activo, nombre, apellidos, email) VALUES('david', ENCRYPT_DATA_BASE64('123'), 'Admin', 1, 'David', 'Jimenez Alonso', 'david@email.es');
+INSERT INTO USER (user_name, password, rol, activo, nombre, apellidos, email) VALUES('david', ENCRYPT_DATA_BASE64('123'), 'Admin', 1, 'David', 'Jiménez Alonso', 'david@email.es');
 INSERT INTO USER (user_name, password, rol, activo, nombre, apellidos, email) VALUES('juanma', ENCRYPT_DATA_BASE64('123'), 'Admin', 1, 'Juan Manuel', 'Soltero Sánchez', 'juanma@email.es');
 INSERT INTO USER (user_name, password, rol, activo, nombre, apellidos, email) VALUES('user_normal', ENCRYPT_DATA_BASE64('123'), 'User', 1, 'User', 'Normal', 'user_normal@email.es');
 INSERT INTO USER (user_name, password, rol, activo, nombre, apellidos, email) VALUES('otro_user', ENCRYPT_DATA_BASE64('123'), 'User', 1, 'Otro', 'User', 'otro_user@email.es');
 
 -- Listar todos los usuarios
-SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol FROM USER WHERE activo = TRUE;
+SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email FROM USER WHERE activo = TRUE;
 
 -- Obtener un usuario
-SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol FROM USER WHERE activo = TRUE AND user_name='david' AND password=ENCRYPT_DATA_BASE64('123');
+SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email FROM USER WHERE activo = TRUE AND user_name='david' AND password=ENCRYPT_DATA_BASE64('123');
 
 -- Eliminar el usuario (4) otro_user
 UPDATE USER SET activo=FALSE WHERE id=4;
@@ -99,7 +99,7 @@ UPDATE USER SET activo=FALSE WHERE id=4;
 UPDATE USER SET password=ENCRYPT_DATA_BASE64('321') WHERE id=3;
 
 -- Muestra todos los usuarios incluso los eliminados
-SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, activo FROM USER;
+SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, activo, nombre, apellidos, email FROM USER;
 
 
 
