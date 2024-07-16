@@ -3,7 +3,7 @@ import { mostrarMensajeAcceso } from './alertasSweetAlert2.mjs';
 
 $(document).ready(function () {
 
-    const form = document.getElementById("frmLogin");
+    //const form = document.getElementById("frmLogin");
     //form.addEventListener("submit", loginSubmit);
 
     validarFormulario("#frmLogin");
@@ -43,6 +43,7 @@ function validarFormulario(nombreForm) {
         },
         complete: function () {
             console.log("complete");
+            formDisable(false);
         }
     });//Fin Validate
 }
@@ -103,6 +104,8 @@ function mostrarError(msg) {
  * @param {string} data - Los datos a enviar en la solicitud.
  */
 function solicitudLogin(url, data) {
+    formDisable(true);
+
     $.ajax({
         url: url,
         type: 'POST',
@@ -131,7 +134,7 @@ function solicitudLogin(url, data) {
             console.log(errorThrown);
         },
         complete: function () {
-
+            formDisable(false);
         }
     });
 }
@@ -144,6 +147,8 @@ function solicitudLogin(url, data) {
  * @param {string} data - Los datos a enviar en la solicitud.
  */
 async function solicitudLoginF(url, data) {
+    formDisable(true);
+
     try {
         const response = await fetch(url, {
             method: 'POST',
@@ -171,6 +176,7 @@ async function solicitudLoginF(url, data) {
         mostrarMensajeAcceso("Error", "No se ha podido realizar la acción por un error en el servidor.", "error");
     } finally {
         console.log("complete");
+        formDisable(false);
     }
 }
 
@@ -182,6 +188,8 @@ async function solicitudLoginF(url, data) {
  * @param {string} data - Los datos a enviar en la solicitud.
  */
 function solicitudLoginF2(url, data) {
+    formDisable(true);
+
     fetch(url, {
         method: 'POST',
         headers: {
@@ -209,6 +217,12 @@ function solicitudLoginF2(url, data) {
     })
     .finally(() => {
         console.log("complete");
+        formDisable(false);
     });
 }
 
+function formDisable(disabled) {
+    console.log("formDisable : " + disabled);
+
+    $("label, button, input, select, option, textarea", "#frmLogin").prop('disabled', disabled);
+}

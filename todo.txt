@@ -28,15 +28,15 @@
 + Crear método en BaseService para gestionar json
 + Eliminar las string hardcodeadas de IdentidadService referente a los mensaje de las acciones
 + Eliminar las string hardcodeadas de IdentidadService referente a los parametros de las requests
-- Revisar como poder mejorar la clase persistencia, que use el patrón singlenton
 + Al registrar un usuario que el nombre sea insensible a mayúsculas y minúsculas
++ Al hacer logout y volver atras muestra la parte que solo se debe mostrar estando logeado
++ http://localhost:8080/WhereFind/js/principal.js net::ERR_ABORTED 404 (Not Found)
++ Bloquear el acceso a partes de la api no definidas o que requieren otro tipo de entrada
+- Revisar como poder mejorar la clase persistencia, que use el patrón singlenton
 - Poder registrar usuarios
 - Poder recuperar la contraseña de los usuarios
 - Poder gestionar los usuarios con un usuario Admin
-+ Al hacer logout y volver atras muestra la parte que solo se debe mostrar estando logeado
-+ http://localhost:8080/WhereFind/js/principal.js net::ERR_ABORTED 404 (Not Found)
 - Securizar api para tener que estar logueado
 - Securizar api para tener que estar logueado como admin
-+ Bloquear el acceso a partes de la api no definidas o que requieren otro tipo de entrada
 - Que el servidor notifique que la base de datos no es accesible en vez de producir una excepción
 - Bloquear la UI al enviar datos a la api mientras se espera la respuesta

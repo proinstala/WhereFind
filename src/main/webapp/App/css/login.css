@@ -1,5 +1,5 @@
 
-/* 
+/*
     Created on : 5 jul 2024, 21:36:55
     Author     : David
 */
@@ -11,7 +11,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     background: #FFA500; /* Naranja */
 }
 
@@ -85,7 +85,7 @@
     flex-direction: column;
     width: 70%;
     gap: 1rem;
-    margin: 2.5rem 0; 
+    margin: 2.5rem 0;
     position: relative; /* Asegura que el posicionamiento absoluto sea relativo a este contenedor */
 }
 
@@ -99,7 +99,7 @@
 }
 
 .login__input input:focus {
-    border-bottom-color: var(--primario);; /* Cambia el color del borde inferior cuando está enfocado */
+    border-bottom-color: var(--primario); /* Cambia el color del borde inferior cuando está enfocado */
 }
 
 .login__input label {
@@ -110,7 +110,7 @@
 .login__btn {
     height: 4rem;
     background-color: var(--secundario);
-    border: 0.1rem solid #CCCCCC; 
+    border: 0.1rem solid #CCCCCC;
     border-radius: 0.3rem;
     color: white;
 }
@@ -151,4 +151,31 @@ label.error {
     color: red !important;
     font-size: 1.1rem !important;
     margin-top: 65px; /* Ajusta el margen superior para separar del input */
+}
+
+
+/* TODO: Ajustar los colores al tema actual */
+button:disabled,
+button[disabled]
+button[disabled]:hover {
+    border: 1px solid #999999 !important;
+    background-color: #cccccc !important;
+    color: #666666 !important;
+    font-weight: normal !important;
+}
+
+/* TODO: Ajustar los colores al tema actual */
+label[disabled],
+label:disabled,
+input[disabled],
+input:disabled,
+select[disabled],
+select:disabled,
+option[disabled],
+option:disabled,
+textarea[disabled],
+textarea:disabled {
+    border: 1px solid #999999 !important;
+    background-color: #cccccc !important;
+    color: #666666 !important;
 }

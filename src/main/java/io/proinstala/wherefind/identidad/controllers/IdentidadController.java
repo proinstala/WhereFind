@@ -7,6 +7,7 @@ import java.io.IOException;
 import io.proinstala.wherefind.identidad.services.IdentidadService;
 import io.proinstala.wherefind.shared.controllers.BaseHttpServlet;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
+import io.proinstala.wherefind.shared.tools.Tools;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 
@@ -129,6 +130,10 @@ public class IdentidadController  extends BaseHttpServlet {
 
         // Imprime en la salida del servidor el EndPoint
         System.out.println("EndPoint POST : " + actionController.parametros()[0]);
+
+
+        //TODO: Eliminar solo es para testear una api lenta
+        Tools.wait(5000);
 
         switch(actionController.actionType()){
 
