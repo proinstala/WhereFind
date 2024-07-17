@@ -105,3 +105,69 @@ SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, activo, no
 
 -- Agregar un usuario existente cambiando en el user name y en el email mayúsculas y minúsculas
 -- INSERT INTO USER (user_name, password, rol, activo, nombre, apellidos, email) VALUES('USER_Normal', ENCRYPT_DATA_BASE64('123'), 'User', 1, 'User', 'Normal', 'useR_Normal@email.es');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+use `WHERE_FIND_DATA`;
+
+
+-- Elimina la tabla POBLACION
+DROP TABLE IF EXISTS WHERE_FIND_DATA.`POBLACION`;
+
+-- Crea la tabla POBLACION
+CREATE TABLE IF NOT EXISTS POBLACION (
+	id INT auto_increment NOT NULL,
+	name varchar(200) NOT null,
+    PRIMARY KEY (id),
+    CONSTRAINT UC_NOMBRE UNIQUE (name)
+);
+
+-- Se crea el index en la columna name para un mejor rendimiento
+CREATE INDEX POBLACION_NOMBRE_IDX USING BTREE ON POBLACION (name);
+
+-- Crea unas poblaciones de prueba
+INSERT INTO POBLACION (name) VALUES('Madrid');
+INSERT INTO POBLACION (name) VALUES('Murcia');
+INSERT INTO POBLACION (name) VALUES('Sevilla');
+INSERT INTO POBLACION (name) VALUES('Granada');
+
+
+-- Listar todas los poblaciones
+SELECT * FROM POBLACION;
+
+-- Obtener una poblacion por nombre
+SELECT * FROM POBLACION WHERE name='Murcia';
+
+-- Obtener una poblacion por id
+SELECT * FROM POBLACION WHERE id=3;
