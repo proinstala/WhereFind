@@ -7,6 +7,7 @@ import io.proinstala.wherefind.infraestructure.data.GestionPersistencia;
 import io.proinstala.wherefind.infraestructure.data.interfaces.IUserService;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
 import io.proinstala.wherefind.shared.controllers.actions.ActionServer;
+import io.proinstala.wherefind.shared.dtos.ResponseDTO;
 import io.proinstala.wherefind.shared.dtos.UserDTO;
 import io.proinstala.wherefind.shared.services.BaseService;
 import io.proinstala.wherefind.shared.textos.ConstParametros;
@@ -16,17 +17,6 @@ import io.proinstala.wherefind.shared.textos.LocaleApp;
  * Clase que maneja operaciones relacionadas con la identidad de los usuarios.
  */
 public class IdentidadService extends BaseService {
-
-    /**
-     * Registro de tipo ResponseDTO utilizado para representar una respuesta del servicio.
-     *
-     * @param isError Indicador de error (1 si es un error, 0 si no lo es)
-     * @param isUrl   Indicador de URL (1 si la respuesta contiene una URL, 0 si no lo hace)
-     * @param result  Resultado de la operación
-     * @param user    Información del usuario relacionada con la respuesta
-     */
-    record ResponseDTO(int isError, int isUrl, String result, Object user) {}
-
     /**
      * Crea un objeto ResponseDTO con los parámetros especificados.
      *
