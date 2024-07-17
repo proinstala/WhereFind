@@ -11,26 +11,26 @@ public interface IUserService {
     /**
      * Añade un nuevo usuario.
      *
-     * @param usuario el objeto UserDTO que representa al nuevo usuario a añadir.
+     * @param userDTO el objeto UserDTO que representa al nuevo usuario a añadir.
      * @return el objeto UserDTO del usuario añadido.
      */
-    public UserDTO add(UserDTO usuario);
+    public UserDTO add(UserDTO userDTO);
 
     /**
      * Actualiza los datos de un usuario existente.
      *
-     * @param usuario el objeto UserDTO que representa al usuario a actualizar.
+     * @param userDTO el objeto UserDTO que representa al usuario a actualizar.
      * @return true si la actualización fue exitosa, false en caso contrario.
      */
-    public boolean update(UserDTO usuario);
+    public boolean update(UserDTO userDTO);
 
     /**
      * Elimina un usuario existente.
      *
-     * @param usuario el objeto UserDTO que representa al usuario a eliminar.
+     * @param userDTO el objeto UserDTO que representa al usuario a eliminar.
      * @return true si la eliminación fue exitosa, false en caso contrario.
      */
-    public boolean delete(UserDTO usuario);
+    public boolean delete(UserDTO userDTO);
 
     /**
      * Obtiene los datos de un usuario existente mediante su Id.

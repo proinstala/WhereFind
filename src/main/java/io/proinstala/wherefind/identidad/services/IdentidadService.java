@@ -40,29 +40,29 @@ public class IdentidadService extends BaseService {
         String passwordUsuario = server.getRequestParameter(ConstParametros.PARAM_USUARIO_PASSWORD, "");
 
         // Intenta realizar el login con los datos pasados por el navegador
-        UserDTO usuario = UserSession.login(nombreUsuario, passwordUsuario, server);
+        UserDTO userDTO = UserSession.login(nombreUsuario, passwordUsuario, server);
 
         // Respuesta de la acción actual
-        ResponseDTO response;
+        ResponseDTO responseDTO;
 
         // Si el usuario existe
-        if (usuario != null)
+        if (userDTO != null)
         {
             // Se vacía el password por motivos de seguridad
-            usuario.setPassword("");
+            userDTO.setPassword("");
 
             // Como la acción se ha ejecutado correctamente se crea la respuesta acorde a la misma
-            response = getResponseOk(server.request().getContextPath() + "/index.jsp", usuario, 1);
+            responseDTO = getResponseOk(server.request().getContextPath() + "/index.jsp", userDTO, 1);
         }
         else
         {
             // El usuario no existe o se ha producido un error
             // Crea la respuesta con un error
-            response = getResponseError(LocaleApp.ERROR_USUARIO_NO_ENCONTRADO);
+            responseDTO = getResponseError(LocaleApp.ERROR_USUARIO_NO_ENCONTRADO);
         }
 
         // Devuelve la respuesta al navegador del usuario en formato json
-        responseJson(server.response(), response);
+        responseJson(server.response(), responseDTO);
     }
 
 
@@ -75,7 +75,7 @@ public class IdentidadService extends BaseService {
     public void getUser(ActionController actionController)
     {
         // Respuesta de la acción actual
-        ResponseDTO response;
+        ResponseDTO responseDTO;
 
         // Comprueba que hay más de 1 parámetro
         if (actionController.parametros().length > 1) {
@@ -87,37 +87,37 @@ public class IdentidadService extends BaseService {
             if (id > -1)
             {
                 // Conecta con el Gestor de Permanencia
-                IUserService gestor = GestionPersistencia.getUserService();
+                IUserService userService = GestionPersistencia.getUserService();
 
                 // Obtiene los datos del usuario
-                UserDTO userActual = gestor.getUserById(id);
+                UserDTO userDTO = userService.getUserById(id);
 
                 // Si el usuario recuperado no es nulo
-                if (userActual != null)
+                if (userDTO != null)
                 {
                     // Como la acción se ha ejecutado correctamente se crea la respuesta acorde a la misma
-                    response = getResponseOk("OK", userActual, 0);
+                    responseDTO = getResponseOk("OK", userDTO, 0);
                 }
                 else
                 {
                     // Crea la respuesta con un error
-                    response = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
+                    responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
                 }
             }
             else
             {
                 // Crea la respuesta con un error
-                response = getResponseError(LocaleApp.ERROR_PARAMETRO_NO_CORRECTO);
+                responseDTO = getResponseError(LocaleApp.ERROR_PARAMETRO_NO_CORRECTO);
             }
         }
         else
         {
             // Crea la respuesta con un error
-            response = getResponseError(LocaleApp.ERROR_FALTAN_PARAMETROS);
+            responseDTO = getResponseError(LocaleApp.ERROR_FALTAN_PARAMETROS);
         }
 
         // Devuelve la respuesta al navegador del usuario en formato json
-        responseJson(actionController.server().response(), response);
+        responseJson(actionController.server().response(), responseDTO);
     }
 
     /**
@@ -128,28 +128,28 @@ public class IdentidadService extends BaseService {
     public void getUsers(ActionController actionController)
     {
         // Respuesta de la acción actual
-        ResponseDTO response;
+        ResponseDTO responseDTO;
 
         // Conecta con el Gestor de Permanencia
-        IUserService gestor = GestionPersistencia.getUserService();
+        IUserService userService = GestionPersistencia.getUserService();
 
         // Obtiene la lista de usuarios
-        List<UserDTO> listado = gestor.getAllUsers();
+        List<UserDTO> listaUserDTO = userService.getAllUsers();
 
         // Si la lista devuelta no es nula
-        if (listado != null)
+        if (listaUserDTO != null)
         {
             // Como la acción se ha ejecutado correctamente se crea la respuesta acorde a la misma
-            response = getResponseOk("OK", listado, 0);
+            responseDTO = getResponseOk("OK", listaUserDTO, 0);
         }
         else
         {
             // Crea la respuesta con un error
-            response = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR, new ArrayList<>());
+            responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR, new ArrayList<>());
         }
 
         // Devuelve la respuesta al navegador del usuario en formato json
-        responseJson(actionController.server().response(), response);
+        responseJson(actionController.server().response(), responseDTO);
     }
 
     /**
@@ -160,7 +160,7 @@ public class IdentidadService extends BaseService {
     public void deleteUser(ActionController actionController)
     {
         // Respuesta de la acción actual
-        ResponseDTO response;
+        ResponseDTO responseDTO;
 
         // Comprueba que hay más de 1 parámetro
         if (actionController.parametros().length > 1) {
@@ -172,49 +172,49 @@ public class IdentidadService extends BaseService {
             if (id > -1)
             {
                 // Conecta con el Gestor de Permanencia
-                IUserService gestor = GestionPersistencia.getUserService();
+                IUserService userService = GestionPersistencia.getUserService();
 
                 // Obtiene los datos del usuario
-                UserDTO userActual = gestor.getUserById(id);
+                UserDTO userDTO = userService.getUserById(id);
 
                 // Si el usuario no es nulo
-                if (userActual != null)
+                if (userDTO != null)
                 {
                     // Se vacía el password por motivos de seguridad
-                    userActual.setPassword("");
+                    userDTO.setPassword("");
 
                     // Se elimina el usuario
-                    if (gestor.delete(userActual))
+                    if (userService.delete(userDTO))
                     {
                         // Como la acción se ha ejecutado correctamente se crea la respuesta acorde a la misma
-                        response = getResponseOk(LocaleApp.INFO_DELETE_USER, userActual, 0);
+                        responseDTO = getResponseOk(LocaleApp.INFO_DELETE_USER, userDTO, 0);
                     }
                     else
                     {
                         // Crea la respuesta con un error
-                        response = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
+                        responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
                     }
                 }
                 else
                 {
                     // Crea la respuesta con un error
-                    response = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
+                    responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
                 }
             }
             else
             {
                 // Crea la respuesta con un error
-                response = getResponseError(LocaleApp.ERROR_PARAMETRO_NO_CORRECTO);
+                responseDTO = getResponseError(LocaleApp.ERROR_PARAMETRO_NO_CORRECTO);
             }
         }
         else
         {
             // Crea la respuesta con un error
-            response = getResponseError(LocaleApp.ERROR_FALTAN_PARAMETROS);
+            responseDTO = getResponseError(LocaleApp.ERROR_FALTAN_PARAMETROS);
         }
 
         // Devuelve la respuesta al navegador del usuario en formato json
-        responseJson(actionController.server().response(), response);
+        responseJson(actionController.server().response(), responseDTO);
     }
 
     /**
@@ -225,7 +225,7 @@ public class IdentidadService extends BaseService {
     public void updateUser(ActionController actionController)
     {
         // Respuesta de la acción actual
-        ResponseDTO response;
+        ResponseDTO responseDTO;
 
         // Comprueba que hay más de 1 parámetro
         if (actionController.parametros().length > 1) {
@@ -237,57 +237,57 @@ public class IdentidadService extends BaseService {
             if (id > -1)
             {
                 // Conecta con el Gestor de Permanencia
-                IUserService gestor = GestionPersistencia.getUserService();
+                IUserService userService = GestionPersistencia.getUserService();
 
                 // Obtiene los datos del usuario
-                UserDTO userActual = gestor.getUserById(id);
+                UserDTO userDTO = userService.getUserById(id);
 
                 // Si el usuario no es nulo
-                if (userActual != null)
+                if (userDTO != null)
                 {
                     // Obtiene los parámetros desde el request
-                    String passwordUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_PASSWORD, userActual.getPassword());
-                    String rolUsuario      = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_ROL, userActual.getRol());
+                    String passwordUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_PASSWORD, userDTO.getPassword());
+                    String rolUsuario      = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_ROL, userDTO.getRol());
 
                     // Actualiza los datos del usuario con los pasados por el navegador
-                    userActual.setPassword(passwordUsuario);
-                    userActual.setRol(rolUsuario);
+                    userDTO.setPassword(passwordUsuario);
+                    userDTO.setRol(rolUsuario);
 
                     // Se guardan los cambios del usuario
-                    if (gestor.update(userActual))
+                    if (userService.update(userDTO))
                     {
                         // Se vacía el password por motivos de seguridad
-                        userActual.setPassword("");
+                        userDTO.setPassword("");
 
                         // Como la acción se ha ejecutado correctamente se crea la respuesta acorde a la misma
-                        response = getResponseOk(LocaleApp.INFO_UPDATE_USER, userActual, 0);
+                        responseDTO = getResponseOk(LocaleApp.INFO_UPDATE_USER, userDTO, 0);
                     }
                     else
                     {
                         // Crea la respuesta con un error
-                        response = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
+                        responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
                     }
                 }
                 else
                 {
                     // Crea la respuesta con un error
-                    response = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
+                    responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
                 }
             }
             else
             {
                 // Crea la respuesta con un error
-                response = getResponseError(LocaleApp.ERROR_PARAMETRO_NO_CORRECTO);
+                responseDTO = getResponseError(LocaleApp.ERROR_PARAMETRO_NO_CORRECTO);
             }
         }
         else
         {
             // Crea la respuesta con un error
-            response = getResponseError(LocaleApp.ERROR_FALTAN_PARAMETROS);
+            responseDTO = getResponseError(LocaleApp.ERROR_FALTAN_PARAMETROS);
         }
 
         // Devuelve la respuesta al navegador del usuario en formato json
-        responseJson(actionController.server().response(), response);
+        responseJson(actionController.server().response(), responseDTO);
     }
 
     /**
@@ -298,7 +298,7 @@ public class IdentidadService extends BaseService {
     public void createUser(ActionController actionController)
     {
         // Respuesta de la acción actual
-        ResponseDTO response;
+        ResponseDTO responseDTO;
 
         // Obtiene los parámetros desde el request
         String nombreUsuario       = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_USERNAME, "");
@@ -311,33 +311,33 @@ public class IdentidadService extends BaseService {
         if (!nombreUsuario.isBlank() && !passwordUsuario.isBlank())
         {
             // Conecta con el Gestor de Permanencia
-            IUserService gestor = GestionPersistencia.getUserService();
+            IUserService userService = GestionPersistencia.getUserService();
 
             // Crea y guarda los datos del usuario
-            UserDTO userActual = gestor.add(new UserDTO(-1, nombreUsuario, passwordUsuario, "User", nombreRealUsuario, apellidoRealUsuario, emailUsuario));
+            UserDTO userDTO = userService.add(new UserDTO(-1, nombreUsuario, passwordUsuario, "User", nombreRealUsuario, apellidoRealUsuario, emailUsuario));
 
             // Si el usuario no es nulo
-            if (userActual != null)
+            if (userDTO != null)
             {
                 // Se vacía el password por motivos de seguridad
-                userActual.setPassword("");
+                userDTO.setPassword("");
 
                 // Como la acción se ha ejecutado correctamente se crea la respuesta acorde a la misma
-                response = getResponseOk(actionController.server().request().getContextPath() + "/index.jsp", userActual, 1);
+                responseDTO = getResponseOk(actionController.server().request().getContextPath() + "/index.jsp", userDTO, 1);
             }
             else
             {
                 // Crea la respuesta con un error
-                response = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
+                responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
             }
         }
         else
         {
             // Crea la respuesta con un error
-            response = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
+            responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
         }
 
         // Devuelve la respuesta al navegador del usuario en formato json
-        responseJson(actionController.server().response(), response);
+        responseJson(actionController.server().response(), responseDTO);
     }
 }

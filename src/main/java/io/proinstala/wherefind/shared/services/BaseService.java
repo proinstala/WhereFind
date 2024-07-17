@@ -47,17 +47,6 @@ public class BaseService {
         return responseJson(response, new GsonBuilder().create().toJson(data));
     }
 
-
-
-
-
-
-
-
-
-
-
-
     /**
      * Crea un objeto ResponseDTO con los parámetros especificados.
      *

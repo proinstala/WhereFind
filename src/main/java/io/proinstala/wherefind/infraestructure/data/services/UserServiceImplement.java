@@ -62,11 +62,11 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
     /**
      * Añade un nuevo usuario a la base de datos.
      *
-     * @param usuario el objeto UserDTO que representa al nuevo usuario.
+     * @param userDTO el objeto UserDTO que representa al nuevo usuario.
      * @return el objeto UserDTO añadido.
      */
     @Override
-    public UserDTO add(UserDTO usuario) {
+    public UserDTO add(UserDTO userDTO) {
         // Para recoger el numero de filas afectadas
         try
         {
@@ -77,12 +77,12 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
             PreparedStatement sentencia = conexion.prepareStatement(SQL_INSERT_NEW_USER);
 
             // Le paso los parametros al PreparedStatement
-            sentencia.setString(1, usuario.getUserName());
-            sentencia.setString(2, usuario.getPassword());
-            sentencia.setString(3, usuario.getRol());
-            sentencia.setString(4, usuario.getNombre());
-            sentencia.setString(5, usuario.getApellidos());
-            sentencia.setString(6, usuario.getEmail());
+            sentencia.setString(1, userDTO.getUserName());
+            sentencia.setString(2, userDTO.getPassword());
+            sentencia.setString(3, userDTO.getRol());
+            sentencia.setString(4, userDTO.getNombre());
+            sentencia.setString(5, userDTO.getApellidos());
+            sentencia.setString(6, userDTO.getEmail());
 
             // Ejecuto la sentencia preparada
             sentencia.executeUpdate();
@@ -97,17 +97,17 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
         }
 
         // Vuelve a conectarse a mysql para devolver el usuario recién creado
-        return getUser(usuario.getUserName(), usuario.getPassword());
+        return getUser(userDTO.getUserName(), userDTO.getPassword());
     }
 
     /**
      * Actualiza un usuario existente en la base de datos.
      *
-     * @param usuario el objeto UserDTO que representa al usuario a actualizar.
+     * @param userDTO el objeto UserDTO que representa al usuario a actualizar.
      * @return true si la actualización fue exitosa, false en caso contrario.
      */
     @Override
-    public boolean update(UserDTO usuario) {
+    public boolean update(UserDTO userDTO) {
 
         // Para recoger el numero de filas afectadas
         int rowAfectadas = 0;
@@ -120,9 +120,9 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
             PreparedStatement sentencia = conexion.prepareStatement(SQL_UPDATE_USER);
 
             // Le paso los parametros al PreparedStatement
-            sentencia.setString(1, usuario.getRol());
-            sentencia.setString(2, usuario.getPassword());
-            sentencia.setInt(3, usuario.getId());
+            sentencia.setString(1, userDTO.getRol());
+            sentencia.setString(2, userDTO.getPassword());
+            sentencia.setInt(3, userDTO.getId());
 
             // Ejecuto la sentencia preparada
             rowAfectadas = sentencia.executeUpdate();
@@ -143,11 +143,11 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
     /**
      * Elimina un usuario de la base de datos.
      *
-     * @param usuario el objeto UserDTO que representa al usuario a eliminar.
+     * @param userDTO el objeto UserDTO que representa al usuario a eliminar.
      * @return true si la eliminación fue exitosa, false en caso contrario.
      */
     @Override
-    public boolean delete(UserDTO usuario) {
+    public boolean delete(UserDTO userDTO) {
         // Para recoger el numero de filas afectadas
         int rowAfectadas = 0;
         try
@@ -159,7 +159,7 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
             PreparedStatement sentencia = conexion.prepareStatement(SQL_DELETE_USER);
 
             // Le paso los parametros al PreparedStatement
-            sentencia.setInt(1, usuario.getId());
+            sentencia.setInt(1, userDTO.getId());
 
             // Ejecuto la sentencia preparada
             rowAfectadas = sentencia.executeUpdate();
@@ -186,7 +186,7 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
     @Override
     public UserDTO getUser(String userName, String password) {
 
-        UserDTO resultado = null;
+        UserDTO userDTO = null;
         try
         {
             System.out.println("username = " + userName);
@@ -206,7 +206,7 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
             // Recupera la lista
             if (resultSet.next())
             {
-                resultado = getUserFromResultSet(resultSet);
+                userDTO = getUserFromResultSet(resultSet);
             }
 
             // Cerramos todo lo que hemos usado
@@ -219,7 +219,7 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
             e.printStackTrace();
         }
 
-        return resultado;
+        return userDTO;
     }
 
     /**
@@ -230,7 +230,7 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
     @Override
     public List<UserDTO> getAllUsers() {
         // Se declara e instancia la lista donde se almacenarán los UserDTO
-        List<UserDTO> resultado = new ArrayList<>();
+        List<UserDTO> listUserDTO = new ArrayList<>();
         try
         {
             // Se crea la conexion
@@ -245,9 +245,9 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
             // Recupera la lista
             while(resultSet.next())
             {
-                UserDTO userActual = getUserFromResultSet(resultSet);
-                if (userActual != null) {
-                    resultado.add(userActual);
+                UserDTO userDTO = getUserFromResultSet(resultSet);
+                if (userDTO != null) {
+                    listUserDTO.add(userDTO);
                 }
             }
 
@@ -262,7 +262,7 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
         }
 
         // devuelve la lista de UserDTO
-        return resultado;
+        return listUserDTO;
     }
 
     /**
@@ -275,7 +275,7 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
     public UserDTO getUserById(int id) {
 
         // Declada el resultado
-        UserDTO resultado = null;
+        UserDTO userDTO = null;
         try
         {
             // Se crea la conexion
@@ -293,7 +293,7 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
             // Recupera la lista
             if (resultSet.next())
             {
-                resultado = getUserFromResultSet(resultSet);
+                userDTO = getUserFromResultSet(resultSet);
             }
 
             // Cerramos todo lo que hemos usado
@@ -307,6 +307,6 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
         }
 
         // Devuelve el resultado
-        return resultado;
+        return userDTO;
     }
 }

@@ -25,22 +25,22 @@ public class UserSession {
     public static UserDTO login(String userName, String password, ActionServer server)
     {
         // Conecta con el Gestor de Permanencia
-        IUserService gestor = GestionPersistencia.getUserService();
+        IUserService userService = GestionPersistencia.getUserService();
 
         // Obtiene los datos del usuario
-        UserDTO userActual = gestor.getUser(userName, password);
+        UserDTO userDTO = userService.getUser(userName, password);
 
         // Comprueba que el usuario no sea nulo
-        if (userActual != null)
+        if (userDTO != null)
         {
             // Recupera la sesión actual desde el request
             HttpSession session = server.request().getSession();
 
             // Guarda en la sesión actual el usuario logueado
-            session.setAttribute("user", userActual);
+            session.setAttribute("user", userDTO);
         }
 
-        return userActual;
+        return userDTO;
     }
 
     /**
@@ -129,10 +129,10 @@ public class UserSession {
         disableCacheWebBrowser(server);
 
         // Obtiene el UserDTO del usuario logueado
-        UserDTO userActual = getUserLogin(server.request());
+        UserDTO userDTO = getUserLogin(server.request());
 
         // Si el usuario no está logueado lo redirije a la página de login
-        if (userActual == null) {
+        if (userDTO == null) {
             // Redirecciona al usuario a la página de login
             redireccionar(server.response(), server.request().getContextPath()+"/login.jsp");
         }
@@ -161,12 +161,12 @@ public class UserSession {
     public static String getLoginUserFullName(HttpServletRequest request)
     {
         // Obtiene el UserDTO del usuario logueado
-        UserDTO userActual = getUserLogin(request);
+        UserDTO userDTO = getUserLogin(request);
 
         // Si el usuario no es nulo
-        if (userActual != null) {
+        if (userDTO != null) {
             // Devuelve el nombre completo del usuario logueado
-            return userActual.getNombre() + " " + userActual.getApellidos();
+            return userDTO.getNombre() + " " + userDTO.getApellidos();
         }
 
         // Devuelve No aplicable si no hay usuario logueado
@@ -182,12 +182,12 @@ public class UserSession {
     public static String getLoginUserRol(HttpServletRequest request)
     {
         // Obtiene el UserDTO del usuario logueado
-        UserDTO userActual = getUserLogin(request);
+        UserDTO userDTO = getUserLogin(request);
 
         // Si el usuario no es nulo
-        if (userActual != null) {
+        if (userDTO != null) {
             // Devuelve el rol del usuario logueado
-            return userActual.getRol();
+            return userDTO.getRol();
         }
 
         // Devuelve No aplicable si no hay usuario logueado

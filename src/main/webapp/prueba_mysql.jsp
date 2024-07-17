@@ -12,39 +12,39 @@
 <%@ page import="java.util.List" %>
 
 <%
-    IUserService gestor = GestionPersistencia.getUserService();
+    IUserService userService = GestionPersistencia.getUserService();
 
     // Crea un nuevo usuario
-    UserDTO userTemporal = new UserDTO(-1, "manolo", "password", "dddddddddd");
-    userTemporal = gestor.add(userTemporal);
+    UserDTO userTemporal = new UserDTO(-1, "manolo", "password", "dddddddddd", "ddd", "ddd", "ddd");
+    userTemporal = userService.add(userTemporal);
 
     if(userTemporal != null)
     {
         // Actualiza el usuario
         userTemporal.setPassword("nuevo");
         userTemporal.setRol("User");
-        gestor.update(userTemporal);
+        userService.update(userTemporal);
     }
 
     // Crea un nuevo usuario para eliminarlo
-    UserDTO userTemporalBorrar = gestor.add(new UserDTO(-1, "paraBorrar", "borrar", "User"));
+    UserDTO userTemporalBorrar = userService.add(new UserDTO(-1, "paraBorrar", "borrar", "User", "ddd", "ddd", "ddd"));
 
     if(userTemporalBorrar != null)
     {
         // Elimina el usuario
-        gestor.delete(userTemporalBorrar);
+        userService.delete(userTemporalBorrar);
     }
 
     // Lista todos los usuarios
-    List<UserDTO> listadoUsuarios = gestor.getAllUsers();
+    List<UserDTO> listadoUsuarios = userService.getAllUsers();
     int total = listadoUsuarios.size();
 
     // Obtiene datos individuales de usuarios
-    UserDTO datosDavid = gestor.getUser("david", "123");
-    UserDTO datosJuanma = gestor.getUser("juanma", "123");
-    UserDTO datosJuanmaError = gestor.getUser("juanma", "12300000000000000");
-    UserDTO datosUserById = gestor.getUserById(3);
-    UserDTO datosUserByIdError = gestor.getUserById(-3333);
+    UserDTO datosDavid = userService.getUser("david", "123");
+    UserDTO datosJuanma = userService.getUser("juanma", "123");
+    UserDTO datosJuanmaError = userService.getUser("juanma", "12300000000000000");
+    UserDTO datosUserById = userService.getUserById(3);
+    UserDTO datosUserByIdError = userService.getUserById(-3333);
 
     String resultadoUserDavid = Tools.getMensajeResultado(datosDavid);
     String resultadoUserJuanma = Tools.getMensajeResultado(datosJuanma);
