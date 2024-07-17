@@ -22,7 +22,7 @@
     IPoblacionService gestor = GestionPersistencia.getPoblacionService();
 
     // Crea un nueva poblacion
-    PoblacionDTO temporal = new PoblacionDTO(-1, "Cartagena");
+    PoblacionDTO temporal = new PoblacionDTO(-1, "Cartagena", "30201");
     temporal = gestor.add(temporal);
 
 
@@ -37,11 +37,12 @@
     <tr>
         <th>Id</th>
         <th>Nombre</th>
+        <th>Código postal</th>
     </tr>
 
     <%
     for (PoblacionDTO poblacion : listado) {
-        out.println("<tr><td>"+poblacion.getId()+"</td> <td>"+poblacion.getName()+"</td> </tr>");
+        out.println("<tr><td>"+poblacion.getId()+"</td> <td>"+poblacion.getName()+"</td>  <td>"+poblacion.getCp()+"</td> </tr>");
     }
     %>
 

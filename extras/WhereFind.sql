@@ -149,6 +149,7 @@ DROP TABLE IF EXISTS WHERE_FIND_DATA.`POBLACION`;
 CREATE TABLE IF NOT EXISTS POBLACION (
 	id INT auto_increment NOT NULL,
 	name varchar(200) NOT null,
+	cp varchar(10) NOT null,
     PRIMARY KEY (id),
     CONSTRAINT UC_NOMBRE UNIQUE (name)
 );
@@ -157,10 +158,10 @@ CREATE TABLE IF NOT EXISTS POBLACION (
 CREATE INDEX POBLACION_NOMBRE_IDX USING BTREE ON POBLACION (name);
 
 -- Crea unas poblaciones de prueba
-INSERT INTO POBLACION (name) VALUES('Madrid');
-INSERT INTO POBLACION (name) VALUES('Murcia');
-INSERT INTO POBLACION (name) VALUES('Sevilla');
-INSERT INTO POBLACION (name) VALUES('Granada');
+INSERT INTO POBLACION (name, cp) VALUES('Madrid', '12345');
+INSERT INTO POBLACION (name, cp) VALUES('Murcia', '67895');
+INSERT INTO POBLACION (name, cp) VALUES('Sevilla', '04257');
+INSERT INTO POBLACION (name, cp) VALUES('Granada', '96542');
 
 
 -- Listar todas los poblaciones

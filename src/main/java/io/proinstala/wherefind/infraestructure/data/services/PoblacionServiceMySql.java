@@ -22,7 +22,7 @@ public class PoblacionServiceMySql implements IPoblacionService {
     private static final String SQL_SELECT_ALL = "SELECT * FROM POBLACION;";
 
     // Añada un nueva poblacion
-    private static final String SQL_INSERT_NEW = "INSERT INTO POBLACION (name) VALUES(?);";
+    private static final String SQL_INSERT_NEW = "INSERT INTO POBLACION (name, cp) VALUES(?, ?);";
 
 
     /**
@@ -82,7 +82,8 @@ public class PoblacionServiceMySql implements IPoblacionService {
             // Crea y devuelve un UserDTO a partir de los datos de un ResultSet
             return new PoblacionDTO(
                 resultSet.getInt("id"),
-                    resultSet.getString("name")
+                    resultSet.getString("name"),
+                    resultSet.getString("cp")
             );
         } catch (SQLException e) {
             e.printStackTrace();
@@ -107,6 +108,7 @@ public class PoblacionServiceMySql implements IPoblacionService {
 
             // Le paso los parametros al PreparedStatement
             sentencia.setString(1, poblacion.getName());
+            sentencia.setString(2, poblacion.getCp());
 
             // Ejecuto la sentencia preparada
             sentencia.executeUpdate();

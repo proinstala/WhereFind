@@ -15,4 +15,5 @@ import lombok.NoArgsConstructor;
 public class PoblacionDTO {
     private int id;
     private String name;
+    private String cp;
 }
