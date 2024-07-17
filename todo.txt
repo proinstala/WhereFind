@@ -44,3 +44,4 @@
 - Que el servidor notifique que la base de datos no es accesible en vez de producir una excepción
 - Que muestre la info del usuario en la barra superior
 + Al crear un nuevo usuario que lo redirija a index.jsp
+- Crear javadoc
