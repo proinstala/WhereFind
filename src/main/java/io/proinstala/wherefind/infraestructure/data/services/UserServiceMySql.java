@@ -5,16 +5,12 @@ import io.proinstala.wherefind.shared.dtos.UserDTO;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.sql.DataSource;
 import java.sql.*;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 
 /**
  * Clase UserServiceMySql que gestiona las operaciones relacionadas con usuarios en una base de datos MySQL.
  */
-public class UserServiceMySql implements IUserService {
+public class UserServiceMySql extends BaseMySql implements IUserService {
     //---------------------------------------------
     // Sentencias para trabajar con mysql
     //---------------------------------------------
@@ -35,52 +31,6 @@ public class UserServiceMySql implements IUserService {
 
     // Marca a un usuario como eliminado
     private static final String SQL_DELETE_USER = "UPDATE USER SET activo=false WHERE id=?;";
-
-
-    /**
-     * Constructor por defecto.
-     */
-    public UserServiceMySql()
-    {
-        try {
-            // Necesario para que el servidor inicialice el driver de mysql
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Obtiene una conexión a la base de datos MySQL.
-     *
-     * @return una conexión a la base de datos.
-     */
-    private Connection getConnection()
-    {
-        try {
-            // Se declara el initContext
-            Context initContext;
-
-            // Se instancia el initContext
-            initContext = new InitialContext();
-
-            // Devuelve el Context
-            Context envContext = (Context) initContext.lookup("java:comp/env");
-
-            // Devuelve el DataSource
-            DataSource ds = (DataSource) envContext.lookup("jdbc/WHERE_FIND_DATA");
-
-            // Devuelve la conexión
-            return ds.getConnection();
-        }
-        catch (NamingException | SQLException e)
-        {
-            e.printStackTrace();
-        }
-
-        // Deveulve nulo en caso de error
-        return null;
-    }
 
     /**
      * Convierte un ResultSet en un objeto UserDTO.
