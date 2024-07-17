@@ -308,7 +308,7 @@ public class IdentidadService extends BaseService {
         String emailUsuario        = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_EMAIL, "");
 
         // Comprueba que los datos del usuario no estén vacios
-        if (nombreUsuario != "" && passwordUsuario != "" )
+        if (!nombreUsuario.isBlank() && !passwordUsuario.isBlank())
         {
             // Conecta con el Gestor de Permanencia
             IUserService gestor = GestionPersistencia.getUserService();
