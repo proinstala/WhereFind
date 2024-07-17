@@ -11,6 +11,9 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+/**
+ * Clase UserServiceMySql que gestiona las operaciones relacionadas con usuarios en una base de datos MySQL.
+ */
 public class UserServiceMySql implements IUserService {
     //---------------------------------------------
     // Sentencias para trabajar con mysql
@@ -34,23 +37,40 @@ public class UserServiceMySql implements IUserService {
     private static final String SQL_DELETE_USER = "UPDATE USER SET activo=false WHERE id=?;";
 
 
-
+    /**
+     * Constructor por defecto.
+     */
     public UserServiceMySql()
     {
         try {
+            // Necesario para que el servidor inicialice el driver de mysql
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Obtiene una conexión a la base de datos MySQL.
+     *
+     * @return una conexión a la base de datos.
+     */
     private Connection getConnection()
     {
         try {
+            // Se declara el initContext
             Context initContext;
+
+            // Se instancia el initContext
             initContext = new InitialContext();
+
+            // Devuelve el Context
             Context envContext = (Context) initContext.lookup("java:comp/env");
+
+            // Devuelve el DataSource
             DataSource ds = (DataSource) envContext.lookup("jdbc/WHERE_FIND_DATA");
+
+            // Devuelve la conexión
             return ds.getConnection();
         }
         catch (NamingException | SQLException e)
@@ -58,12 +78,20 @@ public class UserServiceMySql implements IUserService {
             e.printStackTrace();
         }
 
+        // Deveulve nulo en caso de error
         return null;
     }
 
+    /**
+     * Convierte un ResultSet en un objeto UserDTO.
+     *
+     * @param resultSet el conjunto de resultados de la base de datos.
+     * @return un objeto UserDTO.
+     */
     private static UserDTO getUserFromResultSet(ResultSet resultSet)
     {
         try {
+            // Crea y devuelve un UserDTO a partir de los datos de un ResultSet
             return new UserDTO(
                 resultSet.getInt("id"),
                     resultSet.getString("user_name"),
@@ -77,10 +105,16 @@ public class UserServiceMySql implements IUserService {
             e.printStackTrace();
         }
 
+        // Deveulve nulo en caso de error
         return null;
     }
 
-
+    /**
+     * Añade un nuevo usuario a la base de datos.
+     *
+     * @param usuario el objeto UserDTO que representa al nuevo usuario.
+     * @return el objeto UserDTO añadido.
+     */
     @Override
     public UserDTO add(UserDTO usuario) {
         // Para recoger el numero de filas afectadas
@@ -112,9 +146,16 @@ public class UserServiceMySql implements IUserService {
             e.printStackTrace();
         }
 
+        // Vuelve a conectarse a mysql para devolver el usuario recién creado
         return getUser(usuario.getUserName(), usuario.getPassword());
     }
 
+    /**
+     * Actualiza un usuario existente en la base de datos.
+     *
+     * @param usuario el objeto UserDTO que representa al usuario a actualizar.
+     * @return true si la actualización fue exitosa, false en caso contrario.
+     */
     @Override
     public boolean update(UserDTO usuario) {
 
@@ -148,6 +189,13 @@ public class UserServiceMySql implements IUserService {
         return rowAfectadas > 0;
     }
 
+
+    /**
+     * Elimina un usuario de la base de datos.
+     *
+     * @param usuario el objeto UserDTO que representa al usuario a eliminar.
+     * @return true si la eliminación fue exitosa, false en caso contrario.
+     */
     @Override
     public boolean delete(UserDTO usuario) {
         // Para recoger el numero de filas afectadas
@@ -178,6 +226,13 @@ public class UserServiceMySql implements IUserService {
         return rowAfectadas > 0;
     }
 
+    /**
+     * Obtiene un usuario de la base de datos basado en su nombre de usuario y contraseña.
+     *
+     * @param userName el nombre de usuario.
+     * @param password la contraseña del usuario.
+     * @return el objeto UserDTO correspondiente al usuario, o null si no se encuentra.
+     */
     @Override
     public UserDTO getUser(String userName, String password) {
 
@@ -217,8 +272,14 @@ public class UserServiceMySql implements IUserService {
         return resultado;
     }
 
+    /**
+     * Obtiene una lista de todos los usuarios de la base de datos.
+     *
+     * @return una lista de objetos UserDTO que representan a todos los usuarios.
+     */
     @Override
     public List<UserDTO> getAllUsers() {
+        // Se declara e instancia la lista donde se almacenarán los UserDTO
         List<UserDTO> resultado = new ArrayList<>();
         try
         {
@@ -250,12 +311,20 @@ public class UserServiceMySql implements IUserService {
             e.printStackTrace();
         }
 
+        // devuelve la lista de UserDTO
         return resultado;
     }
 
+    /**
+     * Obtiene un usuario de la base de datos basado en su ID.
+     *
+     * @param id el ID del usuario.
+     * @return el objeto UserDTO correspondiente al usuario, o null si no se encuentra.
+     */
     @Override
     public UserDTO getUserById(int id) {
 
+        // Declada el resultado
         UserDTO resultado = null;
         try
         {
@@ -287,6 +356,7 @@ public class UserServiceMySql implements IUserService {
             e.printStackTrace();
         }
 
+        // Devuelve el resultado
         return resultado;
     }
 }
