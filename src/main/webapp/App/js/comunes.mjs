@@ -22,6 +22,10 @@ const solicitudPost = (url, idForm) => {
     solicitudPostFetch(url, data, idForm);
 }
 
+const solicitudGet = (url, callBack) => {
+    solicitudGetFetch(url, callBack);
+}
+
 /**
  * Realiza una solicitud de POST utilizando jQuery AJAX.
  *
@@ -145,6 +149,38 @@ function solicitudPostFetch(url, data, idForm) {
     });
 }
 
+
+/**
+ * Realiza una solicitud GET utilizando fetch.
+ *
+ * @param {string} url    - La URL a la que se enviará la solicitud.
+ */
+function solicitudGetFetch(url, callBack) {
+    fetch(url, {
+        method: 'GET'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+        .then(response => {
+            callBack(response);
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        mostrarMensajeAcceso("Error", "No se ha podido realizar la acción por un error en el servidor.", "error");
+    })
+    .finally(() => {
+        console.log("complete");
+        //formDisable(idForm, false);
+    });
+}
+
+
+
+
 /**
  * Activa/desactiva todos los campos de un formulario y muestra la alerta de cargando.
  *
@@ -164,4 +200,4 @@ function formDisable(idForm, disabled) {
 
 
 
-export { solicitudPost };
+export { solicitudPost, solicitudGet };
