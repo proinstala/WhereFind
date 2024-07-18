@@ -116,6 +116,13 @@ public class IdentidadController  extends BaseHttpServlet {
      */
     protected void apiGetUser(ActionController actionController)
     {
+        // Se comprueba que el usuario está logueado y sea administrador
+        if (!UserSession.isUserLogIn(actionController.server(), true))
+        {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+
         // Se llama al servicio para procese la acción requerida
         identidadServicio.getUser(actionController);
     }
@@ -150,6 +157,13 @@ public class IdentidadController  extends BaseHttpServlet {
      */
     protected void apiDeleteUser(ActionController actionController)
     {
+        // Se comprueba que el usuario está logueado y sea administrador
+        if (!UserSession.isUserLogIn(actionController.server(), true))
+        {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+
         // Se llama al servicio para procese la acción requerida
         identidadServicio.deleteUser(actionController);
     }
@@ -163,6 +177,13 @@ public class IdentidadController  extends BaseHttpServlet {
      */
     protected void apiUpdateUser(ActionController actionController)
     {
+        // Se comprueba que el usuario está logueado y sea administrador
+        if (!UserSession.isUserLogIn(actionController.server(), false))
+        {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+
         // Se llama al servicio para procese la acción requerida
         identidadServicio.updateUser(actionController);
     }
