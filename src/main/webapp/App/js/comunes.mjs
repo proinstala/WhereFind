@@ -22,8 +22,8 @@ const solicitudPost = (url, idForm) => {
     solicitudPostFetch(url, data, idForm);
 }
 
-const solicitudGet = (url, callBack) => {
-    solicitudGetFetch(url, callBack);
+const solicitudGet = (url, callBack, idElement) => {
+    solicitudGetFetch(url, callBack, idElement);
 }
 
 /**
@@ -155,7 +155,7 @@ function solicitudPostFetch(url, data, idForm) {
  *
  * @param {string} url    - La URL a la que se enviará la solicitud.
  */
-function solicitudGetFetch(url, callBack) {
+function solicitudGetFetch(url, callBack, idElement) {
     fetch(url, {
         method: 'GET'
     })
@@ -166,7 +166,7 @@ function solicitudGetFetch(url, callBack) {
         return response.json();
     })
         .then(response => {
-            callBack(response);
+            callBack(response, idElement);
     })
     .catch(error => {
         console.error("Error:", error);
