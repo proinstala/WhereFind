@@ -4,6 +4,8 @@ package io.proinstala.wherefind.identidad.controllers;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+import io.proinstala.wherefind.identidad.UserSession;
 import io.proinstala.wherefind.identidad.services.IdentidadService;
 import io.proinstala.wherefind.shared.controllers.BaseHttpServlet;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
@@ -127,6 +129,13 @@ public class IdentidadController  extends BaseHttpServlet {
      */
     protected void apiGetUsers(ActionController actionController)
     {
+        if (!UserSession.isUserLogIn(actionController.server(), false))
+        {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+
+
         // Se llama al servicio para procese la acción requerida
         identidadServicio.getUsers(actionController);
     }

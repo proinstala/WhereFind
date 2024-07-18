@@ -193,4 +193,36 @@ public class UserSession {
         // Devuelve No aplicable si no hay usuario logueado
         return "n/a";
     }
+
+
+    /**
+     * Devuelve si el usuario está logueado, incluso si es administrador.
+     *
+     * @param server Instancia de ActionServer
+     * @param isAdmin Indica si se quiere comprobar si es administrador o no
+     * @return El rol del usuario logueado*
+     */
+    public static boolean isUserLogIn(ActionServer server, boolean isAdmin)
+    {
+        // Se desactiva la cache del navegador para esta página
+        disableCacheWebBrowser(server);
+
+        // Obtiene el UserDTO del usuario logueado
+        UserDTO userDTO = getUserLogin(server.request());
+
+        // Si el usuario no está logueado lo redirije a la página de login
+        if (userDTO == null) {
+            return false;
+        }
+        else
+        {
+            // Si se quiere comprobar si es administrador y el usuario no lo es, devuelve falso
+            if(isAdmin && !userDTO.getRol().equalsIgnoreCase("admin"))
+            {
+                return false;
+            }
+
+            return true;
+        }
+    }
 }
