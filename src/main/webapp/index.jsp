@@ -11,8 +11,6 @@
 </jsp:include>
 
 
-<a href="App/web/admin/users.jsp">Usuarios</a>
-
 <%@ include file="App/web/inicio/inicio.jsp" %>
 
 

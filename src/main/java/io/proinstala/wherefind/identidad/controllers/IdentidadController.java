@@ -129,7 +129,8 @@ public class IdentidadController  extends BaseHttpServlet {
      */
     protected void apiGetUsers(ActionController actionController)
     {
-        if (!UserSession.isUserLogIn(actionController.server(), false))
+        // Se comprueba que el usuario está logueado y sea administrador
+        if (!UserSession.isUserLogIn(actionController.server(), true))
         {
             responseError403(actionController.server().response(), "");
             return;
@@ -197,6 +198,10 @@ public class IdentidadController  extends BaseHttpServlet {
         // Imprime en la salida del servidor el EndPoint
         System.out.println("EndPoint GET : " + actionController.parametros()[0]);
 
+        //TODO: Eliminar solo es para testear una api lenta
+        //Tools.wait(2000);
+
+
         // Dependiendo del ActionType, realizará una acción
         switch(actionController.actionType()){
             case ActionType.LOGOUT :
@@ -236,7 +241,7 @@ public class IdentidadController  extends BaseHttpServlet {
 
 
         //TODO: Eliminar solo es para testear una api lenta
-        Tools.wait(2000);
+        //Tools.wait(2000);
 
         // Dependiendo del ActionType, realizará una acción
         switch(actionController.actionType()){
@@ -271,6 +276,10 @@ public class IdentidadController  extends BaseHttpServlet {
 
         // Imprime en la salida del servidor el EndPoint
         System.out.println("EndPoint PUT : " + actionController.parametros()[0]);
+
+
+        //TODO: Eliminar solo es para testear una api lenta
+        //Tools.wait(2000);
 
         // Dependiendo del ActionType, realizará una acción
         switch(actionController.actionType()){
