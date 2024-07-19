@@ -123,7 +123,7 @@ public class UserSession {
      *
      * @param server Instancia de ActionServer
      */
-    public static void redireccionarIsUserNotLogIn(ActionServer server)
+    public static boolean redireccionarIsUserNotLogIn(ActionServer server)
     {
         // Se desactiva la cache del navegador para esta página
         disableCacheWebBrowser(server);
@@ -135,7 +135,11 @@ public class UserSession {
         if (userDTO == null) {
             // Redirecciona al usuario a la página de login
             redireccionar(server.response(), server.request().getContextPath()+"/login.jsp");
+
+            return true;
         }
+
+        return false;
     }
 
     /**

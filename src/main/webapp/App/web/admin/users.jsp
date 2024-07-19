@@ -7,9 +7,12 @@
     ActionServer actionServer = new ActionServer(request, response);
 
     // Si no se está logueado se manda al usuario al login.jsp
-    UserSession.redireccionarIsUserNotLogIn(actionServer);
+    if(UserSession.redireccionarIsUserNotLogIn(actionServer)){
+        // Detiene la ejecución de este servlet
+        return;
+    }
 
-    // Si el usuaria está logueado pero no es administrado
+    // Si el usuario está logueado pero no es administrado
     if (!UserSession.isUserLogIn(actionServer, true))
     {
         // Obtiene un error 403

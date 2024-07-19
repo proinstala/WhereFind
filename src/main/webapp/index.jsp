@@ -3,7 +3,11 @@
 <%@page import="io.proinstala.wherefind.identidad.UserSession"%>
 <%
     // Si no se está logueado se manda al usuario al login.jsp
-    UserSession.redireccionarIsUserNotLogIn(new ActionServer(request, response));
+    if(UserSession.redireccionarIsUserNotLogIn(new ActionServer(request, response))){
+        // Detiene la ejecución de este servlet
+        return;
+    }
+
 %>
 
 <jsp:include page="App/web/shared/head.jsp" >
