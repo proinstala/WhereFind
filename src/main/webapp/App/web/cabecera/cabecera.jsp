@@ -33,7 +33,7 @@
     {
 %>
 
-        <a href="App/web/admin/users.jsp"><i class="las la-users-cog" title="Usuarios"></i></a>
+        <a href="admin/users"><i class="las la-users-cog" title="Usuarios"></i></a>
 
 <%
     }

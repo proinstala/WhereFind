@@ -18,7 +18,7 @@
     }
 %>
 
-<jsp:include page="../shared/head.jsp" >
+<jsp:include page="/App/web/shared/head.jsp" >
     <jsp:param name="titleweb" value="Usuarios" />
 </jsp:include>
 
