@@ -46,7 +46,7 @@
 - Poder gestionar los usuarios con un usuario Admin
 - Que el servidor notifique que la base de datos no es accesible en vez de producir una excepción
 + Poder bloquear la UI en las peticiones http GET
-- Poder bloquear la UI en las peticiones http POST
++ Poder bloquear la UI en las peticiones http POST
 - Poder bloquear la UI en las peticiones http PUT
 + Limpiar comunes.js de métodos POST no usados
 - Añadir a comunes.js en el método POST un callback

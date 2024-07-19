@@ -57,7 +57,7 @@ function validarFormulario(nombreForm) {
         },//Fin de msg  ------------------
 
         submitHandler: function () {
-            solicitudPost("api/identidad/create", nombreForm);
+            solicitudPost("api/identidad/create", "", nombreForm, true);
         },
        // Función error de respuesta
         errorPlacement: function (error, element) {

@@ -12,19 +12,21 @@ function getDatosForm (idForm) {
 }
 
 /**
- * Realiza una solicitud Post.
+ * Realiza una solicitud POST.
  *
- * @param {string} url    - La URL a la que se enviará la solicitud.
- * @param {string} idForm - Id del formulario.
+ * @param {string} url         - La URL a la que se enviará la solicitud.
+ * @param {function} callBack  - Método que recibirá el resultado.
+ * @param {string} idElement   - Id del formulario.
+ * @param {string} mostrarLoad - Bloquea la UI mostrando una alerta con una animación de espera.
  */
-const solicitudPost = (url, idForm) => {
-    let data = getDatosForm(idForm);
-    solicitudPostFetch(url, data, idForm);
+const solicitudPost = (url, callBack, idElement, mostrarLoad) => {
+    let data = getDatosForm(idElement);
+    solicitudPostFetch(url, data, callBack, idElement, mostrarLoad);
 }
 
 
 /**
- * Realiza una solicitud Post.
+ * Realiza una solicitud GET.
  *
  * @param {string} url         - La URL a la que se enviará la solicitud.
  * @param {function} callBack  - Método que recibirá el resultado.
@@ -38,12 +40,14 @@ const solicitudGet = (url, callBack, idElement, mostrarLoad) => {
 /**
  * Realiza una solicitud POST utilizando fetch.
  *
- * @param {string} url    - La URL a la que se enviará la solicitud.
- * @param {string} data   - Los datos a enviar en la solicitud.
- * @param {string} idForm - Id del formulario.
+ * @param {string} url         - La URL a la que se enviará la solicitud.
+ * @param {string} data        - Los datos a enviar en la solicitud.
+ * @param {function} callBack  - Método que recibirá el resultado.
+ * @param {string} idElement   - Id del formulario.
+ * @param {string} mostrarLoad - Bloquea la UI mostrando una alerta con una animación de espera.
  */
-function solicitudPostFetch(url, data, idForm) {
-    formDisable(idForm, true);
+function solicitudPostFetch(url, data, callBack, idElement, mostrarLoad) {
+    formDisable(idElement, true, mostrarLoad);
 
     fetch(url, {
         method: 'POST',
@@ -72,7 +76,7 @@ function solicitudPostFetch(url, data, idForm) {
     })
     .finally(() => {
         console.log("complete");
-        formDisable(idForm, false);
+        formDisable(idElement, false, false);
     });
 }
 
@@ -80,7 +84,10 @@ function solicitudPostFetch(url, data, idForm) {
 /**
  * Realiza una solicitud GET utilizando fetch.
  *
- * @param {string} url    - La URL a la que se enviará la solicitud.
+ * @param {string} url         - La URL a la que se enviará la solicitud.
+ * @param {function} callBack  - Método que recibirá el resultado.
+ * @param {string} idElement   - Id del elemento que donde se inyectará los datos.
+ * @param {string} mostrarLoad - Bloquea la UI mostrando una alerta con una animación de espera.
  */
 function solicitudGetFetch(url, callBack, idElement, mostrarLoad) {
 
@@ -120,13 +127,15 @@ function solicitudGetFetch(url, callBack, idElement, mostrarLoad) {
 /**
  * Activa/desactiva todos los campos de un formulario y muestra la alerta de cargando.
  *
- * @param {string}  idForm   - Id del formulario.
- * @param {boolean} disabled - Estado en el que se quiere poner el formulario.
+ * @param {string}  idForm     - Id del formulario.
+ * @param {boolean} disabled   - Estado en el que se quiere poner el formulario.
+ * @param {string} mostrarLoad - Bloquea la UI mostrando una alerta con una animación de espera.
+ * mostrarLoad
  */
-function formDisable(idForm, disabled) {
+function formDisable(idForm, disabled, mostrarLoad) {
     console.log("formDisable : " + disabled);
 
-    if (disabled) {
+    if (disabled && mostrarLoad) {
         mostrarLoading();
     }
 

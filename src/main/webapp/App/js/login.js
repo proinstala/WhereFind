@@ -29,7 +29,7 @@ function validarFormulario(nombreForm) {
         },//Fin de msg  ------------------
 
         submitHandler: function () {
-            solicitudPost("api/identidad/login", nombreForm);
+            solicitudPost("api/identidad/login", "", nombreForm, true);
         },
        // Función error de respuesta
         errorPlacement: function (error, element) {
