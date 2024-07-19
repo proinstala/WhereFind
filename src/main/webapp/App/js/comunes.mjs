@@ -1,4 +1,4 @@
-import { mostrarMensajeAcceso, mostrarLoading } from './alertasSweetAlert2.mjs';
+import { mostrarMensajeAcceso, mostrarLoading, ocultarLoading } from './alertasSweetAlert2.mjs';
 
 /**
  * Obtiene los datos del formulario.
@@ -15,15 +15,24 @@ function getDatosForm (idForm) {
  * Realiza una solicitud Post.
  *
  * @param {string} url    - La URL a la que se enviará la solicitud.
-  * @param {string} idForm - Id del formulario.
+ * @param {string} idForm - Id del formulario.
  */
 const solicitudPost = (url, idForm) => {
     let data = getDatosForm(idForm);
     solicitudPostFetch(url, data, idForm);
 }
 
-const solicitudGet = (url, callBack, idElement) => {
-    solicitudGetFetch(url, callBack, idElement);
+
+/**
+ * Realiza una solicitud Post.
+ *
+ * @param {string} url         - La URL a la que se enviará la solicitud.
+ * @param {function} callBack  - Método que recibirá el resultado.
+ * @param {string} idElement   - Id del formulario.
+ * @param {string} mostrarLoad - Bloquea la UI mostrando una alerta con una animación de espera.
+ */
+const solicitudGet = (url, callBack, idElement, mostrarLoad) => {
+    solicitudGetFetch(url, callBack, idElement, mostrarLoad);
 }
 
 /**
@@ -73,7 +82,12 @@ function solicitudPostFetch(url, data, idForm) {
  *
  * @param {string} url    - La URL a la que se enviará la solicitud.
  */
-function solicitudGetFetch(url, callBack, idElement) {
+function solicitudGetFetch(url, callBack, idElement, mostrarLoad) {
+
+    if (mostrarLoad) {
+        mostrarLoading();
+    }
+
     fetch(url, {
         method: 'GET'
     })
@@ -83,7 +97,11 @@ function solicitudGetFetch(url, callBack, idElement) {
         }
         return response.json();
     })
-        .then(response => {
+    .then(response => {
+
+            if (mostrarLoad) {
+                ocultarLoading();
+            }
             callBack(response, idElement);
     })
     .catch(error => {

@@ -16,7 +16,7 @@ const adminLoadListUsers = (idElement) => {
         }
     }
 
-    solicitudGet("api/identidad/users", adminLoadListUsersCallBack, idElement);
+    solicitudGet("api/identidad/users", adminLoadListUsersCallBack, idElement, true);
 }
 
 
