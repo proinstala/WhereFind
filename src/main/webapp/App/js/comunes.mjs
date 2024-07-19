@@ -63,12 +63,7 @@ function solicitudPostFetch(url, data, callBack, idElement, mostrarLoad) {
         return response.json();
     })
     .then(response => {
-        if (response.isError === 1) {
-            mostrarMensajeAcceso("Acceso Denegado", response.result, "error");
-        } else {
-            const acceso = () => window.location.replace(response.result);
-            mostrarMensajeAcceso(`Bienvenido ${response.user.nombre}`, "Acceso Permitido.", "success", (response.isUrl)? acceso : null);
-        }
+        callBack(response);
     })
     .catch(error => {
         console.error("Error:", error);
@@ -106,10 +101,11 @@ function solicitudGetFetch(url, callBack, idElement, mostrarLoad) {
     })
     .then(response => {
 
-            if (mostrarLoad) {
-                ocultarLoading();
-            }
-            callBack(response, idElement);
+        if (mostrarLoad) {
+            ocultarLoading();
+        }
+
+        callBack(response, idElement);
     })
     .catch(error => {
         console.error("Error:", error);
@@ -117,7 +113,6 @@ function solicitudGetFetch(url, callBack, idElement, mostrarLoad) {
     })
     .finally(() => {
         console.log("complete");
-        //formDisable(idForm, false);
     });
 }
 

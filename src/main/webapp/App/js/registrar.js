@@ -1,4 +1,5 @@
 import { solicitudPost } from './comunes.mjs';
+import { mostrarMensajeAcceso } from './alertasSweetAlert2.mjs';
 
 $(document).ready(function () {
     validarFormulario("#frmUser");
@@ -57,7 +58,16 @@ function validarFormulario(nombreForm) {
         },//Fin de msg  ------------------
 
         submitHandler: function () {
-            solicitudPost("api/identidad/create", "", nombreForm, true);
+            const registrarCallBack = (response)  => {
+                if (response.isError === 1) {
+                    mostrarMensajeAcceso("No se puede registrar", response.result, "error");
+                } else {
+                    const acceso = () => window.location.replace(response.result);
+                    mostrarMensajeAcceso(`Se ha creado correctamente el usuario de ${response.user.nombre}`, "Creado Usuario.", "success", (response.isUrl)? acceso : null);
+                }
+            }
+
+            solicitudPost("api/identidad/create", registrarCallBack, nombreForm, true);
         },
        // Función error de respuesta
         errorPlacement: function (error, element) {
