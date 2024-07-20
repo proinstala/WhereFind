@@ -306,6 +306,7 @@ public class IdentidadService extends BaseService {
         String nombreRealUsuario   = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_NOMBRE, "");
         String apellidoRealUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_APELLIDOS, "");
         String emailUsuario        = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_EMAIL, "");
+        String imagenUsuario        = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_IMAGEN, "");
 
         // Comprueba que los datos del usuario no estén vacios
         if (!nombreUsuario.isBlank() && !passwordUsuario.isBlank())
@@ -314,7 +315,7 @@ public class IdentidadService extends BaseService {
             IUserService userService = GestionPersistencia.getUserService();
 
             // Crea y guarda los datos del usuario
-            UserDTO userDTO = userService.add(new UserDTO(-1, nombreUsuario, passwordUsuario, "User", nombreRealUsuario, apellidoRealUsuario, emailUsuario));
+            UserDTO userDTO = userService.add(new UserDTO(-1, nombreUsuario, passwordUsuario, "User", nombreRealUsuario, apellidoRealUsuario, emailUsuario, imagenUsuario));
 
             // Si el usuario no es nulo
             if (userDTO != null)

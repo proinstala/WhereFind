@@ -197,6 +197,26 @@ public class UserSession {
         // Devuelve No aplicable si no hay usuario logueado
         return "n/a";
     }
+    
+    /**
+     * Obtiene la imagen en formato Base64 del usuario logueado.
+     *
+     * @param request Instancia de HttpServletRequest
+     * @return una cadena con la imagen en formato Base64 del usuario si está disponible, 
+     *         "App/img/defaultUser.svg" si la imagen está en blanco, 
+     *         o "n/a" si no hay usuario logueado.
+     */
+    public static String getLoginImagen(HttpServletRequest request) {
+        // Obtiene el UserDTO del usuario logueado
+        UserDTO userDTO = getUserLogin(request);
+
+        if (userDTO != null && userDTO.getImagen() != null) {
+            return (userDTO.getImagen().isBlank()) ? "App/img/defaultUser.svg" : userDTO.getImagen();
+        }
+
+        // Devuelve No aplicable si no hay usuario logueado
+        return "n/a";
+    }
 
 
     /**

@@ -22,4 +22,7 @@ public class ConstParametros {
 
     /** Correo electrónico del usuario. */
     public static final String PARAM_USUARIO_EMAIL = "emailUsuario";
+    
+    /** Imagen del usuario. */
+    public static final String PARAM_USUARIO_IMAGEN = "imagenUsuarioB64";
 }

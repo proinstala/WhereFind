@@ -15,16 +15,16 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
     // Sentencias para trabajar con mysql
     //---------------------------------------------
     // Obtiene toda la lista de usuarios
-    private static final String SQL_SELECT_ALL_USERS = "SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email FROM USER WHERE activo = TRUE;";
+    private static final String SQL_SELECT_ALL_USERS = "SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email, imagen FROM USER WHERE activo = TRUE;";
 
     // Obtiene un usuario en concreto que coincidan su user_name y su password
-    private static final String SQL_SELECT_GET_USER = "SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email FROM USER WHERE activo = TRUE AND user_name=? AND password=ENCRYPT_DATA_BASE64(?);";
+    private static final String SQL_SELECT_GET_USER = "SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email, imagen FROM USER WHERE activo = TRUE AND user_name=? AND password=ENCRYPT_DATA_BASE64(?);";
 
     // Obtiene un usuario en concreto que coincidan su user_name y su password
-    private static final String SQL_SELECT_GET_USER_BY_ID = "SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email FROM USER WHERE activo = TRUE AND id=?;";
+    private static final String SQL_SELECT_GET_USER_BY_ID = "SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email, imagen FROM USER WHERE activo = TRUE AND id=?;";
 
     // Añada un nuevo user
-    private static final String SQL_INSERT_NEW_USER = "INSERT INTO USER (user_name, password, rol, activo, nombre, apellidos, email) VALUES(?, ENCRYPT_DATA_BASE64(?), ?, 1, ?, ?, ?);";
+    private static final String SQL_INSERT_NEW_USER = "INSERT INTO USER (user_name, password, rol, activo, nombre, apellidos, email, imagen) VALUES(?, ENCRYPT_DATA_BASE64(?), ?, 1, ?, ?, ?, ?);";
 
     // Actualiza el rol y el password a un usuario
     private static final String SQL_UPDATE_USER = "UPDATE USER SET rol=?, password=ENCRYPT_DATA_BASE64(?) WHERE id=?;";
@@ -49,7 +49,8 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
                     resultSet.getString("rol"),
                     resultSet.getString("nombre"),
                     resultSet.getString("apellidos"),
-                    resultSet.getString("email")
+                    resultSet.getString("email"),
+                    resultSet.getString("imagen")
             );
         } catch (SQLException e) {
             e.printStackTrace();
@@ -83,6 +84,7 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
             sentencia.setString(4, userDTO.getNombre());
             sentencia.setString(5, userDTO.getApellidos());
             sentencia.setString(6, userDTO.getEmail());
+            sentencia.setString(7, userDTO.getImagen());
 
             // Ejecuto la sentencia preparada
             sentencia.executeUpdate();

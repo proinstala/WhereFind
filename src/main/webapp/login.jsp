@@ -16,7 +16,7 @@
             <!-- Parte izquierda -->
             <form class="login__izquierda" name="frmLogin" id="frmLogin" >
                 <h1 class="login__titulo">Login</h1>
-                <img class="login__img" src="App/img/user2.svg" alt="logo usuario">
+                <img class="login__img" src="App/img/defaultUser.svg" alt="logo usuario">
 
                 <div class="info-error" id="info-error">
                     <b>Errores</b>
