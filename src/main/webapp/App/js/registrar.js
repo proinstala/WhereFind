@@ -3,6 +3,7 @@ import { mostrarMensajeAcceso } from './alertasSweetAlert2.mjs';
 
 $(document).ready(function () {
     validarFormulario("#frmUser");
+    const nombre = "nombre";
 });
 
 function validarFormulario(nombreForm) {
