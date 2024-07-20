@@ -45,5 +45,10 @@ const mostrarLoading = (mensaje = "Por favor espere.") => {
     });
 };
 
+const ocultarLoading = () => {
+    swal.close();
+};
 
-export { mostrarMensajeAcceso, mostrarLoading };
+
+
+export { mostrarMensajeAcceso, mostrarLoading, ocultarLoading };

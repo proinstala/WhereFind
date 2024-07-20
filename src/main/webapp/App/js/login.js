@@ -1,4 +1,5 @@
 import { solicitudPost } from './comunes.mjs';
+import { mostrarMensajeAcceso } from './alertasSweetAlert2.mjs';
 
 $(document).ready(function () {
     validarFormulario("#frmLogin");
@@ -29,7 +30,20 @@ function validarFormulario(nombreForm) {
         },//Fin de msg  ------------------
 
         submitHandler: function () {
-            solicitudPost("api/identidad/login", nombreForm);
+
+            const loginCallBack = (response)  => {
+                if (response.isError === 1) {
+                    mostrarMensajeAcceso("Acceso Denegado", response.result, "error");
+                } else {
+                    const acceso = () => window.location.replace(response.result);
+                    mostrarMensajeAcceso(`Bienvenido ${response.user.nombre}`, "Acceso Permitido.", "success", (response.isUrl)? acceso : null);
+                }
+            }
+
+            solicitudPost("api/identidad/login", loginCallBack, nombreForm, true);
+
+
+
         },
        // Función error de respuesta
         errorPlacement: function (error, element) {

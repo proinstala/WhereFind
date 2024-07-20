@@ -6,7 +6,7 @@
 
 <link href="App/css/inicio.css" rel="stylesheet" type="text/css"/>
 
-<body>
+
     <div class="contenedor__general">
         <div class="contenedor">
 

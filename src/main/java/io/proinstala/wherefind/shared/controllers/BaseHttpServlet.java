@@ -89,7 +89,7 @@ public class BaseHttpServlet extends HttpServlet {
      * @param error    el código de error HTTP.
      * @param mensaje  el mensaje de error asociado.
      */
-    protected void responseError(HttpServletResponse response, int error, String mensaje)
+    public static void responseError(HttpServletResponse response, int error, String mensaje)
     {
         try
         {
@@ -107,7 +107,7 @@ public class BaseHttpServlet extends HttpServlet {
      * @param response la respuesta HTTP a la que se enviará el error.
      * @param mensaje  el mensaje de error asociado.
      */
-    protected void responseError403(HttpServletResponse response, String mensaje)
+    public static void responseError403(HttpServletResponse response, String mensaje)
     {
         responseError(response, HttpServletResponse.SC_FORBIDDEN, mensaje);
     }
@@ -118,7 +118,7 @@ public class BaseHttpServlet extends HttpServlet {
      * @param response la respuesta HTTP a la que se enviará el error.
      * @param mensaje  el mensaje de error asociado.
      */
-    protected void responseError404(HttpServletResponse response, String mensaje)
+    public static void responseError404(HttpServletResponse response, String mensaje)
     {
         responseError(response, HttpServletResponse.SC_NOT_FOUND, mensaje);
     }

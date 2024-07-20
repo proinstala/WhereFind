@@ -47,11 +47,12 @@
     gap: 2rem;
 }
 .contenedor__menu i {
+    color: var(--blanco) !important;
     font-size: 6rem;
     transition: transform 0.2s ease;
 }
 .contenedor__menu i:hover {
-    color: var(--secundario);
+    color: var(--secundario) !important;
     cursor: pointer;
     transform: scale(1.2);
 

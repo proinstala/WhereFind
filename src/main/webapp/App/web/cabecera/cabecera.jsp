@@ -4,6 +4,7 @@
     Author     : David
 --%>
 
+<%@page import="io.proinstala.wherefind.shared.controllers.actions.ActionServer"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="io.proinstala.wherefind.identidad.UserSession"%>
 
@@ -24,6 +25,24 @@
         <i class="las la-box" title="Articulo"></i>
         <i class="las la-map-marked-alt" title="Direccion"></i>
         <i class="las la-store-alt" title="Proveedor"></i>
+<%
+    // ----------------------------------------
+    // Iconos que solo muestra al administrador
+    // ----------------------------------------
+    if (UserSession.isUserLogIn(new ActionServer(request, response), true))
+    {
+%>
+
+        <a href="admin/users"><i class="las la-users-cog" title="Usuarios"></i></a>
+
+<%
+    }
+    // ----------------------------------------
+    // Iconos que solo muestra al administrador
+    // ----------------------------------------
+%>
+
+
     </div>
 
     <div class="contenedor__usuario">
