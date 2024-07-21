@@ -1,8 +1,3 @@
-<%--
-    Document   : inicio
-    Created on : 6 jul 2024, 17:36:35
-    Author     : David
---%>
 
 <link href="App/css/inicio.css" rel="stylesheet" type="text/css"/>
 

@@ -38,7 +38,10 @@
 }
 
 .custom-popup .swal2-icon.swal2-success,
-.custom-popup .swal2-icon.swal2-error {
+.custom-popup .swal2-icon.swal2-error,
+.custom-popup .swal2-icon.swal2-warning,
+.custom-popup .swal2-icon.swal2-info,
+.custom-popup .swal2-icon.swal2-question {
     font-size: 2rem; /* tamaño para icono de success */
 }
 

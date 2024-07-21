@@ -1,45 +1,33 @@
-import { solicitudPost } from './comunes.mjs';
+import { solicitudPost, setImageSelected } from './comunes.mjs';
 import { mostrarMensajeAcceso } from './alertasSweetAlert2.mjs';
 
 $(document).ready(function () {
     validarFormulario("#frmUser");
     
-    const inputFoto = document.querySelector('#btnFoto');
+    const btnFoto = document.querySelector('#btnFoto');
     const contenedorImg = document.querySelector('#imgUsuario');
     const inputHide64 = document.querySelector('#imagenUsuarioB64');
     
-    inputFoto.addEventListener('change', (e) => {
-        obtenerImagen(e, contenedorImg, inputHide64);
+    btnFoto.addEventListener('change', (e) => {
+        const defaultUserImg = contenedorImg.src;
+        const fileImg = e.target.files[0];
+        
+        //Establece la imagen seleccionada. 
+        setImageSelected(fileImg, contenedorImg, inputHide64, defaultUserImg)
+            .then((result) => {
+                if (result) {
+                    //console.log("Imagen establecida correctamente.");
+                } else {
+                    console.log("No se ha establecido la imagen.");
+                }
+            })
+            .catch((error) => {
+                // Maneja cualquier error que ocurra durante la validación o el proceso de establecer la imagen
+                console.error('Error:', error);
+                btnFoto.value = '';
+            });
     });
 });
-
-function obtenerImagen(event, contenedorImagen, inputHideImagen64) {
-    const defaultFile = 'App/img/defaultUser.svg';
-    
-    if(event.target.files[0]) {
-        console.log("Nombre del archivo:", event.target.files[0].name);
-        console.log("Tipo de archivo:", event.target.files[0].type);
-        console.log("Tamaño del archivo:", event.target.files[0].size, "bytes");
-        console.log("Tamaño del archivo:", (event.target.files[0].size / 1024).toFixed(2), "KB");
-
-        const reader = new FileReader(); //Crea un objeto FileReader para leer el contenido del archivo.
-        reader.onload = function(e) {
-            const base64String = e.target.result; // Obtén la URL de datos Base64
-            //contenedorImagen.src = e.target.result; //Asigna el contenido del archivo como una URL de datos a la imagen.
-            contenedorImagen.src = base64String; // Asigna el contenido del archivo como una URL de datos a la imagen.
-            inputHideImagen64.value = base64String; // Establece el valor del input oculto con la representación Base64 de la imagen.
-        };
-
-        reader.readAsDataURL(event.target.files[0]); //Lee el contenido del archivo como una URL de datos.
-        //contenedorImagen.style.display = 'block'; //Muestra la imagen al cambiar su display a 'block.
-    } else {
-        //imagen.src = '';
-        //imagen.style.display = 'none'; //Oculta la imagen.
-        
-        //Si no se seleccionó ningún archivo, muestra la imagen por defecto.
-        contenedorImagen.src = defaultFile; 
-    }
-}
 
 
 function validarFormulario(nombreForm) {

@@ -1,8 +1,3 @@
-<%--
-    Document   : cabecera
-    Created on : 6 jul 2024, 17:49:25
-    Author     : David
---%>
 
 <%@page import="io.proinstala.wherefind.shared.controllers.actions.ActionServer"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -42,7 +37,6 @@
     // ----------------------------------------
 %>
 
-
     </div>
 
     <div class="contenedor__usuario">
@@ -56,27 +50,6 @@
         </div>
 
         <button class="btn_user las la-pen" title="Editar Usuario"></button>
-
-        <!-- muestra
-        <i class="las la-pen"></i>
-        <i class="las la-user-edit"></i>
-        <i class="las la-sign-out-alt"></i>
-        <i class="las la-door-closed"></i>
-        <i class="las la-microchip"></i>
-
-
-        - almacen - <i class="las la-warehouse"></i>
-	- almacen - <i class="las la-archive"></i>
-
-	- articulo - <i class="las la-box"></i>
-	- articulos - <i class="las la-boxes"></i>
-
-	- Ubicacion - <i class="las la-map-marked-alt"></i>
-	- Ubicacion - <i class="las la-compass"></i> <i class="lar la-compass"></i>
-	- Ubicacion - <i class="las la-map-marker-alt"></i>
-
-	- proveedor - <i class="las la-store-alt"></i>
-        -->
 
         <a href="api/identidad/logout"><button class="btn_user las la-sign-out-alt" title="Cerrar Sesión"></button></a>
     </div>

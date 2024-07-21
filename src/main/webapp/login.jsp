@@ -1,8 +1,3 @@
-<%--
-    Document   : index
-    Created on : 5 jul 2024, 21:09:53
-    Author     : David
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="App/web/shared/head.jsp" >

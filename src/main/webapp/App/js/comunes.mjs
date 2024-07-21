@@ -1,4 +1,4 @@
-import { mostrarMensajeAcceso, mostrarLoading, ocultarLoading } from './alertasSweetAlert2.mjs';
+import { mostrarMensajeAcceso, mostrarLoading, ocultarLoading, mostrarMensajeAdvertencia } from './alertasSweetAlert2.mjs';
 
 /**
  * Obtiene los datos del formulario.
@@ -138,6 +138,73 @@ function formDisable(idForm, disabled, mostrarLoad) {
 }
 
 
+/**
+ * Establece una imagen en un contenedor dado a partir de un archivo de imagen seleccionado,
+ * actualiza un campo oculto con la representación Base64 de la imagen, y maneja errores 
+ * mostrando una advertencia y configurando una imagen por defecto si es necesario.
+ * 
+ * 
+ * 
+ * @param {File} fileImage - El archivo de imagen que se va a establecer en el contenedor.
+ * @param {HTMLImageElement} contenedorImagen - El contenedor de imagen (etiqueta <img>) donde se mostrará la imagen.
+ * @param {HTMLInputElement} inputHideImagen64 - Un campo de entrada oculto donde se almacenará la representación Base64 de la imagen.
+ * @param {string} [defaultImage] - La URL de la imagen por defecto que se mostrará si la imagen no es válida. Si no se proporciona, no se cambia la imagen.
+ * @param {number} [maxSizeInMB=1] - El tamaño máximo permitido para el archivo de imagen en megabytes. El valor predeterminado es 1 MB.
+ * 
+ * @returns {Promise<boolean>} - Una promesa que se resuelve en `true` si la imagen es válida y se ha establecido correctamente. La promesa se rechaza con un error si ocurre un problema.
+ */
+const setImageSelected = (fileImage, contenedorImagen, inputHideImagen64, defaultImage, maxSizeInMB) => {
+    return new Promise((resolve, reject) => {
+        validateImage(fileImage).then(() => {
+            const reader = new FileReader(); //Crea un objeto FileReader para leer el contenido del archivo.
+            reader.readAsDataURL(fileImage); //Lee el contenido del archivo como una URL de datos.
+            reader.onload = function(e) {
+                const base64String = e.target.result;   //Obtén la URL de datos Base64
+                contenedorImagen.src = base64String;    //Asigna el contenido del archivo como una URL de datos a la imagen.
+                inputHideImagen64.value = base64String; //Establece el valor del input oculto con la representación Base64 de la imagen.
+                resolve(true); // Resuelve la promesa en true cuando la imagen se establece correctamente.
+            };
+
+        }).catch(error => {
+            mostrarMensajeAdvertencia("Imagen no válida", error, "warning");
+            if(defaultImage) {
+                contenedorImagen.src = defaultImage; //Si no se seleccionó ningún archivo válido, muestra la imagen por defecto.
+            }
+            reject(error); // Rechaza la promesa en false cuando hay un error.
+        });
+    });
+}
 
 
-export { solicitudPost, solicitudGet };
+/**
+ * Valida si el archivo proporcionado es una imagen válida y si su tamaño está dentro del límite especificado.
+ * 
+ * @param {File} fileImage - El archivo de imagen a validar.
+ * @param {number} [maxSizeInMB=1] - El tamaño máximo permitido para el archivo de imagen en megabytes. El valor predeterminado es 1 MB.
+ * 
+ * @returns {Promise<boolean>} - Una promesa que se resuelve en `true` si el archivo es una imagen válida y está dentro del límite de tamaño, o se rechaza con un mensaje de error si no lo es.
+ */
+function validateImage(fileImage, maxSizeInMB = 1) {
+    return new Promise((resolve, reject) => {
+        //Verifica si el archivo es de tipo imagen.
+        const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/avif', 'image/webp'];
+        if (!validImageTypes.includes(fileImage.type)) {
+            reject("El archivo seleccionado no es una imagen o no es una imagen válida.");
+            return;
+        }
+
+        //Verifica si el tamaño del archivo es menor al tamaño máximo especificado
+        const maxSizeInBytes = maxSizeInMB * 1024 * 1024; // Tamaño máximo en bytes
+        if (fileImage.size > maxSizeInBytes) {
+            reject(`El archivo seleccionado supera el tamaño máximo de ${maxSizeInMB}MB.`);
+            return;
+        }
+
+        //Si todas las validaciones pasan.
+        resolve(true);
+    });
+}
+
+
+
+export { solicitudPost, solicitudGet, setImageSelected };
