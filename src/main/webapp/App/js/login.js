@@ -41,9 +41,6 @@ function validarFormulario(nombreForm) {
             }
 
             solicitudPost("api/identidad/login", loginCallBack, nombreForm, true);
-
-
-
         },
        // Función error de respuesta
         errorPlacement: function (error, element) {

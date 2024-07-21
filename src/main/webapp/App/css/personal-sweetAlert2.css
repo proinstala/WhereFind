@@ -11,12 +11,22 @@
 
 .swal-titulo {
     font-size: 4rem;
-    color: #8E64A6;
+    color: var(--primario);
 }
 
 .swal-boton {
     font-size: 2rem !important;
-    background-color: #3e3d4d !important;
+    background-color: var(--secundario) !important;
+    border-color: var(--secundario) !important; /*No funciona*/
+}
+
+.swal-boton:hover {
+    background-color: var(--primario) !important;
+    border-color: var(--secundario) !important; /*No funciona*/
+}
+
+.swal-boton:focus {
+    border-color: var(--secundario) !important; /*No funciona*/
 }
 
 .swal-contenido {
