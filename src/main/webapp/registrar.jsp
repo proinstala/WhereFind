@@ -12,8 +12,15 @@
             <!-- Parte izquierda -->
             <form class="login__izquierda" name="frmUser" id="frmUser" >
                 <h1 class="login__titulo">Registrar</h1>
-                <img class="login__img" src="App/img/defaultUser.svg" id="imgUsuario" alt="logo usuario">
+                <div >
+                    <img class="login__img" src="App/img/defaultUser.svg" id="imgUsuario" alt="logo usuario">
 
+                    <label for="btnFoto2" class="estilo-btnFoto2">
+                            Cambiar foto
+                        </label>
+                    <input id="btnFoto2" type="file" />
+
+                </div>
                 <div class="info-error" id="info-error">
                     <b>Errores</b>
                 </div>
@@ -42,7 +49,7 @@
                     <label for="passwordUsuario">Password</label>
                     <input class="input-underline" type="password" name="passwordUsuario" id="passwordUsuario" placeholder="Introduce tu password">
                 </div>
-                
+
                 <div class="login__input">
                     <label for="imagenUsuario">Imagen</label>
                     <!-- comment <input class="input-underline" type="text" name="imagenUsuario" id="imagenUsuario" placeholder="Introduce imagen"> -->

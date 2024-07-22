@@ -3,16 +3,16 @@ import { mostrarMensajeAcceso } from './alertasSweetAlert2.mjs';
 
 $(document).ready(function () {
     validarFormulario("#frmUser");
-    
-    const btnFoto = document.querySelector('#btnFoto');
+
+    const btnFoto = document.querySelector('#btnFoto2');
     const contenedorImg = document.querySelector('#imgUsuario');
     const inputHide64 = document.querySelector('#imagenUsuarioB64');
-    
+
     btnFoto.addEventListener('change', (e) => {
         const defaultUserImg = contenedorImg.src;
         const fileImg = e.target.files[0];
-        
-        //Establece la imagen seleccionada. 
+
+        //Establece la imagen seleccionada.
         setImageSelected(fileImg, contenedorImg, inputHide64, defaultUserImg)
             .then((result) => {
                 if (result) {
