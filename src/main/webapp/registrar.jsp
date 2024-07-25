@@ -4,68 +4,71 @@
     <jsp:param name="titleweb" value="Registrar" />
 </jsp:include>
 
-    <link rel="stylesheet" href="App/css/login.css">
     <link rel="stylesheet" href="App/css/registrar.css">
 
-    <div class="contenedor__general--login">
-        <div class="login registrar">
+    <div class="contenedor__general--registrar">
+        <div class="contenedor__formulario">
             <!-- Parte izquierda -->
-            <form class="login__izquierda" name="frmUser" id="frmUser" >
-                <h1 class="login__titulo">Registrar</h1>
-                <img class="login__img" src="App/img/defaultUser.svg" id="imgUsuario" alt="logo usuario">
-
-                <div class="info-error" id="info-error">
-                    <b>Errores</b>
+            <div class="contenedor__formulario--cabecera">
+                <div>
+                    <h1>Registrar Nuevo Usuario</h1>
                 </div>
-
-                <div class="login__input">
-                    <label for="nombreUsuario">Usuario</label>
-                    <input class="input-underline" type="text" name="nombreUsuario" id="nombreUsuario" placeholder="Introduce tu nombre de usuario">
+                <div>
+                    <div class="contenedor__formulario--cabecera--imagen">
+                        <img class="imagen--registrar" src="App/img/defaultUser.svg" id="imgUsuario" alt="logo usuario">
+                    </div>
+                    
+                    <label for="btnFoto" class="input_foto">
+                        <input type="file" name="btnFoto" id="btnFoto" accept="image/*">
+                        <i class="las la-camera"></i>
+                        <span id="textoImagen"></span>
+                    </label>
                 </div>
+            </div>
+            
+            
+            <div class="contenedor__formulario--main">
+                <form class="formulario" name="frmRegistrarUsuario" id="frmRegistrarUsuario">
+                    <div class="form__input">
+                        <input class="" type="text" name="nombreUsuario" id="nombreUsuario" placeholder="Introduce tu nombre de usuario">
+                        <label for="nombreUsuario">Usuario</label>
+                    </div>
 
-                <div class="login__input">
-                    <label for="nombreRealUsuario">Nombre</label>
-                    <input class="input-underline" type="text" name="nombreRealUsuario" id="nombreRealUsuario" placeholder="Introduce tu nombre">
-                </div>
+                    <div class="form__input">
+                        <input class="" type="text" name="nombreRealUsuario" id="nombreRealUsuario" placeholder="Introduce tu nombre">
+                        <label for="nombreRealUsuario">Nombre</label>
+                    </div>
 
-                <div class="login__input">
-                    <label for="apellidoRealUsuario">Apellidos</label>
-                    <input class="input-underline" type="text" name="apellidoRealUsuario" id="apellidoRealUsuario" placeholder="Introduce tus apellidos">
-                </div>
+                    <div class="form__input">
+                        <input class="" type="text" name="apellidoRealUsuario" id="apellidoRealUsuario" placeholder="Introduce tus apellidos">
+                        <label for="apellidoRealUsuario">Apellidos</label>
+                    </div>
 
-                <div class="login__input">
-                    <label for="emailUsuario">Email</label>
-                    <input class="input-underline" type="text" name="emailUsuario" id="emailUsuario" placeholder="Introduce tu email">
-                </div>
+                    <div class="form__input">
+                        <input class="" type="text" name="emailUsuario" id="emailUsuario" placeholder="Introduce tu email">
+                        <label for="emailUsuario">Email</label>
+                    </div>
 
-                <div class="login__input">
-                    <label for="passwordUsuario">Password</label>
-                    <input class="input-underline" type="password" name="passwordUsuario" id="passwordUsuario" placeholder="Introduce tu password">
-                </div>
-                
-                <div class="login__input">
-                    <label for="imagenUsuario">Imagen</label>
-                    <!-- comment <input class="input-underline" type="text" name="imagenUsuario" id="imagenUsuario" placeholder="Introduce imagen"> -->
-                    <input type="file" name="btnFoto" id="btnFoto" accept="image/*">
+                    <div class="form__input">
+                        <input class="" type="password" name="passwordUsuario" id="passwordUsuario" placeholder="Introduce tu password">
+                        <label for="passwordUsuario">Password</label>
+                    </div>
+                    
+                    <div class="form__input">
+                        <input class="" type="password" name="confirmarPasswordUsuario" id="confirmarPasswordUsuario" placeholder="Introduce tu password">
+                        <label for="confirmarPasswordUsuario">Confirmar Password</label>
+                    </div>
+                    
                     <input type="hidden" name="imagenUsuarioB64" id="imagenUsuarioB64">
+                </form>
+            </div>
+            
+            <div class="contenedor__formulario--footer">
+                <div class="form__btn">
+                    <button class="form__btn--aceptar" form="frmRegistrarUsuario" type="submit">REGISTRAR USUARIO</button>
                 </div>
-
-                <div class="login__input">
-                    <button class="login__btn" type="submit">REGISTRAR</button>
-                </div>
-            </form>
-
-            <!-- Parte derecha -->
-            <div class="login__derecha">
-                <h1 class="login__titulo-saludo">Bienvenido a WhereFind</h1>
-                <p class="login__descripcion">Organiza, cataloga y encuentra tus artí­culos de manera rápida y eficiente.</p>
-                <div class="login__imagen">
-                    <img src="App/img/caja.png" alt="caja carton">
-                </div>
-
-                <div class="login__enlaces">
-                    <a class="login__enlaces-enlace" href="login.jsp">Login</a>
-                    <a class="login__enlaces-enlace" href="#">He olvidado mi password</a>
+                <div class="form__btn">
+                    <button class="form__btn--cancelar" id="btnCancelar">CANCELAR</button>
                 </div>
             </div>
 

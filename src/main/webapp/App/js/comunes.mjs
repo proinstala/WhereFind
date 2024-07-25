@@ -162,7 +162,8 @@ const setImageSelected = (fileImage, contenedorImagen, inputHideImagen64, defaul
                 const base64String = e.target.result;   //Obtén la URL de datos Base64
                 contenedorImagen.src = base64String;    //Asigna el contenido del archivo como una URL de datos a la imagen.
                 inputHideImagen64.value = base64String; //Establece el valor del input oculto con la representación Base64 de la imagen.
-                resolve(true); // Resuelve la promesa en true cuando la imagen se establece correctamente.
+                //labelImagen.textContent = fileImage.name;
+                resolve(fileImage.name); // Resuelve la promesa en true cuando la imagen se establece correctamente.
             };
 
         }).catch(error => {

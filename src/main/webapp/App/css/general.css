@@ -22,15 +22,20 @@ Bordes/Líneas	    #CCCCCC	204, 204, 204
     --fuenteParrafos: 'Open Sans', sans-serif;
     */
     --primario: #FFA500;
-    --secundario: #005FA5;
+    --secundario: #005FA5; 
+
+    --secundario-brillo: #0073C8;
     
     --fondo_primario: #FFFFFF;
     --fondo_secundario: #F5F5F5;
 
     --texto_principal: #333333;
-    --texto_secundario: #666666;
+    --texto_medio: #444444;
+    --texto_secundario: #555555;
     
     --enfasis: #FF4500;
+    --enfasis-brillo: #FF641E;
+    
     --bordes_lineas: #CCCCCC;
 
     --negro: #000000;
@@ -57,11 +62,11 @@ body {
     font-family: Arial, sans-serif;
 }
 
-
 /*Experimental: animaciones de transicion.  */
 @view-transition {
     navigation: auto;
 }
+/*
 ::view-transition-old(almacen_contenedor) {
     animation-name: scaleOut;
 }
@@ -73,6 +78,22 @@ body {
 }
 .almcen_card {
     view-transition-name: almacen_contenedor;
+}
+*/
+::view-transition-old(transicion_img_login) {
+    animation-name: scaleOut;
+}
+
+::view-transition-new(transicion_img_login) {
+    animation-name: scaleIn;
+}
+
+.imagen--login {
+    view-transition-name: transicion_img_login;
+}
+
+.imagen--registrar {
+    view-transition-name: transicion_img_login;
 }
 
 
@@ -92,6 +113,23 @@ body {
         transform: scale(1);
     }
 }
+
+
+
+
+/*
+clase de la imagen en login
+login__img
+
+clase de div que contiene la imagen en registrar
+contenedor__formulario--cabecera--imagen
+
+*/
+
+
+
+
+
 
 /** Globales **/
 a {
@@ -173,12 +211,42 @@ p {
 
 
 
-#info-error {
-    width: 287px !important;
-    border: 2px solid rgba(255, 0, 0, 0.95);
-    display: none;
-    padding: 10px;
-    margin-top: 10px;
-    background-color: rgba(255, 0, 0, 0.05);
-    font-weight: 500;
+/*Clase de label de error de validacion de formulario.*/
+label.error {
+    position: absolute; /* Coloca los mensajes de error en posición absoluta */
+    color: red !important;
+    font-size: 1.1rem !important;
+    margin-top: 0px; /* Ajusta el margen superior para separar del input */
+    bottom: -2rem;
 }
+
+
+
+/* TODO: Ajustar los colores al tema actual */
+button:disabled,
+button[disabled]
+button[disabled]:hover {
+    border: 1px solid #999999 !important;
+    background-color: #cccccc !important;
+    color: #666666 !important;
+    font-weight: normal !important;
+}
+
+/* TODO: Ajustar los colores al tema actual */
+label[disabled],
+label:disabled,
+input[disabled],
+input:disabled,
+select[disabled],
+select:disabled,
+option[disabled],
+option:disabled,
+textarea[disabled],
+textarea:disabled {
+    border: 1px solid #999999 !important;
+    background-color: #cccccc !important;
+    color: #666666 !important;
+}
+
+
+

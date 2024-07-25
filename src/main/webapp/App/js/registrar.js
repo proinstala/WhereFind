@@ -2,21 +2,24 @@ import { solicitudPost, setImageSelected } from './comunes.mjs';
 import { mostrarMensajeAcceso } from './alertasSweetAlert2.mjs';
 
 $(document).ready(function () {
-    validarFormulario("#frmUser");
+    validarFormulario("#frmRegistrarUsuario");
     
     const btnFoto = document.querySelector('#btnFoto');
     const contenedorImg = document.querySelector('#imgUsuario');
     const inputHide64 = document.querySelector('#imagenUsuarioB64');
+    const labelInputFoto = document.querySelector('#textoImagen');
     
     btnFoto.addEventListener('change', (e) => {
         const defaultUserImg = contenedorImg.src;
         const fileImg = e.target.files[0];
         
+        
         //Establece la imagen seleccionada. 
         setImageSelected(fileImg, contenedorImg, inputHide64, defaultUserImg)
             .then((result) => {
                 if (result) {
-                    //console.log("Imagen establecida correctamente.");
+                    console.log("Imagen establecida correctamente.");
+                    labelInputFoto.textContent = result;
                 } else {
                     console.log("No se ha establecido la imagen.");
                 }
@@ -30,8 +33,8 @@ $(document).ready(function () {
 });
 
 
-function validarFormulario(nombreForm) {
-    $(nombreForm).validate({
+function validarFormulario(idForm) {
+    $(idForm).validate({
         rules: {
             nombreUsuario: {
                 required: true,
@@ -87,7 +90,7 @@ function validarFormulario(nombreForm) {
                 }
             };
 
-            solicitudPost("api/identidad/create", registrarCallBack, nombreForm, true);
+            solicitudPost("api/identidad/create", registrarCallBack, idForm, true);
         },
        // Función error de respuesta
         errorPlacement: function (error, element) {
@@ -96,7 +99,7 @@ function validarFormulario(nombreForm) {
         },
         complete: function () {
             console.log("complete");
-            formDisable(false, nombreForm);
+            formDisable(false, idForm);
         }
     });//Fin Validate
 }

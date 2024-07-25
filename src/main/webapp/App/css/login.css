@@ -146,12 +146,6 @@
     font-weight: 700;
 }
 
-label.error {
-    position: absolute; /* Coloca los mensajes de error en posición absoluta */
-    color: red !important;
-    font-size: 1.1rem !important;
-    margin-top: 65px; /* Ajusta el margen superior para separar del input */
-}
 
 
 /* TODO: Ajustar los colores al tema actual */
