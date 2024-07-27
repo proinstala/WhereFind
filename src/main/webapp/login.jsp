@@ -18,7 +18,7 @@
                     <input class="input-underline" type="text" name="nombreUsuario" id="nombreUsuario" placeholder="Introduce tu nombre de usuario">
                 </div>
                 <div class="login__input">
-                    <label for="passwordUsuario">Password</label>
+                    <label for="passwordUsuario">Password Usuario</label>
                     <input class="input-underline" type="password" name="passwordUsuario" id="passwordUsuario" placeholder="Introduce tu password">
                 </div>
                 <div class="login__input">

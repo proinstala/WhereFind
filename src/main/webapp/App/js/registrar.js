@@ -34,6 +34,11 @@ $(document).ready(function () {
 
 
 function validarFormulario(idForm) {
+    $.validator.addMethod("passwordMatch", function(value, element) {
+        // Comprueba si el valor del campo de confirmación coincide con el de la contraseña
+        return value === $(idForm).find("input[name='passwordUsuario']").val();
+    }, "Las contraseñas no coinciden.");
+    
     $(idForm).validate({
         rules: {
             nombreUsuario: {
@@ -42,7 +47,8 @@ function validarFormulario(idForm) {
             },
             passwordUsuario: {
                 required: true,
-                maxlength: 60
+                maxlength: 60,
+                minlength: 4
             },
             nombreRealUsuario: {
                 required: true,
@@ -55,6 +61,10 @@ function validarFormulario(idForm) {
             emailUsuario: {
                 required: true,
                 email: true
+            },
+            confirmarPasswordUsuario: {
+                required: true,
+                passwordMatch: true
             }
         },//Fin de reglas ----------------
         messages: {
@@ -64,7 +74,8 @@ function validarFormulario(idForm) {
             },
             passwordUsuario: {
                 required: "Debe introducir el password de usuario.",
-                maxlength: "Longitud máx 60 caracteres."
+                maxlength: "Longitud máx 60 caracteres.",
+                minlength: "Logitud minima de 4 caracteres."
             },
             nombreRealUsuario: {
                 required: "Debe introducir su nombre.",
@@ -77,7 +88,12 @@ function validarFormulario(idForm) {
             emailUsuario: {
                 required: "Debe introducir su email.",
                 email: "Debe introducir un email válido."
+            },
+            confirmarPasswordUsuario: {
+                required: "Debe introducir el password de confirmación.",
+                passwordMatch: "El password de confirmación y de usuario no coinciden."
             }
+            
         },//Fin de msg  ------------------
 
         submitHandler: function () {
