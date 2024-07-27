@@ -24,6 +24,19 @@ const solicitudPost = (url, callBack, idElement, mostrarLoad) => {
     solicitudPostFetch(url, data, callBack, idElement, mostrarLoad);
 }
 
+/**
+ * Realiza una solicitud POST.
+ *
+ * @param {string} url         - La URL a la que se enviará la solicitud.
+ * @param {string} idElement   - Id del formulario.
+ * @param {string} mostrarLoad - Bloquea la UI mostrando una alerta con una animación de espera.
+ */
+const solicitudPost_modificada = (url, idElement, mostrarLoad) => {
+    let data = getDatosForm(idElement);
+    return solicitudPostFetch_modificada(url, data, idElement, mostrarLoad);
+}
+
+
 
 /**
  * Realiza una solicitud GET.
@@ -73,6 +86,42 @@ function solicitudPostFetch(url, data, callBack, idElement, mostrarLoad) {
         console.log("complete");
         formDisable(idElement, false, false);
     });
+}
+
+/**
+ * Realiza una solicitud POST utilizando fetch.
+ *
+ * @param {string} url         - La URL a la que se enviará la solicitud.
+ * @param {string} data        - Los datos a enviar en la solicitud.
+ * @param {string} idElement   - Id del formulario.
+ * @param {string} mostrarLoad - Bloquea la UI mostrando una alerta con una animación de espera.
+ */
+function solicitudPostFetch_modificada(url, data, idElement, mostrarLoad) {
+ 
+    formDisable(idElement, true, mostrarLoad);
+
+    return fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: data
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        return response.json(); // Procesar la respuesta JSON
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        mostrarMensajeAcceso("Error", "No se ha podido realizar la acción por un error en el servidor.", "error");
+    })
+    .finally(() => {
+        formDisable(idElement, false, false);
+    });
+
 }
 
 
@@ -155,7 +204,7 @@ function formDisable(idForm, disabled, mostrarLoad) {
  */
 const setImageSelected = (fileImage, contenedorImagen, inputHideImagen64, defaultImage, maxSizeInMB) => {
     return new Promise((resolve, reject) => {
-        validateImage(fileImage).then(() => {
+        validateImage(fileImage, maxSizeInMB).then(() => {
             const reader = new FileReader(); //Crea un objeto FileReader para leer el contenido del archivo.
             reader.readAsDataURL(fileImage); //Lee el contenido del archivo como una URL de datos.
             reader.onload = function(e) {
@@ -208,4 +257,4 @@ function validateImage(fileImage, maxSizeInMB = 1) {
 
 
 
-export { solicitudPost, solicitudGet, setImageSelected };
+export { solicitudPost, solicitudGet, setImageSelected, solicitudPost_modificada };

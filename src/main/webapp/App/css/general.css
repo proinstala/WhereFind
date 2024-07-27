@@ -1,26 +1,59 @@
 
-/*
-    Created on : 5 jul 2024, 21:39:07
-    Author     : David
-*/
 
 /*
 Color Principal	    #FFA500	255, 165, 0
 Color Secundario    #005FA5	0, 95, 165
-Color de Fondo	    #FFFFFF	255, 255, 255
+Color Secundario +  #0073C8
+
+Color Énfasis       #FF4500	255, 69, 0
+Color Enfasis +     #FF641E
+
 Texto Principal	    #333333	51, 51, 51
+Texto Medio         #444444
 Texto Secundario    #666666	102, 102, 102
-Color de Énfasis    #FF4500	255, 69, 0
+
 Fondo Secundario    #F5F5F5	245, 245, 245
 Bordes/Líneas	    #CCCCCC	204, 204, 204
+Borde input form    #444444
+
+Color Blanco	    #FFFFFF	255, 255, 255
+Color Negro         #000000
 
 */
 
+@font-face {
+    font-family: 'AnekMalayalam';
+    src: url('../font/Anek_Malayalam/AnekMalayalam-VariableFont_wdth,wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ChivoMono';
+    src: url('../font/Chivo_Mono/ChivoMono-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('../font/Inter/Inter-VariableFont_slnt,wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Outfit';
+    src: url('../font/Outfit/Outfit-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+}
+
 :root {
-    /*
-    --fuenteHeading: 'PT Sans', sans-serif;
-    --fuenteParrafos: 'Open Sans', sans-serif;
-    */
+    
+    --fuente_principal: 'Inter', sans-serif;
+    --fuente_auxiliar: 'Outfit', sans-serif;
+    
     --primario: #FFA500;
     --secundario: #005FA5; 
 
@@ -37,6 +70,8 @@ Bordes/Líneas	    #CCCCCC	204, 204, 204
     --enfasis-brillo: #FF641E;
     
     --bordes_lineas: #CCCCCC;
+    
+    --borde_input_formulario: #444444;
 
     --negro: #000000;
     --blanco: #FFFFFF;
@@ -57,9 +92,12 @@ html {
 }
 body {
     font-size: 16px; /*Ajuste para REM, ahora 1 rem es 10px (1rem = 10px) */
-    /* font-family: var(--fuenteParrafos); */
     /*line-height: 2;*/
-    font-family: Arial, sans-serif;
+
+    font-family: var(--fuente_principal);
+    
+    font-optical-sizing: auto;
+    font-style: normal;
 }
 
 /*Experimental: animaciones de transicion.  */
@@ -116,21 +154,6 @@ body {
 
 
 
-
-/*
-clase de la imagen en login
-login__img
-
-clase de div que contiene la imagen en registrar
-contenedor__formulario--cabecera--imagen
-
-*/
-
-
-
-
-
-
 /** Globales **/
 a {
     /*text-decoration: none;*/
@@ -160,6 +183,9 @@ img {
 p {
     line-height: 1.5;
     color: var(--texto_secundario)
+}
+label {
+    letter-spacing: 0.1rem;
 }
 
 /** Utilidades **/

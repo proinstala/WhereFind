@@ -60,47 +60,37 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
         return null;
     }
 
+    
     /**
      * Añade un nuevo usuario a la base de datos.
      *
      * @param userDTO el objeto UserDTO que representa al nuevo usuario.
      * @return el objeto UserDTO añadido.
+     * @throws SQLException si ocurre un error al acceder a la base de datos.
      */
     @Override
-    public UserDTO add(UserDTO userDTO) {
-        // Para recoger el numero de filas afectadas
-        try
-        {
-            // Se crea la conexion
-            Connection conexion  = getConnection();
-
-            // Preparo un PreparedStatement con la sentencia necesaria para saber el numero de filas
-            PreparedStatement sentencia = conexion.prepareStatement(SQL_INSERT_NEW_USER);
-
-            // Le paso los parametros al PreparedStatement
-            sentencia.setString(1, userDTO.getUserName());
-            sentencia.setString(2, userDTO.getPassword());
-            sentencia.setString(3, userDTO.getRol());
-            sentencia.setString(4, userDTO.getNombre());
-            sentencia.setString(5, userDTO.getApellidos());
-            sentencia.setString(6, userDTO.getEmail());
-            sentencia.setString(7, userDTO.getImagen());
-
-            // Ejecuto la sentencia preparada
-            sentencia.executeUpdate();
-
-            // Cerramos todo lo que hemos usado
-            sentencia.close();
-            conexion.close();
+    public UserDTO add(UserDTO userDTO) throws SQLException {
+        // Usar try-with-resources para manejar automáticamente la liberación de recursos
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_INSERT_NEW_USER)) {
+            
+            // Asignar parámetros al PreparedStatement
+            statement.setString(1, userDTO.getUserName());
+            statement.setString(2, userDTO.getPassword());
+            statement.setString(3, userDTO.getRol());
+            statement.setString(4, userDTO.getNombre());
+            statement.setString(5, userDTO.getApellidos());
+            statement.setString(6, userDTO.getEmail());
+            statement.setString(7, userDTO.getImagen());
+            
+            // Ejecutar la sentencia preparada
+            statement.executeUpdate();
         }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
-
-        // Vuelve a conectarse a mysql para devolver el usuario recién creado
+        
+        // Vuelve a conectarse a la base de datos para devolver el usuario recién creado
         return getUser(userDTO.getUserName(), userDTO.getPassword());
     }
+    
 
     /**
      * Actualiza un usuario existente en la base de datos.

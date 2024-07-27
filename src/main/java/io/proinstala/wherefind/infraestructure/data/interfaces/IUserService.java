@@ -3,6 +3,7 @@ package io.proinstala.wherefind.infraestructure.data.interfaces;
 import java.util.List;
 
 import io.proinstala.wherefind.shared.dtos.UserDTO;
+import java.sql.SQLException;
 
 /**
  * Interfaz para el servicio de usuarios.
@@ -13,8 +14,9 @@ public interface IUserService {
      *
      * @param userDTO el objeto UserDTO que representa al nuevo usuario a añadir.
      * @return el objeto UserDTO del usuario añadido.
+     * @throws java.sql.SQLException
      */
-    public UserDTO add(UserDTO userDTO);
+    public UserDTO add(UserDTO userDTO) throws SQLException;
 
     /**
      * Actualiza los datos de un usuario existente.

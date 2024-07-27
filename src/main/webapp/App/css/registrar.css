@@ -1,6 +1,4 @@
 
-
-
 .contenedor__general--registrar {
     /*overflow: hidden;*/
     margin: 0;
@@ -14,6 +12,7 @@
 @media (max-width: 800px) {
     .contenedor__general--registrar {
         height: auto;
+        min-height: 100vh;
     }
 }
 
@@ -33,7 +32,7 @@
         height: 100%;
         grid-template-columns: 1fr;
         grid-template-rows: 1fr;
-        margin: 2rem;
+        margin: 3rem;
         padding: 3rem;
     }
 }
@@ -44,7 +43,9 @@
     
     h1 {
         margin-bottom: 5rem;    
-        color: var(--texto_principal);
+        
+        
+        font-weight: 600;
     }
 } 
 @media (max-width: 800px) {
@@ -95,15 +96,17 @@
     flex-direction: column-reverse;
     justify-content: flex-start;
     align-content: flex-start;
-    min-width: 30rem;
+    min-width: 25rem;
     max-width: 60rem;
     gap: 1rem;
     margin: 1rem 0;
+    font-family: var(--fuente_inter);
+    font-family: var(--fuente_outfit);
    
     
     input {
         border: none; /* Elimina todos los bordes */
-        border-bottom: 0.2rem solid var(--texto_medio); /* Agrega un borde inferior */
+        border-bottom: 0.2rem solid var(--borde_input_formulario); /* Agrega un borde inferior */
         padding: 0.5rem 0.1rem; /* Ajusta el espaciado */
         font-size: 1.5rem; /* Ajusta el tamaño del texto */
         outline: none; /* Elimina el borde de enfoque predeterminado */
@@ -152,13 +155,10 @@
     height: 3.25rem;
     
     border: none; /* Elimina todos los bordes */
-    border-bottom: 0.2rem solid var(--texto_medio); /* Agrega un borde inferior */
+    border-bottom: 0.2rem solid var(--borde_input_formulario); /* Agrega un borde inferior */
     padding: 0.5rem 0.1rem; /* Ajusta el espaciado */
     font-size: 1.5rem; /* Ajusta el tamaño del texto */
     outline: none;  /*Elimina el borde de enfoque predeterminado */
-    color: var(--negro);
-    
-    /*background-color: var(--secundario);*/
     color: var(--negro);
     
     &:hover {
@@ -177,6 +177,7 @@
     
     #textoImagen {
         font-size: 1.5rem; /* Ajusta el tamaño del texto */
+        letter-spacing: 0rem;
     }
     
     input {
@@ -193,9 +194,10 @@
         height: 4rem;
         width: 100%;
         background-color: var(--secundario);
-        border: 0.1rem solid #CCCCCC;
+        border: 0.1rem solid var(--bordes_lineas);
         border-radius: 0.3rem;
         color: white;
+        letter-spacing: 0.1rem;
         
         &:hover {
             cursor: pointer;

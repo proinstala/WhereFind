@@ -12,6 +12,8 @@ import io.proinstala.wherefind.shared.dtos.UserDTO;
 import io.proinstala.wherefind.shared.services.BaseService;
 import io.proinstala.wherefind.shared.textos.ConstParametros;
 import io.proinstala.wherefind.shared.textos.LocaleApp;
+import java.sql.SQLException;
+
 
 /**
  * Clase que maneja operaciones relacionadas con la identidad de los usuarios.
@@ -309,14 +311,26 @@ public class IdentidadService extends BaseService {
         String imagenUsuario        = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_IMAGEN, "");
 
         // Comprueba que los datos del usuario no estén vacios
-        if (!nombreUsuario.isBlank() && !passwordUsuario.isBlank())
+        if (!nombreUsuario.isBlank() && !passwordUsuario.isBlank() && passwordUsuario.length() > 3)
         {
             // Conecta con el Gestor de Permanencia
             IUserService userService = GestionPersistencia.getUserService();
 
             // Crea y guarda los datos del usuario
-            UserDTO userDTO = userService.add(new UserDTO(-1, nombreUsuario, passwordUsuario, "User", nombreRealUsuario, apellidoRealUsuario, emailUsuario, imagenUsuario));
-
+            UserDTO userDTO = null;
+            try {
+                userDTO = userService.add(new UserDTO(-1, nombreUsuario, passwordUsuario, "User", nombreRealUsuario, apellidoRealUsuario, emailUsuario, imagenUsuario));
+            
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                
+                if (ex.getSQLState().equals("23000")) {
+                    responseDTO = getResponseError("El nombre de usuario no es valido.");
+                    responseJson(actionController.server().response(), responseDTO);
+                    return;
+                }
+            }
+            
             // Si el usuario no es nulo
             if (userDTO != null)
             {
