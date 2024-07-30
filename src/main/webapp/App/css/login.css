@@ -1,32 +1,28 @@
 
-/*
-    Created on : 5 jul 2024, 21:36:55
-    Author     : David
-*/
-
 .contenedor__general--login {
-    overflow: hidden;
     margin: 0;
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-
-    background: #FFA500; /* Naranja */
+    background: var(--primario);
+    padding: 3rem;
 }
 
 @media (max-width: 800px) {
     .contenedor__general--login {
         height: auto;
-        background: #FFA500; /* Fondo degradado para pantallas más pequeñas */
-        overflow: auto;
+    }
+}
+@media (max-width: 500px) {
+    .contenedor__general--login {
+        padding: 2rem;
     }
 }
 
 .login {
     width: 800px;
     height: 600px;
-    margin: 50px;
     border-radius: 1.5rem;
     background-color: var(--blanco);
     display: grid;
@@ -46,10 +42,32 @@
     align-items: center;
     background-color: var(--blanco);
     border-radius: 1.5rem 0 0 1.5rem;
+    padding: 5rem;
+    
+    h1 {
+        text-align: center;
+        margin-top: 0;
+        margin-bottom: 2rem;
+    }
+    
+    img {
+        width: 12rem;
+    }
+    
+    div:last-child {
+        flex-grow: 1;
+    }
 }
 @media (max-width: 800px) {
     .login__izquierda {
         border-radius: 1.5rem 1.5rem 0 0;
+        padding-bottom: 5rem;
+    }
+}
+@media (max-width: 500px) {
+    .login__izquierda {
+        padding: 3rem;
+        padding-bottom: 5rem;
     }
 }
 
@@ -61,73 +79,108 @@
     flex-direction: column;
     align-items: center;
     padding: 5rem;
+    
+    h1 {
+        text-align: center;
+        margin: 0 0 2rem 0;
+    }
+    
+    p {
+        text-align: left;
+    }
 }
 @media (max-width: 800px) {
     .login__derecha {
         border-radius: 0 0 1.5rem 1.5rem;
+        padding: 3rem;
+    }
+}
+@media (max-width: 500px) {
+    .login__izquierda {
+        padding: 2rem;
     }
 }
 
-.login__img {
-    width: 12rem;
-}
 
-.login__titulo {
-    text-align: center;
-    margin: 5rem 0 2rem 0;
-}
-.login__titulo-saludo {
-    text-align: center;
-    margin: 0 0 2rem 0;
-}
+
 .login__input {
     display: flex;
-    flex-direction: column;
-    width: 70%;
-    gap: 1rem;
+    width: 100%;
     margin: 2.5rem 0;
-    position: relative; /* Asegura que el posicionamiento absoluto sea relativo a este contenedor */
+    position: relative; /*para los label de error.*/
+    
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+    align-content: flex-start;
+    
+    input {
+        border: none; /* Elimina todos los bordes */
+        border-bottom: 0.2rem solid var(--borde_input_formulario); /* Agrega un borde inferior */
+        padding: 0.5rem 0.1rem; /* Ajusta el espaciado */
+        font-size: 1.5rem; /* Ajusta el tamaño del texto */
+        outline: none; /* Elimina el borde de enfoque predeterminado */
+        color: var(--negro);
+        
+        &:focus,
+        &:hover {
+            border-bottom-color: var(--primario);
+        
+            i {
+                color: var(--primario);
+            }
+            
+            + label {
+                color: var(--primario);
+            }
+        }
+    }
+    
+    
+    label {
+        font-weight: 700;
+        color: var(--texto_medio);
+        padding-bottom: 0.5rem;
+        
+        &:focus {
+            border-bottom-color: var(--primario); /* Cambia el color del borde inferior cuando está enfocado */
+        }
+        
+        &:hover {
+            border-bottom-color: var(--primario);
+        
+            i {
+                color: var(--primario);
+            }
+        }
+    }
+    
+    button {
+        height: 4rem;
+        background-color: var(--secundario);
+        border: 0.1rem solid var(--bordes_lineas);
+        border-radius: 0.3rem;
+        color: var(--blanco);
+        letter-spacing: 0.1rem;
+
+        &:hover {
+            cursor: pointer;
+            background-color: var(--secundario-brillo);
+            font-weight: 700;
+        }
+    }
+    
+    &:last-child {
+        justify-content: flex-start;
+        padding-top: 3rem;
+        margin: auto 0 0 0;
+    }
 }
 
-.login__input input {
-    border: none; /* Elimina todos los bordes */
-    border-bottom: 0.2rem solid var(--texto_principal); /* Agrega un borde inferior */
-    padding: 0.5rem 0.1rem; /* Ajusta el espaciado */
-    font-size: 1.5rem; /* Ajusta el tamaño del texto */
-    outline: none; /* Elimina el borde de enfoque predeterminado */
-    color: var(--negro);
-}
 
-.login__input input:focus {
-    border-bottom-color: var(--primario); /* Cambia el color del borde inferior cuando está enfocado */
-}
-
-.login__input label {
-    font-weight: 700;
-    color: var(--texto_principal);
-}
-
-.login__btn {
-    height: 4rem;
-    background-color: var(--secundario);
-    border: 0.1rem solid #CCCCCC;
-    border-radius: 0.3rem;
-    color: white;
-}
-
-.login__btn:hover {
-    cursor: pointer;
-    background-color: var(--primario);
-    font-weight: 700;
-}
-
-.login__imagen {
+.login__logo {
     width: 30%;
 }
 
-.login__descripcion {
-    text-align: left;
-}
 
 .login__enlaces {
     width: 100%;
@@ -135,41 +188,15 @@
     display: flex;
     justify-content: space-between;
     align-items: end;
+    
+    a {
+        font-size: 1.3rem;
+        color: var(--secundario);
+
+        &:hover {
+            color: var(--primario);
+            font-weight: 700;
+        }
+    }
 }
 
-.login__enlaces-enlace {
-    font-size: 1.3rem;
-    color: var(--secundario);
-}
-.login__enlaces-enlace:hover {
-    color: var(--primario);
-    font-weight: 700;
-}
-
-
-
-/* TODO: Ajustar los colores al tema actual */
-button:disabled,
-button[disabled]
-button[disabled]:hover {
-    border: 1px solid #999999 !important;
-    background-color: #cccccc !important;
-    color: #666666 !important;
-    font-weight: normal !important;
-}
-
-/* TODO: Ajustar los colores al tema actual */
-label[disabled],
-label:disabled,
-input[disabled],
-input:disabled,
-select[disabled],
-select:disabled,
-option[disabled],
-option:disabled,
-textarea[disabled],
-textarea:disabled {
-    border: 1px solid #999999 !important;
-    background-color: #cccccc !important;
-    color: #666666 !important;
-}

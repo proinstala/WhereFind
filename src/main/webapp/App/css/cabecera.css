@@ -4,17 +4,28 @@
     Author     : David
 */
 
-.cabecera, .barra__inferior {
-    padding: 1rem;
+.cabecera, 
+.barra__inferior {
     color: var(--blanco);
-    text-align: center;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    height: 10rem;
 }
 
 .cabecera {
+    text-align: center;
+    padding: 1rem;
+    margin: 0 2rem;
+    height: 10rem;
     border-bottom: 3px solid var(--blanco);
+}
+.barra__inferior {
+    padding: 0.5rem;
+    height: 3rem;
+    background-color: #CCA500;
+    
+    p {
+        margin: 0;
+    }
 }
 
 .contenedor__inicio {

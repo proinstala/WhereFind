@@ -49,8 +49,10 @@
             <p id="rolUser"><%= UserSession.getLoginUserRol(request) %></p>
         </div>
 
-        <button class="btn_user las la-pen" title="Editar Usuario"></button>
+        <button class="btn_user las la-pen" id="btnEditarUsuario" title="Editar Usuario"></button>
 
         <a href="api/identidad/logout"><button class="btn_user las la-sign-out-alt" title="Cerrar Sesión"></button></a>
     </div>
 </div>
+        
+<script src="App/js/cabecera.js" type="text/javascript" defer></script>

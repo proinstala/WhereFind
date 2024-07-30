@@ -10,27 +10,27 @@
         <div class="login">
             <!-- Parte izquierda -->
             <form class="login__izquierda" name="frmLogin" id="frmLogin" >
-                <h1 class="login__titulo">Login</h1>
-                <img class="login__img imagen--login" src="App/img/defaultUser.svg" alt="logo usuario">
+                <h1>Login</h1>
+                <img class="imagen--login" src="App/img/defaultUser.svg" alt="logo usuario">
 
                 <div class="login__input">
-                    <label for="nombreUsuario">Usuario</label>
                     <input class="input-underline" type="text" name="nombreUsuario" id="nombreUsuario" placeholder="Introduce tu nombre de usuario">
+                    <label for="nombreUsuario">Usuario</label>
                 </div>
                 <div class="login__input">
-                    <label for="passwordUsuario">Password Usuario</label>
                     <input class="input-underline" type="password" name="passwordUsuario" id="passwordUsuario" placeholder="Introduce tu password">
+                    <label for="passwordUsuario">Password Usuario</label>
                 </div>
                 <div class="login__input">
-                    <button class="login__btn" type="submit">ENTRAR</button>
+                    <button type="submit">ENTRAR</button>
                 </div>
             </form>
 
             <!-- Parte derecha -->
             <div class="login__derecha">
-                <h1 class="login__titulo-saludo">Bienvenido<br>a<br>WhereFind</h1>
-                <p class="login__descripcion">Organiza, cataloga y encuentra tus artí­culos de manera rápida y eficiente.</p>
-                <div class="login__imagen">
+                <h1>Bienvenido<br>a<br>WhereFind</h1>
+                <p>Organiza, cataloga y encuentra tus artí­culos de manera rápida y eficiente.</p>
+                <div class="login__logo">
                     <img src="App/img/caja.png" alt="caja carton">
                 </div>
 
