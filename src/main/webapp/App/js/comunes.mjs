@@ -1,4 +1,4 @@
-import { mostrarMensajeAcceso, mostrarLoading, ocultarLoading, mostrarMensajeAdvertencia } from './alertasSweetAlert2.mjs';
+import { mostrarMensaje, mostrarLoading, ocultarLoading, mostrarMensajeAdvertencia } from './alertasSweetAlert2.mjs';
 
 /**
  * Obtiene los datos del formulario.
@@ -22,7 +22,7 @@ function getDatosForm (idForm) {
 const solicitudPost = (url, callBack, idElement, mostrarLoad) => {
     let data = getDatosForm(idElement);
     solicitudPostFetch(url, data, callBack, idElement, mostrarLoad);
-}
+};
 
 /**
  * Realiza una solicitud POST.
@@ -34,7 +34,19 @@ const solicitudPost = (url, callBack, idElement, mostrarLoad) => {
 const solicitudPost_modificada = (url, idElement, mostrarLoad) => {
     let data = getDatosForm(idElement);
     return solicitudPostFetch_modificada(url, data, idElement, mostrarLoad);
-}
+};
+
+/**
+ * Realiza una solicitud PUT.
+ *
+ * @param {string} url         - La URL a la que se enviará la solicitud.
+ * @param {string} idElement   - Id del formulario.
+ * @param {string} mostrarLoad - Bloquea la UI mostrando una alerta con una animación de espera.
+ */
+const solicitudPut = (url, idElement, mostrarLoad) => {
+    let data = getDatosForm(idElement);
+    return solicitudPutFetch(url, data, idElement, mostrarLoad);
+};
 
 
 
@@ -48,7 +60,7 @@ const solicitudPost_modificada = (url, idElement, mostrarLoad) => {
  */
 const solicitudGet = (url, callBack, idElement, mostrarLoad) => {
     solicitudGetFetch(url, callBack, idElement, mostrarLoad);
-}
+};
 
 /**
  * Realiza una solicitud POST utilizando fetch.
@@ -80,7 +92,7 @@ function solicitudPostFetch(url, data, callBack, idElement, mostrarLoad) {
     })
     .catch(error => {
         console.error("Error:", error);
-        mostrarMensajeAcceso("Error", "No se ha podido realizar la acción por un error en el servidor.", "error");
+        mostrarMensaje("Error", "No se ha podido realizar la acción por un error en el servidor.", "error");
     })
     .finally(() => {
         console.log("complete");
@@ -116,13 +128,52 @@ function solicitudPostFetch_modificada(url, data, idElement, mostrarLoad) {
     })
     .catch(error => {
         console.error("Error:", error);
-        mostrarMensajeAcceso("Error", "No se ha podido realizar la acción por un error en el servidor.", "error");
+        mostrarMensaje("Error", "No se ha podido realizar la acción por un error en el servidor.", "error");
     })
     .finally(() => {
         formDisable(idElement, false, false);
     });
 
 }
+
+
+
+/**
+ * Realiza una solicitud PUT utilizando fetch.
+ *
+ * @param {string} url         - La URL a la que se enviará la solicitud.
+ * @param {string} data        - Los datos a enviar en la solicitud.
+ * @param {string} idElement   - Id del formulario.
+ * @param {string} mostrarLoad - Bloquea la UI mostrando una alerta con una animación de espera.
+ */
+function solicitudPutFetch(url, data, idElement, mostrarLoad) {
+ 
+    formDisable(idElement, true, mostrarLoad);
+
+    return fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: data
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        return response.json(); // Procesar la respuesta JSON
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        mostrarMensaje("Error", "No se ha podido realizar la acción por un error en el servidor.", "error");
+    })
+    .finally(() => {
+        formDisable(idElement, false, false);
+    });
+
+}
+
 
 
 /**
@@ -158,7 +209,7 @@ function solicitudGetFetch(url, callBack, idElement, mostrarLoad) {
     })
     .catch(error => {
         console.error("Error:", error);
-        mostrarMensajeAcceso("Error", "No se ha podido realizar la acción por un error en el servidor.", "error");
+        mostrarMensaje("Error", "No se ha podido realizar la acción por un error en el servidor.", "error");
     })
     .finally(() => {
         console.log("complete");
@@ -223,7 +274,7 @@ const setImageSelected = (fileImage, contenedorImagen, inputHideImagen64, defaul
             reject(error); // Rechaza la promesa en false cuando hay un error.
         });
     });
-}
+};
 
 
 /**
@@ -257,4 +308,4 @@ function validateImage(fileImage, maxSizeInMB = 1) {
 
 
 
-export { solicitudPost, solicitudGet, setImageSelected, solicitudPost_modificada };
+export { solicitudPost, solicitudGet, solicitudPut, setImageSelected, solicitudPost_modificada };

@@ -1,18 +1,16 @@
-import { solicitudPost, setImageSelected, solicitudPost_modificada } from './comunes.mjs';
-import { mostrarMensajeAcceso } from './alertasSweetAlert2.mjs';
+import { setImageSelected, solicitudPut } from './comunes.mjs';
+import { mostrarMensaje, mostrarMensajeError } from './alertasSweetAlert2.mjs';
 
 $(document).ready(function () {
     validarFormulario("#frmModificarUsuario");
     
     const btnCancelar = document.querySelector('#btnCancelar'); 
-    const btnGuardar = document.querySelector('#btnGuardar'); 
+    //const btnGuardar = document.querySelector('#btnGuardar'); 
     const btnPassword = document.querySelector('#btnPassword');
     const btnFoto = document.querySelector('#btnFoto');
     const contenedorImg = document.querySelector('#imgUsuario');
     const inputHide64 = document.querySelector('#imagenUsuarioB64');
     const labelInputFoto = document.querySelector('#textoImagen');
-    
-    
     
     
     btnFoto.addEventListener('change', (e) => {
@@ -99,23 +97,24 @@ function validarFormulario(idForm) {
 
             solicitudPost("api/identidad/create", registrarCallBack, idForm, true);
             */
-            /*
-            solicitudPost_modificada("api/identidad/create", idForm, true)
+            const usuarioIdInput = document.querySelector('#usuario_id');
+            const usuarioId = usuarioIdInput ? usuarioIdInput.value : -1;
+          
+            solicitudPut(`api/identidad/update/${usuarioId}`, idForm, true)
                 .then(response => {
                     if (response.isError === 1) {
-                        mostrarMensajeAcceso("No se puede registrar", response.result, "error");
+                        mostrarMensajeError("No se puede actualizar los datos", response.result);
                     } else {
-                        const acceso = () => window.location.replace(response.result);
-                        mostrarMensajeAcceso(`Se ha creado correctamente el usuario de ${response.user.nombre}`, "Creado Usuario.", "success", (response.isUrl) ? acceso : null);
+                        //const acceso = () => window.location.replace(response.result);
+                        mostrarMensaje(`Se han modificado correctamente los datos el usuario de ${response.user.nombre}`, "Modificado Usuario.", "success");
                     }
                 })
                 .catch(error => {
                     // Maneja el error aquí
                     console.error("Error:", error);
-                    mostrarMensajeAcceso("Error", "No se ha podido realizar la acción por un error en el servidor.", "error");
+                    mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
                 });
-             */
-            
+             
         },
        // Función error de respuesta
         errorPlacement: function (error, element) {

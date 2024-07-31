@@ -104,6 +104,8 @@ body {
     view-transition-name: almacen_contenedor;
 }
 */
+
+/*
 ::view-transition-old(transicion_img_login) {
     animation-name: scaleOut;
 }
@@ -119,7 +121,7 @@ body {
 .imagen--registrar {
     view-transition-name: transicion_img_login;
 }
-
+*/
 
 @keyframes scaleIn {
     from {

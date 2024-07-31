@@ -231,7 +231,7 @@ public class IdentidadService extends BaseService {
 
         // Comprueba que hay más de 1 parámetro
         if (actionController.parametros().length > 1) {
-
+    
             // Obtiene el id del usuario desde el parámetro 1 de la lista de parámetros
             int id = actionController.getIntFromParametros(1);
 
@@ -248,17 +248,27 @@ public class IdentidadService extends BaseService {
                 if (userDTO != null)
                 {
                     // Obtiene los parámetros desde el request
+                    String userName      = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_USERNAME, userDTO.getUserName());
+                    String nombreUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_NOMBRE, userDTO.getNombre());
+                    String apellidosUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_APELLIDOS, userDTO.getApellidos());
+                    String emailUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_EMAIL, userDTO.getEmail());
+                    String imagenUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_IMAGEN, userDTO.getImagen());
                     String passwordUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_PASSWORD, userDTO.getPassword());
                     String rolUsuario      = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_ROL, userDTO.getRol());
 
                     // Actualiza los datos del usuario con los pasados por el navegador
+                    userDTO.setUserName(userName);
+                    userDTO.setNombre(nombreUsuario);
+                    userDTO.setApellidos(apellidosUsuario);
+                    userDTO.setEmail(emailUsuario);
+                    userDTO.setImagen(imagenUsuario);
                     userDTO.setPassword(passwordUsuario);
                     userDTO.setRol(rolUsuario);
 
                     // Se guardan los cambios del usuario
                     if (userService.update(userDTO))
                     {
-                        // Se vacía el password por motivos de seguridad
+                        //Se vacía el password por motivos de seguridad
                         userDTO.setPassword("");
 
                         // Como la acción se ha ejecutado correctamente se crea la respuesta acorde a la misma
@@ -266,7 +276,7 @@ public class IdentidadService extends BaseService {
                     }
                     else
                     {
-                        // Crea la respuesta con un error
+                        //Crea la respuesta con un error
                         responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
                     }
                 }
