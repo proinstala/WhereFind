@@ -11,12 +11,40 @@ import jakarta.servlet.http.HttpServletResponse;
 /**
  * Clase ActionServer que encapsula una solicitud y respuesta HTTP.
  *
- * @param request  la solicitud HTTP.
- * @param response la respuesta HTTP.
  */
-public record ActionServer(HttpServletRequest request, HttpServletResponse response) {
+public class ActionServer {
 
-/**
+    private HttpServletRequest request;
+    private HttpServletResponse response;
+    private HashMap<String, String[]> parametros;
+
+    /**
+     * Constructor para crear una nueva instancia de {@code ActionServer}.
+     *
+     * Este constructor inicializa una nueva instancia de {@code ActionServer}
+     * utilizando los objetos {@code HttpServletRequest} y {@code HttpServletResponse}
+     * proporcionados.
+     *
+     * @param request  el objeto {@code HttpServletRequest} que contiene la solicitud del cliente.
+     * @param response el objeto {@code HttpServletResponse} que contiene la respuesta del servidor.
+     */
+    public ActionServer(HttpServletRequest request, HttpServletResponse response)
+    {
+        this.request = request;
+        this.response = response;
+
+        // Obtiene del request el map de parámetros
+        parametros = new HashMap<>(request.getParameterMap());
+
+        // Si se está procesando una operación PUT
+        if (request.getMethod().equals("PUT"))
+        {
+            // Intenta obtener los parámetros de dicha operación
+            getParametrosPut(parametros);
+        }
+    }
+
+    /**
      * Obtiene un parámetro de la solicitud HTTP.
      *
      * @param name       el nombre del parámetro que se desea obtener.
@@ -25,21 +53,9 @@ public record ActionServer(HttpServletRequest request, HttpServletResponse respo
      */
     public String getRequestParameter(String name, String porDefecto)
     {
-        // Obtiene del request el map de parámetros
-        Map<String, String[]> parametros = new HashMap<>(request.getParameterMap());
-
-        // Si se está procesando una operación PUT
-        if (request.getMethod().equals("PUT"))
-        {
-            // Intenta obtener los parámetros de dicha operación
-            getParametrosPut(parametros);
-        }
-
         // En caso de encontar el parámetros
         if (parametros.containsKey(name))
         {
-            String p = parametros.get(name)[0];
-            
             // Se devuelve la primera ocurrencia dentro del arreglo
             return parametros.get(name)[0];
         }
@@ -57,7 +73,7 @@ public record ActionServer(HttpServletRequest request, HttpServletResponse respo
      * y establece estos pares como atributos de la solicitud para su posterior procesamiento.
      *
      */
-    public void getParametrosPut(Map<String, String[]> parametros)
+    protected void getParametrosPut(Map<String, String[]> parametros)
     {
         // Leer el cuerpo de la solicitud PUT
         StringBuilder sb = new StringBuilder();
@@ -86,6 +102,14 @@ public record ActionServer(HttpServletRequest request, HttpServletResponse respo
                 parametros.put(pair[0], new String[]{pair[1]});
             }
         }
+    }
+
+    public HttpServletRequest request() {
+        return request;
+    }
+
+    public HttpServletResponse response() {
+        return response;
     }
 
 }
