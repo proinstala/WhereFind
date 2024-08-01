@@ -233,7 +233,7 @@ public class UserSession {
         }
 
         // Devuelve No aplicable si no hay usuario logueado
-        return "n/a";
+        return "App/img/defaultUser.svg";
     }
 
 
