@@ -231,7 +231,7 @@ public class IdentidadService extends BaseService {
 
         // Comprueba que hay más de 1 parámetro
         if (actionController.parametros().length > 1) {
-    
+
             // Obtiene el id del usuario desde el parámetro 1 de la lista de parámetros
             int id = actionController.getIntFromParametros(1);
 
@@ -271,9 +271,19 @@ public class IdentidadService extends BaseService {
                         {
                             //Se vacía el password por motivos de seguridad
                             userDTO.setPassword("");
-                            
+
                             // Como la acción se ha ejecutado correctamente se crea la respuesta acorde a la misma
                             responseDTO = getResponseOk(LocaleApp.INFO_UPDATE_USER, userDTO, 0);
+
+                            // Comprueba que el usuario logueado que esta editando al usuario sea el mismo que el usuario editado
+                            // Si el id coincide (por ejemplo si se es administrador se pueden editar usuarios y el id no debería coincidir si no se esta editando a si mismo)
+                            UserDTO userLogeado = UserSession.getUserLogin(actionController.server().request());
+                            if (userLogeado.getId() == id)
+                            {
+                                // Guarda los datos modificados por el usuario en el user de la sessión, así si se pulsa F5,
+                                // se cargan los datos actualizados del mismo
+                                UserSession.setUserSession(userDTO, actionController.server());
+                            }
                         }
                         else
                         {
@@ -282,7 +292,7 @@ public class IdentidadService extends BaseService {
                         }
                     } catch (SQLException ex) {
                         ex.printStackTrace();
-                        
+
                         //Crea la respuesta con un error
                         responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
                     }
@@ -337,17 +347,17 @@ public class IdentidadService extends BaseService {
             UserDTO userDTO = null;
             try {
                 userDTO = userService.add(new UserDTO(-1, nombreUsuario, passwordUsuario, "User", nombreRealUsuario, apellidoRealUsuario, emailUsuario, imagenUsuario));
-            
+
             } catch (SQLException ex) {
                 ex.printStackTrace();
-                
+
                 if (ex.getSQLState().equals("23000")) {
                     responseDTO = getResponseError("El nombre de usuario no es valido.");
                     responseJson(actionController.server().response(), responseDTO);
                     return;
                 }
             }
-            
+
             // Si el usuario no es nulo
             if (userDTO != null)
             {

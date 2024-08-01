@@ -30,6 +30,25 @@ public class UserSession {
         // Obtiene los datos del usuario
         UserDTO userDTO = userService.getUser(userName, password);
 
+        // Estable en la session el usuario logueado
+        setUserSession(userDTO, server);
+
+        return userDTO;
+    }
+
+
+    /**
+     * Establece la sesión del usuario utilizando la información proporcionada y el servidor de acción.
+     *
+     * Este método estático recibe un objeto {@code UserDTO} que contiene la información del usuario
+     * y un objeto {@code ActionServer} que representa el servidor de acción. Realiza las operaciones
+     * necesarias para establecer la sesión del usuario en el sistema utilizando ambos parámetros.
+     *
+     * @param userDTO el objeto {@code UserDTO} que contiene la información del usuario.
+     * @param server  el objeto {@code ActionServer} que representa el servidor de acción.
+     */
+    public static void setUserSession(UserDTO userDTO, ActionServer server)
+    {
         // Comprueba que el usuario no sea nulo
         if (userDTO != null)
         {
@@ -39,9 +58,8 @@ public class UserSession {
             // Guarda en la sesión actual el usuario logueado
             session.setAttribute("user", userDTO);
         }
-
-        return userDTO;
     }
+
 
     /**
      * Realiza el proceso de logout para un usuario.
@@ -197,13 +215,13 @@ public class UserSession {
         // Devuelve No aplicable si no hay usuario logueado
         return "n/a";
     }
-    
+
     /**
      * Obtiene la imagen en formato Base64 del usuario logueado.
      *
      * @param request Instancia de HttpServletRequest
-     * @return una cadena con la imagen en formato Base64 del usuario si está disponible, 
-     *         "App/img/defaultUser.svg" si la imagen está en blanco, 
+     * @return una cadena con la imagen en formato Base64 del usuario si está disponible,
+     *         "App/img/defaultUser.svg" si la imagen está en blanco,
      *         o "n/a" si no hay usuario logueado.
      */
     public static String getLoginImagen(HttpServletRequest request) {
