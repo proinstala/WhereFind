@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -27,7 +26,7 @@ public record ActionServer(HttpServletRequest request, HttpServletResponse respo
     public String getRequestParameter(String name, String porDefecto)
     {
         // Obtiene del request el map de parámetros
-        Map<String, String[]> parametros = new HashMap<String, String[]>(request.getParameterMap());
+        Map<String, String[]> parametros = new HashMap<>(request.getParameterMap());
 
         // Si se está procesando una operación PUT
         if (request.getMethod().equals("PUT"))
