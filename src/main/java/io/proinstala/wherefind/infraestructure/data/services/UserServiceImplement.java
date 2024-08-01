@@ -26,8 +26,14 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
     // Añada un nuevo user
     private static final String SQL_INSERT_NEW_USER = "INSERT INTO USER (user_name, password, rol, activo, nombre, apellidos, email, imagen) VALUES(?, ENCRYPT_DATA_BASE64(?), ?, 1, ?, ?, ?, ?);";
 
-    // Actualiza el rol y el password a un usuario
-    private static final String SQL_UPDATE_USER = "UPDATE USER SET rol=?, password=ENCRYPT_DATA_BASE64(?) WHERE id=?;";
+    // Actualiza el rol a un usuario
+    private static final String SQL_UPDATE_USER_ROL = "UPDATE USER SET rol=? WHERE id=?;";
+    
+    // Actualiza el password a un usuario
+    private static final String SQL_UPDATE_USER_PASSWORD = "UPDATE USER SET password=ENCRYPT_DATA_BASE64(?) WHERE id=?;";
+    
+    // Actualiza los datos generales a un usuario
+    private static final String SQL_UPDATE_USER = "UPDATE USER SET user_name=?, nombre=?, apellidos=?, email=?, imagen=? WHERE id=?;";
 
     // Marca a un usuario como eliminado
     private static final String SQL_DELETE_USER = "UPDATE USER SET activo=false WHERE id=?;";
@@ -97,38 +103,32 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
      *
      * @param userDTO el objeto UserDTO que representa al usuario a actualizar.
      * @return true si la actualización fue exitosa, false en caso contrario.
+     * @throws java.sql.SQLException
      */
     @Override
-    public boolean update(UserDTO userDTO) {
+    public boolean update(UserDTO userDTO) throws SQLException {
+        // Contador de filas afectadas
+        int rowsAffected = 0;
 
-        // Para recoger el numero de filas afectadas
-        int rowAfectadas = 0;
-        try
-        {
-            // Se crea la conexion
-            Connection conexion  = getConnection();
+        // Usar try-with-resources para asegurar el cierre automático de recursos
+        try (Connection connection = getConnection(); 
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_USER)) {
 
-            // Preparo un PreparedStatement con la sentencia necesaria para saber el numero de filas
-            PreparedStatement sentencia = conexion.prepareStatement(SQL_UPDATE_USER);
+            // Establecer los parámetros en el PreparedStatement
+            statement.setString(1, userDTO.getUserName());
+            statement.setString(2, userDTO.getNombre());
+            statement.setString(3, userDTO.getApellidos());
+            statement.setString(4, userDTO.getEmail());
+            statement.setString(5, userDTO.getImagen());
+            statement.setInt(6, userDTO.getId());
 
-            // Le paso los parametros al PreparedStatement
-            sentencia.setString(1, userDTO.getRol());
-            sentencia.setString(2, userDTO.getPassword());
-            sentencia.setInt(3, userDTO.getId());
+            // Ejecutar la actualización y obtener el número de filas afectadas
+            rowsAffected = statement.executeUpdate();
 
-            // Ejecuto la sentencia preparada
-            rowAfectadas = sentencia.executeUpdate();
+        } 
 
-            // Cerramos todo lo que hemos usado
-            sentencia.close();
-            conexion.close();
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
-
-        return rowAfectadas > 0;
+        // Retornar si se afectaron más de 0 filas
+        return rowsAffected > 0;
     }
 
 

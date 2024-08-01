@@ -23,8 +23,9 @@ public interface IUserService {
      *
      * @param userDTO el objeto UserDTO que representa al usuario a actualizar.
      * @return true si la actualización fue exitosa, false en caso contrario.
+     * @throws java.sql.SQLException
      */
-    public boolean update(UserDTO userDTO);
+    public boolean update(UserDTO userDTO) throws SQLException;
 
     /**
      * Elimina un usuario existente.

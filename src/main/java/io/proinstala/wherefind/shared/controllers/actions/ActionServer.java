@@ -38,6 +38,8 @@ public record ActionServer(HttpServletRequest request, HttpServletResponse respo
         // En caso de encontar el parámetros
         if (parametros.containsKey(name))
         {
+            String p = parametros.get(name)[0];
+            
             // Se devuelve la primera ocurrencia dentro del arreglo
             return parametros.get(name)[0];
         }

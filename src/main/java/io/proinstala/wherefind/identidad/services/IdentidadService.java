@@ -265,17 +265,24 @@ public class IdentidadService extends BaseService {
                     userDTO.setPassword(passwordUsuario);
                     userDTO.setRol(rolUsuario);
 
-                    // Se guardan los cambios del usuario
-                    if (userService.update(userDTO))
-                    {
-                        //Se vacía el password por motivos de seguridad
-                        userDTO.setPassword("");
-
-                        // Como la acción se ha ejecutado correctamente se crea la respuesta acorde a la misma
-                        responseDTO = getResponseOk(LocaleApp.INFO_UPDATE_USER, userDTO, 0);
-                    }
-                    else
-                    {
+                    try {
+                        // Se guardan los cambios del usuario
+                        if (userService.update(userDTO))
+                        {
+                            //Se vacía el password por motivos de seguridad
+                            userDTO.setPassword("");
+                            
+                            // Como la acción se ha ejecutado correctamente se crea la respuesta acorde a la misma
+                            responseDTO = getResponseOk(LocaleApp.INFO_UPDATE_USER, userDTO, 0);
+                        }
+                        else
+                        {
+                            //Crea la respuesta con un error
+                            responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
+                        }
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                        
                         //Crea la respuesta con un error
                         responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
                     }
