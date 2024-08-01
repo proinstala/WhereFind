@@ -2,6 +2,7 @@ package io.proinstala.wherefind.shared.controllers.actions;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -99,7 +100,8 @@ public class ActionServer {
         for (String param : parameters) {
             String[] pair = param.split("=");
             if (pair.length == 2) {
-                parametros.put(pair[0], new String[]{pair[1]});
+                String textoDecode = java.net.URLDecoder.decode(pair[1], StandardCharsets.UTF_8);
+                parametros.put(pair[0], new String[]{textoDecode});
             }
         }
     }
