@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 /**
  * Clase BaseService que proporciona métodos para gestionar respuestas JSON en servicios HTTP.
  */
-public class BaseService {
+public abstract class BaseService {
 
     /**
      * Envía una respuesta JSON con los datos especificados.

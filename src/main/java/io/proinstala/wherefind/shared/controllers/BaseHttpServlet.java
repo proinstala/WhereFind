@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 /**
  * Clase BaseHttpServlet que extiende HttpServlet y proporciona métodos comunes para manejar peticiones HTTP.
  */
-public class BaseHttpServlet extends HttpServlet {
+public abstract class BaseHttpServlet extends HttpServlet {
 
     /**
      * Obtiene la acción a realizar a partir de la solicitud HTTP y la API base.
@@ -41,10 +41,8 @@ public class BaseHttpServlet extends HttpServlet {
      *
      * @return la ruta base de la API.
      */
-    protected String getBaseApi()
-    {
-        return "";
-    }
+    protected abstract String getBaseApi();
+
 
     /**
      * Obtiene el tipo de acción a partir del nombre de acción.
@@ -52,10 +50,8 @@ public class BaseHttpServlet extends HttpServlet {
      * @param action el nombre de la acción.
      * @return el tipo de acción asociado.
      */
-    protected Object getActionType(String action)
-    {
-        return action;
-    }
+    protected abstract Object getActionType(String action);
+
 
     /**
      * Crea y devuelve un objeto ActionController para manejar la acción HTTP.
