@@ -51,6 +51,12 @@ public class IdentidadService extends BaseService {
         // Si el usuario existe
         if (userDTO != null)
         {
+            // Si la imagen de usuario está vacía se le añade la imagen por defecto
+            if(userDTO.getImagen() == null || (userDTO.getImagen() != null && userDTO.getImagen().isBlank()))
+            {
+                userDTO.setImagen("App/img/defaultUser.svg");
+            }
+
             // Se vacía el password por motivos de seguridad
             userDTO.setPassword("");
 
