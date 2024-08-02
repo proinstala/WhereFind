@@ -255,22 +255,17 @@ public class IdentidadService extends BaseService {
                 if (userDTO != null)
                 {
                     // Obtiene los parámetros desde el request
-                    String userName      = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_USERNAME, userDTO.getUserName());
                     String nombreUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_NOMBRE, userDTO.getNombre());
                     String apellidosUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_APELLIDOS, userDTO.getApellidos());
                     String emailUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_EMAIL, userDTO.getEmail());
                     String imagenUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_IMAGEN, userDTO.getImagen());
-                    String passwordUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_PASSWORD, userDTO.getPassword());
-                    String rolUsuario      = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_ROL, userDTO.getRol());
-
+                    
                     // Actualiza los datos del usuario con los pasados por el navegador
-                    userDTO.setUserName(userName);
                     userDTO.setNombre(nombreUsuario);
                     userDTO.setApellidos(apellidosUsuario);
                     userDTO.setEmail(emailUsuario);
                     userDTO.setImagen(imagenUsuario);
-                    userDTO.setPassword(passwordUsuario);
-                    userDTO.setRol(rolUsuario);
+                    
 
                     try {
                         // Se guardan los cambios del usuario

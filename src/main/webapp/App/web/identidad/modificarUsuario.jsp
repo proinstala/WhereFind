@@ -28,33 +28,41 @@
 
         <div class="main">
 
-            <div class="contenedor__formulario">
+            <div class="contenedor__formulario max-width-100">
 
                 <div class="contenedor__formulario--cabecera">
                     <div>
                         <h1>Modificar Usuario</h1>
                     </div>
-                    <div>
-                        <div class="contenedor__formulario--cabecera--imagen">
-                            <img class="imagen--registrar" src="<%=userDTO.getImagen()%>" id="imgUsuario" alt="logo usuario">
-                        </div>
-
-                        <label for="btnFoto" class="input_foto">
-                            <input type="file" name="btnFoto" id="btnFoto" accept="image/*">
-                            <i class="las la-camera"></i>
-                            <span id="textoImagen"></span>
-                        </label>
-                    </div>
                 </div>
-
 
                 <div class="contenedor__formulario--main">
                     <form class="formulario" name="frmModificarUsuario" id="frmModificarUsuario">
                         <input type="hidden" name="usuario_id" id="usuario_id" value="<%=userDTO.getId()%>">
+                        
+                        <div class="form__input grid-row-span-2">
+                            <div>
+                                <div class="contenedor__formulario--cabecera--imagen">
+                                    <img class="imagen--registrar" src="<%=userDTO.getImagen()%>" id="imgUsuario" alt="logo usuario">
+                                </div>
+
+                                <label for="btnFoto" class="input_foto">
+                                    <input type="file" name="btnFoto" id="btnFoto" accept="image/*">
+                                    <i class="las la-camera"></i>
+                                    <span id="textoImagen"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
 
                         <div class="form__input">
-                            <input class="" type="text" name="nombreUsuario" id="nombreUsuario" placeholder="Introduce tu nombre de usuario" value="<%=userDTO.getUserName()%>">
+                            <input class="" type="text" name="nombreUsuario" id="nombreUsuario" placeholder="Introduce tu nombre de usuario" value="<%=userDTO.getUserName()%>" readonly>
                             <label for="nombreUsuario">Usuario</label>
+                        </div>
+                        
+                        <div class="form__input">
+                            <input class="" type="text" name="rolUsuario" id="rolUsuario" placeholder="Introduce tu email" value="<%=userDTO.getRol()%>" readonly>
+                            <label for="rolUsuario">Rol</label>
                         </div>
 
                         <div class="form__input">
@@ -71,7 +79,8 @@
                             <input class="" type="text" name="emailUsuario" id="emailUsuario" placeholder="Introduce tu email" value="<%=userDTO.getEmail()%>">
                             <label for="emailUsuario">Email</label>
                         </div>
-
+                            
+                        
 
                         <input type="hidden" name="imagenUsuarioB64" id="imagenUsuarioB64" value="<%=userDTO.getImagen()%>">
 
