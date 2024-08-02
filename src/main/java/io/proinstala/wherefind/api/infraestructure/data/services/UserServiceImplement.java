@@ -1,6 +1,6 @@
-package io.proinstala.wherefind.infraestructure.data.services;
+package io.proinstala.wherefind.api.infraestructure.data.services;
 
-import io.proinstala.wherefind.infraestructure.data.interfaces.IUserService;
+import io.proinstala.wherefind.api.infraestructure.data.interfaces.IUserService;
 import io.proinstala.wherefind.shared.dtos.UserDTO;
 
 import java.util.ArrayList;
@@ -28,10 +28,10 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
 
     // Actualiza el rol a un usuario
     private static final String SQL_UPDATE_USER_ROL = "UPDATE USER SET rol=? WHERE id=?;";
-    
+
     // Actualiza el password a un usuario
     private static final String SQL_UPDATE_USER_PASSWORD = "UPDATE USER SET password=ENCRYPT_DATA_BASE64(?) WHERE id=?;";
-    
+
     // Actualiza los datos generales a un usuario
     private static final String SQL_UPDATE_USER = "UPDATE USER SET user_name=?, nombre=?, apellidos=?, email=?, imagen=? WHERE id=?;";
 
@@ -66,7 +66,7 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
         return null;
     }
 
-    
+
     /**
      * Añade un nuevo usuario a la base de datos.
      *
@@ -79,7 +79,7 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
         // Usar try-with-resources para manejar automáticamente la liberación de recursos
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_INSERT_NEW_USER)) {
-            
+
             // Asignar parámetros al PreparedStatement
             statement.setString(1, userDTO.getUserName());
             statement.setString(2, userDTO.getPassword());
@@ -88,15 +88,15 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
             statement.setString(5, userDTO.getApellidos());
             statement.setString(6, userDTO.getEmail());
             statement.setString(7, userDTO.getImagen());
-            
+
             // Ejecutar la sentencia preparada
             statement.executeUpdate();
         }
-        
+
         // Vuelve a conectarse a la base de datos para devolver el usuario recién creado
         return getUser(userDTO.getUserName(), userDTO.getPassword());
     }
-    
+
 
     /**
      * Actualiza un usuario existente en la base de datos.
@@ -111,7 +111,7 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
         int rowsAffected = 0;
 
         // Usar try-with-resources para asegurar el cierre automático de recursos
-        try (Connection connection = getConnection(); 
+        try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_USER)) {
 
             // Establecer los parámetros en el PreparedStatement
@@ -125,7 +125,7 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
             // Ejecutar la actualización y obtener el número de filas afectadas
             rowsAffected = statement.executeUpdate();
 
-        } 
+        }
 
         // Retornar si se afectaron más de 0 filas
         return rowsAffected > 0;

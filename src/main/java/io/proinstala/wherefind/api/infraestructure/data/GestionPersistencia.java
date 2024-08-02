@@ -1,7 +1,7 @@
-package io.proinstala.wherefind.infraestructure.data;
+package io.proinstala.wherefind.api.infraestructure.data;
 
-import io.proinstala.wherefind.infraestructure.data.interfaces.IUserService;
-import io.proinstala.wherefind.infraestructure.data.services.UserServiceImplement;
+import io.proinstala.wherefind.api.infraestructure.data.interfaces.IUserService;
+import io.proinstala.wherefind.api.infraestructure.data.services.UserServiceImplement;
 
 /**
  * Clase GestionPersistencia que gestiona la persistencia y proporciona servicios relacionados con los usuarios.

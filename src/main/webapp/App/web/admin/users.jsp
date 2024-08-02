@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="io.proinstala.wherefind.shared.controllers.BaseHttpServlet"%>
 <%@page import="io.proinstala.wherefind.shared.controllers.actions.ActionServer"%>
-<%@page import="io.proinstala.wherefind.identidad.UserSession"%>
+<%@page import="io.proinstala.wherefind.api.identidad.UserSession"%>
 <%
     // Se declara e instancia un ActionServer
     ActionServer actionServer = new ActionServer(request, response);

@@ -1,4 +1,4 @@
-package io.proinstala.wherefind.infraestructure.data.services;
+package io.proinstala.wherefind.api.infraestructure.data.services;
 
 import java.sql.SQLException;
 

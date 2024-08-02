@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="io.proinstala.wherefind.shared.controllers.actions.ActionServer"%>
-<%@page import="io.proinstala.wherefind.identidad.UserSession"%>
+<%@page import="io.proinstala.wherefind.api.identidad.UserSession"%>
 <%
     // Si no se está logueado se manda al usuario al login.jsp
     if(UserSession.redireccionarIsUserNotLogIn(new ActionServer(request, response))){

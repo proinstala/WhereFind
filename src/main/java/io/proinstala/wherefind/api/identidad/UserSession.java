@@ -1,8 +1,9 @@
-package io.proinstala.wherefind.identidad;
+package io.proinstala.wherefind.api.identidad;
 
 import java.io.IOException;
-import io.proinstala.wherefind.infraestructure.data.GestionPersistencia;
-import io.proinstala.wherefind.infraestructure.data.interfaces.IUserService;
+
+import io.proinstala.wherefind.api.infraestructure.data.GestionPersistencia;
+import io.proinstala.wherefind.api.infraestructure.data.interfaces.IUserService;
 import io.proinstala.wherefind.shared.controllers.actions.ActionServer;
 import io.proinstala.wherefind.shared.dtos.UserDTO;
 import jakarta.servlet.http.HttpServletRequest;

@@ -2,14 +2,14 @@
 <%@page import="io.proinstala.wherefind.shared.dtos.UserDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="io.proinstala.wherefind.shared.controllers.actions.ActionServer"%>
-<%@page import="io.proinstala.wherefind.identidad.UserSession"%>
+<%@page import="io.proinstala.wherefind.api.identidad.UserSession"%>
 <%
     // Si no se está logueado se manda al usuario al login.jsp
     if(UserSession.redireccionarIsUserNotLogIn(new ActionServer(request, response))){
         // Detiene la ejecución de este servlet
         return;
     }
-    
+
     UserDTO userDTO = UserSession.getUserLogin(request);
 
 %>
@@ -25,11 +25,11 @@
     <div class="contenedor">
 
         <%@ include file="../cabecera/cabecera.jsp" %>
-        
+
         <div class="main">
-            
+
             <div class="contenedor__formulario">
-                
+
                 <div class="contenedor__formulario--cabecera">
                     <div>
                         <h1>Modificar Usuario</h1>
@@ -51,7 +51,7 @@
                 <div class="contenedor__formulario--main">
                     <form class="formulario" name="frmModificarUsuario" id="frmModificarUsuario">
                         <input type="hidden" name="usuario_id" id="usuario_id" value="<%=userDTO.getId()%>">
-                        
+
                         <div class="form__input">
                             <input class="" type="text" name="nombreUsuario" id="nombreUsuario" placeholder="Introduce tu nombre de usuario" value="<%=userDTO.getUserName()%>">
                             <label for="nombreUsuario">Usuario</label>
@@ -72,29 +72,29 @@
                             <label for="emailUsuario">Email</label>
                         </div>
 
-                        
+
                         <input type="hidden" name="imagenUsuarioB64" id="imagenUsuarioB64" value="<%=userDTO.getImagen()%>">
-                        
+
                     </form>
                 </div>
 
                 <div class="contenedor__formulario--footer">
-                    
+
                     <div class="form__btn_circle centrar_izquierda">
                         <button class="" id="btnPassword" title="Modificar Password"><i class="las la-key"></i></button>
                     </div>
-                    
+
                     <div class="form__btn_circle">
                         <button class="" form="frmModificarUsuario" id="btnGuardar" title="Guardar" type="submit"><i class="las la-save"></i></button>
                     </div>
-                    
+
                     <div class="form__btn_circle">
                         <button class="" id="btnCancelar" title="Cancelar"><i class="las la-times"></i></button>
                     </div>
-                    
-                    
-                  
-                    <!-- comment 
+
+
+
+                    <!-- comment
                     <div class="form__btn btnPassword">
                         <button class="form__btn--aceptar" id="btnPassword">MODIFICAR PASSWORD</button>
                     </div>
@@ -106,9 +106,9 @@
                     </div>
                     -->
                 </div>
-                
+
             </div> <!-- Fin contenedor__formulario -->
-            
+
         </div> <!-- Fin main -->
 
         <div class="barra__inferior">
@@ -117,7 +117,7 @@
 
     </div>
 </div>
-        
+
 
 <script src="App/js/modificarUsuario.js" type="module" defer></script>
 

@@ -1,10 +1,11 @@
-package io.proinstala.wherefind.identidad.services;
+package io.proinstala.wherefind.api.identidad.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import io.proinstala.wherefind.identidad.UserSession;
-import io.proinstala.wherefind.infraestructure.data.GestionPersistencia;
-import io.proinstala.wherefind.infraestructure.data.interfaces.IUserService;
+
+import io.proinstala.wherefind.api.identidad.UserSession;
+import io.proinstala.wherefind.api.infraestructure.data.GestionPersistencia;
+import io.proinstala.wherefind.api.infraestructure.data.interfaces.IUserService;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
 import io.proinstala.wherefind.shared.controllers.actions.ActionServer;
 import io.proinstala.wherefind.shared.dtos.ResponseDTO;

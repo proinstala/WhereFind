@@ -1,4 +1,4 @@
-<%@page import="io.proinstala.wherefind.infraestructure.data.interfaces.IUserService"%>
+<%@page import="io.proinstala.wherefind.api.infraestructure.data.interfaces.IUserService"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="io.proinstala.wherefind.shared.tools.Tools"%>
 
@@ -7,7 +7,7 @@
 </jsp:include>
 
 
-<%@ page import="io.proinstala.wherefind.infraestructure.data.*" %>
+<%@ page import="io.proinstala.wherefind.api.infraestructure.data.*" %>
 <%@ page import="io.proinstala.wherefind.shared.dtos.*" %>
 <%@ page import="java.util.List" %>
 

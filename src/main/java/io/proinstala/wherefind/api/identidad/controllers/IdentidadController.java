@@ -1,12 +1,12 @@
-package io.proinstala.wherefind.identidad.controllers;
+package io.proinstala.wherefind.api.identidad.controllers;
 
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import io.proinstala.wherefind.identidad.UserSession;
-import io.proinstala.wherefind.identidad.services.IdentidadService;
+import io.proinstala.wherefind.api.identidad.UserSession;
+import io.proinstala.wherefind.api.identidad.services.IdentidadService;
 import io.proinstala.wherefind.shared.controllers.BaseHttpServlet;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
 import io.proinstala.wherefind.shared.tools.Tools;

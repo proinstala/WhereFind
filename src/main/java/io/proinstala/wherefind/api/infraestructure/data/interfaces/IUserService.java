@@ -1,4 +1,4 @@
-package io.proinstala.wherefind.infraestructure.data.interfaces;
+package io.proinstala.wherefind.api.infraestructure.data.interfaces;
 
 import java.util.List;
 

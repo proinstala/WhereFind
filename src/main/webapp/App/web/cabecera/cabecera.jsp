@@ -1,7 +1,7 @@
 
 <%@page import="io.proinstala.wherefind.shared.controllers.actions.ActionServer"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="io.proinstala.wherefind.identidad.UserSession"%>
+<%@page import="io.proinstala.wherefind.api.identidad.UserSession"%>
 
 <link href="App/css/cabecera.css" rel="stylesheet" type="text/css"/>
 
@@ -54,5 +54,5 @@
         <a href="api/identidad/logout"><button class="btn_user las la-sign-out-alt" title="Cerrar Sesión"></button></a>
     </div>
 </div>
-        
+
 <script src="App/js/cabecera.js" type="text/javascript" defer></script>
