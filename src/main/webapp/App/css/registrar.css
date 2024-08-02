@@ -26,9 +26,9 @@
     border-radius: 1.5rem;
     background-color: var(--blanco);
     display: grid;
-    grid-template-rows: 1fr 2fr 1fr; 
+    grid-template-rows: 1fr 2fr 1fr;
     grid-template-rows: auto 1fr auto;
-    
+
 }
 @media (max-width: 800px), (max-height: 800px) {
     .contenedor__formulario {
@@ -42,20 +42,20 @@
 .contenedor__formulario--cabecera {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    
+
     h1 {
-        margin-bottom: 5rem;    
+        margin-bottom: 0.5rem;
         font-weight: 600;
     }
-} 
+}
 @media (max-width: 800px) {
     .contenedor__formulario--cabecera {
         grid-template-columns: 1fr;
-        
+
         h1 {
             text-align: center;
         }
-    } 
+    }
 }
 
 .contenedor__formulario--cabecera--imagen {
@@ -63,7 +63,7 @@
     max-height: 15rem;
     text-align: center;
     align-content: center;
-    
+
     img {
         width: 15rem;
     }
@@ -79,19 +79,19 @@
     flex-wrap: wrap;
     gap: 2rem;
     justify-content: flex-start;*/
-    
+
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
     gap: 2rem;
     width: 100%;
-    
+
     background-color: var(--blanco);
 }
 
 
-.form__input { 
+.form__input {
     position: relative; /*para los label de error.*/
-    flex-grow: 1; 
+    flex-grow: 1;
     display: flex;
     flex-direction: column-reverse;
     justify-content: flex-start;
@@ -100,7 +100,7 @@
     max-width: 60rem;
     margin: 1rem 0;
     font-family: var(--fuente_principal);
-   
+
     input {
         border: none; /* Elimina todos los bordes */
         border-bottom: 0.2rem solid var(--borde_input_formulario); /* Agrega un borde inferior */
@@ -108,33 +108,33 @@
         font-size: 1.5rem; /* Ajusta el tamaño del texto */
         outline: none; /* Elimina el borde de enfoque predeterminado */
         color: var(--negro);
-        
+
         &:focus,
         &:hover {
             border-bottom-color: var(--primario);
-        
+
             i {
                 color: var(--primario);
             }
-            
+
             + label {
                 color: var(--primario);
             }
         }
     }
-    
+
     label {
         font-weight: 700;
         color: var(--texto_medio);
         padding-bottom: 0.5rem;
- 
+
         &:focus {
             border-bottom-color: var(--primario); /* Cambia el color del borde inferior cuando está enfocado */
         }
-        
+
         &:hover {
             border-bottom-color: var(--primario);
-        
+
             i {
                 color: var(--primario);
             }
@@ -152,33 +152,33 @@
     cursor: pointer;
     width: 20rem;
     height: 3.25rem;
-    
+
     border: none; /* Elimina todos los bordes */
     border-bottom: 0.2rem solid var(--borde_input_formulario); /* Agrega un borde inferior */
     padding: 0.5rem 0.1rem; /* Ajusta el espaciado */
     font-size: 1.5rem; /* Ajusta el tamaño del texto */
     outline: none;  /*Elimina el borde de enfoque predeterminado */
     color: var(--negro);
-    
+
     &:hover {
         border-bottom-color: var(--primario);
-        
+
         i {
             color: var(--primario);
         }
     }
-    
+
     i {
         font-size: 2.5rem;
         padding-right: 1rem;
-       
+
     }
-    
+
     #textoImagen {
         font-size: 1.5rem; /* Ajusta el tamaño del texto */
         letter-spacing: 0rem;
     }
-    
+
     input {
         display: none;
         margin: 0;
@@ -188,7 +188,7 @@
 
 .form__btn {
     width: 20rem;
-    
+
     button {
         height: 4rem;
         width: 100%;
@@ -197,22 +197,22 @@
         border-radius: 0.3rem;
         color: var(--blanco);
         letter-spacing: 0.1rem;
-        
+
         &:hover {
             cursor: pointer;
             background-color: var(--secundario-brillo);
             font-weight: 700;
         }
-        
+
         &.form__btn--cancelar {
             background-color: var(--enfasis);
-            
+
             &:hover {
                 background-color: var(--enfasis-brillo);
             }
         }
     }
-    
+
 }
 @media (max-width: 500px) {
     .form__btn {
@@ -234,8 +234,7 @@
     }
 }
 
-
-
-
-
+.form__input.form__input-imagen {
+    grid-row: span 2;
+}
 
