@@ -52,3 +52,4 @@
 - Que el servidor notifique que la base de datos no es accesible en vez de producir una excepción
 + Poder bloquear la UI en las peticiones http PUT
 + Al obtener/actualizar un usuario, que solo lo pueda solicitar/modificar el mismo o un admin
+- Gestionar error cuando se usa un email ya usado.
