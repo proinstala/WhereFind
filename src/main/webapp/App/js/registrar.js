@@ -1,5 +1,5 @@
 import { solicitudPost, setImageSelected, solicitudPost_modificada } from './comunes.mjs';
-import { mostrarMensajeAcceso } from './alertasSweetAlert2.mjs';
+import { mostrarMensaje, mostrarMensajeError } from './alertasSweetAlert2.mjs';
 
 $(document).ready(function () {
     validarFormulario("#frmRegistrarUsuario");
@@ -122,16 +122,16 @@ function validarFormulario(idForm) {
             solicitudPost_modificada("api/identidad/create", idForm, true)
                 .then(response => {
                     if (response.isError === 1) {
-                        mostrarMensajeAcceso("No se puede registrar", response.result, "error");
+                        mostrarMensajeError("No se puede registrar", response.result);
                     } else {
                         const acceso = () => window.location.replace(response.result);
-                        mostrarMensajeAcceso(`Se ha creado correctamente el usuario de ${response.user.nombre}`, "Creado Usuario.", "success", (response.isUrl) ? acceso : null);
+                        mostrarMensaje(`Se ha creado correctamente el usuario de ${response.user.nombre}`, "Creado Usuario.", "success", (response.isUrl) ? acceso : null);
                     }
                 })
                 .catch(error => {
                     // Maneja el error aquí
                     console.error("Error:", error);
-                    mostrarMensajeAcceso("Error", "No se ha podido realizar la acción por un error en el servidor.", "error");
+                    mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
                 });
              
             
