@@ -301,4 +301,21 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
         // Devuelve el resultado
         return userDTO;
     }
+
+    /**
+     * Verifica si el estado obtenido de la excepción es igual a un estado específico.
+     *
+     * Este método verifica si el estado obtenido de la excepción proporcionada
+     * es igual a un estado específico. Devuelve {@code true} si los estados son iguales,
+     * y {@code false} en caso contrario.
+     *
+     * @param ex la excepción de la cual se obtiene el estado.
+     * @return {@code true} si el estado obtenido de la excepción es igual al estado específico,
+     *         {@code false} en caso contrario.
+     */
+    @Override
+    public boolean isGetStateEqualFromException(Exception ex)
+    {
+        return ((SQLException)ex).getSQLState().equals("23000");
+    }
 }

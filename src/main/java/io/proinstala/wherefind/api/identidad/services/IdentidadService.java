@@ -13,7 +13,6 @@ import io.proinstala.wherefind.shared.dtos.UserDTO;
 import io.proinstala.wherefind.shared.services.BaseService;
 import io.proinstala.wherefind.shared.textos.ConstParametros;
 import io.proinstala.wherefind.shared.textos.LocaleApp;
-import java.sql.SQLException;
 
 
 /**
@@ -259,13 +258,13 @@ public class IdentidadService extends BaseService {
                     String apellidosUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_APELLIDOS, userDTO.getApellidos());
                     String emailUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_EMAIL, userDTO.getEmail());
                     String imagenUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_IMAGEN, userDTO.getImagen());
-                    
+
                     // Actualiza los datos del usuario con los pasados por el navegador
                     userDTO.setNombre(nombreUsuario);
                     userDTO.setApellidos(apellidosUsuario);
                     userDTO.setEmail(emailUsuario);
                     userDTO.setImagen(imagenUsuario);
-                    
+
 
                     try {
                         // Se guardan los cambios del usuario
@@ -292,7 +291,7 @@ public class IdentidadService extends BaseService {
                             //Crea la respuesta con un error
                             responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
                         }
-                    } catch (SQLException ex) {
+                    } catch (Exception ex) {
                         ex.printStackTrace();
 
                         //Crea la respuesta con un error
@@ -350,11 +349,11 @@ public class IdentidadService extends BaseService {
             try {
                 userDTO = userService.add(new UserDTO(-1, nombreUsuario, passwordUsuario, "User", nombreRealUsuario, apellidoRealUsuario, emailUsuario, imagenUsuario));
 
-            } catch (SQLException ex) {
+            } catch (Exception ex) {
                 ex.printStackTrace();
 
-                if (ex.getSQLState().equals("23000")) {
-                    responseDTO = getResponseError("El nombre de usuario no es valido.");
+                if (userService.isGetStateEqualFromException(ex)) {
+                    responseDTO = getResponseError("El nombre de usuario no es valido ddddddddddddddddddddd.");
                     responseJson(actionController.server().response(), responseDTO);
                     return;
                 }
