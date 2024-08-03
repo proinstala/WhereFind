@@ -36,27 +36,27 @@ Color Negro         #000000
 }
 
 :root {
-    
+
     --fuente_principal: 'Inter', sans-serif;
     --fuente_auxiliar: 'Outfit', sans-serif;
-    
+
     --primario: #FFA500;
-    --secundario: #005FA5; 
+    --secundario: #005FA5;
 
     --secundario-brillo: #0073C8;
-    
+
     --fondo_primario: #FFFFFF;
     --fondo_secundario: #F5F5F5;
 
     --texto_principal: #333333;
     --texto_medio: #444444;
     --texto_secundario: #555555;
-    
+
     --enfasis: #FF4500;
     --enfasis-brillo: #FF641E;
-    
+
     --bordes_lineas: #CCCCCC;
-    
+
     --borde_input_formulario: #444444;
 
     --negro: #000000;
@@ -81,7 +81,7 @@ body {
     /*line-height: 2;*/
 
     font-family: var(--fuente_principal);
-    
+
     font-optical-sizing: auto;
     font-style: normal;
 }
@@ -270,6 +270,10 @@ button[disabled]:hover {
 }
 
 /* TODO: Ajustar los colores al tema actual */
+div.disable input,
+div.disable select,
+div.disable option,
+div.disable textarea,
 label[disabled],
 label:disabled,
 input[disabled],

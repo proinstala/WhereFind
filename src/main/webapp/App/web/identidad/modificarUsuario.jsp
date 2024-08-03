@@ -39,7 +39,7 @@
                 <div class="contenedor__formulario--main">
                     <form class="formulario" name="frmModificarUsuario" id="frmModificarUsuario">
                         <input type="hidden" name="usuario_id" id="usuario_id" value="<%=userDTO.getId()%>">
-                        
+
                         <div class="form__input grid-row-span-2">
                             <div>
                                 <div class="contenedor__formulario--cabecera--imagen">
@@ -53,14 +53,14 @@
                                 </label>
                             </div>
                         </div>
-                        
 
-                        <div class="form__input">
+
+                        <div class="form__input disable">
                             <input class="" type="text" name="nombreUsuario" id="nombreUsuario" placeholder="Introduce tu nombre de usuario" value="<%=userDTO.getUserName()%>" readonly>
                             <label for="nombreUsuario">Usuario</label>
                         </div>
-                        
-                        <div class="form__input">
+
+                        <div class="form__input disable">
                             <input class="" type="text" name="rolUsuario" id="rolUsuario" placeholder="Introduce tu email" value="<%=userDTO.getRol()%>" readonly>
                             <label for="rolUsuario">Rol</label>
                         </div>
@@ -79,8 +79,8 @@
                             <input class="" type="text" name="emailUsuario" id="emailUsuario" placeholder="Introduce tu email" value="<%=userDTO.getEmail()%>">
                             <label for="emailUsuario">Email</label>
                         </div>
-                            
-                        
+
+
 
                         <input type="hidden" name="imagenUsuarioB64" id="imagenUsuarioB64" value="<%=userDTO.getImagen()%>">
 
