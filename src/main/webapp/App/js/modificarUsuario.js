@@ -7,10 +7,14 @@ $(document).ready(function () {
     const btnCancelar = document.querySelector('#btnCancelar'); 
     //const btnGuardar = document.querySelector('#btnGuardar'); 
     const btnPassword = document.querySelector('#btnPassword');
+    const btnUsuario = document.querySelector('#btnUsuario');
     const btnFoto = document.querySelector('#btnFoto');
     const contenedorImg = document.querySelector('#imgUsuario');
     const inputHide64 = document.querySelector('#imagenUsuarioB64');
     const labelInputFoto = document.querySelector('#textoImagen');
+    
+    const divFormUsuario = document.querySelector('#form_usuario');
+    const divFormPassword = document.querySelector('#form_password');
     
     
     btnFoto.addEventListener('change', (e) => {
@@ -39,6 +43,9 @@ $(document).ready(function () {
         //window.location.href = 'login.jsp';
     });
     
+    //btnPassword.addEventListener('click', modificarPassword);
+    btnPassword.addEventListener('click',() => mostrarContenedor(divFormPassword, divFormUsuario));
+    btnUsuario.addEventListener('click',() => mostrarContenedor(divFormUsuario, divFormPassword));
 });
 
 
@@ -128,4 +135,65 @@ function validarFormulario(idForm) {
     });//Fin Validate
 }
 
+
+function modificarPassword() {
+    Swal.fire({
+        title: "Cambiar Password",
+        html:`<div class="formulario_sw2">
+<div class="form__input">
+<input type="password" name="passwordUsuario" id="oldPassword" placeholder="Introduce tu password">
+<label for="passwordUsuario">Password Usuario</label>
+</div>
+        
+<div class="form__input">
+<input type="password" name="passwordUsuario" id="newPassword" placeholder="Introduce tu password">
+<label for="passwordUsuario">Nuevo Password</label>
+</div>
+<div class="form__input">
+<input type="password" name="passwordUsuario" id="confirmPassword" placeholder="Introduce tu password">
+<label for="passwordUsuario">Confirma Nuevo Password</label>
+</div>
+        </div>
+`, 
+        focusConfirm: false,
+        showCancelButton: true,
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar',
+        customClass: {
+            title: 'swal-titulo',
+            confirmButton: 'swal-boton',
+            popup: 'custom-popup'
+        },
+        preConfirm: () => {
+            return [
+                document.getElementById("oldPassword").value,
+                document.getElementById("newPassword").value,
+                document.getElementById("confirmPassword").value
+            ];
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const formValues = result.value;
+            const [oldPassword, newPassword, confirmPassword] = formValues;
+            console.log("Old Password:", oldPassword);
+            console.log("New Password:", newPassword);
+            console.log("Confirm Password:", confirmPassword);
+        } else {
+            console.log("User cancelled the input");
+        }
+    });
+}
+
+function mostrarContenedor(nodeMostrar, nodeOcultar) {
+    const estiloNodeMostrar = window.getComputedStyle(nodeMostrar);
+    
+    // Verificar si el nodo a mostrar tiene display: none
+    if (estiloNodeMostrar.display === 'none') {
+        // Si es así, cambiar su display a grid
+        nodeMostrar.style.display = 'grid';
+        
+        // Ocultar el nodo a ocultar
+        nodeOcultar.style.display = 'none';
+    }
+}
 

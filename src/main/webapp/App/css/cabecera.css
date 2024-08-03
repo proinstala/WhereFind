@@ -12,9 +12,9 @@
 
 .cabecera {
     text-align: center;
-    padding: 1rem;
+    padding: 0.5rem;
     margin: 0 2rem;
-    height: 8rem;
+    height: 7rem;
     border-bottom: 3px solid var(--blanco);
     grid-template:
         "general menu usuario";
@@ -84,13 +84,15 @@
     color: var(--blanco) !important;
     font-size: 5rem;
     transition: transform 0.2s ease;
-}
-.contenedor__menu i:hover {
-    color: var(--secundario) !important;
-    cursor: pointer;
-    transform: scale(1.2);
+    
+    &:hover {
+        color: var(--secundario) !important;
+        cursor: pointer;
+        transform: scale(1.2);
 
+    }
 }
+
 
 .contenedor__usuario {
     grid-area: usuario;
@@ -110,11 +112,12 @@
     overflow: hidden;
     flex-direction: row-reverse;
     position: fixed;
+    
+    &:hover {
+        width: 43.9rem;
+    }
 }
 
-.contenedor__usuario:hover {
-    width: 43.9rem;
-}
 
 .imagen__usuario {
     display: inline-block;
@@ -125,16 +128,17 @@
     border: 3px solid var(--texto_principal);
     overflow: hidden; /* Oculta cualquier contenido que se desborde */
     position: relative;
-}
-.imagen__usuario img {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    height: 100%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    object-fit: cover;
-    object-position: center;
+    
+    img {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        height: 100%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
 }
 
 
@@ -148,13 +152,14 @@
     cursor: pointer;
     font-size: 3rem;
     border: 2px solid var(--texto_principal);
+    
+    &:hover {
+        color: var(--secundario);
+        border-color: var(--secundario);
+        background-color: var(--blanco);
+    }
 }
-.btn_user:hover {
-    /*background-color: var(--secundario);*/
-    color: var(--secundario);
-    border-color: var(--secundario);
-    background-color: var(--blanco);
-}
+
 .info_user {
     display: flex;
     flex-direction: column;
@@ -167,23 +172,14 @@
     background-color: var(--fondo_secundario);
     overflow: hidden;
     text-overflow: ellipsis;
+    
+    p {
+        margin: 0;
+        color: var(--texto_principal);
+    }
+    
+    #rolUser {
+        font-weight: bold;
+    }
 }
 
-.info_user p {
-    margin: 0;
-    color: var(--texto_principal);
-}
-
-.contenedor__usuario .btn_prueba:not(:first-child) {
-    opacity: 0;
-
-}
-
-.contenedor__usuario:hover .btn_prueba:not(:first-child) {
-    opacity: 1;
-
-}
-
-#rolUser {
-    font-weight: bold;
-}

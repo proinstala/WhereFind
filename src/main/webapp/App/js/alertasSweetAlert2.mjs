@@ -30,7 +30,7 @@ const messageBox = (titulo = "titulo", contenido = "contenido", icon = "success"
             callback();
         }
     });
-}
+};
 
 /**
  * Muestra un mensaje de acceso utilizando SweetAlert2.
