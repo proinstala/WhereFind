@@ -8,17 +8,32 @@
 .barra__inferior {
     color: var(--blanco);
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
 }
 
 .cabecera {
     text-align: center;
     padding: 1rem;
     margin: 0 2rem;
-    height: 10rem;
+    height: 8rem;
     border-bottom: 3px solid var(--blanco);
+    grid-template:
+        "general menu usuario";
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+@media (max-width: 800px) {
+    .cabecera {
+        padding: 1rem 0;
+        height: 13.5rem;
+        grid-template:
+            "general usuario"
+            "menu menu";
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+    }
 }
 .barra__inferior {
+    grid-template-columns: 1fr 1fr 1fr;
     padding: 0.5rem;
     height: 3rem;
     background-color: #CCA500;
@@ -29,13 +44,14 @@
 }
 
 .contenedor__inicio {
+    grid-area: general;
     display: flex;
     align-items: center;
     gap: 2rem;
 }
 
 .contenedor__inicio--config {
-    width: 7rem;
+    width: 5.5rem;
     transition: transform 0.7s ease;
     cursor: pointer;
 }
@@ -50,6 +66,7 @@
 
 
 .contenedor__menu {
+    grid-area: menu;
     /*width: 5rem;*/
     /*background-color: aqua;*/
     justify-self: center;
@@ -57,9 +74,15 @@
     align-items: center;
     gap: 2rem;
 }
+@media (max-width: 800px) {
+    .contenedor__menu {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
 .contenedor__menu i {
     color: var(--blanco) !important;
-    font-size: 6rem;
+    font-size: 5rem;
     transition: transform 0.2s ease;
 }
 .contenedor__menu i:hover {
@@ -70,18 +93,19 @@
 }
 
 .contenedor__usuario {
+    grid-area: usuario;
     justify-self: right;
-    width: 8rem;
+    width: 5.8rem;
     background-color: var(--blanco);
     /* margin-left: auto; */
     border-radius: 4.5rem;
     transition: all 0.3s ease-in-out;
     display: flex;
     align-items: center;
-    padding-right: 0.5rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    gap: 2rem;
+    padding-right: 0.4rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    gap: 1rem;
     white-space: nowrap; /* Evita el salto de línea */
     overflow: hidden;
     flex-direction: row-reverse;
@@ -89,14 +113,14 @@
 }
 
 .contenedor__usuario:hover {
-    width: 46rem;
+    width: 43.9rem;
 }
 
 .imagen__usuario {
     display: inline-block;
-    min-width: 70px;
-    max-width: 70px;
-    height: 70px;
+    min-width: 5rem;
+    max-width: 5rem;
+    height: 5rem;
     border-radius: 70%;
     border: 3px solid var(--texto_principal);
     overflow: hidden; /* Oculta cualquier contenido que se desborde */
@@ -116,13 +140,13 @@
 
 .btn_user {
     display: inline-block;
-    min-width: 70px;
-    max-width: 70px;
-    height: 70px;
+    min-width: 5rem;
+    max-width: 5rem;
+    height: 5rem;
     transition: opacity 0.5s ease-in-out;
     border-radius: 70%;
     cursor: pointer;
-    font-size: 5rem;
+    font-size: 3rem;
     border: 2px solid var(--texto_principal);
 }
 .btn_user:hover {
@@ -135,13 +159,13 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-width: 18rem;
-    max-width: 70px;
-    height: 70px;
+    min-width: 25rem;
+    max-width: 7rem;
+    height: 5rem;
     border-radius: 7rem;
     border: 2px solid var(--texto_principal);
     background-color: var(--fondo_secundario);
-    overflow-x: hidden;
+    overflow: hidden;
     text-overflow: ellipsis;
 }
 

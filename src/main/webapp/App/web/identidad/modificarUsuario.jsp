@@ -80,6 +80,52 @@
                             <label for="emailUsuario">Email</label>
                         </div>
                             
+                         <div class="form__input">
+                            <input class="" type="text" name="rolUsuario" id="rolUsuario" placeholder="Introduce tu email" value="<%=userDTO.getRol()%>" readonly>
+                            <label for="rolUsuario">Rol</label>
+                        </div>
+
+                        <div class="form__input">
+                            <input class="" type="text" name="nombreRealUsuario" id="nombreRealUsuario" placeholder="Introduce tu nombre"value="<%=userDTO.getNombre()%>">
+                            <label for="nombreRealUsuario">Nombre</label>
+                        </div>
+
+                        <div class="form__input">
+                            <input class="" type="text" name="apellidoRealUsuario" id="apellidoRealUsuario" placeholder="Introduce tus apellidos"value="<%=userDTO.getApellidos()%>">
+                            <label for="apellidoRealUsuario">Apellidos</label>
+                        </div>
+
+                        <div class="form__input">
+                            <input class="" type="text" name="emailUsuario" id="emailUsuario" placeholder="Introduce tu email" value="<%=userDTO.getEmail()%>">
+                            <label for="emailUsuario">Email</label>
+                        </div>
+                            
+                            
+                            <div class="form__input">
+                            <input class="" type="text" name="rolUsuario" id="rolUsuario" placeholder="Introduce tu email" value="<%=userDTO.getRol()%>" readonly>
+                            <label for="rolUsuario">Rol</label>
+                        </div>
+
+                        <div class="form__input">
+                            <input class="" type="text" name="nombreRealUsuario" id="nombreRealUsuario" placeholder="Introduce tu nombre"value="<%=userDTO.getNombre()%>">
+                            <label for="nombreRealUsuario">Nombre</label>
+                        </div>
+
+                        <div class="form__input">
+                            <input class="" type="text" name="apellidoRealUsuario" id="apellidoRealUsuario" placeholder="Introduce tus apellidos"value="<%=userDTO.getApellidos()%>">
+                            <label for="apellidoRealUsuario">Apellidos</label>
+                        </div>
+
+                        <div class="form__input">
+                            <input class="" type="text" name="emailUsuario" id="emailUsuario" placeholder="Introduce tu email" value="<%=userDTO.getEmail()%>">
+                            <label for="emailUsuario">Email</label>
+                        </div>
+                            
+                         <div class="form__input">
+                            <input class="" type="text" name="emailUsuario" id="emailUsuario" placeholder="Introduce tu email" value="<%=userDTO.getEmail()%>">
+                            <label for="emailUsuario">Email</label>
+                        </div>
+                            
                         
 
                         <input type="hidden" name="imagenUsuarioB64" id="imagenUsuarioB64" value="<%=userDTO.getImagen()%>">

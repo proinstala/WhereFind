@@ -1,5 +1,4 @@
 
-
 /*
 Color Principal	    #FFA500	255, 165, 0
 Color Secundario    #005FA5	0, 95, 165
@@ -18,7 +17,6 @@ Borde input form    #444444
 
 Color Blanco	    #FFFFFF	255, 255, 255
 Color Negro         #000000
-
 */
 
 @font-face {
@@ -35,8 +33,7 @@ Color Negro         #000000
     font-style: normal;
 }
 
-:root {
-    
+:root { 
     --fuente_principal: 'Inter', sans-serif;
     --fuente_auxiliar: 'Outfit', sans-serif;
     
@@ -78,12 +75,9 @@ html {
 }
 body {
     font-size: 16px; /*Ajuste para REM, ahora 1 rem es 10px (1rem = 10px) */
-    /*line-height: 2;*/
-
-    font-family: var(--fuente_principal);
-    
-    font-optical-sizing: auto;
     font-style: normal;
+    font-family: var(--fuente_principal);
+    font-optical-sizing: auto;
 }
 
 /*Experimental: animaciones de transicion.  */
@@ -189,7 +183,6 @@ label {
 .negrita {
     font-weight: 700;
 }
-
 .grid-row-span-2 {
     grid-row: span 2;
 }
@@ -245,6 +238,7 @@ label {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
     justify-items: center;
+    overflow-y: auto;
 }
 
 
