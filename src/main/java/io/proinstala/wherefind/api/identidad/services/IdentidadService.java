@@ -353,7 +353,7 @@ public class IdentidadService extends BaseService {
                 ex.printStackTrace();
 
                 if (userService.isGetStateEqualFromException(ex)) {
-                    responseDTO = getResponseError("El nombre de usuario no es valido ddddddddddddddddddddd.");
+                    responseDTO = getResponseError("El nombre de usuario no es válido.");
                     responseJson(actionController.server().response(), responseDTO);
                     return;
                 }
