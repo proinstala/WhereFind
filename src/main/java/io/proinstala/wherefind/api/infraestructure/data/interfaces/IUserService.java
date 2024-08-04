@@ -13,7 +13,7 @@ public interface IUserService {
      *
      * @param userDTO el objeto UserDTO que representa al nuevo usuario a añadir.
      * @return el objeto UserDTO del usuario añadido.
-     * @throws java.sql.Exception
+     * @throws java.lang.Exception
      */
     public UserDTO add(UserDTO userDTO) throws Exception;
 
@@ -22,9 +22,18 @@ public interface IUserService {
      *
      * @param userDTO el objeto UserDTO que representa al usuario a actualizar.
      * @return true si la actualización fue exitosa, false en caso contrario.
-     * @throws java.sql.Exception
+     * @throws java.lang.Exception
      */
     public boolean update(UserDTO userDTO) throws Exception;
+    
+    /**
+     * Actualiza el password de un usuario existente.
+     *
+     * @param userDTO el objeto UserDTO que representa al usuario a actualizar.
+     * @return true si la actualización fue exitosa, false en caso contrario.
+     * @throws java.lang.Exception
+     */
+    public boolean updatePasswordUser(UserDTO userDTO) throws Exception;
 
     /**
      * Elimina un usuario existente.

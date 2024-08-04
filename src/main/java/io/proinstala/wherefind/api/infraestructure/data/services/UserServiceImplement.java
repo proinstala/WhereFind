@@ -78,19 +78,19 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
     public UserDTO add(UserDTO userDTO) throws SQLException {
         // Usar try-with-resources para manejar automáticamente la liberación de recursos
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQL_INSERT_NEW_USER)) {
+             PreparedStatement ps = connection.prepareStatement(SQL_INSERT_NEW_USER)) {
 
             // Asignar parámetros al PreparedStatement
-            statement.setString(1, userDTO.getUserName());
-            statement.setString(2, userDTO.getPassword());
-            statement.setString(3, userDTO.getRol());
-            statement.setString(4, userDTO.getNombre());
-            statement.setString(5, userDTO.getApellidos());
-            statement.setString(6, userDTO.getEmail());
-            statement.setString(7, userDTO.getImagen());
+            ps.setString(1, userDTO.getUserName());
+            ps.setString(2, userDTO.getPassword());
+            ps.setString(3, userDTO.getRol());
+            ps.setString(4, userDTO.getNombre());
+            ps.setString(5, userDTO.getApellidos());
+            ps.setString(6, userDTO.getEmail());
+            ps.setString(7, userDTO.getImagen());
 
             // Ejecutar la sentencia preparada
-            statement.executeUpdate();
+            ps.executeUpdate();
         }
 
         // Vuelve a conectarse a la base de datos para devolver el usuario recién creado
@@ -112,19 +112,46 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
 
         // Usar try-with-resources para asegurar el cierre automático de recursos
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_USER)) {
+             PreparedStatement ps = connection.prepareStatement(SQL_UPDATE_USER)) {
 
             // Establecer los parámetros en el PreparedStatement
-            statement.setString(1, userDTO.getUserName());
-            statement.setString(2, userDTO.getNombre());
-            statement.setString(3, userDTO.getApellidos());
-            statement.setString(4, userDTO.getEmail());
-            statement.setString(5, userDTO.getImagen());
-            statement.setInt(6, userDTO.getId());
+            ps.setString(1, userDTO.getUserName());
+            ps.setString(2, userDTO.getNombre());
+            ps.setString(3, userDTO.getApellidos());
+            ps.setString(4, userDTO.getEmail());
+            ps.setString(5, userDTO.getImagen());
+            ps.setInt(6, userDTO.getId());
 
             // Ejecutar la actualización y obtener el número de filas afectadas
-            rowsAffected = statement.executeUpdate();
+            rowsAffected = ps.executeUpdate();
+        }
 
+        // Retornar si se afectaron más de 0 filas
+        return rowsAffected > 0;
+    }
+    
+    /**
+     * Actualiza un usuario existente en la base de datos.
+     *
+     * @param userDTO el objeto UserDTO que representa al usuario a actualizar.
+     * @return true si la actualización fue exitosa, false en caso contrario.
+     * @throws java.sql.SQLException
+     */
+    @Override
+    public boolean updatePasswordUser(UserDTO userDTO) throws SQLException {
+        // Contador de filas afectadas
+        int rowsAffected = 0;
+
+        // Usar try-with-resources para asegurar el cierre automático de recursos
+        try (Connection connection = getConnection();
+             PreparedStatement ps = connection.prepareStatement(SQL_UPDATE_USER_PASSWORD)) {
+
+            // Establecer los parámetros en el PreparedStatement
+            ps.setString(1, userDTO.getPassword());
+            ps.setInt(2, userDTO.getId());
+
+            // Ejecutar la actualización y obtener el número de filas afectadas
+            rowsAffected = ps.executeUpdate();
         }
 
         // Retornar si se afectaron más de 0 filas

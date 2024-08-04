@@ -10,7 +10,6 @@ $(document).ready(function () {
     const inputHide64 = document.querySelector('#imagenUsuarioB64');
     const labelInputFoto = document.querySelector('#textoImagen');
     
-    
     btnFoto.addEventListener('change', (e) => {
         const defaultUserImg = contenedorImg.src;
         const fileImg = e.target.files[0];
@@ -32,11 +31,9 @@ $(document).ready(function () {
             });
     });
     
-    
     btnCancelar.addEventListener('click', () => {
         window.location.href = 'login.jsp';
     });
-    
 });
 
 
@@ -106,21 +103,6 @@ function validarFormulario(idForm) {
         },//Fin de msg  ------------------
 
         submitHandler: function () {
-            /*
-            const registrarCallBack = (response)  => {
-                if (response.isError === 1) {
-                    debugger;
-                    mostrarMensajeAcceso("No se puede registrar", response.result, "error");
-                } else {
-                    debugger;
-                    const acceso = () => window.location.replace(response.result);
-                    mostrarMensajeAcceso(`Se ha creado correctamente el usuario de ${response.user.nombre}`, "Creado Usuario.", "success", (response.isUrl)? acceso : null);
-                }
-            };
-
-            solicitudPost("api/identidad/create", registrarCallBack, idForm, true);
-            */
-           
             solicitudPost_modificada("api/identidad/create", idForm, true)
                 .then(response => {
                     if (response.isError === 1) {
@@ -135,13 +117,10 @@ function validarFormulario(idForm) {
                     console.error("Error:", error);
                     mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
                 });
-             
-            
         },
        // Función error de respuesta
         errorPlacement: function (error, element) {
             error.insertAfter(element); // Esto colocará el mensaje de error después del elemento con error
-
         },
         complete: function () {
             console.log("complete");

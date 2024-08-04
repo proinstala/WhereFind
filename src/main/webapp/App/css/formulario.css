@@ -29,6 +29,14 @@
         text-align: left;
     }
 } 
+@media (max-width: 500px) {
+    .contenedor__formulario--cabecera {
+
+        h1 {  
+            text-align: center;
+        }
+    }
+}
 
 .contenedor__formulario--cabecera--imagen {
     height: 15rem;

@@ -115,7 +115,7 @@
             </div> <!-- Fin contenedor__formulario (usuario)-->
             
             <!-- Formulario para modificar el password de usuario -->
-            <div style="display: none" class="contenedor__formulario max-width-100" id="form_password">
+            <div style="display: none;" class="contenedor__formulario max-width-100" id="form_password">
 
                 <div class="contenedor__formulario--cabecera">
                     <div>
@@ -124,8 +124,8 @@
                 </div>
 
                 <div class="contenedor__formulario--main">
-                    <form class="formulario" name="frmModificarPassword" id="frmModificarPasword">
-                        <input type="hidden" name="usuario_id" id="usuario_id" value="<%=userDTO.getId()%>">
+                    <form class="formulario" name="frmModificarPassword" id="frmModificarPassword">
+                        <input type="hidden" name="usuario_id" id="passwordUsuario_id" value="<%=userDTO.getId()%>">
 
                         <div class="form__input">
                             <input class="" type="password" name="passwordUsuario" id="passwordUsuario" placeholder="Introduce tu password actual">

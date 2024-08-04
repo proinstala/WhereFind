@@ -306,6 +306,9 @@ function validateImage(fileImage, maxSizeInMB = 1) {
     });
 }
 
+function resetCamposForm(idForm) {
+    document.querySelector(idForm).reset();
+}
 
 
-export { solicitudPost, solicitudGet, solicitudPut, setImageSelected, solicitudPost_modificada };
+export { solicitudPost, solicitudGet, solicitudPut, setImageSelected, solicitudPost_modificada, resetCamposForm };

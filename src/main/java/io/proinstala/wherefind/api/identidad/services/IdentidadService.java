@@ -262,7 +262,6 @@ public class IdentidadService extends BaseService {
                     userDTO.setEmail(emailUsuario);
                     userDTO.setImagen(imagenUsuario);
 
-
                     try {
                         // Se guardan los cambios del usuario
                         if (userService.update(userDTO))
@@ -337,19 +336,17 @@ public class IdentidadService extends BaseService {
                     // Obtiene los parámetros desde el request
                     String passwordUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_PASSWORD, "");
                     String nuevoPassword = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_NUEVO_PASSWORD, "");
-                    //String confirmacionPassword = actionController.server().getRequestParameter("confirmPassword", "");
                     
                     boolean passwordOK = false;
-                    if(passwordUsuario.length() > 3 && passwordUsuario.length() < 61 && !nuevoPassword.equals(userDTO.getPassword())) {
+                    if(passwordUsuario.equals(userDTO.getPassword()) && nuevoPassword.length() > 3 && nuevoPassword.length() < 61 && !nuevoPassword.equals(userDTO.getPassword())) {
                         // Actualiza los datos del usuario con los pasados por el navegador
                         userDTO.setPassword(nuevoPassword);
                         passwordOK = true;
                     }
 
-
                     try {
                         // Se guardan los cambios del usuario
-                        if (passwordOK && userService.update(userDTO))
+                        if (passwordOK && userService.updatePasswordUser(userDTO))
                         {
                             //Se vacía el password por motivos de seguridad
                             userDTO.setPassword("");
