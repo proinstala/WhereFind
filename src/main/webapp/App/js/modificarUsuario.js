@@ -3,9 +3,9 @@ import { mostrarMensaje, mostrarMensajeError } from './alertasSweetAlert2.mjs';
 
 $(document).ready(function () {
     validarFormulario("#frmModificarUsuario");
+    validarFormularioPassword("#frmModificarUsuario");
     
     const btnCancelar = document.querySelector('#btnCancelar'); 
-    //const btnGuardar = document.querySelector('#btnGuardar'); 
     const btnPassword = document.querySelector('#btnPassword');
     const btnUsuario = document.querySelector('#btnUsuario');
     const btnFoto = document.querySelector('#btnFoto');
@@ -66,6 +66,7 @@ function validarFormulario(idForm) {
             },
             emailUsuario: {
                 required: true,
+                maxlength: 200,
                 email: true
             }
         },//Fin de reglas ----------------
@@ -76,38 +77,98 @@ function validarFormulario(idForm) {
             },
             nombreRealUsuario: {
                 required: "Debe introducir su nombre.",
-                maxlength: "Longitud máx 60 caracteres."
+                maxlength: "Longitud máx 100 caracteres."
             },
             apellidoRealUsuario: {
                 required: "Debe introducir sus apellidos.",
-                maxlength: "Longitud máx 60 caracteres."
+                maxlength: "Longitud máx 100 caracteres."
             },
             emailUsuario: {
                 required: "Debe introducir su email.",
+                maxlength: "Longitud máx 200 caracteres.",
                 email: "Debe introducir un email válido."
             }
         },//Fin de msg  ------------------
 
         submitHandler: function () {
   
-            /*
-            const registrarCallBack = (response)  => {
-                if (response.isError === 1) {
-                    debugger;
-                    mostrarMensajeAcceso("No se puede registrar", response.result, "error");
-                } else {
-                    debugger;
-                    const acceso = () => window.location.replace(response.result);
-                    mostrarMensajeAcceso(`Se ha creado correctamente el usuario de ${response.user.nombre}`, "Creado Usuario.", "success", (response.isUrl)? acceso : null);
-                }
-            };
-
-            solicitudPost("api/identidad/create", registrarCallBack, idForm, true);
-            */
             const usuarioIdInput = document.querySelector('#usuario_id');
             const usuarioId = usuarioIdInput ? usuarioIdInput.value : -1;
           
             solicitudPut(`api/identidad/update/${usuarioId}`, idForm, true)
+                .then(response => {
+                    if (response.isError === 1) {
+                        mostrarMensajeError("No se puede actualizar los datos", response.result);
+                    } else {
+                        //const acceso = () => window.location.replace(response.result);
+                        mostrarMensaje(`Se han modificado correctamente los datos el usuario de ${response.user.nombre}`, "Modificado Usuario.", "success");
+                    }
+                })
+                .catch(error => {
+                    // Maneja el error aquí
+                    console.error("Error:", error);
+                    mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
+                });
+             
+        },
+       // Función error de respuesta
+        errorPlacement: function (error, element) {
+            error.insertAfter(element); // Esto colocará el mensaje de error después del elemento con error
+
+        },
+        complete: function () {
+            console.log("complete");
+            formDisable(false, idForm);
+        }
+    });//Fin Validate
+}
+
+function validarFormularioPassword(idForm) {
+    $.validator.addMethod("passwordMatch", function(value, element) {
+        // Comprueba si el valor del campo de confirmación coincide con el de la contraseña
+        return value === $(idForm).find("input[name='nuevoPassword']").val();
+    }, "Las contraseñas no coinciden.");
+    
+    $(idForm).validate({
+        rules: {
+            passwordUsuario: {
+                required: true,
+                maxlength: 60
+            },
+            nuevoPassword: {
+                required: true,
+                maxlength: 60,
+                minlength: 4
+            },
+            confirmPassword: {
+                required: true,
+                passwordMatch: true
+            }
+            
+        },//Fin de reglas ----------------
+        messages: {
+            passwordUsuario: {
+                required: "Debe introducir el password de usuario.",
+                maxlength: "Longitud máx 60 caracteres."
+            },
+            nuevoPassword: {
+                required: "Debe introducir el nuevo password de usuario.",
+                maxlength: "Longitud máx 60 caracteres.",
+                minlength: "Logitud minima de 4 caracteres."
+            },
+            confirmPassword: {
+                required: "Debe introducir el password de confirmación.",
+                passwordMatch: "El password de confirmación y de usuario no coinciden."
+            }
+            
+        },//Fin de msg  ------------------
+
+        submitHandler: function () {
+  
+            const usuarioIdInput = document.querySelector('#usuario_id');
+            const usuarioId = usuarioIdInput ? usuarioIdInput.value : -1;
+          
+            solicitudPut(`api/identidad/updatePassword/${usuarioId}`, idForm, true)
                 .then(response => {
                     if (response.isError === 1) {
                         mostrarMensajeError("No se puede actualizar los datos", response.result);

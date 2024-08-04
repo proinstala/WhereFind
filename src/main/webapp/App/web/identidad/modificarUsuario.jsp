@@ -36,6 +36,7 @@
                     </div>
                 </div>
 
+                <!-- Formulario para modificar los datos generales del usuario -->
                 <div class="contenedor__formulario--main">
                     <form class="formulario" name="frmModificarUsuario" id="frmModificarUsuario">
                         <input type="hidden" name="usuario_id" id="usuario_id" value="<%=userDTO.getId()%>">
@@ -85,7 +86,6 @@
                 </div>
 
                 <div class="contenedor__formulario--footer">
-
                     <div class="form__btn_circle centrar_izquierda">
                         <button class="" id="btnPassword" title="Modificar Password"><i class="las la-key"></i></button>
                     </div>
@@ -99,7 +99,7 @@
                     </div>
 
 
-                    <!-- comment
+                    <!-- estos botones esta provisional solo para ver como quedan.
                     <div class="form__btn btnPassword">
                         <button class="form__btn--aceptar" id="btnPassword">MODIFICAR PASSWORD</button>
                     </div>
@@ -112,10 +112,9 @@
                     -->
                 </div>
 
-            </div> <!-- Fin contenedor__formulario -->
+            </div> <!-- Fin contenedor__formulario (usuario)-->
             
-            
-            
+            <!-- Formulario para modificar el password de usuario -->
             <div style="display: none" class="contenedor__formulario max-width-100" id="form_password">
 
                 <div class="contenedor__formulario--cabecera">
@@ -147,7 +146,6 @@
                 </div>
 
                 <div class="contenedor__formulario--footer">
-                    
                     <div class="form__btn_circle centrar_izquierda">
                         <button class="" id="btnUsuario" title="Modificar Usuario"><i class="las la-user-edit"></i></i></button>
                     </div>
@@ -159,14 +157,10 @@
                     <div class="form__btn_circle">
                         <button class="" id="btnCancelarPassword" title="Cancelar"><i class="las la-times"></i></button>
                     </div>
-                    
                 </div>
-
-            </div> <!-- Fin contenedor__formulario -->
-            
-            
-            
-
+                        
+            </div> <!-- Fin contenedor__formulario (password)-->
+   
         </div> <!-- Fin main -->
 
         <div class="barra__inferior">
@@ -175,7 +169,6 @@
 
     </div>
 </div>
-
 
 <script src="App/js/modificarUsuario.js" type="module" defer></script>
 

@@ -293,6 +293,90 @@ public class IdentidadService extends BaseService {
         // Devuelve la respuesta al navegador del usuario en formato json
         responseJson(actionController.server().response(), responseDTO);
     }
+    
+    
+    /**
+     * Actualiza los datos de un usuario en la base de datos.
+     *
+     * @param actionController Controlador de acción
+     */
+    public void updatePasswordUser(ActionController actionController)
+    {
+        // Respuesta de la acción actual
+        ResponseDTO responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
+
+        // Comprueba que hay más de 1 parámetro
+        if (actionController.parametros().length <= 1)
+        {
+            // Crea la respuesta con un error
+            responseDTO = getResponseError(LocaleApp.ERROR_FALTAN_PARAMETROS);
+        }
+        else
+        {
+            // Obtiene el id del usuario desde el parámetro 1 de la lista de parámetros
+            int id = actionController.getIntFromParametros(1);
+
+            // Si el id es mayor que -1 significa que hay en principio un id válido que se puede procesar
+            // En caso de ser igual a -1 significa que el parámetro introducido no es correcto
+            if (id == -1)
+            {
+                // Crea la respuesta con un error
+                responseDTO = getResponseError(LocaleApp.ERROR_PARAMETRO_NO_CORRECTO);
+            }
+            else
+            {
+                // Conecta con el Gestor de Permanencia
+                IUserService userService = GestionPersistencia.getUserService();
+
+                // Obtiene los datos del usuario
+                UserDTO userDTO = userService.getUserById(id);
+
+                // Si el usuario no es nulo
+                if (userDTO != null)
+                {
+                    // Obtiene los parámetros desde el request
+                    String passwordUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_PASSWORD, "");
+                    String nuevoPassword = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_NUEVO_PASSWORD, "");
+                    //String confirmacionPassword = actionController.server().getRequestParameter("confirmPassword", "");
+                    
+                    boolean passwordOK = false;
+                    if(passwordUsuario.length() > 3 && passwordUsuario.length() < 61 && !nuevoPassword.equals(userDTO.getPassword())) {
+                        // Actualiza los datos del usuario con los pasados por el navegador
+                        userDTO.setPassword(nuevoPassword);
+                        passwordOK = true;
+                    }
+
+
+                    try {
+                        // Se guardan los cambios del usuario
+                        if (passwordOK && userService.update(userDTO))
+                        {
+                            //Se vacía el password por motivos de seguridad
+                            userDTO.setPassword("");
+
+                            // Como la acción se ha ejecutado correctamente se crea la respuesta acorde a la misma
+                            responseDTO = getResponseOk(LocaleApp.INFO_UPDATE_USER, userDTO, 0);
+
+                            // Comprueba que el usuario logueado que esta editando al usuario sea el mismo que el usuario editado
+                            // Si el id coincide (por ejemplo si se es administrador se pueden editar usuarios y el id no debería coincidir si no se esta editando a si mismo)
+                            UserDTO userLogeado = UserSession.getUserLogin(actionController.server().request());
+                            if (userLogeado.getId() == id)
+                            {
+                                // Guarda los datos modificados por el usuario en el user de la sessión, así si se pulsa F5,
+                                // se cargan los datos actualizados del mismo
+                                UserSession.setUserSession(userDTO, actionController.server());
+                            }
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        // Devuelve la respuesta al navegador del usuario en formato json
+        responseJson(actionController.server().response(), responseDTO);
+    }
 
     /**
      * Crea un nuevo usuario en la base de datos.

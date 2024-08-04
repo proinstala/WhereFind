@@ -11,6 +11,9 @@ public class ConstParametros {
     /** Contraseña del usuario. */
     public static final String PARAM_USUARIO_PASSWORD = "passwordUsuario";
     
+    /** Nueva Contraseña del usuario*/
+    public static final String PARAM_USUARIO_NUEVO_PASSWORD = "nuevoPassword";
+    
     /** Rol del usuario. */
     public static final String PARAM_USUARIO_ROL = "rolUsuario";
 

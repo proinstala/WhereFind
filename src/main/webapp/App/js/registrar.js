@@ -67,6 +67,7 @@ function validarFormulario(idForm) {
             },
             emailUsuario: {
                 required: true,
+                maxlength: 200,
                 email: true
             },
             confirmarPasswordUsuario: {
@@ -86,14 +87,15 @@ function validarFormulario(idForm) {
             },
             nombreRealUsuario: {
                 required: "Debe introducir su nombre.",
-                maxlength: "Longitud máx 60 caracteres."
+                maxlength: "Longitud máx 100 caracteres."
             },
             apellidoRealUsuario: {
                 required: "Debe introducir sus apellidos.",
-                maxlength: "Longitud máx 60 caracteres."
+                maxlength: "Longitud máx 100 caracteres."
             },
             emailUsuario: {
                 required: "Debe introducir su email.",
+                maxlength: "Longitud máx 200 caracteres.",
                 email: "Debe introducir un email válido."
             },
             confirmarPasswordUsuario: {

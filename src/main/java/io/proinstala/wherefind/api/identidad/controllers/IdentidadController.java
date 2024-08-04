@@ -38,6 +38,7 @@ public class IdentidadController  extends BaseHttpServlet {
         USERS,
         DELETE,
         UPDATE,
+        UPDATEPASSWORD,
         CREATE
     }
 
@@ -187,6 +188,27 @@ public class IdentidadController  extends BaseHttpServlet {
         // Se llama al servicio para procese la acción requerida
         identidadServicio.updateUser(actionController);
     }
+    
+    
+    /**
+     * Maneja la solicitud para actualizar el password de un usuario específico.
+     *
+     * EndPoint - PUT : /api/identidad/updatepassword/{id}
+     *
+     * @param actionController el controlador de acción.
+     */
+    protected void apiUpdatePasswordUser(ActionController actionController)
+    {
+        // Se comprueba que el usuario está logueado y sea administrador
+        if (!UserSession.isUserLogIn(actionController.server(), false))
+        {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+
+        // Se llama al servicio para procese la acción requerida
+        identidadServicio.updatePasswordUser(actionController);
+    }
 
     /**
      * Maneja la solicitud para crear un nuevo usuario.
@@ -310,6 +332,10 @@ public class IdentidadController  extends BaseHttpServlet {
 
             case ActionType.UPDATE :
                 apiUpdateUser(actionController);
+                break;
+                
+            case ActionType.UPDATEPASSWORD :
+                apiUpdatePasswordUser(actionController);
                 break;
 
             default:
