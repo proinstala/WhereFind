@@ -1,9 +1,15 @@
-import { solicitudPost } from './comunes.mjs';
+import { solicitudPost, detectarCambiosFormulario } from './comunes.mjs';
 import { mostrarMensaje } from './alertasSweetAlert2.mjs';
 
 $(document).ready(function () {
     validarFormulario("#frmLogin");
+    detectarCambiosFormulario("#frmLogin", onDetectarCambios);
 });
+
+function onDetectarCambios(hayCambios) {
+    $("#btnEntrar").prop('disabled', !hayCambios);
+}
+
 
 function validarFormulario(nombreForm) {
     $(nombreForm).validate({

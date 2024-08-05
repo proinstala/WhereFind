@@ -79,7 +79,7 @@
                             <input class="" type="text" name="emailUsuario" id="emailUsuario" placeholder="Introduce tu email" value="<%=userDTO.getEmail()%>">
                             <label for="emailUsuario">Email</label>
                         </div>
-                            
+
                         <input type="hidden" name="imagenUsuarioB64" id="imagenUsuarioB64" value="<%=userDTO.getImagen()%>">
 
                     </form>
@@ -91,11 +91,11 @@
                     </div>
 
                     <div class="form__btn_circle">
-                        <button class="" form="frmModificarUsuario" id="btnGuardar" title="Guardar" type="submit"><i class="las la-save"></i></button>
+                        <button class="" form="frmModificarUsuario" id="btnGuardar" title="Guardar" type="submit" disabled><i class="las la-save"></i></button>
                     </div>
 
                     <div class="form__btn_circle">
-                        <button class="" id="btnCancelar" title="Cancelar"><i class="las la-times"></i></button>
+                        <button class="" id="btnCancelar" title="Cancelar"  disabled><i class="las la-times"></i></button>
                     </div>
 
 
@@ -113,7 +113,7 @@
                 </div>
 
             </div> <!-- Fin contenedor__formulario (usuario)-->
-            
+
             <!-- Formulario para modificar el password de usuario -->
             <div style="display: none;" class="contenedor__formulario max-width-100" id="form_password">
 
@@ -131,12 +131,12 @@
                             <input class="" type="password" name="passwordUsuario" id="passwordUsuario" placeholder="Introduce tu password actual">
                             <label for="passwordUsuario">Password Actual</label>
                         </div>
-                        
+
                         <div class="form__input">
                             <input class="" type="password" name="nuevoPassword" id="nuevoPassword" placeholder="Introduce el nuevo password">
                             <label for="passwordUsuario">Nuevo Password</label>
                         </div>
-                        
+
                         <div class="form__input">
                             <input class="" type="password" name="confirmPassword" id="confirmPassword" placeholder="confirma el password">
                             <label for="passwordUsuario">Confirma Password</label>
@@ -149,18 +149,18 @@
                     <div class="form__btn_circle centrar_izquierda">
                         <button class="" id="btnUsuario" title="Modificar Usuario"><i class="las la-user-edit"></i></i></button>
                     </div>
-                    
+
                     <div class="form__btn_circle">
-                        <button class="" form="frmModificarPassword" id="btnGuardarPassword" title="Guardar" type="submit"><i class="las la-save"></i></button>
+                        <button class="" form="frmModificarPassword" id="btnGuardarPassword" title="Guardar" type="submit" disabled><i class="las la-save"></i></button>
                     </div>
 
                     <div class="form__btn_circle">
-                        <button class="" id="btnCancelarPassword" title="Cancelar"><i class="las la-times"></i></button>
+                        <button class="" id="btnCancelarPassword" title="Cancelar" disabled><i class="las la-times"></i></button>
                     </div>
                 </div>
-                        
+
             </div> <!-- Fin contenedor__formulario (password)-->
-   
+
         </div> <!-- Fin main -->
 
         <div class="barra__inferior">

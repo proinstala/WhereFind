@@ -1,20 +1,28 @@
-import { solicitudPost, setImageSelected, solicitudPost_modificada } from './comunes.mjs';
+import { solicitudPost, setImageSelected, solicitudPost_modificada, detectarCambiosFormulario } from './comunes.mjs';
 import { mostrarMensaje, mostrarMensajeError } from './alertasSweetAlert2.mjs';
+
+
+function onDetectarCambios(hayCambios) {
+    $("#btnRegistrar").prop('disabled', !hayCambios);
+    $("#btnCancelar").prop('disabled', !hayCambios);
+}
+
 
 $(document).ready(function () {
     validarFormulario("#frmRegistrarUsuario");
-    
-    const btnCancelar = document.querySelector('#btnCancelar'); 
+    detectarCambiosFormulario("#frmRegistrarUsuario", onDetectarCambios);
+
+    const btnCancelar = document.querySelector('#btnCancelar');
     const btnFoto = document.querySelector('#btnFoto');
     const contenedorImg = document.querySelector('#imgUsuario');
     const inputHide64 = document.querySelector('#imagenUsuarioB64');
     const labelInputFoto = document.querySelector('#textoImagen');
-    
+
     btnFoto.addEventListener('change', (e) => {
         const defaultUserImg = contenedorImg.src;
         const fileImg = e.target.files[0];
-        
-        //Establece la imagen seleccionada. 
+
+        //Establece la imagen seleccionada.
         setImageSelected(fileImg, contenedorImg, inputHide64, defaultUserImg, 2)
             .then((result) => {
                 if (result) {
@@ -30,7 +38,7 @@ $(document).ready(function () {
                 btnFoto.value = '';
             });
     });
-    
+
     btnCancelar.addEventListener('click', () => {
         window.location.href = 'login.jsp';
     });
@@ -42,7 +50,7 @@ function validarFormulario(idForm) {
         // Comprueba si el valor del campo de confirmación coincide con el de la contraseña
         return value === $(idForm).find("input[name='passwordUsuario']").val();
     }, "Las contraseñas no coinciden.");
-    
+
     $(idForm).validate({
         rules: {
             nombreUsuario: {
@@ -99,7 +107,7 @@ function validarFormulario(idForm) {
                 required: "Debe introducir el password de confirmación.",
                 passwordMatch: "El password de confirmación y de usuario no coinciden."
             }
-            
+
         },//Fin de msg  ------------------
 
         submitHandler: function () {

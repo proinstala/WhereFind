@@ -109,7 +109,7 @@ function solicitudPostFetch(url, data, callBack, idElement, mostrarLoad) {
  * @param {string} mostrarLoad - Bloquea la UI mostrando una alerta con una animación de espera.
  */
 function solicitudPostFetch_modificada(url, data, idElement, mostrarLoad) {
- 
+
     formDisable(idElement, true, mostrarLoad);
 
     return fetch(url, {
@@ -123,7 +123,7 @@ function solicitudPostFetch_modificada(url, data, idElement, mostrarLoad) {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
+
         return response.json(); // Procesar la respuesta JSON
     })
     .catch(error => {
@@ -147,7 +147,7 @@ function solicitudPostFetch_modificada(url, data, idElement, mostrarLoad) {
  * @param {string} mostrarLoad - Bloquea la UI mostrando una alerta con una animación de espera.
  */
 function solicitudPutFetch(url, data, idElement, mostrarLoad) {
- 
+
     formDisable(idElement, true, mostrarLoad);
 
     return fetch(url, {
@@ -161,7 +161,7 @@ function solicitudPutFetch(url, data, idElement, mostrarLoad) {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
+
         return response.json(); // Procesar la respuesta JSON
     })
     .catch(error => {
@@ -240,17 +240,17 @@ function formDisable(idForm, disabled, mostrarLoad) {
 
 /**
  * Establece una imagen en un contenedor dado a partir de un archivo de imagen seleccionado,
- * actualiza un campo oculto con la representación Base64 de la imagen, y maneja errores 
+ * actualiza un campo oculto con la representación Base64 de la imagen, y maneja errores
  * mostrando una advertencia y configurando una imagen por defecto si es necesario.
- * 
- * 
- * 
+ *
+ *
+ *
  * @param {File} fileImage - El archivo de imagen que se va a establecer en el contenedor.
  * @param {HTMLImageElement} contenedorImagen - El contenedor de imagen (etiqueta <img>) donde se mostrará la imagen.
  * @param {HTMLInputElement} inputHideImagen64 - Un campo de entrada oculto donde se almacenará la representación Base64 de la imagen.
  * @param {string} [defaultImage] - La URL de la imagen por defecto que se mostrará si la imagen no es válida. Si no se proporciona, no se cambia la imagen.
  * @param {number} [maxSizeInMB=1] - El tamaño máximo permitido para el archivo de imagen en megabytes. El valor predeterminado es 1 MB.
- * 
+ *
  * @returns {Promise<boolean>} - Una promesa que se resuelve en `true` si la imagen es válida y se ha establecido correctamente. La promesa se rechaza con un error si ocurre un problema.
  */
 const setImageSelected = (fileImage, contenedorImagen, inputHideImagen64, defaultImage, maxSizeInMB) => {
@@ -279,10 +279,10 @@ const setImageSelected = (fileImage, contenedorImagen, inputHideImagen64, defaul
 
 /**
  * Valida si el archivo proporcionado es una imagen válida y si su tamaño está dentro del límite especificado.
- * 
+ *
  * @param {File} fileImage - El archivo de imagen a validar.
  * @param {number} [maxSizeInMB=1] - El tamaño máximo permitido para el archivo de imagen en megabytes. El valor predeterminado es 1 MB.
- * 
+ *
  * @returns {Promise<boolean>} - Una promesa que se resuelve en `true` si el archivo es una imagen válida y está dentro del límite de tamaño, o se rechaza con un mensaje de error si no lo es.
  */
 function validateImage(fileImage, maxSizeInMB = 1) {
@@ -311,4 +311,21 @@ function resetCamposForm(idForm) {
 }
 
 
-export { solicitudPost, solicitudGet, solicitudPut, setImageSelected, solicitudPost_modificada, resetCamposForm };
+/**
+ * Detecta los cambios en los datos de un formulario y si esos datos son distintos al los datos originales del mismo.
+ *
+ * @param {string} idForm   - Id del formulario que se quiere vigilar para detectar cambios.
+ * @param {function} callBack  - Método que recibirá el resultado.
+ */
+const detectarCambiosFormulario = (idForm, callBack) => {
+    let form_original_data = $(idForm).serialize();
+    $(idForm).on('keyup change paste', 'input, select, textarea', function(){
+        if (callBack != null) {
+            callBack($(idForm).serialize() != form_original_data)
+        }
+    });
+}
+
+
+
+export { solicitudPost, solicitudGet, solicitudPut, setImageSelected, solicitudPost_modificada, resetCamposForm, detectarCambiosFormulario };

@@ -8,7 +8,7 @@
 
 <div class="contenedor__general--registrar">
     <div class="contenedor__formulario max-width-80">
- 
+
         <div class="contenedor__formulario--cabecera">
             <div>
                 <h1>Registrar Nuevo Usuario</h1>
@@ -30,7 +30,7 @@
                         </label>
                     </div>
                 </div>
-                
+
                 <div class="form__input">
                     <input class="" type="text" name="nombreUsuario" id="nombreUsuario" placeholder="Introduce tu nombre de usuario">
                     <label for="nombreUsuario">Usuario</label>
@@ -67,10 +67,10 @@
 
         <div class="contenedor__formulario--footer">
             <div class="form__btn">
-                <button class="form__btn--aceptar" form="frmRegistrarUsuario" type="submit">REGISTRAR USUARIO</button>
+                <button class="form__btn--aceptar" form="frmRegistrarUsuario" type="submit" id="btnRegistrar" disabled>REGISTRAR USUARIO</button>
             </div>
             <div class="form__btn">
-                <button class="form__btn--cancelar" id="btnCancelar">CANCELAR</button>
+                <button class="form__btn--cancelar" id="btnCancelar" id="btnCancelar" disabled>CANCELAR</button>
             </div>
         </div>
 

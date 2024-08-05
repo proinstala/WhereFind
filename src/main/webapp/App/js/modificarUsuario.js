@@ -1,11 +1,29 @@
-import { setImageSelected, solicitudPut, resetCamposForm } from './comunes.mjs';
+import { setImageSelected, solicitudPut, resetCamposForm, detectarCambiosFormulario } from './comunes.mjs';
 import { mostrarMensaje, mostrarMensajeError } from './alertasSweetAlert2.mjs';
+
+
+
+function onDetectarCambiosModificarUsuario(hayCambios) {
+    $("#btnGuardar").prop('disabled', !hayCambios);
+    $("#btnCancelar").prop('disabled', !hayCambios);
+}
+
+function onDetectarCambiosModificarPassword(hayCambios) {
+    $("#btnGuardarPassword").prop('disabled', !hayCambios);
+    $("#btnCancelarPassword").prop('disabled', !hayCambios);
+}
+
 
 $(document).ready(function () {
     validarFormulario("#frmModificarUsuario");
     validarFormularioPassword("#frmModificarPassword");
-    
-    const btnCancelar = document.querySelector('#btnCancelar'); 
+
+    detectarCambiosFormulario("#frmModificarUsuario", onDetectarCambiosModificarUsuario);
+    detectarCambiosFormulario("#frmModificarPassword", onDetectarCambiosModificarPassword);
+
+
+
+    const btnCancelar = document.querySelector('#btnCancelar');
     const btnPassword = document.querySelector('#btnPassword');
     const btnUsuario = document.querySelector('#btnUsuario');
 
@@ -13,16 +31,16 @@ $(document).ready(function () {
     const contenedorImg = document.querySelector('#imgUsuario');
     const inputHide64 = document.querySelector('#imagenUsuarioB64');
     const labelInputFoto = document.querySelector('#textoImagen');
-    
+
     const divFormUsuario = document.querySelector('#form_usuario');
     const divFormPassword = document.querySelector('#form_password');
-    
-    
+
+
     btnFoto.addEventListener('change', (e) => {
         const defaultUserImg = contenedorImg.src;
         const fileImg = e.target.files[0];
-        
-        //Establece la imagen seleccionada. 
+
+        //Establece la imagen seleccionada.
         setImageSelected(fileImg, contenedorImg, inputHide64, defaultUserImg, 2)
             .then((result) => {
                 if (result) {
@@ -38,11 +56,11 @@ $(document).ready(function () {
                 btnFoto.value = '';
             });
     });
-      
+
     btnCancelar.addEventListener('click', () => {
         //window.location.href = 'login.jsp';
     });
-    
+
     btnPassword.addEventListener('click',() => mostrarContenedor(divFormPassword, divFormUsuario, 'grid'));
     btnUsuario.addEventListener('click',() => mostrarContenedor(divFormUsuario, divFormPassword, 'grid'));
 });
@@ -90,10 +108,10 @@ function validarFormulario(idForm) {
         },//Fin de msg  ------------------
 
         submitHandler: function () {
-  
+
             const usuarioIdInput = document.querySelector('#usuario_id');
             const usuarioId = usuarioIdInput ? usuarioIdInput.value : -1;
-          
+
             solicitudPut(`api/identidad/update/${usuarioId}`, idForm, true)
                 .then(response => {
                     if (response.isError === 1) {
@@ -108,7 +126,7 @@ function validarFormulario(idForm) {
                     console.error("Error:", error);
                     mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
                 });
-             
+
         },
        // Función error de respuesta
         errorPlacement: function (error, element) {
@@ -127,7 +145,7 @@ function validarFormularioPassword(idForm) {
         // Comprueba si el valor del campo de confirmación coincide con el de la contraseña
         return value === $(idForm).find("input[name='nuevoPassword']").val();
     }, "Las contraseñas no coinciden.");
-    
+
     $(idForm).validate({
         rules: {
             passwordUsuario: {
@@ -143,7 +161,7 @@ function validarFormularioPassword(idForm) {
                 required: true,
                 passwordMatch: true
             }
-            
+
         },//Fin de reglas ----------------
         messages: {
             passwordUsuario: {
@@ -159,14 +177,14 @@ function validarFormularioPassword(idForm) {
                 required: "Este campo es requerido.",
                 passwordMatch: "El password de confirmación es erroneo."
             }
-            
+
         },//Fin de msg  ------------------
 
         submitHandler: function () {
-            
+
             const usuarioIdInput = document.querySelector('#passwordUsuario_id');
             const usuarioId = usuarioIdInput ? usuarioIdInput.value : -1;
-          
+
             solicitudPut(`api/identidad/updatePassword/${usuarioId}`, idForm, true)
                 .then(response => {
                     if (response.isError === 1) {
@@ -197,12 +215,12 @@ function validarFormularioPassword(idForm) {
 
 function mostrarContenedor(nodeMostrar, nodeOcultar, display) {
     const estiloNodeMostrar = window.getComputedStyle(nodeMostrar);
-    
+
     // Verificar si el nodo a mostrar tiene display: none
     if (estiloNodeMostrar.display === 'none') {
         // Si es así, cambiar su display a grid
         nodeMostrar.style.display = display;
-        
+
         // Ocultar el nodo a ocultar
         nodeOcultar.style.display = 'none';
     }

@@ -22,7 +22,7 @@
                     <label for="passwordUsuario">Password Usuario</label>
                 </div>
                 <div class="login__input">
-                    <button type="submit">ENTRAR</button>
+                    <button id="btnEntrar" type="submit" disabled>ENTRAR</button>
                 </div>
             </form>
 
