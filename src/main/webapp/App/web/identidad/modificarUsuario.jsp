@@ -61,7 +61,7 @@
                         </div>
 
                         <div class="form__input disable">
-                            <input class="" type="text" name="rolUsuario" id="rolUsuario" placeholder="Introduce tu email" value="<%=userDTO.getRol()%>" readonly>
+                            <input class="" type="text" name="rolUsuario" id="rolUsuario" placeholder="Introduce el rol del usuario" value="<%=userDTO.getRol()%>" disabled readonly>
                             <label for="rolUsuario">Rol</label>
                         </div>
 

@@ -266,12 +266,6 @@ button[disabled]:hover {
 }
 
 /* TODO: Ajustar los colores al tema actual */
-div.disable input,
-div.disable select,
-div.disable option,
-div.disable textarea,
-label[disabled],
-label:disabled,
 input[disabled],
 input:disabled,
 select[disabled],
@@ -280,9 +274,14 @@ option[disabled],
 option:disabled,
 textarea[disabled],
 textarea:disabled {
-    border: 1px solid #999999 !important;
-    background-color: #cccccc !important;
-    color: #666666 !important;
+    background-color: #FFFFFF !important;
+    color: #AAAAAA !important;
+    border-bottom-color: #AAAAAA !important;
+
+    i,
+    + label {
+        color: #AAAAAA !important;
+    }
 }
 
 
