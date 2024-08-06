@@ -8,7 +8,6 @@
     background-color: var(--blanco);
     display: grid;
     grid-template-rows: auto auto auto; 
-    
 }
 
 @media (max-width: 800px), (max-height: 800px) {
@@ -38,9 +37,32 @@
     }
 }
 
-.contenedor__formulario--cabecera--imagen {
-    height: 15rem;
-    max-height: 15rem;
+/*para*/
+.contenedor__formulario--imagen--redondo {
+    margin: 0 auto;
+    height: 11rem;
+    width: 11rem;
+    border-radius: 70%;
+    border: 3px solid var(--texto_principal);
+    overflow: hidden; /* Oculta cualquier contenido que se desborde */
+    position: relative;
+    
+    img {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        height: 100%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+}
+
+
+.contenedor__formulario--imagen {
+    height: 11rem;
+    max-height: 11rem;
     text-align: center;
     align-content: center;
     
@@ -60,7 +82,6 @@
     gap: 2rem;
     width: 100%;
 }
-
 
 .form__input { 
     position: relative; /*para los label de error.*/
@@ -225,10 +246,8 @@
         
         &:hover {
             cursor: pointer;
-            /*background-color: var(--secundario-brillo);*/
             color: var(--secundario-brillo);
             border-color: var(--secundario-brillo);
-            /*font-weight: 700;*/
         }
         
         &.form__btn--cancelar {
@@ -239,12 +258,7 @@
             }
         }
     }
-    
-    &.centrar_izquierda {
-        margin-right: auto;
-    }
 }
-
 
 .contenedor__formulario--footer {
     display: flex;
@@ -259,12 +273,7 @@
     }
 }
 
-.btnPassword {
-    margin-right: auto;
-}
-
 /*Formulario sweetalert2*/
-
 .formulario_sw2 {
     background-color: var(--blanco);
     display: grid;
@@ -272,5 +281,4 @@
     gap: 2rem;
     width: 100%;
     justify-items: center;
-    
 }

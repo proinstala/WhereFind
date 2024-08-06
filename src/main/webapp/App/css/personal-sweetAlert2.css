@@ -14,20 +14,47 @@
     color: var(--primario);
 }
 
+
 .swal-boton {
     font-size: 2rem !important;
     background-color: var(--secundario) !important;
-    border-color: var(--secundario) !important; /*No funciona*/
+    cursor: pointer !important; /*No funciona*/
+    
+    &:hover {
+        background-color: var(--secundario-brillo) !important;
+    }                   
+    
+    &:focus {
+         box-shadow: 0 0 0 3px rgba(110, 120, 129, 0.5) !important;
+    }
 }
 
-.swal-boton:hover {
-    background-color: var(--primario) !important;
-    border-color: var(--secundario) !important; /*No funciona*/
+.swal-boton-deny {
+    font-size: 2rem !important;
+    background-color: var(--enfasis) !important;
+    
+    &:hover {
+        background-color: var(--enfasis-brillo) !important;
+    }
+    
+    &:focus {
+        
+    }
 }
 
-.swal-boton:focus {
-    border-color: var(--secundario) !important; /*No funciona*/
+.swal-boton-cancel {
+    font-size: 2rem !important;
+    background-color: var(--enfasis) !important;
+    
+    &:hover {
+        background-color: var(--enfasis-brillo) !important;
+    }
+    
+    &:focus {
+        
+    }
 }
+
 
 .swal-contenido {
     font-size: 2rem;

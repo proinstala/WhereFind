@@ -48,15 +48,24 @@
     }
 } 
 
-
-.contenedor__formulario--cabecera--imagen {
-    height: 15rem;
-    max-height: 15rem;
-    text-align: center;
-    align-content: center;
+.contenedor__formulario--imagen--redondo {
+    margin: 0 auto;
+    height: 11rem;
+    width: 11rem;
+    border-radius: 70%;
+    border: 3px solid var(--texto_principal);
+    overflow: hidden; /* Oculta cualquier contenido que se desborde */
+    position: relative;
     
     img {
-        width: 15rem;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        height: 100%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
     }
 }
 
@@ -78,7 +87,6 @@
     
     background-color: var(--blanco);
 }
-
 
 .form__input { 
     position: relative; /*para los label de error.*/
@@ -133,8 +141,6 @@
     }
 }
 
-
-
 .input_foto {
     font-size: 3rem;
     display: flex;
@@ -176,7 +182,6 @@
     }
 }
 
-
 .form__btn {
     width: 20rem;
     
@@ -210,7 +215,6 @@
         width: 100%;
     }
 }
-
 
 .contenedor__formulario--footer {
     display: flex;

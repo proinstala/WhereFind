@@ -11,13 +11,11 @@
     }
 
     UserDTO userDTO = UserSession.getUserLogin(request);
-
 %>
 
 <jsp:include page="../shared/head.jsp" >
     <jsp:param name="titleweb" value="Index" />
 </jsp:include>
-
 
 <link href="App/css/formulario.css" rel="stylesheet" type="text/css"/>
 
@@ -43,8 +41,8 @@
 
                         <div class="form__input grid-row-span-2">
                             <div>
-                                <div class="contenedor__formulario--cabecera--imagen">
-                                    <img class="imagen--registrar" src="<%=userDTO.getImagen()%>" id="imgUsuario" alt="logo usuario">
+                                <div class="contenedor__formulario--imagen--redondo">
+                                    <img src="<%=userDTO.getImagen()%>" id="imgUsuario" alt="logo usuario">
                                 </div>
 
                                 <label for="btnFoto" class="input_foto">
@@ -86,7 +84,7 @@
                 </div>
 
                 <div class="contenedor__formulario--footer">
-                    <div class="form__btn_circle centrar_izquierda">
+                    <div class="form__btn_circle margin-right-auto">
                         <button class="" id="btnPassword" title="Modificar Password"><i class="las la-key"></i></button>
                     </div>
 
@@ -97,19 +95,6 @@
                     <div class="form__btn_circle">
                         <button class="" id="btnCancelar" title="Cancelar"  disabled><i class="las la-times"></i></button>
                     </div>
-
-
-                    <!-- estos botones esta provisional solo para ver como quedan.
-                    <div class="form__btn btnPassword">
-                        <button class="form__btn--aceptar" id="btnPassword">MODIFICAR PASSWORD</button>
-                    </div>
-                    <div class="form__btn">
-                        <button class="form__btn--aceptar" form="frmModificarUsuario" type="submit">ACEPTAR</button>
-                    </div>
-                    <div class="form__btn">
-                        <button class="form__btn--cancelar" id="btnCancelar">CANCELAR</button>
-                    </div>
-                    -->
                 </div>
 
             </div> <!-- Fin contenedor__formulario (usuario)-->
@@ -146,7 +131,7 @@
                 </div>
 
                 <div class="contenedor__formulario--footer">
-                    <div class="form__btn_circle centrar_izquierda">
+                    <div class="form__btn_circle margin-right-auto">
                         <button class="" id="btnUsuario" title="Modificar Usuario"><i class="las la-user-edit"></i></i></button>
                     </div>
 

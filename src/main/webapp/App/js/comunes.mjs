@@ -217,8 +217,6 @@ function solicitudGetFetch(url, callBack, idElement, mostrarLoad) {
 }
 
 
-
-
 /**
  * Activa/desactiva todos los campos de un formulario y muestra la alerta de cargando.
  *
@@ -242,8 +240,6 @@ function formDisable(idForm, disabled, mostrarLoad) {
  * Establece una imagen en un contenedor dado a partir de un archivo de imagen seleccionado,
  * actualiza un campo oculto con la representación Base64 de la imagen, y maneja errores
  * mostrando una advertencia y configurando una imagen por defecto si es necesario.
- *
- *
  *
  * @param {File} fileImage - El archivo de imagen que se va a establecer en el contenedor.
  * @param {HTMLImageElement} contenedorImagen - El contenedor de imagen (etiqueta <img>) donde se mostrará la imagen.
@@ -306,6 +302,13 @@ function validateImage(fileImage, maxSizeInMB = 1) {
     });
 }
 
+
+/**
+ * Restablece todos los campos de un formulario.
+ * 
+ * @param {string} idForm - El selector CSS del formulario a restablecer.
+ * 
+ */
 function resetCamposForm(idForm) {
     document.querySelector(idForm).reset();
 }

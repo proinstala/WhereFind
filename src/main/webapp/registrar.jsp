@@ -19,8 +19,8 @@
             <form class="formulario" name="frmRegistrarUsuario" id="frmRegistrarUsuario">
                 <div class="form__input grid-row-span-2">
                     <div>
-                        <div class="contenedor__formulario--cabecera--imagen">
-                            <img class="imagen--registrar" src="App/img/defaultUser.svg" id="imgUsuario" alt="logo usuario">
+                        <div class="contenedor__formulario--imagen--redondo">
+                            <img src="App/img/defaultUser.svg" id="imgUsuario" alt="logo usuario">
                         </div>
 
                         <label for="btnFoto" class="input_foto">

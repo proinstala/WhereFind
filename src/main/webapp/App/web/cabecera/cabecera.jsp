@@ -41,7 +41,7 @@
 
     <div class="contenedor__usuario">
         <div class="imagen__usuario">
-            <img class="imagen__usuario--imagen" src="<%= UserSession.getLoginImagen(request) %>" alt="foto usuario">
+            <img src="<%= UserSession.getLoginImagen(request) %>" alt="foto usuario">
         </div>
 
         <div class="info_user">

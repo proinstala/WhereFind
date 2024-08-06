@@ -1,5 +1,5 @@
 import { setImageSelected, solicitudPut, resetCamposForm, detectarCambiosFormulario } from './comunes.mjs';
-import { mostrarMensaje, mostrarMensajeError } from './alertasSweetAlert2.mjs';
+import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from './alertasSweetAlert2.mjs';
 
 
 
@@ -20,8 +20,6 @@ $(document).ready(function () {
 
     detectarCambiosFormulario("#frmModificarUsuario", onDetectarCambiosModificarUsuario);
     detectarCambiosFormulario("#frmModificarPassword", onDetectarCambiosModificarPassword);
-
-
 
     const btnCancelar = document.querySelector('#btnCancelar');
     const btnPassword = document.querySelector('#btnPassword');
@@ -108,25 +106,32 @@ function validarFormulario(idForm) {
         },//Fin de msg  ------------------
 
         submitHandler: function () {
+            mostrarMensajeOpcion("Modificar Usuario", '¿Quieres realmente modificar los datos?')
+                    .then((result) => {
+                        if (result.isConfirmed) {
+                            const usuarioIdInput = document.querySelector('#usuario_id');
+                            const usuarioId = usuarioIdInput ? usuarioIdInput.value : -1;
 
-            const usuarioIdInput = document.querySelector('#usuario_id');
-            const usuarioId = usuarioIdInput ? usuarioIdInput.value : -1;
-
-            solicitudPut(`api/identidad/update/${usuarioId}`, idForm, true)
-                .then(response => {
-                    if (response.isError === 1) {
-                        mostrarMensajeError("No se puede actualizar los datos", response.result);
-                    } else {
-                        //const acceso = () => window.location.replace(response.result);
-                        mostrarMensaje(`Se han modificado correctamente los datos el usuario de ${response.user.nombre}`, "Modificado Usuario.", "success");
-                    }
-                })
-                .catch(error => {
-                    // Maneja el error aquí
-                    console.error("Error:", error);
-                    mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
-                });
-
+                            solicitudPut(`api/identidad/update/${usuarioId}`, idForm, true)
+                                    .then(response => {
+                                        if (response.isError === 1) {
+                                            mostrarMensajeError("No se puede actualizar los datos", response.result);
+                                        } else {
+                                            //const acceso = () => window.location.replace(response.result);
+                                            mostrarMensaje(`Se han modificado correctamente los datos el usuario de ${response.user.nombre}`, "Modificado Usuario.", "success");
+                                        }
+                                    })
+                                    .catch(error => {
+                                        // Maneja el error aquí
+                                        console.error("Error:", error);
+                                        mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
+                                    });
+                        } else if (result.isDenied) {
+                            //denegado
+                        } else if (result.isDismissed) {
+                            //cancelado
+                        }
+                    });
         },
        // Función error de respuesta
         errorPlacement: function (error, element) {
@@ -181,25 +186,33 @@ function validarFormularioPassword(idForm) {
         },//Fin de msg  ------------------
 
         submitHandler: function () {
+            mostrarMensajeOpcion("Modificar Password Usuario", '¿Quieres realmente modificar el password de usuario?')
+                    .then((result) => {
+                        if (result.isConfirmed) {
+                            const usuarioIdInput = document.querySelector('#passwordUsuario_id');
+                            const usuarioId = usuarioIdInput ? usuarioIdInput.value : -1;
 
-            const usuarioIdInput = document.querySelector('#passwordUsuario_id');
-            const usuarioId = usuarioIdInput ? usuarioIdInput.value : -1;
-
-            solicitudPut(`api/identidad/updatePassword/${usuarioId}`, idForm, true)
-                .then(response => {
-                    if (response.isError === 1) {
-                        mostrarMensajeError("No se puede actualizar los datos", response.result);
-                    } else {
-                        //const acceso = () => window.location.replace(response.result);
-                        mostrarMensaje(`Se han modificado correctamente los datos el usuario de ${response.user.nombre}`, "Modificado Usuario.", "success");
-                        resetCamposForm(idForm);
-                    }
-                })
-                .catch(error => {
-                    // Maneja el error aquí
-                    console.error("Error:", error);
-                    mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
-                });
+                            solicitudPut(`api/identidad/updatePassword/${usuarioId}`, idForm, true)
+                                    .then(response => {
+                                        if (response.isError === 1) {
+                                            mostrarMensajeError("No se puede actualizar los datos", response.result);
+                                        } else {
+                                            //const acceso = () => window.location.replace(response.result);
+                                            mostrarMensaje(`Se han modificado correctamente los datos el usuario de ${response.user.nombre}`, "Modificado Usuario.", "success");
+                                            resetCamposForm(idForm);
+                                        }
+                                    })
+                                    .catch(error => {
+                                        // Maneja el error aquí
+                                        console.error("Error:", error);
+                                        mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
+                                    });
+                        } else if (result.isDenied) {
+                            //denegado
+                        } else if (result.isDismissed) {
+                            //cancelado
+                        }
+                    });
         },
        // Función error de respuesta
         errorPlacement: function (error, element) {

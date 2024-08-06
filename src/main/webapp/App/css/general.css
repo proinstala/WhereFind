@@ -176,6 +176,9 @@ label {
 .no-margin {
     margin:0;
 }
+.margin-right-auto {
+    margin-right: auto;
+}
 .no-padding {
     padding: 0;
 }
