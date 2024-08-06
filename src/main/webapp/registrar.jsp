@@ -70,7 +70,7 @@
                 <button class="form__btn--aceptar" form="frmRegistrarUsuario" type="submit" id="btnRegistrar" disabled>REGISTRAR USUARIO</button>
             </div>
             <div class="form__btn">
-                <button class="form__btn--cancelar" id="btnCancelar" id="btnCancelar" disabled>CANCELAR</button>
+                <button class="form__btn--cancelar" id="btnCancelar" id="btnCancelar">CANCELAR</button>
             </div>
         </div>
 

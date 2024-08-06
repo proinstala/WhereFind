@@ -4,7 +4,6 @@ import { mostrarMensaje, mostrarMensajeError } from './alertasSweetAlert2.mjs';
 
 function onDetectarCambios(hayCambios) {
     $("#btnRegistrar").prop('disabled', !hayCambios);
-    $("#btnCancelar").prop('disabled', !hayCambios);
 }
 
 

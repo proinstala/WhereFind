@@ -53,3 +53,8 @@
 + Poder bloquear la UI en las peticiones http PUT
 + Al obtener/actualizar un usuario, que solo lo pueda solicitar/modificar el mismo o un admin
 - Gestionar error cuando se usa un email ya usado.
++ Mirar el ancho de la app cuado se le reduce, llega un momento que no se puede seguir reduciendo
++ Boton cancelar de registrar usuario no se debe bloquear
+- El input de la imagen no activa el boton de guardar
+- Cambiar jquery por javascript puro
+- Crear sistema de migas de pan
