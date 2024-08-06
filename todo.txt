@@ -55,6 +55,6 @@
 - Gestionar error cuando se usa un email ya usado.
 + Mirar el ancho de la app cuado se le reduce, llega un momento que no se puede seguir reduciendo
 + Boton cancelar de registrar usuario no se debe bloquear
-- El input de la imagen no activa el boton de guardar
++ El input de la imagen no activa el boton de guardar
 - Cambiar jquery por javascript puro
 - Crear sistema de migas de pan

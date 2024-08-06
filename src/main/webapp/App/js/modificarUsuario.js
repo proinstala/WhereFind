@@ -43,6 +43,10 @@ $(document).ready(function () {
             .then((result) => {
                 if (result) {
                     console.log("Imagen establecida correctamente.");
+
+                    // Detecta el cambio de la imagen
+                    onDetectarCambiosModificarUsuario(labelInputFoto.textContent != result);
+
                     labelInputFoto.textContent = result;
                 } else {
                     console.log("No se ha establecido la imagen.");
