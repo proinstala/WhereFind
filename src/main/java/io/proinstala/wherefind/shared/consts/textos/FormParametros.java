@@ -1,19 +1,19 @@
-package io.proinstala.wherefind.shared.textos;
+package io.proinstala.wherefind.shared.consts.textos;
 
 /**
  * Clase ConstParametros que contiene constantes para los parámetros utilizados en la gestión de usuarios.
  */
-public class ConstParametros {
+public class FormParametros {
 
     /** Nombre de usuario. */
     public static final String PARAM_USUARIO_USERNAME = "nombreUsuario";
 
     /** Contraseña del usuario. */
     public static final String PARAM_USUARIO_PASSWORD = "passwordUsuario";
-    
+
     /** Nueva Contraseña del usuario*/
     public static final String PARAM_USUARIO_NUEVO_PASSWORD = "nuevoPassword";
-    
+
     /** Rol del usuario. */
     public static final String PARAM_USUARIO_ROL = "rolUsuario";
 
@@ -25,7 +25,7 @@ public class ConstParametros {
 
     /** Correo electrónico del usuario. */
     public static final String PARAM_USUARIO_EMAIL = "emailUsuario";
-    
+
     /** Imagen del usuario. */
     public static final String PARAM_USUARIO_IMAGEN = "imagenUsuarioB64";
 }

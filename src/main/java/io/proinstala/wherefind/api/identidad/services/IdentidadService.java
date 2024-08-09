@@ -6,6 +6,8 @@ import java.util.List;
 import io.proinstala.wherefind.api.identidad.UserSession;
 import io.proinstala.wherefind.api.infraestructure.data.GestionPersistencia;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IUserService;
+import io.proinstala.wherefind.shared.consts.textos.FormParametros;
+import io.proinstala.wherefind.shared.consts.textos.LocaleApp;
 import io.proinstala.wherefind.shared.consts.urls.UrlsInternas;
 import io.proinstala.wherefind.shared.consts.urls.enums.UrlApp;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
@@ -13,8 +15,6 @@ import io.proinstala.wherefind.shared.controllers.actions.ActionServer;
 import io.proinstala.wherefind.shared.dtos.ResponseDTO;
 import io.proinstala.wherefind.shared.dtos.UserDTO;
 import io.proinstala.wherefind.shared.services.BaseService;
-import io.proinstala.wherefind.shared.textos.ConstParametros;
-import io.proinstala.wherefind.shared.textos.LocaleApp;
 
 
 /**
@@ -40,8 +40,8 @@ public class IdentidadService extends BaseService {
     public void logIn(ActionServer server)
     {
         // Obtiene los parámetros desde el request
-        String nombreUsuario   = server.getRequestParameter(ConstParametros.PARAM_USUARIO_USERNAME, "");
-        String passwordUsuario = server.getRequestParameter(ConstParametros.PARAM_USUARIO_PASSWORD, "");
+        String nombreUsuario   = server.getRequestParameter(FormParametros.PARAM_USUARIO_USERNAME, "");
+        String passwordUsuario = server.getRequestParameter(FormParametros.PARAM_USUARIO_PASSWORD, "");
 
         // Intenta realizar el login con los datos pasados por el navegador
         UserDTO userDTO = UserSession.login(nombreUsuario, passwordUsuario, server);
@@ -253,10 +253,10 @@ public class IdentidadService extends BaseService {
                 if (userDTO != null)
                 {
                     // Obtiene los parámetros desde el request
-                    String nombreUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_NOMBRE, userDTO.getNombre());
-                    String apellidosUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_APELLIDOS, userDTO.getApellidos());
-                    String emailUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_EMAIL, userDTO.getEmail());
-                    String imagenUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_IMAGEN, userDTO.getImagen());
+                    String nombreUsuario = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_NOMBRE, userDTO.getNombre());
+                    String apellidosUsuario = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_APELLIDOS, userDTO.getApellidos());
+                    String emailUsuario = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_EMAIL, userDTO.getEmail());
+                    String imagenUsuario = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_IMAGEN, userDTO.getImagen());
 
                     // Actualiza los datos del usuario con los pasados por el navegador
                     userDTO.setNombre(nombreUsuario);
@@ -336,8 +336,8 @@ public class IdentidadService extends BaseService {
                 if (userDTO != null)
                 {
                     // Obtiene los parámetros desde el request
-                    String passwordUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_PASSWORD, "");
-                    String nuevoPassword = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_NUEVO_PASSWORD, "");
+                    String passwordUsuario = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_PASSWORD, "");
+                    String nuevoPassword = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_NUEVO_PASSWORD, "");
 
                     boolean passwordOK = false;
                     if(passwordUsuario.equals(userDTO.getPassword()) && nuevoPassword.length() > 3 && nuevoPassword.length() < 61 && !nuevoPassword.equals(userDTO.getPassword())) {
@@ -388,12 +388,12 @@ public class IdentidadService extends BaseService {
         ResponseDTO responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
 
         // Obtiene los parámetros desde el request
-        String nombreUsuario       = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_USERNAME, "");
-        String passwordUsuario     = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_PASSWORD, "");
-        String nombreRealUsuario   = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_NOMBRE, "");
-        String apellidoRealUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_APELLIDOS, "");
-        String emailUsuario        = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_EMAIL, "");
-        String imagenUsuario        = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_IMAGEN, "");
+        String nombreUsuario       = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_USERNAME, "");
+        String passwordUsuario     = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_PASSWORD, "");
+        String nombreRealUsuario   = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_NOMBRE, "");
+        String apellidoRealUsuario = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_APELLIDOS, "");
+        String emailUsuario        = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_EMAIL, "");
+        String imagenUsuario        = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_IMAGEN, "");
 
         // Comprueba que los datos del usuario no estén vacios
         if (!nombreUsuario.isBlank() && !passwordUsuario.isBlank() && passwordUsuario.length() > 3)
