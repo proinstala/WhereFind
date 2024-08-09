@@ -1,4 +1,6 @@
 
+<%@page import="io.proinstala.wherefind.shared.consts.urls.UrlsInternas"%>
+<%@page import="io.proinstala.wherefind.shared.consts.urls.enums.UrlIdentidad"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="/App/web/shared/head.jsp" >
     <jsp:param name="titleweb" value="Login" />
@@ -35,7 +37,7 @@
                 </div>
 
                 <div class="login__enlaces">
-                    <a class="login__enlaces-enlace" href="registrar.jsp">Crear usuario</a>
+                    <a class="login__enlaces-enlace" href="<%=UrlsInternas.getIdentidadUri(UrlIdentidad.REGISTRAR)%>">Crear usuario</a>
                     <a class="login__enlaces-enlace" href="#">He olvidado mi password</a>
                 </div>
             </div>

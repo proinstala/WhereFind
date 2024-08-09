@@ -19,7 +19,7 @@ public class UrlsInternas {
         urlsIdentidad = new EnumMap<>(UrlIdentidad.class);
 
         urlsIdentidad.put(UrlIdentidad.LOGIN, "account/login");
-        urlsIdentidad.put(UrlIdentidad.REGISTRAR, "registrar.jsp");
+        urlsIdentidad.put(UrlIdentidad.REGISTRAR, "account/registrar");
         urlsIdentidad.put(UrlIdentidad.MODIFICAR, "modificarUsuario");
     }
 

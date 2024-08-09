@@ -38,5 +38,16 @@
     </servlet-mapping>
 
 
+    <servlet>
+        <servlet-name>identidadRegistrar</servlet-name>
+        <jsp-file>/App/web/identidad/registrar.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>identidadRegistrar</servlet-name>
+        <url-pattern>/account/registrar</url-pattern>
+    </servlet-mapping>
+
+
 
 </web-app>
