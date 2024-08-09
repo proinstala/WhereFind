@@ -6,6 +6,8 @@ import java.util.List;
 import io.proinstala.wherefind.api.identidad.UserSession;
 import io.proinstala.wherefind.api.infraestructure.data.GestionPersistencia;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IUserService;
+import io.proinstala.wherefind.shared.consts.urls.UrlsInternas;
+import io.proinstala.wherefind.shared.consts.urls.enums.UrlApp;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
 import io.proinstala.wherefind.shared.controllers.actions.ActionServer;
 import io.proinstala.wherefind.shared.dtos.ResponseDTO;
@@ -60,7 +62,7 @@ public class IdentidadService extends BaseService {
             userDTO.setPassword("");
 
             // Como la acción se ha ejecutado correctamente se crea la respuesta acorde a la misma
-            responseDTO = getResponseOk(server.request().getContextPath() + "/index.jsp", userDTO, 1);
+            responseDTO = getResponseOk(server.request().getContextPath() + "/" + UrlsInternas.getAppdUri(UrlApp.HOME), userDTO, 1);
         }
         else
         {
@@ -292,8 +294,8 @@ public class IdentidadService extends BaseService {
         // Devuelve la respuesta al navegador del usuario en formato json
         responseJson(actionController.server().response(), responseDTO);
     }
-    
-    
+
+
     /**
      * Actualiza los datos de un usuario en la base de datos.
      *
@@ -336,7 +338,7 @@ public class IdentidadService extends BaseService {
                     // Obtiene los parámetros desde el request
                     String passwordUsuario = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_PASSWORD, "");
                     String nuevoPassword = actionController.server().getRequestParameter(ConstParametros.PARAM_USUARIO_NUEVO_PASSWORD, "");
-                    
+
                     boolean passwordOK = false;
                     if(passwordUsuario.equals(userDTO.getPassword()) && nuevoPassword.length() > 3 && nuevoPassword.length() < 61 && !nuevoPassword.equals(userDTO.getPassword())) {
                         // Actualiza los datos del usuario con los pasados por el navegador
@@ -421,7 +423,7 @@ public class IdentidadService extends BaseService {
                 userDTO.setPassword("");
 
                 // Como la acción se ha ejecutado correctamente se crea la respuesta acorde a la misma
-                responseDTO = getResponseOk(actionController.server().request().getContextPath() + "/index.jsp", userDTO, 1);
+                responseDTO = getResponseOk(actionController.server().request().getContextPath() + "/" + UrlsInternas.getAppdUri(UrlApp.HOME), userDTO, 1);
             }
         }
 

@@ -17,6 +17,19 @@
     </resource-ref>
 
 
+<!-- Mapeo de la url de home o index -->
+    <servlet>
+        <servlet-name>home</servlet-name>
+        <jsp-file>/index.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>home</servlet-name>
+        <url-pattern>/dashboard</url-pattern>
+    </servlet-mapping>
+
+
+
 <!-- Mapeo de las url referentes a la cuenta de administrador -->
     <servlet>
         <servlet-name>adminIdentidadListaUsuarios</servlet-name>

@@ -5,6 +5,7 @@ import java.io.IOException;
 import io.proinstala.wherefind.api.infraestructure.data.GestionPersistencia;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IUserService;
 import io.proinstala.wherefind.shared.consts.urls.UrlsInternas;
+import io.proinstala.wherefind.shared.consts.urls.enums.UrlApp;
 import io.proinstala.wherefind.shared.consts.urls.enums.UrlIdentidad;
 import io.proinstala.wherefind.shared.controllers.actions.ActionServer;
 import io.proinstala.wherefind.shared.dtos.UserDTO;
@@ -85,7 +86,7 @@ public class UserSession {
         }
 
         // Redirecciona al usuario a la página de login
-        redireccionar(server.response(), server.request().getContextPath()+"/index.jsp");
+        redireccionar(server.response(), server.request().getContextPath() + "/" + UrlsInternas.getAppdUri(UrlApp.HOME));
     }
 
 
