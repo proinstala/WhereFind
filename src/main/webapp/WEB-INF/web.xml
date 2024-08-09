@@ -16,6 +16,8 @@
         <res-auth>Container</res-auth>
     </resource-ref>
 
+
+<!-- Mapeo de las url referentes a la cuenta de administrador -->
     <servlet>
         <servlet-name>adminIdentidadListaUsuarios</servlet-name>
         <jsp-file>/App/web/admin/users.jsp</jsp-file>
@@ -26,7 +28,7 @@
         <url-pattern>/admin/users</url-pattern>
     </servlet-mapping>
 
-
+<!-- Mapeo de las url referentes a la cuenta de usuario -->
     <servlet>
         <servlet-name>identidadLogin</servlet-name>
         <jsp-file>/App/web/identidad/login.jsp</jsp-file>
@@ -48,6 +50,15 @@
         <url-pattern>/account/registrar</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>identidadModificar</servlet-name>
+        <jsp-file>/App/web/identidad/modificarUsuario.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>identidadModificar</servlet-name>
+        <url-pattern>/account/modificar</url-pattern>
+    </servlet-mapping>
 
 
 </web-app>

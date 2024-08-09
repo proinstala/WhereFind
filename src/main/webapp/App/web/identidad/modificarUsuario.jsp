@@ -13,7 +13,7 @@
     UserDTO userDTO = UserSession.getUserLogin(request);
 %>
 
-<jsp:include page="../shared/head.jsp" >
+<jsp:include page="/App/web/shared/head.jsp" >
     <jsp:param name="titleweb" value="Index" />
 </jsp:include>
 
@@ -157,4 +157,4 @@
 
 <script src="App/js/modificarUsuario.js" type="module" defer></script>
 
-<%@ include file="../shared/foot.jsp" %>
+<%@ include file="/App/web/shared/foot.jsp" %>
