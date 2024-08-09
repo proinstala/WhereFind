@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import io.proinstala.wherefind.api.infraestructure.data.GestionPersistencia;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IUserService;
+import io.proinstala.wherefind.shared.consts.urls.UrlsInternas;
+import io.proinstala.wherefind.shared.consts.urls.enums.UrlIdentidad;
 import io.proinstala.wherefind.shared.controllers.actions.ActionServer;
 import io.proinstala.wherefind.shared.dtos.UserDTO;
 import jakarta.servlet.http.HttpServletRequest;
@@ -153,7 +155,7 @@ public class UserSession {
         // Si el usuario no está logueado lo redirije a la página de login
         if (userDTO == null) {
             // Redirecciona al usuario a la página de login
-            redireccionar(server.response(), server.request().getContextPath()+"/login.jsp");
+            redireccionar(server.response(), server.request().getContextPath()+"/" + UrlsInternas.getIdentidadUri(UrlIdentidad.LOGIN));
 
             return true;
         }

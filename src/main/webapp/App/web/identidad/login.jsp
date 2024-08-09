@@ -1,6 +1,6 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:include page="App/web/shared/head.jsp" >
+<jsp:include page="/App/web/shared/head.jsp" >
     <jsp:param name="titleweb" value="Login" />
 </jsp:include>
 
@@ -46,4 +46,4 @@
     <script src="App/js/comunes.mjs" type="module"></script>
     <script src="App/js/login.js" type="module"></script>
 
-<%@ include file="App/web/shared/foot.jsp" %>
+<%@ include file="/App/web/shared/foot.jsp" %>

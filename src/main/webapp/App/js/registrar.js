@@ -43,7 +43,7 @@ $(document).ready(function () {
     });
 
     btnCancelar.addEventListener('click', () => {
-        window.location.href = 'login.jsp';
+        window.location.href = 'account/login';
     });
 });
 

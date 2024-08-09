@@ -27,4 +27,16 @@
     </servlet-mapping>
 
 
+    <servlet>
+        <servlet-name>identidadLogin</servlet-name>
+        <jsp-file>/App/web/identidad/login.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>identidadLogin</servlet-name>
+        <url-pattern>/account/login</url-pattern>
+    </servlet-mapping>
+
+
+
 </web-app>
