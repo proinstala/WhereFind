@@ -73,5 +73,15 @@
         <url-pattern>/account/modificar</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>identidadRecoveryPassword</servlet-name>
+        <jsp-file>/App/web/identidad/recoveryPassword.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>identidadRecoveryPassword</servlet-name>
+        <url-pattern>/account/recovery</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>

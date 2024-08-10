@@ -33,6 +33,7 @@ public class UrlsInternas {
         urlsIdentidad.put(UrlIdentidad.LOGIN, "account/login");
         urlsIdentidad.put(UrlIdentidad.REGISTRAR, "account/registrar");
         urlsIdentidad.put(UrlIdentidad.MODIFICAR, "account/modificarUsuario");
+        urlsIdentidad.put(UrlIdentidad.RECOVERY, "account/recovery");
     }
 
     /**
