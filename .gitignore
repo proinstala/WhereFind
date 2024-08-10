@@ -1,2 +1,3 @@
 /target/
 copia_seguridad.sh
+**/emails.settings.json
