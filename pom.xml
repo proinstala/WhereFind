@@ -10,7 +10,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jakartaee>10.0.0</jakartaee>
-        
+
         <!-- java 21 -->
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
@@ -41,16 +41,23 @@
             <version>1.18.34</version>
             <scope>provided</scope>
 	</dependency>
-        
+
         <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.11.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+
     </dependencies>
-    
-    
+
+
 
     <build>
         <plugins>
@@ -71,6 +78,6 @@
             </plugin>
         </plugins>
     </build>
-    
-    
+
+
 </project>
