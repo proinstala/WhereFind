@@ -39,7 +39,8 @@ public class IdentidadController  extends BaseHttpServlet {
         DELETE,
         UPDATE,
         UPDATEPASSWORD,
-        CREATE
+        CREATE,
+        RECOVERY
     }
 
     /**
@@ -188,8 +189,8 @@ public class IdentidadController  extends BaseHttpServlet {
         // Se llama al servicio para procese la acción requerida
         identidadServicio.updateUser(actionController);
     }
-    
-    
+
+
     /**
      * Maneja la solicitud para actualizar el password de un usuario específico.
      *
@@ -221,6 +222,19 @@ public class IdentidadController  extends BaseHttpServlet {
     {
         // Se llama al servicio para procese la acción requerida
         identidadServicio.createUser(actionController);
+    }
+
+    /**
+     * Maneja la solicitud para recuperar el password de un usuario.
+     *
+     * EndPoint - POST : /api/identidad/recovery
+     *
+     * @param actionController el controlador de acción.
+     */
+    protected void apiRecovery(ActionController actionController)
+    {
+        // Se llama al servicio para procese la acción requerida
+        identidadServicio.recovery(actionController);
     }
 
     /**
@@ -297,6 +311,10 @@ public class IdentidadController  extends BaseHttpServlet {
                 apiCreateUser(actionController);
                 break;
 
+            case ActionType.RECOVERY:
+                apiRecovery(actionController);
+            break;
+
             default:
                 responseError404(actionController.server().response(), "");
         }
@@ -333,7 +351,7 @@ public class IdentidadController  extends BaseHttpServlet {
             case ActionType.UPDATE :
                 apiUpdateUser(actionController);
                 break;
-                
+
             case ActionType.UPDATEPASSWORD :
                 apiUpdatePasswordUser(actionController);
                 break;

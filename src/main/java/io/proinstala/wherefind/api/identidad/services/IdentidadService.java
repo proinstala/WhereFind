@@ -1,15 +1,21 @@
 package io.proinstala.wherefind.api.identidad.services;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.proinstala.wherefind.api.identidad.UserSession;
 import io.proinstala.wherefind.api.infraestructure.data.GestionPersistencia;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IUserService;
+import io.proinstala.wherefind.api.infraestructure.email.EnviarEmail;
 import io.proinstala.wherefind.shared.consts.textos.FormParametros;
 import io.proinstala.wherefind.shared.consts.textos.LocaleApp;
 import io.proinstala.wherefind.shared.consts.urls.UrlsInternas;
 import io.proinstala.wherefind.shared.consts.urls.enums.UrlApp;
+import io.proinstala.wherefind.shared.consts.urls.enums.UrlIdentidad;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
 import io.proinstala.wherefind.shared.controllers.actions.ActionServer;
 import io.proinstala.wherefind.shared.dtos.ResponseDTO;
@@ -430,4 +436,140 @@ public class IdentidadService extends BaseService {
         // Devuelve la respuesta al navegador del usuario en formato json
         responseJson(actionController.server().response(), responseDTO);
     }
+
+
+    /**
+     * Envía un email al email del usuario para poder resetear el password
+     *
+     * @param actionController Controlador de acción
+     */
+    public void recovery(ActionController actionController)
+    {
+        // Respuesta de la acción actual
+        ResponseDTO responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
+
+        // Obtiene los parámetros desde el request
+        String nombreUsuario       = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_USERNAME, "");
+
+        // Comprueba que los datos del usuario no estén vacios
+        if (!nombreUsuario.isBlank())
+        {
+            // Conecta con el Gestor de Permanencia
+            IUserService userService = GestionPersistencia.getUserService();
+
+            // Busca al usuario por el nombre de usuario o email
+            UserDTO userDTO = null;
+            try
+            {
+                userDTO = userService.getUserByUserNameOrEmail(nombreUsuario);
+
+                if (!recoverySendEmailToUser(userDTO, actionController.getServerUrlBase()))
+                {
+                    userDTO = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.printStackTrace();
+
+                responseDTO = getResponseError("El nombre de usuario o el email no son válidos.");
+                responseJson(actionController.server().response(), responseDTO);
+                return;
+            }
+
+            // Si el usuario no es nulo
+            if (userDTO != null)
+            {
+                // Como la acción se ha ejecutado correctamente se crea la respuesta acorde a la misma
+                responseDTO = getResponseOk("Se ha enviado un email a "+userDTO.getEmail()+" para poder recuperar el usuario.", null, 0);
+            }
+        }
+
+        // Devuelve la respuesta al navegador del usuario en formato json
+        responseJson(actionController.server().response(), responseDTO);
+    }
+
+
+    /**
+     * Método protegido para enviar un correo electrónico a un usuario cuando se recupera su contraseña.
+     *
+     * @param userDTO Información del usuario que se va a notificar sobre la restauración de su contraseña.
+     * @param url La URL principal del sistema, necesaria para generar el enlace de recuperación.
+     * @return true si se envía el correo electrónico correctamente, false en caso de error.
+     */
+    protected boolean recoverySendEmailToUser(UserDTO userDTO, String url)
+    {
+        long epochSeconds = Instant.now().getEpochSecond();
+
+        // Generamos la URL para la página de recuperación
+        String linkRecuperacion = url + "/"
+                                + UrlsInternas.getIdentidadUri(UrlIdentidad.RECOVERY)
+                                + "?email="
+                                + userDTO.getEmail()
+                                + "&time=" + epochSeconds
+                                + "&hash=" + recoveryGetHashId(recoveryGetTextoId(userDTO.getEmail(), epochSeconds));
+
+        // Generamos el enlace HTML para la recuperación
+        String enlaceRecuperacion = String.format("<a href='%s'>%s</a>", linkRecuperacion, linkRecuperacion);
+
+        // Preparamos el mensaje del correo electrónico
+        String mensajeEmail = String.format(LocaleApp.EMAIL_CAMBIAR_PASSWORD_CUERPO, userDTO.getUserName(), enlaceRecuperacion);
+
+        // Enviamos el correo electrónico al usuario
+        return EnviarEmail.enviarEmail(userDTO.getEmail(), LocaleApp.EMAIL_CAMBIAR_PASSWORD_TITULO, mensajeEmail);
+    }
+
+
+    /**
+     * Genera un hash SHA-1 a partir de la cadena dada como parámetro.
+     *
+     * @param input Cadena a procesar para generar el hash
+     * @return String representación hexadecimal del hash SHA-1
+     */
+    protected String recoveryGetHashId(String input)
+    {
+        // Crea un nuevo hash utilizando algoritmo SHA-1
+        MessageDigest sha1 = null;
+        try
+        {
+            // Crea un nuevo hash utilizando algoritmo SHA-1
+            sha1 = MessageDigest.getInstance("SHA-1");  // Crea un nuevo hash utilizando SHA-1
+
+            // Convierte la cadena de entrada a bytes y calcula el mensaje digest
+            byte[] messageDigest = sha1.digest(input.getBytes());
+
+            // Convierte los bytes del mensaje digest a un número big integer hexadecimal
+            BigInteger no = new BigInteger(1, messageDigest);
+            String hashtext = no.toString(16);  // Convertir el arreglo de bytes a hexadecimal
+
+            // Completar con ceros para lograr un hash de 32 caracteres
+            while (hashtext.length() < 32)
+            {
+                hashtext = "0" + hashtext;
+            }
+
+            return hashtext;
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+            e.printStackTrace();
+        }
+
+        // Devuelve un string vacío en caso de error
+        return "";
+    }
+
+
+    /**
+     * Metodo para realizar la recuperación del ID de texto a partir de los parámetros.
+     *
+     * @param input El texto que se va a procesar.
+     * @param time La marca de tiempo asociada al proceso.
+     * @return Un string con el texto convertido a minúsculas y la marca de tiempo.
+     */
+    protected String recoveryGetTextoId(String input, long time)
+    {
+        return input.toLowerCase() + "---> [" + time + "]";
+    }
+
 }

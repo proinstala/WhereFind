@@ -29,4 +29,16 @@ public class LocaleApp {
 
     /** Mensaje para indicar que un usuario ha sido eliminado correctamente. */
     public static final String INFO_DELETE_USER = "Se ha eliminado el usuario correctamente.";
+
+    /** Título del email que recibirá el usuario cuando solita un cambio de password. */
+    public static final String EMAIL_CAMBIAR_PASSWORD_TITULO = "Cambio de Contraseña Solicitado";
+
+    /** Cuerpo del email que recibirá el usuario cuando solita un cambio de password. */
+    public static final String EMAIL_CAMBIAR_PASSWORD_CUERPO =    "Hola <b>%s</b>,\n\n<br/><br/>"
+                                                                + "Recibimos tu solicitud para cambiar la contraseña. Para proceder, por favor haz clic en el siguiente enlace:\n\n<br/><br/>"
+                                                                + "%s\n\n<br/><br/>"
+                                                                + "Este enlace es válido por las próximas 24 horas. Si no solicitaste este cambio, ignora este correo.\n\n<br/><br/>"
+                                                                + "Gracias,\n\n<br/><br/>"
+                                                                + "<b>Equipo de Soporte</b>";
+
 }
