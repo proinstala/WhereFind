@@ -504,7 +504,7 @@ public class IdentidadService extends BaseService {
         // Generamos la URL para la página de recuperación
         String linkRecuperacion = url + "/"
                                 + UrlsInternas.getIdentidadUri(UrlIdentidad.RECOVERY)
-                                + "?email="
+                                + "/?email="
                                 + userDTO.getEmail()
                                 + "&time=" + epochSeconds
                                 + "&hash=" + recoveryGetHashId(recoveryGetTextoId(userDTO.getEmail(), epochSeconds));
@@ -572,4 +572,86 @@ public class IdentidadService extends BaseService {
         return input.toLowerCase() + "---> [" + time + "]";
     }
 
+
+    /**
+     * Método para la recuperación de usuario verificado.
+     *
+     * @param actionController Controlador de acción que maneja las peticiones del cliente.
+     * @return Devuelve un UserDTO con los datos del usuario recién recuperados, vacío en caso contrario.
+     */
+    public UserDTO recoveryVerificar(ActionController actionController)
+    {
+        // Inicializar usuario DTO a null
+        UserDTO userDTO = null;
+
+        // Obtener parámetros de la petición: 'email', 'time' y 'hash'
+        String email = actionController.server().getRequestParameter("email", "");
+        String time  = actionController.server().getRequestParameter("time", "");
+        String hash  = actionController.server().getRequestParameter("hash", "");
+
+        // Si alguno de los parámetros está vacío, se devuelve usuario DTO vacío
+        if (email.isBlank() || time.isBlank() || hash.isBlank())
+        {
+            return userDTO;
+        }
+
+        // Convertir 'time' en segundos desde la época (1970-01-01T00:00:00Z)
+        long epochSeconds = Long.parseLong(time);
+
+        // Calcular hash a partir del texto obtenido del email y tiempo con el método 'recoveryGetHashId'
+        String hashCalculado = recoveryGetHashId(recoveryGetTextoId(email, epochSeconds));
+
+
+        System.out.println("'" + hash + "'");
+        System.out.println("'" + hashCalculado+ "'");
+
+        // Si los hashes no coinciden, se devuelve usuario DTO vacío
+        if (!hash.equalsIgnoreCase(hashCalculado))
+        {
+            return userDTO;
+        }
+
+        // Verificar si el tiempo pasado es válido comparándolo con la hora actual en segundos
+        // y devolviendo usuario DTO vacío en caso de que no lo sea.
+        if (!verificarSegundos(Instant.now().getEpochSecond(), epochSeconds))
+        {
+            return userDTO;
+        }
+
+        // Conectar con el Gestor de Permanencia y obtener UserService
+        IUserService userService = GestionPersistencia.getUserService();
+
+        // Consulta al usuario en la base de datos usando el email proporcionado,
+        // almacenando los datos del usuario obtenidos en 'userDTO'
+        userDTO = userService.getUserByUserNameOrEmail(email);
+
+        // Devolver el objeto UserDTO con los campos requeridos del usuario recién recuperado
+        return userDTO;
+    }
+
+
+    /**
+     * Método que verifica si los segundos suministrados de acuerdo a dos valores dados cumplen una serie de condiciones.
+     * Además, se verificará que el valorA no sea menor al del valorB y que la diferencia entre ambos valores esté en un máximo de 24 horas.
+     *
+     * @param valorA Valor a comparar contra el segundo valor proporcionado (fecha/hora)
+     * @param valorB Segundo valor con respecto al cual se compara el primer valor (fecha/hora)
+     * @return boolean True si se cumplen ambas condiciones, False de lo contrario
+     */
+    public static boolean verificarSegundos(long valorA, long valorB)
+    {
+        // Condición 1: A no puede ser menor que B
+        if (valorA < valorB) {
+            return false;
+        }
+
+        // Condición 2: Entre B y A no pueden haber pasado más de 24 horas
+        long segundosEn24Horas = (long)24 * 60 * 60;
+        if (valorA - valorB > segundosEn24Horas) {
+            return false;
+        }
+
+        // Si ambas condiciones se cumplen, retorna true
+        return true;
+    }
 }

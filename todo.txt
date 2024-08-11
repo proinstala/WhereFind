@@ -60,4 +60,3 @@
 - Crear sistema de migas de pan
 
 
-http://localhost:8080/WhereFind/account/recovery?email=9614449@alu.murciaeduca.es&time=1723372019&hash=feb8d5fd34ed16ef6323822f581781408269f89a
