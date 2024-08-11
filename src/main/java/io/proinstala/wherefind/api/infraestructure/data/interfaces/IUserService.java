@@ -25,7 +25,7 @@ public interface IUserService {
      * @throws java.lang.Exception
      */
     public boolean update(UserDTO userDTO) throws Exception;
-    
+
     /**
      * Actualiza el password de un usuario existente.
      *
@@ -79,4 +79,13 @@ public interface IUserService {
      *         {@code false} en caso contrario.
      */
     public boolean isGetStateEqualFromException(Exception ex);
+
+
+    /**
+     * Obtiene los datos de un usuario existente mediante su nombre de usuario o email.
+     *
+     * @param id el nombre de usuario del usuario o el email.
+     * @return el objeto UserDTO del usuario que coincide con el nombre de usuario o el email.
+     */
+    public UserDTO getUserByUserNameOrEmail(String id);
 }

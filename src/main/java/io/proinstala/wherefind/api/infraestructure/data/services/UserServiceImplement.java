@@ -23,6 +23,11 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
     // Obtiene un usuario en concreto que coincidan su user_name y su password
     private static final String SQL_SELECT_GET_USER_BY_ID = "SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email, imagen FROM USER WHERE activo = TRUE AND id=?;";
 
+    // Obtiene un usuario en concreto que coincidan su user_name y su password
+    private static final String SQL_SELECT_GET_USER_BY_USER_OR_EMAIL = "SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email, imagen FROM USER WHERE activo = TRUE AND (user_name=? OR email=?);";
+
+
+
     // Añada un nuevo user
     private static final String SQL_INSERT_NEW_USER = "INSERT INTO USER (user_name, password, rol, activo, nombre, apellidos, email, imagen) VALUES(?, ENCRYPT_DATA_BASE64(?), ?, 1, ?, ?, ?, ?);";
 
@@ -129,7 +134,7 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
         // Retornar si se afectaron más de 0 filas
         return rowsAffected > 0;
     }
-    
+
     /**
      * Actualiza un usuario existente en la base de datos.
      *
@@ -344,5 +349,51 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
     public boolean isGetStateEqualFromException(Exception ex)
     {
         return ((SQLException)ex).getSQLState().equals("23000");
+    }
+
+    /**
+     * Obtiene un usuario de la base de datos basado en su USERNAME o su EMAIL.
+     *
+     * @param USERNAME o EMAIL el NOMBRE del usuario.
+     * @return el objeto UserDTO correspondiente al usuario, o null si no se encuentra.
+     */
+
+    @Override
+    public UserDTO getUserByUserNameOrEmail(String id) {
+        // Declada el resultado
+        UserDTO userDTO = null;
+        try
+        {
+            // Se crea la conexion
+            Connection conexion  = getConnection();
+
+            // Preparo un PreparedStatement con la sentencia necesaria para saber el numero de filas
+            PreparedStatement sentencia = conexion.prepareStatement(SQL_SELECT_GET_USER_BY_USER_OR_EMAIL);
+
+            // Le paso los parametros al PreparedStatement
+            sentencia.setString(1, id);
+            sentencia.setString(2, id);
+
+            // Se ejecuta la query y nos devuelve un resultado
+            ResultSet resultSet = sentencia.executeQuery();
+
+            // Recupera la lista
+            if (resultSet.next())
+            {
+                userDTO = getUserFromResultSet(resultSet);
+            }
+
+            // Cerramos todo lo que hemos usado
+            resultSet.close();
+            sentencia.close();
+            conexion.close();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        // Devuelve el resultado
+        return userDTO;
     }
 }
