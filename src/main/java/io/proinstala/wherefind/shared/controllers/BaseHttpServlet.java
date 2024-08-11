@@ -2,8 +2,11 @@ package io.proinstala.wherefind.shared.controllers;
 
 import java.io.IOException;
 
+import io.proinstala.wherefind.shared.config.AppSettings;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
 import io.proinstala.wherefind.shared.controllers.actions.ActionServer;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -117,5 +120,21 @@ public abstract class BaseHttpServlet extends HttpServlet {
     public static void responseError404(HttpServletResponse response, String mensaje)
     {
         responseError(response, HttpServletResponse.SC_NOT_FOUND, mensaje);
+    }
+
+    /**
+     * Inicializa la instancia de la clase.
+     *
+     * @throws ServletException si surge un error durante el proceso de inicio
+     */
+    @Override
+    public void init() throws ServletException {
+        super.init();
+
+        // Llamada a la implementación por defecto para asegurar que todos los pasos necesarios se realizan correctamente
+        ServletContext context = getServletContext();
+
+        // Sets la ruta base basada en el path real del contexto servlet.
+        AppSettings.setRutaBase(context.getRealPath(""));
     }
 }

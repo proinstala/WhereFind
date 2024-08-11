@@ -32,4 +32,12 @@ public record ActionController(String fullUri, String uri, Object actionType, St
         return id;
     }
 
+    public String  getServerUrlBase()
+    {
+        return server.request().getScheme() + "://" +
+            server.request().getServerName() +
+            ":" + server.request().getServerPort() +
+            server.request().getContextPath();
+    }
+
 }
