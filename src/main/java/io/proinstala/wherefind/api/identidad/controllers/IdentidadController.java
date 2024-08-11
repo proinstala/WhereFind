@@ -199,15 +199,18 @@ public class IdentidadController  extends BaseHttpServlet {
      */
     protected void apiUpdatePasswordUser(ActionController actionController)
     {
+        // Se comprueba que el request lleve el parametro reset
+        boolean isReset = actionController.server().getRequestParameter("reset", "0").equals("1");
+
         // Se comprueba que el usuario está logueado y sea administrador
-        if (!UserSession.isUserLogIn(actionController.server(), false))
+        if (!isReset && !UserSession.isUserLogIn(actionController.server(), false))
         {
             responseError403(actionController.server().response(), "");
             return;
         }
 
         // Se llama al servicio para procese la acción requerida
-        identidadServicio.updatePasswordUser(actionController);
+        identidadServicio.updatePasswordUser(actionController, isReset);
     }
 
     /**

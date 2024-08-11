@@ -307,7 +307,7 @@ public class IdentidadService extends BaseService {
      *
      * @param actionController Controlador de acción
      */
-    public void updatePasswordUser(ActionController actionController)
+    public void updatePasswordUser(ActionController actionController, boolean isReset)
     {
         // Respuesta de la acción actual
         ResponseDTO responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
@@ -346,10 +346,22 @@ public class IdentidadService extends BaseService {
                     String nuevoPassword = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_NUEVO_PASSWORD, "");
 
                     boolean passwordOK = false;
-                    if(passwordUsuario.equals(userDTO.getPassword()) && nuevoPassword.length() > 3 && nuevoPassword.length() < 61 && !nuevoPassword.equals(userDTO.getPassword())) {
-                        // Actualiza los datos del usuario con los pasados por el navegador
-                        userDTO.setPassword(nuevoPassword);
-                        passwordOK = true;
+
+                    if (!isReset)
+                    {
+                        if(passwordUsuario.equals(userDTO.getPassword()) && nuevoPassword.length() > 3 && nuevoPassword.length() < 61 && !nuevoPassword.equals(userDTO.getPassword())) {
+                            // Actualiza los datos del usuario con los pasados por el navegador
+                            userDTO.setPassword(nuevoPassword);
+                            passwordOK = true;
+                        }
+                    }
+                    else
+                    {
+                        if(nuevoPassword.length() > 3 && nuevoPassword.length() < 61 && nuevoPassword.equals(passwordUsuario)) {
+                            // Actualiza los datos del usuario con los pasados por el navegador
+                            userDTO.setPassword(nuevoPassword);
+                            passwordOK = true;
+                        }
                     }
 
                     try {

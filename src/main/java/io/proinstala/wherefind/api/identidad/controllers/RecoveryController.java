@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import io.proinstala.wherefind.api.identidad.UserSession;
 import io.proinstala.wherefind.api.identidad.services.IdentidadService;
 import io.proinstala.wherefind.shared.controllers.BaseHttpServlet;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
@@ -122,9 +123,11 @@ public class RecoveryController  extends BaseHttpServlet {
         // Obtiene la información de la petición a la API
         ActionController actionController = getActionController(request, response);
 
+        // Se desactiva la cache del navegador para esta página
+        UserSession.disableCacheWebBrowser(actionController.server());
+
         // Imprime en la salida del servidor el EndPoint
         System.out.println("ACTION : " +   actionController.actionType());
-
 
         // Dependiendo del ActionType, realizará una acción
         switch(actionController.actionType()){
