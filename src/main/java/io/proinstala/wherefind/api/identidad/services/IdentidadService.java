@@ -481,7 +481,7 @@ public class IdentidadService extends BaseService {
             if (userDTO != null)
             {
                 // Como la acción se ha ejecutado correctamente se crea la respuesta acorde a la misma
-                responseDTO = getResponseOk("Se ha enviado un email a "+userDTO.getEmail()+" para poder recuperar el usuario.", null, 0);
+                responseDTO = getResponseOk(LocaleApp.EMAIL_CAMBIAR_PASSWORD_INFO, null, 0);
             }
         }
 

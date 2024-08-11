@@ -41,4 +41,7 @@ public class LocaleApp {
                                                                 + "Gracias,\n\n<br/><br/>"
                                                                 + "<b>Equipo de Soporte</b>";
 
+    /** Mensaje que se le muestra al usuario cuando solicita recuperar su password. */
+    public static final String EMAIL_CAMBIAR_PASSWORD_INFO  = "Se le ha enviado un email con las instrucciones para recuperar su password.";
+
 }
