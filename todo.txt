@@ -47,7 +47,7 @@
 + Añadir a comunes.js en el método POST un callback
 + Hacer que toda la cuenta se carge usando rutas virtuales en vez de sus rutas reales. ej : http://localhost:8080/WhereFind/App/web/admin/users.jsp ---> http://localhost:8080/WhereFind/admin/users
 - Revisar como poder mejorar la clase persistencia, que use el patrón singlenton
-- Poder recuperar la contraseña de los usuarios
++ Poder recuperar la contraseña de los usuarios
 - Poder gestionar los usuarios con un usuario Admin
 - Que el servidor notifique que la base de datos no es accesible en vez de producir una excepción
 + Poder bloquear la UI en las peticiones http PUT

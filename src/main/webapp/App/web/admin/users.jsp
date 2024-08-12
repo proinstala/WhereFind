@@ -27,7 +27,7 @@
 
 <div class="contenedor__general">
     <div class="contenedor">
-        <%@ include file="../cabecera/cabecera.jsp" %>
+        <%@ include file="../shared/cabecera.jsp" %>
                 <div class="seccion">
 
 
