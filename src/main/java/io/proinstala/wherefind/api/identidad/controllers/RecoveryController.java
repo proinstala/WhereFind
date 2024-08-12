@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import io.proinstala.wherefind.api.identidad.UserSession;
-import io.proinstala.wherefind.api.identidad.services.IdentidadService;
+import io.proinstala.wherefind.api.identidad.services.IdentidadControllerService;
 import io.proinstala.wherefind.shared.controllers.BaseHttpServlet;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
 import io.proinstala.wherefind.shared.dtos.UserDTO;
@@ -25,7 +25,7 @@ public class RecoveryController  extends BaseHttpServlet {
     protected static final String BASE_URL_RECOVERY = "/account";
 
     // Se declara el servicio que realmente gestiona todas las acciones relacionadas con la api
-    private final IdentidadService identidadServicio = new IdentidadService();
+    private final IdentidadControllerService identidadServicio = new IdentidadControllerService();
 
     /**
      * Tipos de acción que este controlador puede manejar.

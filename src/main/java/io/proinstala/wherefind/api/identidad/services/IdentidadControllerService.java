@@ -26,7 +26,7 @@ import io.proinstala.wherefind.shared.services.BaseService;
 /**
  * Clase que maneja operaciones relacionadas con la identidad de los usuarios.
  */
-public class IdentidadService extends BaseService {
+public class IdentidadControllerService extends BaseService {
 
     /**
      * Realiza el cierre de sesión del usuario.
