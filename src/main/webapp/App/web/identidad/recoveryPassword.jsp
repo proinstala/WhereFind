@@ -1,5 +1,4 @@
 
-<%@page import="io.proinstala.wherefind.shared.consts.urls.UrlsInternas"%>
 <%@page import="io.proinstala.wherefind.shared.consts.urls.enums.UrlIdentidad"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="/App/web/shared/head.jsp" >
@@ -33,8 +32,8 @@
                 </div>
 
                 <div class="login__enlaces">
-                    <a class="login__enlaces-enlace" href="<%=UrlsInternas.getIdentidadUri(UrlIdentidad.REGISTRAR)%>">Crear usuario</a>
-                    <a class="login__enlaces-enlace" href="<%=UrlsInternas.getIdentidadUri(UrlIdentidad.LOGIN)%>">Login</a>
+                    <a class="login__enlaces-enlace" href="<%=UrlIdentidad.REGISTRAR.getUri()%>">Crear usuario</a>
+                    <a class="login__enlaces-enlace" href="<%=UrlIdentidad.LOGIN.getUri()%>">Login</a>
                 </div>
             </div>
 

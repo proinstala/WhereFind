@@ -13,7 +13,6 @@ import io.proinstala.wherefind.api.infraestructure.data.interfaces.IUserService;
 import io.proinstala.wherefind.api.infraestructure.email.Email;
 import io.proinstala.wherefind.shared.consts.textos.FormParametros;
 import io.proinstala.wherefind.shared.consts.textos.LocaleApp;
-import io.proinstala.wherefind.shared.consts.urls.UrlsInternas;
 import io.proinstala.wherefind.shared.consts.urls.enums.UrlApp;
 import io.proinstala.wherefind.shared.consts.urls.enums.UrlIdentidad;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
@@ -68,7 +67,7 @@ public class IdentidadControllerService extends BaseService {
             userDTO.setPassword("");
 
             // Como la acción se ha ejecutado correctamente se crea la respuesta acorde a la misma
-            responseDTO = getResponseOk(server.request().getContextPath() + "/" + UrlsInternas.getAppdUri(UrlApp.HOME), userDTO, 1);
+            responseDTO = getResponseOk(server.request().getContextPath() + "/" + UrlApp.HOME.getUri(), userDTO, 1);
         }
         else
         {
@@ -441,7 +440,7 @@ public class IdentidadControllerService extends BaseService {
                 userDTO.setPassword("");
 
                 // Como la acción se ha ejecutado correctamente se crea la respuesta acorde a la misma
-                responseDTO = getResponseOk(actionController.server().request().getContextPath() + "/" + UrlsInternas.getAppdUri(UrlApp.HOME), userDTO, 1);
+                responseDTO = getResponseOk(actionController.server().request().getContextPath() + "/" + UrlApp.HOME.getUri(), userDTO, 1);
             }
         }
 
@@ -515,7 +514,7 @@ public class IdentidadControllerService extends BaseService {
 
         // Generamos la URL para la página de recuperación
         String linkRecuperacion = url + "/"
-                                + UrlsInternas.getIdentidadUri(UrlIdentidad.RECOVERY)
+                                + UrlIdentidad.RECOVERY.getUri()
                                 + "/?email="
                                 + userDTO.getEmail()
                                 + "&time=" + epochSeconds

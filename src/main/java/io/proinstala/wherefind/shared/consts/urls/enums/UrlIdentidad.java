@@ -1,8 +1,24 @@
 package io.proinstala.wherefind.shared.consts.urls.enums;
 
 public enum UrlIdentidad {
-    LOGIN,
-    REGISTRAR,
-    MODIFICAR,
-    RECOVERY
+    LOGIN("account/login"),
+    REGISTRAR("account/registrar"),
+    MODIFICAR("account/modificarUsuario"),
+    RECOVERY("account/recovery");
+
+
+    // Variables de instancia
+    private final String uri;
+
+    // Constructor
+    UrlIdentidad(String uri)
+    {
+        this.uri = uri;
+    }
+
+    // Métodos para acceder a las propiedades
+    public String getUri()
+    {
+        return uri;
+    }
 }
