@@ -10,7 +10,7 @@ import java.util.List;
 import io.proinstala.wherefind.api.identidad.UserSession;
 import io.proinstala.wherefind.api.infraestructure.data.GestionPersistencia;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IUserService;
-import io.proinstala.wherefind.api.infraestructure.email.EnviarEmail;
+import io.proinstala.wherefind.api.infraestructure.email.Email;
 import io.proinstala.wherefind.shared.consts.textos.FormParametros;
 import io.proinstala.wherefind.shared.consts.textos.LocaleApp;
 import io.proinstala.wherefind.shared.consts.urls.UrlsInternas;
@@ -528,7 +528,7 @@ public class IdentidadControllerService extends BaseService {
         String mensajeEmail = String.format(LocaleApp.EMAIL_CAMBIAR_PASSWORD_CUERPO, userDTO.getUserName(), enlaceRecuperacion);
 
         // Enviamos el correo electrónico al usuario
-        return EnviarEmail.enviarEmail(userDTO.getEmail(), LocaleApp.EMAIL_CAMBIAR_PASSWORD_TITULO, mensajeEmail);
+        return Email.enviarEmail(userDTO.getEmail(), LocaleApp.EMAIL_CAMBIAR_PASSWORD_TITULO, mensajeEmail);
     }
 
 

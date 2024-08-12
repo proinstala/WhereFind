@@ -13,7 +13,7 @@ import javax.mail.internet.MimeMessage;
 import io.proinstala.wherefind.shared.config.AppSettings;
 
 
-public class EnviarEmail {
+public class Email {
 
 
     public static boolean enviarEmail(String emailDestinatario, String asunto, String texto)
