@@ -191,15 +191,12 @@ label {
 .grid-row-span-2 {
     grid-row: span 2;
 }
-
 .max-width-120 {
     max-width: 120rem;
 }
-
 .max-width-100 {
     max-width: 100rem;
 }
-
 .max-width-80 {
     max-width: 80rem;
 }
@@ -244,6 +241,26 @@ label {
     grid-template-rows: 1fr;
     justify-items: center;
     overflow-y: auto;
+}
+
+
+/* Contenedor de la vista identidad/registar.jsp */
+.contenedor__general--registrar {
+    /*overflow: hidden;*/
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem;
+    background: var(--primario);
+}
+@media (max-width: 800px), (max-height: 800px) {
+    .contenedor__general--registrar {
+        height: auto;
+        min-height: 100vh;
+        padding: 2rem;
+    }
 }
 
 

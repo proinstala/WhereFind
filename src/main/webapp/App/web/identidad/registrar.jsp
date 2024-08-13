@@ -4,14 +4,14 @@
     <jsp:param name="titleweb" value="Registrar" />
 </jsp:include>
 
-<link rel="stylesheet" href="App/css/registrar.css">
+<link rel="stylesheet" href="App/css/formulario.css">
 
 <div class="contenedor__general--registrar">
     <div class="contenedor__formulario max-width-80">
 
         <div class="contenedor__formulario--cabecera">
             <div>
-                <h1>Registrar Nuevo Usuario</h1>
+                <h1 style="text-align: center;">Registrar Nuevo Usuario</h1>
             </div>
         </div>
 
