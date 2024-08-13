@@ -5,23 +5,24 @@
 </jsp:include>
 
     <link rel="stylesheet" href="App/css/login.css">
+    <link href="App/css/formulario.css" rel="stylesheet" type="text/css"/>
 
     <div class="contenedor__general--login">
         <div class="login">
             <!-- Parte izquierda -->
             <form class="login__izquierda" name="frmLogin" id="frmLogin" >
                 <h1>Login</h1>
-                <img class="imagen--login" src="App/img/defaultUser.svg" alt="logo usuario">
+                <img src="App/img/defaultUser.svg" alt="logo usuario">
 
-                <div class="login__input">
+                <div class="form__input login__input">
                     <input class="input-underline" type="text" name="nombreUsuario" id="nombreUsuario" placeholder="Introduce tu nombre de usuario">
                     <label for="nombreUsuario">Usuario</label>
                 </div>
-                <div class="login__input">
+                <div class="form__input login__input">
                     <input class="input-underline" type="password" name="passwordUsuario" id="passwordUsuario" placeholder="Introduce tu password">
                     <label for="passwordUsuario">Password Usuario</label>
                 </div>
-                <div class="login__input">
+                <div class="form__input login__input">
                     <button id="btnEntrar" type="submit" disabled>ENTRAR</button>
                 </div>
             </form>

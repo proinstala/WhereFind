@@ -144,7 +144,7 @@ a {
     color: var(--texto_secundario)
 }
 h1, h2, h3, h4 {
-    /*font-family: var(--fuenteHeading);*/
+    font-family: var(--fuente_principal);
     line-height: 1.2;
     color: var(--texto_principal);
     margin: 1rem 0;

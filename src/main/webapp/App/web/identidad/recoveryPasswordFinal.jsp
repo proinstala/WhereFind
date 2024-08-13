@@ -9,7 +9,7 @@
 
 
     <div class="contenedor__general--login">
-        <div class="login">
+        <div class="login login__password">
             <!-- Parte izquierda -->
             <form class="login__izquierda" name="frmRecoveryFinal" id="frmRecoveryFinal" >
                 <input type="hidden" name="usuario_id" id="passwordUsuario_id" value="${userDTO.getId()}">
@@ -18,18 +18,18 @@
                 <h3>Cambiar password</h3>
                 <i class="las la-key imagen-recovery"></i>
 
-                <div class="form__input">
+                <div class="form__input login__input">
                     <input class="" type="password" name="passwordUsuario" id="passwordUsuario" placeholder="Introduce el nuevo password">
                     <label for="passwordUsuario">Nueva Contraseña</label>
                 </div>
 
-                <div class="form__input">
+                <div class="form__input login__input">
                     <input class="" type="password" name="nuevoPassword" id="nuevoPassword" placeholder="Vuelve a introducir el nuevo password">
                     <label for="passwordUsuario">Verificar Contraseña</label>
                 </div>
 
 
-                <div class="login__input">
+                <div class="form__input login__input">
                     <button id="btnEntrar" type="submit" disabled>CAMBIAR</button>
                 </div>
             </form>

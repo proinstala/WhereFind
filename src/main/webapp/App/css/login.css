@@ -27,12 +27,21 @@
     background-color: var(--blanco);
     display: grid;
     grid-template-columns: 1fr 1fr;
+    
+    &.login__password {
+        width: 1000px;
+        height: 640px;
+    }
 }
 @media (max-width: 800px) {
     .login {
         height: 100%;
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr;
+        
+        &.login__password {
+            height: 100%;
+        }
     }
 }
 
@@ -92,54 +101,8 @@
 }
 
 .login__input {
-    position: relative; /*para los label de error.*/
-    display: flex;
-    flex-direction: column-reverse;
-    justify-content: flex-start;
-    align-content: flex-start;
     width: 100%;
     margin: 2.5rem 0;
-    font-family: var(--fuente_principal);
-    
-    input {
-        border: none; /* Elimina todos los bordes */
-        border-bottom: 0.2rem solid var(--borde_input_formulario); /* Agrega un borde inferior */
-        padding: 0.5rem 0.1rem; /* Ajusta el espaciado */
-        font-size: 1.5rem; /* Ajusta el tamaño del texto */
-        outline: none; /* Elimina el borde de enfoque predeterminado */
-        color: var(--negro);
-        
-        &:focus,
-        &:hover {
-            border-bottom-color: var(--primario);
-        
-            i {
-                color: var(--primario);
-            }
-            
-            + label {
-                color: var(--primario);
-            }
-        }
-    }
-      
-    label {
-        font-weight: 700;
-        color: var(--texto_medio);
-        padding-bottom: 0.5rem;
-        
-        &:focus {
-            border-bottom-color: var(--primario); /* Cambia el color del borde inferior cuando está enfocado */
-        }
-        
-        &:hover {
-            border-bottom-color: var(--primario);
-        
-            i {
-                color: var(--primario);
-            }
-        }
-    }
     
     button {
         height: 4rem;
@@ -163,6 +126,7 @@
     }
 }
 
+/*logo de la parte derecha*/
 .login__logo {
     width: 30%;
 }
@@ -183,5 +147,11 @@
             font-weight: 700;
         }
     }
+}
+
+.imagen-recovery {
+    padding-top: 2rem;
+    font-size: 7em;
+    color:  var(--primario);
 }
 

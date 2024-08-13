@@ -273,7 +273,7 @@
     }
 }
 
-/*Formulario sweetalert2*/
+/*Formulario sweetalert2 esto es prara borrar*/
 .formulario_sw2 {
     background-color: var(--blanco);
     display: grid;
@@ -283,9 +283,3 @@
     justify-items: center;
 }
 
-.imagen-recovery {
-    margin-top: 10px;
-    margin-bottom: -20px;
-    font-size: 5em;
-    color:  var(--primario);
-}

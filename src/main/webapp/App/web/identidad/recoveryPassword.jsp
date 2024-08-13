@@ -9,17 +9,17 @@
     <link href="App/css/formulario.css" rel="stylesheet" type="text/css"/>
 
     <div class="contenedor__general--login">
-        <div class="login">
+        <div class="login login__password">
             <!-- Parte izquierda -->
             <form class="login__izquierda" name="frmRecovery" id="frmRecovery" >
                 <h4>He olvidado mi password</h4>
                 <i class="las la-user-check imagen-recovery"></i>
 
-                <div class="login__input">
+                <div class="form__input login__input">
                     <input class="input-underline" type="text" name="nombreUsuario" id="nombreUsuario" placeholder="Introduce tu nombre de usuario o el email">
                     <label for="nombreUsuario">Usuario o Email</label>
                 </div>
-                <div class="login__input">
+                <div class="form__input login__input">
                     <button id="btnEntrar" type="submit" disabled>RECUPERAR</button>
                 </div>
             </form>
