@@ -1,4 +1,3 @@
-<%@page import="io.proinstala.wherefind.shared.consts.urls.UrlsInternas"%>
 <%@page import="io.proinstala.wherefind.shared.consts.urls.enums.UrlIdentidad"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="/App/web/shared/head.jsp" >
@@ -8,6 +7,7 @@
     <link rel="stylesheet" href="App/css/login.css">
     <link href="App/css/formulario.css" rel="stylesheet" type="text/css"/>
 
+
     <div class="contenedor__general--login">
         <div class="login">
             <!-- Parte izquierda -->
@@ -16,16 +16,16 @@
                 <input type="hidden" name="reset" value="1">
 
                 <h3>Cambiar password</h3>
-                <img class="imagen--login" src="App/img/defaultUser.svg" alt="logo usuario">
+                <i class="las la-key imagen-recovery"></i>
 
                 <div class="form__input">
                     <input class="" type="password" name="passwordUsuario" id="passwordUsuario" placeholder="Introduce el nuevo password">
-                    <label for="passwordUsuario">Nuevo Password</label>
+                    <label for="passwordUsuario">Nueva Contraseña</label>
                 </div>
 
                 <div class="form__input">
                     <input class="" type="password" name="nuevoPassword" id="nuevoPassword" placeholder="Vuelve a introducir el nuevo password">
-                    <label for="passwordUsuario">Verificar Nuevo Password</label>
+                    <label for="passwordUsuario">Verificar Contraseña</label>
                 </div>
 
 
@@ -36,15 +36,21 @@
 
             <!-- Parte derecha -->
             <div class="login__derecha">
-                <h1>Bienvenido<br>a<br>WhereFind</h1>
-                <p>Organiza, cataloga y encuentra tus artí­culos de manera rápida y eficiente.</p>
-                <div class="login__logo">
-                    <img src="App/img/caja.png" alt="caja carton">
+                <div>
+                    <h4>Restablecer Contraseña</h4>
+                    <p>Por favor, ingrese su nueva contraseña en los campos a continuación para completar el proceso de recuperación. Asegúrate de que tu nueva contraseña sea segura y fácil de recordar.</p>
+                    <ul>
+                        <li><strong>Nueva Contraseña:</strong> Introduce tu nueva contraseña.</li>
+                        <li><strong>Verificar Contraseña:</strong> Vuelve a introducir la nueva contraseña para confirmarla.</li>
+                    </ul>
+                    <p>Una vez que hayas completado ambos campos, haz clic en el botón <strong>"CAMBIAR"</strong> para guardar los cambios y acceder a tu cuenta.</p>
+                    <p>Si tienes algún problema, no dudes en contactar con nuestro equipo de soporte.</p>
                 </div>
 
+
                 <div class="login__enlaces">
-                    <a class="login__enlaces-enlace" href="<%=UrlsInternas.getIdentidadUri(UrlIdentidad.REGISTRAR)%>">Crear usuario</a>
-                    <a class="login__enlaces-enlace" href="<%=UrlsInternas.getIdentidadUri(UrlIdentidad.LOGIN)%>">Login</a>
+                    <a class="login__enlaces-enlace" href="<%=UrlIdentidad.REGISTRAR.getUri()%>">Crear usuario</a>
+                    <a class="login__enlaces-enlace" href="<%=UrlIdentidad.LOGIN.getUri()%>">Login</a>
                 </div>
             </div>
 

@@ -10,10 +10,9 @@ import java.util.List;
 import io.proinstala.wherefind.api.identidad.UserSession;
 import io.proinstala.wherefind.api.infraestructure.data.GestionPersistencia;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IUserService;
-import io.proinstala.wherefind.api.infraestructure.email.EnviarEmail;
+import io.proinstala.wherefind.api.infraestructure.email.Email;
 import io.proinstala.wherefind.shared.consts.textos.FormParametros;
 import io.proinstala.wherefind.shared.consts.textos.LocaleApp;
-import io.proinstala.wherefind.shared.consts.urls.UrlsInternas;
 import io.proinstala.wherefind.shared.consts.urls.enums.UrlApp;
 import io.proinstala.wherefind.shared.consts.urls.enums.UrlIdentidad;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
@@ -26,7 +25,7 @@ import io.proinstala.wherefind.shared.services.BaseService;
 /**
  * Clase que maneja operaciones relacionadas con la identidad de los usuarios.
  */
-public class IdentidadService extends BaseService {
+public class IdentidadControllerService extends BaseService {
 
     /**
      * Realiza el cierre de sesión del usuario.
@@ -68,7 +67,7 @@ public class IdentidadService extends BaseService {
             userDTO.setPassword("");
 
             // Como la acción se ha ejecutado correctamente se crea la respuesta acorde a la misma
-            responseDTO = getResponseOk(server.request().getContextPath() + "/" + UrlsInternas.getAppdUri(UrlApp.HOME), userDTO, 1);
+            responseDTO = getResponseOk(server.request().getContextPath() + "/" + UrlApp.HOME.getUri(), userDTO, 1);
         }
         else
         {
@@ -441,7 +440,7 @@ public class IdentidadService extends BaseService {
                 userDTO.setPassword("");
 
                 // Como la acción se ha ejecutado correctamente se crea la respuesta acorde a la misma
-                responseDTO = getResponseOk(actionController.server().request().getContextPath() + "/" + UrlsInternas.getAppdUri(UrlApp.HOME), userDTO, 1);
+                responseDTO = getResponseOk(actionController.server().request().getContextPath() + "/" + UrlApp.HOME.getUri(), userDTO, 1);
             }
         }
 
@@ -515,7 +514,7 @@ public class IdentidadService extends BaseService {
 
         // Generamos la URL para la página de recuperación
         String linkRecuperacion = url + "/"
-                                + UrlsInternas.getIdentidadUri(UrlIdentidad.RECOVERY)
+                                + UrlIdentidad.RECOVERY.getUri()
                                 + "/?email="
                                 + userDTO.getEmail()
                                 + "&time=" + epochSeconds
@@ -528,7 +527,7 @@ public class IdentidadService extends BaseService {
         String mensajeEmail = String.format(LocaleApp.EMAIL_CAMBIAR_PASSWORD_CUERPO, userDTO.getUserName(), enlaceRecuperacion);
 
         // Enviamos el correo electrónico al usuario
-        return EnviarEmail.enviarEmail(userDTO.getEmail(), LocaleApp.EMAIL_CAMBIAR_PASSWORD_TITULO, mensajeEmail);
+        return Email.enviarEmail(userDTO.getEmail(), LocaleApp.EMAIL_CAMBIAR_PASSWORD_TITULO, mensajeEmail);
     }
 
 
