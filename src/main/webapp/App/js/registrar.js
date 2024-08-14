@@ -1,4 +1,4 @@
-import { solicitudPost, setImageSelected, solicitudPost_modificada, detectarCambiosFormulario } from './comunes.mjs';
+import { solicitudPost, setImageSelected, detectarCambiosFormulario } from './comunes.mjs';
 import { mostrarMensaje, mostrarMensajeError } from './alertasSweetAlert2.mjs';
 
 
@@ -28,7 +28,7 @@ $(document).ready(function () {
                     console.log("Imagen establecida correctamente.");
 
                     // Detecta el cambio de la imagen
-                    onDetectarCambios(labelInputFoto.textContent != result);
+                    onDetectarCambios(labelInputFoto.textContent !== result);
 
                     labelInputFoto.textContent = result;
                 } else {
@@ -58,7 +58,7 @@ function validarFormulario(idForm) {
         rules: {
             nombreUsuario: {
                 required: true,
-                maxlength: 20
+                maxlength: 100
             },
             passwordUsuario: {
                 required: true,
@@ -86,7 +86,7 @@ function validarFormulario(idForm) {
         messages: {
             nombreUsuario: {
                 required: "Debe introducir el nombre de usuario.",
-                maxlength: "Longitud máx 20 caracteres."
+                maxlength: "Longitud máx 100 caracteres."
             },
             passwordUsuario: {
                 required: "Debe introducir el password de usuario.",
@@ -114,7 +114,7 @@ function validarFormulario(idForm) {
         },//Fin de msg  ------------------
 
         submitHandler: function () {
-            solicitudPost_modificada("api/identidad/create", idForm, true)
+            solicitudPost("api/identidad/create", idForm, true)
                 .then(response => {
                     if (response.isError === 1) {
                         mostrarMensajeError("No se puede registrar", response.result);
@@ -124,7 +124,6 @@ function validarFormulario(idForm) {
                     }
                 })
                 .catch(error => {
-                    // Maneja el error aquí
                     console.error("Error:", error);
                     mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
                 });
@@ -132,10 +131,6 @@ function validarFormulario(idForm) {
        // Función error de respuesta
         errorPlacement: function (error, element) {
             error.insertAfter(element); // Esto colocará el mensaje de error después del elemento con error
-        },
-        complete: function () {
-            console.log("complete");
-            formDisable(false, idForm);
         }
     });//Fin Validate
 }

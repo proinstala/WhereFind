@@ -18,41 +18,43 @@ function validarFormularioRecovery(nombreForm) {
         rules: {
             nombreUsuario: {
                 required: true,
-                maxlength: 20
+                maxlength: 200
             }
         },//Fin de reglas ----------------
         messages: {
             nombreUsuario: {
                 required: "Debe introducir el nombre de usuario.",
-                maxlength: "Longitud máx 20 caracteres."
+                maxlength: "Longitud máx 200 caracteres."
             }
         },//Fin de msg  ------------------
 
         submitHandler: function () {
-
-            const loginCallBack = (response)  => {
-                if (response.isError === 1) {
-                    mostrarMensaje("Se ha producido un error", response.result, "error");
-                } else {
-                    mostrarMensaje("Recuperar password", response.result, "success", false);
-                }
-            };
-
-            solicitudPost("api/identidad/recovery", loginCallBack, nombreForm, true);
+            solicitudPost("api/identidad/recovery", nombreForm, true)
+                .then(response => {
+                    if (response.isError === 1) {
+                        mostrarMensajeError("Se ha producido un error", response.result);
+                    } else {
+                        mostrarMensaje("Recuperar password", response.result);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
+                });
         },
        // Función error de respuesta
         errorPlacement: function (error, element) {
             error.insertAfter(element); // Esto colocará el mensaje de error después del elemento con error
-
-        },
-        complete: function () {
-            console.log("complete");
-            formDisable(false, nombreForm);
         }
     });//Fin Validate
 }
 
 function validarFormularioRecoveryFinal(idForm) {
+    $.validator.addMethod("passwordMatch", function(value, element) {
+        // Comprueba si el valor del campo de confirmación coincide con el de la contraseña
+        return value === $(idForm).find("input[name='nuevoPassword']").val();
+    }, "Las contraseñas no coinciden.");
+    
     $(idForm).validate({
         rules: {
             nuevoPassword: {
@@ -79,33 +81,25 @@ function validarFormularioRecoveryFinal(idForm) {
         },//Fin de msg  ------------------
 
         submitHandler: function () {
-
             const usuarioIdInput = document.querySelector('#passwordUsuario_id');
             const usuarioId = usuarioIdInput ? usuarioIdInput.value : -1;
 
             solicitudPut(`api/identidad/updatePassword/${usuarioId}`, idForm, true)
-            .then(response => {
-                if (response.isError === 1) {
-                    mostrarMensajeError("No se puede actualizar el password", response.result);
-                } else {
-                    mostrarMensaje("Cambiar Password.", `Se ha modificado correctamente el password del usuario. Pruebe a loguearse de nuevo usando su nuevo password`, "success");
-                }
-            })
-            .catch(error => {
-                // Maneja el error aquí
-                console.error("Error:", error);
-                mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
-            });
-
+                    .then(response => {
+                        if (response.isError === 1) {
+                            mostrarMensajeError("No se puede actualizar el password", response.result);
+                        } else {
+                            mostrarMensaje("Cambiar Password.", `Se ha modificado correctamente el password del usuario. Pruebe a loguearse de nuevo usando su nuevo password`, "success");
+                        }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
+                    });
         },
        // Función error de respuesta
         errorPlacement: function (error, element) {
             error.insertAfter(element); // Esto colocará el mensaje de error después del elemento con error
-
-        },
-        complete: function () {
-            console.log("complete");
-            formDisable(false, nombreForm);
         }
     });//Fin Validate
 }

@@ -1,3 +1,4 @@
+
 import { mostrarMensaje, mostrarLoading, ocultarLoading, mostrarMensajeAdvertencia } from './alertasSweetAlert2.mjs';
 
 /**
@@ -15,25 +16,12 @@ function getDatosForm (idForm) {
  * Realiza una solicitud POST.
  *
  * @param {string} url         - La URL a la que se enviará la solicitud.
- * @param {function} callBack  - Método que recibirá el resultado.
  * @param {string} idElement   - Id del formulario.
  * @param {string} mostrarLoad - Bloquea la UI mostrando una alerta con una animación de espera.
  */
-const solicitudPost = (url, callBack, idElement, mostrarLoad) => {
+const solicitudPost = (url, idElement, mostrarLoad) => {
     let data = getDatosForm(idElement);
-    solicitudPostFetch(url, data, callBack, idElement, mostrarLoad);
-};
-
-/**
- * Realiza una solicitud POST.
- *
- * @param {string} url         - La URL a la que se enviará la solicitud.
- * @param {string} idElement   - Id del formulario.
- * @param {string} mostrarLoad - Bloquea la UI mostrando una alerta con una animación de espera.
- */
-const solicitudPost_modificada = (url, idElement, mostrarLoad) => {
-    let data = getDatosForm(idElement);
-    return solicitudPostFetch_modificada(url, data, idElement, mostrarLoad);
+    return solicitudPostFetch(url, data, idElement, mostrarLoad);
 };
 
 /**
@@ -49,7 +37,6 @@ const solicitudPut = (url, idElement, mostrarLoad) => {
 };
 
 
-
 /**
  * Realiza una solicitud GET.
  *
@@ -62,43 +49,6 @@ const solicitudGet = (url, callBack, idElement, mostrarLoad) => {
     solicitudGetFetch(url, callBack, idElement, mostrarLoad);
 };
 
-/**
- * Realiza una solicitud POST utilizando fetch.
- *
- * @param {string} url         - La URL a la que se enviará la solicitud.
- * @param {string} data        - Los datos a enviar en la solicitud.
- * @param {function} callBack  - Método que recibirá el resultado.
- * @param {string} idElement   - Id del formulario.
- * @param {string} mostrarLoad - Bloquea la UI mostrando una alerta con una animación de espera.
- */
-function solicitudPostFetch(url, data, callBack, idElement, mostrarLoad) {
-    formDisable(idElement, true, mostrarLoad);
-
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: data
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(response => {
-        callBack(response);
-    })
-    .catch(error => {
-        console.error("Error:", error);
-        mostrarMensaje("Error", "No se ha podido realizar la acción por un error en el servidor.", "error");
-    })
-    .finally(() => {
-        console.log("complete");
-        formDisable(idElement, false, false);
-    });
-}
 
 /**
  * Realiza una solicitud POST utilizando fetch.
@@ -108,10 +58,8 @@ function solicitudPostFetch(url, data, callBack, idElement, mostrarLoad) {
  * @param {string} idElement   - Id del formulario.
  * @param {string} mostrarLoad - Bloquea la UI mostrando una alerta con una animación de espera.
  */
-function solicitudPostFetch_modificada(url, data, idElement, mostrarLoad) {
-
+function solicitudPostFetch(url, data, idElement, mostrarLoad) {
     formDisable(idElement, true, mostrarLoad);
-
     return fetch(url, {
         method: 'POST',
         headers: {
@@ -127,16 +75,12 @@ function solicitudPostFetch_modificada(url, data, idElement, mostrarLoad) {
         return response.json(); // Procesar la respuesta JSON
     })
     .catch(error => {
-        console.error("Error:", error);
-        mostrarMensaje("Error", "No se ha podido realizar la acción por un error en el servidor.", "error");
+        throw new Error(error);
     })
     .finally(() => {
         formDisable(idElement, false, false);
     });
-
 }
-
-
 
 /**
  * Realiza una solicitud PUT utilizando fetch.
@@ -165,16 +109,12 @@ function solicitudPutFetch(url, data, idElement, mostrarLoad) {
         return response.json(); // Procesar la respuesta JSON
     })
     .catch(error => {
-        console.error("Error:", error);
-        mostrarMensaje("Error", "No se ha podido realizar la acción por un error en el servidor.", "error");
+        throw new Error(error);
     })
     .finally(() => {
         formDisable(idElement, false, false);
     });
-
 }
-
-
 
 /**
  * Realiza una solicitud GET utilizando fetch.
@@ -216,7 +156,6 @@ function solicitudGetFetch(url, callBack, idElement, mostrarLoad) {
     });
 }
 
-
 /**
  * Activa/desactiva todos los campos de un formulario y muestra la alerta de cargando.
  *
@@ -234,7 +173,6 @@ function formDisable(idForm, disabled, mostrarLoad) {
 
     $("button, input, select, option, textarea", idForm).prop('disabled', disabled);
 }
-
 
 /**
  * Establece una imagen en un contenedor dado a partir de un archivo de imagen seleccionado,
@@ -272,7 +210,6 @@ const setImageSelected = (fileImage, contenedorImagen, inputHideImagen64, defaul
     });
 };
 
-
 /**
  * Valida si el archivo proporcionado es una imagen válida y si su tamaño está dentro del límite especificado.
  *
@@ -302,7 +239,6 @@ function validateImage(fileImage, maxSizeInMB = 1) {
     });
 }
 
-
 /**
  * Restablece todos los campos de un formulario.
  * 
@@ -313,7 +249,6 @@ function resetCamposForm(idForm) {
     document.querySelector(idForm).reset();
 }
 
-
 /**
  * Detecta los cambios en los datos de un formulario y si esos datos son distintos al los datos originales del mismo.
  *
@@ -323,12 +258,12 @@ function resetCamposForm(idForm) {
 const detectarCambiosFormulario = (idForm, callBack) => {
     let form_original_data = $(idForm).serialize();
     $(idForm).on('keyup change paste', 'input, select, textarea', function(){
-        if (callBack != null) {
-            callBack($(idForm).serialize() != form_original_data)
+        if (callBack !== null) {
+            callBack($(idForm).serialize() !== form_original_data);
         }
     });
-}
+};
 
 
 
-export { solicitudPost, solicitudGet, solicitudPut, setImageSelected, solicitudPost_modificada, resetCamposForm, detectarCambiosFormulario };
+export { solicitudPost, solicitudGet, solicitudPut, setImageSelected, resetCamposForm, detectarCambiosFormulario };

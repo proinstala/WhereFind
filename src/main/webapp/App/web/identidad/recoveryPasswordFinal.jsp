@@ -4,9 +4,8 @@
     <jsp:param name="titleweb" value="Cambiar password" />
 </jsp:include>
 
-    <link rel="stylesheet" href="App/css/login.css">
-    <link href="App/css/formulario.css" rel="stylesheet" type="text/css"/>
-
+    <link rel="stylesheet" type="text/css" href="App/css/login.css">
+    <link rel="stylesheet" type="text/css" href="App/css/formulario.css"/>
 
     <div class="contenedor__general--login">
         <div class="login login__password">
@@ -19,15 +18,14 @@
                 <i class="las la-key imagen-recovery"></i>
 
                 <div class="form__input login__input">
-                    <input class="" type="password" name="passwordUsuario" id="passwordUsuario" placeholder="Introduce el nuevo password">
-                    <label for="passwordUsuario">Nueva Contraseña</label>
+                    <input type="password" name="nuevoPassword" id="nuevoPassword" placeholder="Introduce el nuevo password">
+                    <label for="nuevoPassword">Nueva Contraseña</label>
                 </div>
 
                 <div class="form__input login__input">
-                    <input class="" type="password" name="nuevoPassword" id="nuevoPassword" placeholder="Vuelve a introducir el nuevo password">
-                    <label for="passwordUsuario">Verificar Contraseña</label>
+                    <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Vuelve a introducir el nuevo password">
+                    <label for="confirmPassword">Verificar Contraseña</label>
                 </div>
-
 
                 <div class="form__input login__input">
                     <button id="btnEntrar" type="submit" disabled>CAMBIAR</button>
@@ -46,7 +44,6 @@
                     <p>Una vez que hayas completado ambos campos, haz clic en el botón <strong>"CAMBIAR"</strong> para guardar los cambios y acceder a tu cuenta.</p>
                     <p>Si tienes algún problema, no dudes en contactar con nuestro equipo de soporte.</p>
                 </div>
-
 
                 <div class="login__enlaces">
                     <a class="login__enlaces-enlace" href="<%=UrlIdentidad.REGISTRAR.getUri()%>">Crear usuario</a>

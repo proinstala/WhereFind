@@ -1,5 +1,5 @@
 import { solicitudPost, detectarCambiosFormulario } from './comunes.mjs';
-import { mostrarMensaje } from './alertasSweetAlert2.mjs';
+import { mostrarMensaje, mostrarMensajeError } from './alertasSweetAlert2.mjs';
 
 $(document).ready(function () {
     validarFormulario("#frmLogin");
@@ -16,46 +16,44 @@ function validarFormulario(nombreForm) {
         rules: {
             nombreUsuario: {
                 required: true,
-                maxlength: 20
+                maxlength: 100
             },
             passwordUsuario: {
                 required: true,
-                maxlength: 60
+                maxlength: 200
             }
 
         },//Fin de reglas ----------------
         messages: {
             nombreUsuario: {
                 required: "Debe introducir el nombre de usuario.",
-                maxlength: "Longitud máx 20 caracteres."
+                maxlength: "Longitud máx 100 caracteres."
             },
             passwordUsuario: {
                 required: "Debe introducir el password de usuario.",
-                maxlength: "Longitud máx 60 caracteres."
+                maxlength: "Longitud máx 200 caracteres."
             }
         },//Fin de msg  ------------------
 
         submitHandler: function () {
-
-            const loginCallBack = (response)  => {
-                if (response.isError === 1) {
-                    mostrarMensaje("Acceso Denegado", response.result, "error");
-                } else {
-                    const acceso = () => window.location.replace(response.result);
-                    mostrarMensaje(`Bienvenido ${response.user.nombre}`, "Acceso Permitido.", "success", (response.isUrl)? acceso : null);
-                }
-            };
-
-            solicitudPost("api/identidad/login", loginCallBack, nombreForm, true);
+            solicitudPost("api/identidad/login", nombreForm, true)
+                    .then(response => {
+                        if(response.isError === 1) {
+                            mostrarMensajeError("Acceso Denegado", response.result);
+                        } else {
+                            const acceso = () => window.location.replace(response.result);
+                            mostrarMensaje(`Bienvenido ${response.user.nombre}`, "Acceso Permitido.", "success", (response.isUrl)? acceso : null);
+                        }
+            })
+                    .catch(error => {
+                        console.error(error);
+                        mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
+            });
         },
        // Función error de respuesta
         errorPlacement: function (error, element) {
             error.insertAfter(element); // Esto colocará el mensaje de error después del elemento con error
 
-        },
-        complete: function () {
-            console.log("complete");
-            formDisable(false, nombreForm);
         }
     });//Fin Validate
 }

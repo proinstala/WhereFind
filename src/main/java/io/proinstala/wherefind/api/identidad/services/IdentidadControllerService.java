@@ -305,6 +305,7 @@ public class IdentidadControllerService extends BaseService {
      * Actualiza los datos de un usuario en la base de datos.
      *
      * @param actionController Controlador de acción
+     * @param isReset
      */
     public void updatePasswordUser(ActionController actionController, boolean isReset)
     {
