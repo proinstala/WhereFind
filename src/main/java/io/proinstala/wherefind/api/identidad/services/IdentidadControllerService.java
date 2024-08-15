@@ -344,12 +344,13 @@ public class IdentidadControllerService extends BaseService {
                     // Obtiene los parámetros desde el request
                     String passwordUsuario = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_PASSWORD, "");
                     String nuevoPassword = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_NUEVO_PASSWORD, "");
+                    String confirmPassword = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_CONFIRMACION_PASSWORD, "");
 
                     boolean passwordOK = false;
 
                     if (!isReset)
                     {
-                        if(passwordUsuario.equals(userDTO.getPassword()) && nuevoPassword.length() > 3 && nuevoPassword.length() < 61 && !nuevoPassword.equals(userDTO.getPassword())) {
+                        if(passwordUsuario.equals(userDTO.getPassword()) && nuevoPassword.length() > 3 && nuevoPassword.length() < 61 && !nuevoPassword.equals(userDTO.getPassword()) && nuevoPassword.equals(confirmPassword)) {
                             // Actualiza los datos del usuario con los pasados por el navegador
                             userDTO.setPassword(nuevoPassword);
                             passwordOK = true;
@@ -357,7 +358,7 @@ public class IdentidadControllerService extends BaseService {
                     }
                     else
                     {
-                        if(nuevoPassword.length() > 3 && nuevoPassword.length() < 61 && nuevoPassword.equals(passwordUsuario)) {
+                        if(nuevoPassword.length() > 3 && nuevoPassword.length() < 61 && nuevoPassword.equals(confirmPassword)) {
                             // Actualiza los datos del usuario con los pasados por el navegador
                             userDTO.setPassword(nuevoPassword);
                             passwordOK = true;
@@ -377,7 +378,7 @@ public class IdentidadControllerService extends BaseService {
                             // Comprueba que el usuario logueado que esta editando al usuario sea el mismo que el usuario editado
                             // Si el id coincide (por ejemplo si se es administrador se pueden editar usuarios y el id no debería coincidir si no se esta editando a si mismo)
                             UserDTO userLogeado = UserSession.getUserLogin(actionController.server().request());
-                            if (userLogeado.getId() == id)
+                            if (userLogeado != null && userLogeado.getId() == id)
                             {
                                 // Guarda los datos modificados por el usuario en el user de la sessión, así si se pulsa F5,
                                 // se cargan los datos actualizados del mismo

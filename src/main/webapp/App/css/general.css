@@ -283,6 +283,7 @@ button[disabled]:hover {
     background-color: #cccccc !important;
     color: #666666 !important;
     font-weight: normal !important;
+    cursor: initial !important;
 }
 
 /* TODO: Ajustar los colores al tema actual */

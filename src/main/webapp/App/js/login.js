@@ -10,7 +10,6 @@ function onDetectarCambios(hayCambios) {
     $("#btnEntrar").prop('disabled', !hayCambios);
 }
 
-
 function validarFormulario(nombreForm) {
     $(nombreForm).validate({
         rules: {
@@ -53,7 +52,6 @@ function validarFormulario(nombreForm) {
        // Función error de respuesta
         errorPlacement: function (error, element) {
             error.insertAfter(element); // Esto colocará el mensaje de error después del elemento con error
-
         }
     });//Fin Validate
 }

@@ -50,11 +50,6 @@ function validarFormularioRecovery(nombreForm) {
 }
 
 function validarFormularioRecoveryFinal(idForm) {
-    $.validator.addMethod("passwordMatch", function(value, element) {
-        // Comprueba si el valor del campo de confirmación coincide con el de la contraseña
-        return value === $(idForm).find("input[name='nuevoPassword']").val();
-    }, "Las contraseñas no coinciden.");
-    
     $(idForm).validate({
         rules: {
             nuevoPassword: {
@@ -64,7 +59,7 @@ function validarFormularioRecoveryFinal(idForm) {
             },
             confirmPassword: {
                 required: true,
-                passwordMatch: true
+                equalTo: "#nuevoPassword"
             }
 
         },//Fin de reglas ----------------
@@ -76,7 +71,7 @@ function validarFormularioRecoveryFinal(idForm) {
             },
             confirmPassword: {
                 required: "Este campo es requerido.",
-                passwordMatch: "El password de confirmación es erroneo."
+                equalTo: "El password de confirmación es erroneo."
             }
         },//Fin de msg  ------------------
 

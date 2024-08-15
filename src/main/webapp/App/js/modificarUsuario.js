@@ -1,27 +1,24 @@
 import { setImageSelected, solicitudPut, resetCamposForm, detectarCambiosFormulario } from './comunes.mjs';
 import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from './alertasSweetAlert2.mjs';
 
-
-
-function onDetectarCambiosModificarUsuario(hayCambios) {
-    $("#btnGuardar").prop('disabled', !hayCambios);
-    $("#btnCancelar").prop('disabled', !hayCambios);
-}
-
-function onDetectarCambiosModificarPassword(hayCambios) {
-    $("#btnGuardarPassword").prop('disabled', !hayCambios);
-    $("#btnCancelarPassword").prop('disabled', !hayCambios);
-}
-
+let datosOriginalesFormulario;
 
 $(document).ready(function () {
-    validarFormulario("#frmModificarUsuario");
-    validarFormularioPassword("#frmModificarPassword");
+    const idFormModificarUsuario = '#frmModificarUsuario';
+    const idFormModificarPassword = '#frmModificarPassword';
+    
+    datosOriginalesFormulario = getDatosOriginalesForm(idFormModificarUsuario);
+    
+    validarFormulario(idFormModificarUsuario);
+    validarFormularioPassword(idFormModificarPassword);
 
-    detectarCambiosFormulario("#frmModificarUsuario", onDetectarCambiosModificarUsuario);
-    detectarCambiosFormulario("#frmModificarPassword", onDetectarCambiosModificarPassword);
+    detectarCambiosFormulario(idFormModificarUsuario, onDetectarCambiosModificarUsuario);
+    detectarCambiosFormulario(idFormModificarPassword, onDetectarCambiosModificarPassword);
 
     const btnCancelar = document.querySelector('#btnCancelar');
+    const btnCancelarPassword = document.querySelector('#btnCancelarPassword');
+    const btnDeshacerCambiosUsuario = document.querySelector('#btnDeshacerCambiosUsuario');
+    const btnDeshacerCambiosPassword = document.querySelector('#btnDeshacerCambiosPassword');
     const btnPassword = document.querySelector('#btnPassword');
     const btnUsuario = document.querySelector('#btnUsuario');
 
@@ -32,7 +29,6 @@ $(document).ready(function () {
 
     const divFormUsuario = document.querySelector('#form_usuario');
     const divFormPassword = document.querySelector('#form_password');
-
 
     btnFoto.addEventListener('change', (e) => {
         const defaultUserImg = contenedorImg.src;
@@ -45,7 +41,7 @@ $(document).ready(function () {
                     console.log("Imagen establecida correctamente.");
 
                     // Detecta el cambio de la imagen
-                    onDetectarCambiosModificarUsuario(labelInputFoto.textContent != result);
+                    onDetectarCambiosModificarUsuario(labelInputFoto.textContent !== result);
 
                     labelInputFoto.textContent = result;
                 } else {
@@ -60,13 +56,35 @@ $(document).ready(function () {
     });
 
     btnCancelar.addEventListener('click', () => {
-        //window.location.href = 'login.jsp';
+        window.location.href = 'dashboard';
+    });
+    
+    btnCancelarPassword.addEventListener('click', () => {
+        window.location.href = 'dashboard';
+    });
+    
+    btnDeshacerCambiosUsuario.addEventListener('click', () => {
+        setDatosForm(idFormModificarUsuario, datosOriginalesFormulario, '#imagenUsuarioB64');
+    });
+    
+    btnDeshacerCambiosPassword.addEventListener('click', () => {
+        resetCamposForm(idFormModificarPassword);
     });
 
     btnPassword.addEventListener('click',() => mostrarContenedor(divFormPassword, divFormUsuario, 'grid'));
     btnUsuario.addEventListener('click',() => mostrarContenedor(divFormUsuario, divFormPassword, 'grid'));
+    
 });
 
+function onDetectarCambiosModificarUsuario(hayCambios) {
+    $("#btnGuardar").prop('disabled', !hayCambios);
+    $("#btnDeshacerCambiosUsuario").prop('disabled', !hayCambios);
+}
+
+function onDetectarCambiosModificarPassword(hayCambios) {
+    $("#btnGuardarPassword").prop('disabled', !hayCambios);
+    $("#btnDeshacerCambiosPassword").prop('disabled', !hayCambios);
+}
 
 function validarFormulario(idForm) {
     $(idForm).validate({
@@ -123,6 +141,7 @@ function validarFormulario(idForm) {
                                         } else {
                                             //const acceso = () => window.location.replace(response.result);
                                             mostrarMensaje(`Se han modificado correctamente los datos el usuario de ${response.user.nombre}`, "Modificado Usuario.", "success");
+                                            datosOriginalesFormulario = getDatosOriginalesForm(idForm);
                                         }
                                     })
                                     .catch(error => {
@@ -140,7 +159,6 @@ function validarFormulario(idForm) {
        // Función error de respuesta
         errorPlacement: function (error, element) {
             error.insertAfter(element); // Esto colocará el mensaje de error después del elemento con error
-
         },
         complete: function () {
             console.log("complete");
@@ -150,11 +168,6 @@ function validarFormulario(idForm) {
 }
 
 function validarFormularioPassword(idForm) {
-    $.validator.addMethod("passwordMatch", function(value, element) {
-        // Comprueba si el valor del campo de confirmación coincide con el de la contraseña
-        return value === $(idForm).find("input[name='nuevoPassword']").val();
-    }, "Las contraseñas no coinciden.");
-
     $(idForm).validate({
         rules: {
             passwordUsuario: {
@@ -168,7 +181,7 @@ function validarFormularioPassword(idForm) {
             },
             confirmPassword: {
                 required: true,
-                passwordMatch: true
+                equalTo: "#nuevoPassword"
             }
 
         },//Fin de reglas ----------------
@@ -184,11 +197,11 @@ function validarFormularioPassword(idForm) {
             },
             confirmPassword: {
                 required: "Este campo es requerido.",
-                passwordMatch: "El password de confirmación es erroneo."
+                equalTo: "El password de confirmación es erroneo."
             }
 
         },//Fin de msg  ------------------
-
+        
         submitHandler: function () {
             mostrarMensajeOpcion("Modificar Password Usuario", '¿Quieres realmente modificar el password de usuario?')
                     .then((result) => {
@@ -201,13 +214,11 @@ function validarFormularioPassword(idForm) {
                                         if (response.isError === 1) {
                                             mostrarMensajeError("No se puede actualizar los datos", response.result);
                                         } else {
-                                            //const acceso = () => window.location.replace(response.result);
                                             mostrarMensaje(`Se han modificado correctamente los datos el usuario de ${response.user.nombre}`, "Modificado Usuario.", "success");
                                             resetCamposForm(idForm);
                                         }
                                     })
                                     .catch(error => {
-                                        // Maneja el error aquí
                                         console.error("Error:", error);
                                         mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
                                     });
@@ -221,11 +232,6 @@ function validarFormularioPassword(idForm) {
        // Función error de respuesta
         errorPlacement: function (error, element) {
             error.insertAfter(element); // Esto colocará el mensaje de error después del elemento con error
-
-        },
-        complete: function () {
-            console.log("complete");
-            formDisable(false, idForm);
         }
     });//Fin Validate
 }
@@ -243,3 +249,74 @@ function mostrarContenedor(nodeMostrar, nodeOcultar, display) {
     }
 }
 
+/**
+ * Obtiene los datos originales del formulario, excluyendo los campos de tipo 'hidden' y 'file'.
+ * También incluye la URL de la imagen si hay un elemento <img> dentro del formulario.
+ *
+ * @param {string} idFormulario - El identificador (selector) del formulario del cual obtener los datos.
+ * @returns {Array<Object>} Un array de objetos que contienen el nombre y valor de cada campo del formulario.
+ *                          Si hay una imagen en el formulario, se agrega un objeto con el nombre del la etiqueta img y su URL como valor.
+ */
+function getDatosOriginalesForm(idFormulario) {
+    const form = document.querySelector(idFormulario);
+    const elements = form.querySelectorAll('input, textarea');
+
+    //Selecciona el elemento img dentro del div con clase 'form__input'
+    const imageElement = form.querySelector('.form__input img');
+
+    //Filtrar los inputs para excluir los de tipo 'hidden' y 'file'
+    const filteredElements = Array.from(elements).filter(element => {
+        return element.type !== 'hidden' && element.type !== 'file';
+    });
+
+    //Crea un array de datos a partir de los elementos filtrados.
+    const dataArray = filteredElements.map(element => ({
+        name: element.name,
+        value: element.type === 'checkbox' || element.type === 'radio' ? element.checked : element.value
+    }));
+
+    //Si hay un elemento de imagen, se agrega al array de datos.
+    if (imageElement) {
+        dataArray.push({
+            name: imageElement.name, // Nombre del campo para la imagen
+            value: imageElement.src // URL de la imagen
+        });
+    }
+
+    return dataArray;
+}
+
+/**
+ * Establece los valores de los campos de un formulario basado en un array de datos.
+ *
+ * @param {string} idFormulario - El identificador del formulario en el cual se establecerán los datos.
+ * @param {Array} dataArray - Un array de objetos que contiene el nombre y el valor de cada campo que se va a establecer en el formulario.
+ * @param {string} idInputHideImeagen64 - El identificador del input oculto que almacenará la URL de la imagen en formato base64.
+ */
+function setDatosForm(idFormulario, dataArray, idInputHideImeagen64) {
+    const form = document.querySelector(idFormulario);
+    const textoImg = form.querySelector('.form__input #textoImagen');
+    const inputHideImg = form.querySelector(idInputHideImeagen64);
+    
+    dataArray.forEach(data => {
+        const element = form.querySelector(`[name="${data.name}"]`);
+
+        if (element) {
+            // Si el input es de tipo checkbox o radio, usa la propiedad checked
+            if (element.type === 'checkbox' || element.type === 'radio') {
+                element.checked = data.value === true || data.value === "true";
+            } else if(element.tagName === 'IMG'){
+                element.src = data.value;
+                if(textoImg) {
+                    textoImg.textContent = "";
+                }
+                if(inputHideImg) {
+                    inputHideImg.value = data.value;
+                }
+            } else {
+                //Para otros tipos de inputs (text, email, etc.), establece el valor normalmente
+                element.value = data.value;
+            }
+        } 
+    });
+}

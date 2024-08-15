@@ -13,6 +13,9 @@ public class FormParametros {
 
     /** Nueva Contraseña del usuario*/
     public static final String PARAM_USUARIO_NUEVO_PASSWORD = "nuevoPassword";
+    
+    /** Nueva Contraseña del usuario*/
+    public static final String PARAM_USUARIO_CONFIRMACION_PASSWORD = "confirmPassword";
 
     /** Rol del usuario. */
     public static final String PARAM_USUARIO_ROL = "rolUsuario";

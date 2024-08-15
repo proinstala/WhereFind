@@ -42,7 +42,7 @@
                         <div class="form__input grid-row-span-2">
                             <div>
                                 <div class="contenedor__formulario--imagen--redondo">
-                                    <img src="<%=userDTO.getImagen()%>" id="imgUsuario" alt="logo usuario">
+                                    <img src="<%=userDTO.getImagen()%>" name="imgUsuario" id="imgUsuario" alt="logo usuario">
                                 </div>
 
                                 <label for="btnFoto" class="input_foto">
@@ -54,27 +54,27 @@
                         </div>
 
                         <div class="form__input">
-                            <input class="" type="text" name="nombreUsuario" id="nombreUsuario" placeholder="Introduce tu nombre de usuario" value="<%=userDTO.getUserName()%>" disabled readonly>
+                            <input type="text" name="nombreUsuario" id="nombreUsuario" placeholder="Introduce tu nombre de usuario" value="<%=userDTO.getUserName()%>" disabled readonly>
                             <label for="nombreUsuario">Usuario</label>
                         </div>
 
                         <div class="form__input disable">
-                            <input class="" type="text" name="rolUsuario" id="rolUsuario" placeholder="Introduce el rol del usuario" value="<%=userDTO.getRol()%>" disabled readonly>
+                            <input type="text" name="rolUsuario" id="rolUsuario" placeholder="Introduce el rol del usuario" value="<%=userDTO.getRol()%>" disabled readonly>
                             <label for="rolUsuario">Rol</label>
                         </div>
 
                         <div class="form__input">
-                            <input class="" type="text" name="nombreRealUsuario" id="nombreRealUsuario" placeholder="Introduce tu nombre"value="<%=userDTO.getNombre()%>">
+                            <input type="text" name="nombreRealUsuario" id="nombreRealUsuario" placeholder="Introduce tu nombre"value="<%=userDTO.getNombre()%>">
                             <label for="nombreRealUsuario">Nombre</label>
                         </div>
 
                         <div class="form__input">
-                            <input class="" type="text" name="apellidoRealUsuario" id="apellidoRealUsuario" placeholder="Introduce tus apellidos"value="<%=userDTO.getApellidos()%>">
+                            <input type="text" name="apellidoRealUsuario" id="apellidoRealUsuario" placeholder="Introduce tus apellidos"value="<%=userDTO.getApellidos()%>">
                             <label for="apellidoRealUsuario">Apellidos</label>
                         </div>
 
                         <div class="form__input">
-                            <input class="" type="text" name="emailUsuario" id="emailUsuario" placeholder="Introduce tu email" value="<%=userDTO.getEmail()%>">
+                            <input type="text" name="emailUsuario" id="emailUsuario" placeholder="Introduce tu email" value="<%=userDTO.getEmail()%>">
                             <label for="emailUsuario">Email</label>
                         </div>
 
@@ -85,15 +85,19 @@
 
                 <div class="contenedor__formulario--footer">
                     <div class="form__btn_circle margin-right-auto">
-                        <button class="" id="btnPassword" title="Modificar Password"><i class="las la-key"></i></button>
+                        <button id="btnPassword" title="Modificar Password"><i class="las la-key"></i></button>
                     </div>
 
                     <div class="form__btn_circle">
-                        <button class="" form="frmModificarUsuario" id="btnGuardar" title="Guardar" type="submit" disabled><i class="las la-save"></i></button>
+                        <button form="frmModificarUsuario" id="btnGuardar" title="Guardar" type="submit" disabled><i class="las la-save"></i></button>
+                    </div>
+                    
+                    <div class="form__btn_circle">
+                        <button id="btnDeshacerCambiosUsuario" title="Deshacer cambios" disabled><i class="las la-redo-alt"></i></button>
                     </div>
 
                     <div class="form__btn_circle">
-                        <button class="" id="btnCancelar" title="Cancelar"  disabled><i class="las la-times"></i></button>
+                        <button id="btnCancelar" title="Cancelar"><i class="las la-times"></i></button>
                     </div>
                 </div>
 
@@ -113,34 +117,37 @@
                         <input type="hidden" name="usuario_id" id="passwordUsuario_id" value="<%=userDTO.getId()%>">
 
                         <div class="form__input">
-                            <input class="" type="password" name="passwordUsuario" id="passwordUsuario" placeholder="Introduce tu password actual">
+                            <input type="password" name="passwordUsuario" id="passwordUsuario" placeholder="Introduce tu password actual">
                             <label for="passwordUsuario">Password Actual</label>
                         </div>
 
                         <div class="form__input">
-                            <input class="" type="password" name="nuevoPassword" id="nuevoPassword" placeholder="Introduce el nuevo password">
-                            <label for="passwordUsuario">Nuevo Password</label>
+                            <input type="password" name="nuevoPassword" id="nuevoPassword" placeholder="Introduce el nuevo password">
+                            <label for="nuevoPassword">Nuevo Password</label>
                         </div>
 
                         <div class="form__input">
-                            <input class="" type="password" name="confirmPassword" id="confirmPassword" placeholder="confirma el password">
-                            <label for="passwordUsuario">Confirma Password</label>
+                            <input type="password" name="confirmPassword" id="confirmPassword" placeholder="confirma el password">
+                            <label for="confirmPassword">Confirma Password</label>
                         </div>
-
                     </form>
                 </div>
 
                 <div class="contenedor__formulario--footer">
                     <div class="form__btn_circle margin-right-auto">
-                        <button class="" id="btnUsuario" title="Modificar Usuario"><i class="las la-user-edit"></i></i></button>
+                        <button id="btnUsuario" title="Modificar Usuario"><i class="las la-user-edit"></i></i></button>
                     </div>
 
                     <div class="form__btn_circle">
-                        <button class="" form="frmModificarPassword" id="btnGuardarPassword" title="Guardar" type="submit" disabled><i class="las la-save"></i></button>
+                        <button form="frmModificarPassword" id="btnGuardarPassword" title="Guardar" type="submit" disabled><i class="las la-save"></i></button>
+                    </div>
+                    
+                    <div class="form__btn_circle">
+                        <button id="btnDeshacerCambiosPassword" title="Deshacer cambios" disabled><i class="las la-redo-alt"></i></button>
                     </div>
 
                     <div class="form__btn_circle">
-                        <button class="" id="btnCancelarPassword" title="Cancelar" disabled><i class="las la-times"></i></button>
+                        <button id="btnCancelarPassword" title="Cancelar"><i class="las la-times"></i></button>
                     </div>
                 </div>
 

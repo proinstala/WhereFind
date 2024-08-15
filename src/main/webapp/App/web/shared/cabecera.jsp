@@ -50,8 +50,7 @@
         </div>
 
         <button class="btn_user las la-pen" id="btnEditarUsuario" title="Editar Usuario"></button>
-
-        <a href="api/identidad/logout"><button class="btn_user las la-sign-out-alt" title="Cerrar Sesión"></button></a>
+        <button class="btn_user las la-sign-out-alt" id="btnLogout" title="Cerrar Sesión"></button>
     </div>
 </div>
 
