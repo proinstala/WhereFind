@@ -61,7 +61,6 @@ END //
 DELIMITER ;
 
 
-
 -- Crea la tabla USER
 CREATE TABLE IF NOT EXISTS USER (
 	id INT auto_increment NOT NULL,
@@ -72,36 +71,53 @@ CREATE TABLE IF NOT EXISTS USER (
     nombre varchar(100) NOT NULL,
     apellidos varchar(100) NOT NULL,
     email varchar(200) NOT NULL,
+    imagen MEDIUMTEXT,
     PRIMARY KEY (id),
     CONSTRAINT UC_NOMBRE UNIQUE (user_name),
     CONSTRAINT UC_EMAIL UNIQUE (email)
 );
 
--- Se crea el index en la columna user_name para un mejor rendimiento
-CREATE INDEX USER_NOMBRE_IDX USING BTREE ON USER (user_name);
 
 -- Crea un usuarios de prueba
 INSERT INTO USER (user_name, password, rol, activo, nombre, apellidos, email) VALUES('david', ENCRYPT_DATA_BASE64('123'), 'Admin', 1, 'David', 'Jiménez Alonso', 'david@email.es');
 INSERT INTO USER (user_name, password, rol, activo, nombre, apellidos, email) VALUES('juanma', ENCRYPT_DATA_BASE64('123'), 'Admin', 1, 'Juan Manuel', 'Soltero Sánchez', 'juanma@email.es');
-INSERT INTO USER (user_name, password, rol, activo, nombre, apellidos, email) VALUES('user_normal', ENCRYPT_DATA_BASE64('123'), 'User', 1, 'User', 'Normal', 'user_normal@email.es');
-INSERT INTO USER (user_name, password, rol, activo, nombre, apellidos, email) VALUES('otro_user', ENCRYPT_DATA_BASE64('123'), 'User', 1, 'Otro', 'User', 'otro_user@email.es');
 
--- Listar todos los usuarios
-SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email FROM USER WHERE activo = TRUE;
+-- Elimina las tablas
+DROP TABLE IF EXISTS WHERE_FIND_DATA.`RECOVERY`;
 
--- Obtener un usuario
-SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email FROM USER WHERE activo = TRUE AND user_name='david' AND password=ENCRYPT_DATA_BASE64('123');
+-- Elimina las funciones
+DROP FUNCTION IF EXISTS RECOVERY_GET_INTENTOS;
 
--- Eliminar el usuario (4) otro_user
-UPDATE USER SET activo=FALSE WHERE id=4;
+DELIMITER $$
 
--- Actualiza los datos del usuario user_normal, en este ejemplo solo el password
-UPDATE USER SET password=ENCRYPT_DATA_BASE64('321') WHERE id=3;
+CREATE FUNCTION RECOVERY_GET_INTENTOS(hash_val VARCHAR(100))
+RETURNS INT
+DETERMINISTIC
+BEGIN
+	DECLARE intentos_actuales INT;
 
--- Muestra todos los usuarios incluso los eliminados
-SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, activo, nombre, apellidos, email FROM USER;
+    -- Intenta insertar el nuevo registro
+    INSERT INTO RECOVERY (hash, intentos)
+    VALUES (hash_val, 1)
+    ON DUPLICATE KEY UPDATE intentos = intentos + 1;
+
+    -- Obtiene el valor de intentos después de la inserción/actualización
+    SELECT intentos INTO intentos_actuales
+    FROM RECOVERY
+    WHERE hash = hash_val;
+
+    -- Devuelve el número de intentos
+    RETURN intentos_actuales;
+END $$
+
+DELIMITER ;
 
 
-
--- Agregar un usuario existente cambiando en el user name y en el email mayúsculas y minúsculas
--- INSERT INTO USER (user_name, password, rol, activo, nombre, apellidos, email) VALUES('USER_Normal', ENCRYPT_DATA_BASE64('123'), 'User', 1, 'User', 'Normal', 'useR_Normal@email.es');
+-- Crea la tabla RECOVERY
+CREATE TABLE IF NOT EXISTS RECOVERY (
+	id INT auto_increment NOT NULL,
+	hash varchar(100) NOT NULL,
+    intentos INT DEFAULT 1 NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT UC_HASH UNIQUE (hash)
+);
