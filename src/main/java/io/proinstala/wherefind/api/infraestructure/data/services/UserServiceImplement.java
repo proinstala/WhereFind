@@ -43,6 +43,9 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
     // Marca a un usuario como eliminado
     private static final String SQL_DELETE_USER = "UPDATE USER SET activo=false WHERE id=?;";
 
+    // Obtiene el número de intentos de un enlace de verificación
+    private static final String SQL_RECOVERY_GET_INTENTOS = "SELECT RECOVERY_GET_INTENTOS(?) AS intentos;";
+
     /**
      * Convierte un ResultSet en un objeto UserDTO.
      *
@@ -395,5 +398,48 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
 
         // Devuelve el resultado
         return userDTO;
+    }
+
+    /**
+     * Obtener el número de intentos para una contraseña de recuperación dada.
+     *
+     * @param id identificaedor único de la solicitud
+     * @return Número de intentos para la contraseña de recuperación
+     */
+    @Override
+    public boolean getRecoveryIntentos(String id)
+    {
+        try
+        {
+            // Se crea la conexion
+            Connection conexion  = getConnection();
+
+            // Preparo un PreparedStatement con la sentencia necesaria para saber el numero de filas
+            PreparedStatement sentencia = conexion.prepareStatement(SQL_RECOVERY_GET_INTENTOS);
+
+            // Le paso los parametros al PreparedStatement
+            sentencia.setString(1, id);
+
+            // Se ejecuta la query y nos devuelve un resultado
+            ResultSet resultSet = sentencia.executeQuery();
+
+            // Recupera el valor de los intentos
+            if (resultSet.next())
+            {
+                return resultSet.getInt("intentos") == 1;
+            }
+
+            // Cerramos todo lo que hemos usado
+            resultSet.close();
+            sentencia.close();
+            conexion.close();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        // Devuelve el resultado
+        return false;
     }
 }

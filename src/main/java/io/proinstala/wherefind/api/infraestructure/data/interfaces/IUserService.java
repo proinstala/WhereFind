@@ -88,4 +88,13 @@ public interface IUserService {
      * @return el objeto UserDTO del usuario que coincide con el nombre de usuario o el email.
      */
     public UserDTO getUserByUserNameOrEmail(String id);
+
+
+    /**
+     * Obtener el número de intentos para una contraseña de recuperación dada.
+     *
+     * @param id identificaedor único de la solicitud
+     * @return Número de intentos para la contraseña de recuperación
+     */
+    public boolean getRecoveryIntentos(String id);
 }

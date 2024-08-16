@@ -623,10 +623,6 @@ public class IdentidadControllerService extends BaseService {
         // Calcular hash a partir del texto obtenido del email y tiempo con el método 'recoveryGetHashId'
         String hashCalculado = recoveryGetHashId(recoveryGetTextoId(email, epochSeconds));
 
-
-        System.out.println("'" + hash + "'");
-        System.out.println("'" + hashCalculado+ "'");
-
         // Si los hashes no coinciden, se devuelve usuario DTO vacío
         if (!hash.equalsIgnoreCase(hashCalculado))
         {
@@ -636,6 +632,12 @@ public class IdentidadControllerService extends BaseService {
         // Verificar si el tiempo pasado es válido comparándolo con la hora actual en segundos
         // y devolviendo usuario DTO vacío en caso de que no lo sea.
         if (!verificarSegundos(Instant.now().getEpochSecond(), epochSeconds))
+        {
+            return userDTO;
+        }
+
+        // Verificar si el intento de recuperación es el primero
+        if (!verificarIntento(hash))
         {
             return userDTO;
         }
@@ -676,6 +678,23 @@ public class IdentidadControllerService extends BaseService {
         // Si ambas condiciones se cumplen, retorna true
         return true;
     }
+
+    /**
+     * Verifica si es válido el intento de recuperarcion de contraseña.
+     *
+     * @param hash el valor hasheado de la intención
+     * @return {@code true} si la intentación es correcta, caso contrario {false}
+     */
+    public static boolean verificarIntento(String hash)
+    {
+        // Conectar con el Gestor de Permanencia y obtener UserService
+        IUserService userService = GestionPersistencia.getUserService();
+
+        // Consulta que el hash del recovery solo tenga 1 intento de recuperación
+        return userService.getRecoveryIntentos(hash);
+    }
+
+
 
     /**
      * Método para verificar la valides del password, devuelve true si se cumplen las condiciones (longitud entre 4 y 60 caracteres), caso contrario false.

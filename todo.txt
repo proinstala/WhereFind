@@ -54,10 +54,10 @@
 + El input de la imagen no activa el boton de guardar
 + Cambiar nombre de inicio.jsp a dashboard.jsp
 + Añadir validaciones al crear usuarios
++ Limitar a 1 intento la validación de recuperación de password
 - Revisar como poder mejorar la clase persistencia, que use el patrón singlenton
 - Poder gestionar los usuarios con un usuario Admin
 - Que el servidor notifique que la base de datos no es accesible en vez de producir una excepción
 - Gestionar error cuando se usa un email ya usado.
 - Cambiar jquery por javascript puro
 - Crear sistema de migas de pan
-- Limitar a 1 intento la validación de recuperación de password
