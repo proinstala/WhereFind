@@ -6,9 +6,9 @@ let datosOriginalesFormulario;
 $(document).ready(function () {
     const idFormModificarUsuario = '#frmModificarUsuario';
     const idFormModificarPassword = '#frmModificarPassword';
-    
+
     datosOriginalesFormulario = getDatosOriginalesForm(idFormModificarUsuario);
-    
+
     validarFormulario(idFormModificarUsuario);
     validarFormularioPassword(idFormModificarPassword);
 
@@ -58,22 +58,22 @@ $(document).ready(function () {
     btnCancelar.addEventListener('click', () => {
         window.location.href = 'dashboard';
     });
-    
+
     btnCancelarPassword.addEventListener('click', () => {
         window.location.href = 'dashboard';
     });
-    
+
     btnDeshacerCambiosUsuario.addEventListener('click', () => {
         setDatosForm(idFormModificarUsuario, datosOriginalesFormulario, '#imagenUsuarioB64');
     });
-    
+
     btnDeshacerCambiosPassword.addEventListener('click', () => {
         resetCamposForm(idFormModificarPassword);
     });
 
     btnPassword.addEventListener('click',() => mostrarContenedor(divFormPassword, divFormUsuario, 'grid'));
     btnUsuario.addEventListener('click',() => mostrarContenedor(divFormUsuario, divFormPassword, 'grid'));
-    
+
 });
 
 function onDetectarCambiosModificarUsuario(hayCambios) {
@@ -140,7 +140,7 @@ function validarFormulario(idForm) {
                                             mostrarMensajeError("No se puede actualizar los datos", response.result);
                                         } else {
                                             //const acceso = () => window.location.replace(response.result);
-                                            mostrarMensaje(`Se han modificado correctamente los datos el usuario de ${response.user.nombre}`, "Modificado Usuario.", "success");
+                                            mostrarMensaje("Modificado Usuario.", `Se han modificado correctamente los datos el usuario de ${response.user.nombre}`, "success");
                                             datosOriginalesFormulario = getDatosOriginalesForm(idForm);
                                         }
                                     })
@@ -201,7 +201,7 @@ function validarFormularioPassword(idForm) {
             }
 
         },//Fin de msg  ------------------
-        
+
         submitHandler: function () {
             mostrarMensajeOpcion("Modificar Password Usuario", '¿Quieres realmente modificar el password de usuario?')
                     .then((result) => {
@@ -214,7 +214,7 @@ function validarFormularioPassword(idForm) {
                                         if (response.isError === 1) {
                                             mostrarMensajeError("No se puede actualizar los datos", response.result);
                                         } else {
-                                            mostrarMensaje(`Se han modificado correctamente los datos el usuario de ${response.user.nombre}`, "Modificado Usuario.", "success");
+                                            mostrarMensaje("Modificado Usuario.", `Se han modificado correctamente los datos el usuario de ${response.user.nombre}`, "success");
                                             resetCamposForm(idForm);
                                         }
                                     })
@@ -297,7 +297,7 @@ function setDatosForm(idFormulario, dataArray, idInputHideImeagen64) {
     const form = document.querySelector(idFormulario);
     const textoImg = form.querySelector('.form__input #textoImagen');
     const inputHideImg = form.querySelector(idInputHideImeagen64);
-    
+
     dataArray.forEach(data => {
         const element = form.querySelector(`[name="${data.name}"]`);
 
@@ -317,6 +317,6 @@ function setDatosForm(idFormulario, dataArray, idInputHideImeagen64) {
                 //Para otros tipos de inputs (text, email, etc.), establece el valor normalmente
                 element.value = data.value;
             }
-        } 
+        }
     });
 }
