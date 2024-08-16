@@ -15,7 +15,7 @@
 </jsp:include>
 
 
-<%@ include file="App/web/inicio/inicio.jsp" %>
+<%@ include file="App/web/dashboard/dashboard.jsp" %>
 
 
 <%@ include file="App/web/shared/foot.jsp" %>

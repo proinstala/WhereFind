@@ -46,17 +46,18 @@
 + Limpiar comunes.js de métodos POST no usados
 + Añadir a comunes.js en el método POST un callback
 + Hacer que toda la cuenta se carge usando rutas virtuales en vez de sus rutas reales. ej : http://localhost:8080/WhereFind/App/web/admin/users.jsp ---> http://localhost:8080/WhereFind/admin/users
-- Revisar como poder mejorar la clase persistencia, que use el patrón singlenton
 + Poder recuperar la contraseña de los usuarios
-- Poder gestionar los usuarios con un usuario Admin
-- Que el servidor notifique que la base de datos no es accesible en vez de producir una excepción
 + Poder bloquear la UI en las peticiones http PUT
 + Al obtener/actualizar un usuario, que solo lo pueda solicitar/modificar el mismo o un admin
-- Gestionar error cuando se usa un email ya usado.
 + Mirar el ancho de la app cuado se le reduce, llega un momento que no se puede seguir reduciendo
 + Boton cancelar de registrar usuario no se debe bloquear
 + El input de la imagen no activa el boton de guardar
++ Cambiar nombre de inicio.jsp a dashboard.jsp
+- Revisar como poder mejorar la clase persistencia, que use el patrón singlenton
+- Poder gestionar los usuarios con un usuario Admin
+- Que el servidor notifique que la base de datos no es accesible en vez de producir una excepción
+- Gestionar error cuando se usa un email ya usado.
 - Cambiar jquery por javascript puro
 - Crear sistema de migas de pan
-
-
+- Limitar a 1 intento la validación de recuperación de password
+- Añadir validaciones al crear usuarios
