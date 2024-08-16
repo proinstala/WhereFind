@@ -171,7 +171,7 @@ function formDisable(idForm, disabled, mostrarLoad) {
         mostrarLoading();
     }
 
-    $("button, input, select, option, textarea", idForm).prop('disabled', disabled);
+    $("button:not([force-disabed]), input:not([force-disabed]), select:not([force-disabed]), option:not([force-disabed]), textarea:not([force-disabed])", idForm).prop('disabled', disabled);
 }
 
 /**
@@ -241,9 +241,9 @@ function validateImage(fileImage, maxSizeInMB = 1) {
 
 /**
  * Restablece todos los campos de un formulario.
- * 
+ *
  * @param {string} idForm - El selector CSS del formulario a restablecer.
- * 
+ *
  */
 function resetCamposForm(idForm) {
     document.querySelector(idForm).reset();

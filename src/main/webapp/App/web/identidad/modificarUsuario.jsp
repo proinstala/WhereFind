@@ -54,12 +54,12 @@
                         </div>
 
                         <div class="form__input">
-                            <input type="text" name="nombreUsuario" id="nombreUsuario" placeholder="Introduce tu nombre de usuario" value="<%=userDTO.getUserName()%>" disabled readonly>
+                            <input type="text" name="nombreUsuario" id="nombreUsuario" placeholder="Introduce tu nombre de usuario" value="<%=userDTO.getUserName()%>" force-disabed=true disabled readonly>
                             <label for="nombreUsuario">Usuario</label>
                         </div>
 
                         <div class="form__input disable">
-                            <input type="text" name="rolUsuario" id="rolUsuario" placeholder="Introduce el rol del usuario" value="<%=userDTO.getRol()%>" disabled readonly>
+                            <input type="text" name="rolUsuario" id="rolUsuario" placeholder="Introduce el rol del usuario" value="<%=userDTO.getRol()%>" force-disabed=true disabled readonly>
                             <label for="rolUsuario">Rol</label>
                         </div>
 
@@ -91,7 +91,7 @@
                     <div class="form__btn_circle">
                         <button form="frmModificarUsuario" id="btnGuardar" title="Guardar" type="submit" disabled><i class="las la-save"></i></button>
                     </div>
-                    
+
                     <div class="form__btn_circle">
                         <button id="btnDeshacerCambiosUsuario" title="Deshacer cambios" disabled><i class="las la-redo-alt"></i></button>
                     </div>
@@ -141,7 +141,7 @@
                     <div class="form__btn_circle">
                         <button form="frmModificarPassword" id="btnGuardarPassword" title="Guardar" type="submit" disabled><i class="las la-save"></i></button>
                     </div>
-                    
+
                     <div class="form__btn_circle">
                         <button id="btnDeshacerCambiosPassword" title="Deshacer cambios" disabled><i class="las la-redo-alt"></i></button>
                     </div>

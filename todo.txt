@@ -61,3 +61,6 @@
 - Gestionar error cuando se usa un email ya usado.
 - Cambiar jquery por javascript puro
 - Crear sistema de migas de pan
++ Al guardar los datos modificados de un usuario se vuelve a activar los campos desactivados
+- Llevar webapp\App\web\config\emails.settings.json al directorio del usuario
+- Revisar orden de titulo y descripción en las alertas de los mensajes
