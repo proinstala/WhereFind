@@ -263,34 +263,39 @@ public class IdentidadControllerService extends BaseService {
                     String emailUsuario = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_EMAIL, userDTO.getEmail());
                     String imagenUsuario = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_IMAGEN, userDTO.getImagen());
 
-                    // Actualiza los datos del usuario con los pasados por el navegador
-                    userDTO.setNombre(nombreUsuario);
-                    userDTO.setApellidos(apellidosUsuario);
-                    userDTO.setEmail(emailUsuario);
-                    userDTO.setImagen(imagenUsuario);
+                    if (isValidParametro(nombreUsuario, 1, 100)
+                        && isValidParametro(apellidosUsuario, 1, 100)
+                        && isValidParametro(emailUsuario, 1, 200))
+                    {
+                        // Actualiza los datos del usuario con los pasados por el navegador
+                        userDTO.setNombre(nombreUsuario);
+                        userDTO.setApellidos(apellidosUsuario);
+                        userDTO.setEmail(emailUsuario);
+                        userDTO.setImagen(imagenUsuario);
 
-                    try {
-                        // Se guardan los cambios del usuario
-                        if (userService.update(userDTO))
-                        {
-                            //Se vacía el password por motivos de seguridad
-                            userDTO.setPassword("");
-
-                            // Como la acción se ha ejecutado correctamente se crea la respuesta acorde a la misma
-                            responseDTO = getResponseOk(LocaleApp.INFO_UPDATE_USER, userDTO, 0);
-
-                            // Comprueba que el usuario logueado que esta editando al usuario sea el mismo que el usuario editado
-                            // Si el id coincide (por ejemplo si se es administrador se pueden editar usuarios y el id no debería coincidir si no se esta editando a si mismo)
-                            UserDTO userLogeado = UserSession.getUserLogin(actionController.server().request());
-                            if (userLogeado.getId() == id)
+                        try {
+                            // Se guardan los cambios del usuario
+                            if (userService.update(userDTO))
                             {
-                                // Guarda los datos modificados por el usuario en el user de la sessión, así si se pulsa F5,
-                                // se cargan los datos actualizados del mismo
-                                UserSession.setUserSession(userDTO, actionController.server());
+                                //Se vacía el password por motivos de seguridad
+                                userDTO.setPassword("");
+
+                                // Como la acción se ha ejecutado correctamente se crea la respuesta acorde a la misma
+                                responseDTO = getResponseOk(LocaleApp.INFO_UPDATE_USER, userDTO, 0);
+
+                                // Comprueba que el usuario logueado que esta editando al usuario sea el mismo que el usuario editado
+                                // Si el id coincide (por ejemplo si se es administrador se pueden editar usuarios y el id no debería coincidir si no se esta editando a si mismo)
+                                UserDTO userLogeado = UserSession.getUserLogin(actionController.server().request());
+                                if (userLogeado.getId() == id)
+                                {
+                                    // Guarda los datos modificados por el usuario en el user de la sessión, así si se pulsa F5,
+                                    // se cargan los datos actualizados del mismo
+                                    UserSession.setUserSession(userDTO, actionController.server());
+                                }
                             }
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
                         }
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
                     }
                 }
             }
@@ -350,7 +355,7 @@ public class IdentidadControllerService extends BaseService {
 
                     if (!isReset)
                     {
-                        if(passwordUsuario.equals(userDTO.getPassword()) && nuevoPassword.length() > 3 && nuevoPassword.length() < 61 && !nuevoPassword.equals(userDTO.getPassword()) && nuevoPassword.equals(confirmPassword)) {
+                        if(passwordUsuario.equals(userDTO.getPassword()) && isValidConfirmPassword(nuevoPassword, confirmPassword) && !nuevoPassword.equals(userDTO.getPassword()) ) {
                             // Actualiza los datos del usuario con los pasados por el navegador
                             userDTO.setPassword(nuevoPassword);
                             passwordOK = true;
@@ -358,7 +363,7 @@ public class IdentidadControllerService extends BaseService {
                     }
                     else
                     {
-                        if(nuevoPassword.length() > 3 && nuevoPassword.length() < 61 && nuevoPassword.equals(confirmPassword)) {
+                        if(isValidConfirmPassword(nuevoPassword, confirmPassword)) {
                             // Actualiza los datos del usuario con los pasados por el navegador
                             userDTO.setPassword(nuevoPassword);
                             passwordOK = true;
@@ -415,7 +420,11 @@ public class IdentidadControllerService extends BaseService {
         String imagenUsuario        = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_IMAGEN, "");
 
         // Comprueba que los datos del usuario no estén vacios
-        if (!nombreUsuario.isBlank() && !passwordUsuario.isBlank() && passwordUsuario.length() > 3)
+        if(isValidParametro(nombreUsuario, 1, 100)
+            && isValidPassword(passwordUsuario)
+            && isValidParametro(nombreRealUsuario, 1, 100)
+            && isValidParametro(apellidoRealUsuario, 1, 100)
+            && isValidParametro(emailUsuario, 1, 200))
         {
             // Conecta con el Gestor de Permanencia
             IUserService userService = GestionPersistencia.getUserService();
@@ -667,4 +676,43 @@ public class IdentidadControllerService extends BaseService {
         // Si ambas condiciones se cumplen, retorna true
         return true;
     }
+
+    /**
+     * Método para verificar la valides del password, devuelve true si se cumplen las condiciones (longitud entre 4 y 60 caracteres), caso contrario false.
+     *
+     * @param   password         La contraseña a validar
+     * @return                  Boolean indicando si el password es válido o no.
+     */
+    public static boolean isValidPassword(String password)
+    {
+        return password.length() > 3 && password.length() < 61;
+    }
+
+    /**
+     * Método para asegurar que los passwords proporcionados son iguales y válidos en comparación, devuelve true si se cumplen las condiciones, caso contrario false.
+     *
+     * @param   nuevoPassword     El primer password por confirmar
+     * @param   confirmPassword  La segunda ocurrencia del password para confirmación
+     * @return                   Boolean indicando si el password (confirm password) es válido y igual al primero.
+     */
+    public static boolean isValidConfirmPassword(String nuevoPassword, String confirmPassword)
+    {
+        return isValidPassword(nuevoPassword) && nuevoPassword.equals(confirmPassword);
+    }
+
+    /**
+     * Método que verifica si un parámetro es válido según determinadas condiciones de longitud.
+     *
+     * @param parametro El string a validar. Debe ser no blanco, menor de maxSize y mayor que minSize caracteres.
+     * @param minSize   Tamaño mínimo permitido para el parámetro.
+     * @param maxSize   Tamaño máximo permitido para el parámetro.
+     *
+     * @return boolean Indica si el parámetros cumple las condiciones de longitud establecidas (no blanco y entre minSize y maxSize caracteres).
+     */
+    public static boolean isValidParametro(String parametro, int minSize, int maxSize)
+    {
+        return !parametro.isBlank() && parametro.length() >= minSize && parametro.length() <= maxSize;
+    }
+
+
 }

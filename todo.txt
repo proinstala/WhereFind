@@ -53,6 +53,7 @@
 + Boton cancelar de registrar usuario no se debe bloquear
 + El input de la imagen no activa el boton de guardar
 + Cambiar nombre de inicio.jsp a dashboard.jsp
++ Añadir validaciones al crear usuarios
 - Revisar como poder mejorar la clase persistencia, que use el patrón singlenton
 - Poder gestionar los usuarios con un usuario Admin
 - Que el servidor notifique que la base de datos no es accesible en vez de producir una excepción
@@ -60,4 +61,3 @@
 - Cambiar jquery por javascript puro
 - Crear sistema de migas de pan
 - Limitar a 1 intento la validación de recuperación de password
-- Añadir validaciones al crear usuarios
