@@ -121,3 +121,72 @@ CREATE TABLE IF NOT EXISTS RECOVERY (
     PRIMARY KEY (id),
     CONSTRAINT UC_HASH UNIQUE (hash)
 );
+
+
+CREATE TABLE IF NOT EXISTS PROVINCIA (
+	id INT auto_increment NOT NULL,
+	nombre varchar(100) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS LOCALIDAD (
+	id INT auto_increment NOT NULL,
+	nombre varchar(100) NOT NULL,
+    provincia_id INT NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_LOCALIDAD_PROVINCIA FOREIGN KEY (provincia_id)
+        REFERENCES PROVINCIA(id)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS DIRECCION (
+	id INT auto_increment NOT NULL,
+	calle varchar(100) NOT NULL,
+	numero varchar(200) NOT NULL,
+    codigo_postal INT,
+    localidad_id INT,
+	activo BOOL DEFAULT TRUE NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_DIRECCION_LOCALIDAD FOREIGN KEY (localidad_id)
+        REFERENCES LOCALIDAD(id)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS TIPO_EMPLAZAMIENTO (
+	id INT auto_increment NOT NULL,
+	nombre varchar(100) NOT NULL,
+	descripcion varchar(200) NOT NULL,
+	activo BOOL DEFAULT TRUE NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT UC_NOMBRE UNIQUE (nombre)
+);
+
+CREATE TABLE IF NOT EXISTS EMPLAZAMIENTO (
+	id INT auto_increment NOT NULL,
+	nombre varchar(100) NOT NULL,
+	descripcion varchar(200) NOT NULL,
+    tipo_id INT NOT NULL,
+	activo BOOL DEFAULT TRUE NOT NULL,
+    PRIMARY KEY (id),
+     CONSTRAINT FK_EMPLAZAMIENTO_TIPO FOREIGN KEY (tipo_id)
+        REFERENCES TIPO_EMPLAZAMIENTO(id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS ALMACEN (
+	id INT auto_increment NOT NULL,
+	nombre varchar(100) NOT NULL,
+	descripcion varchar(200) NOT NULL,
+    imagen varchar(200),
+    direccion_id INT,
+    activo BOOL DEFAULT TRUE NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT UC_NOMBRE UNIQUE (nombre),
+    CONSTRAINT FK_ALMACEN_DIRECCION FOREIGN KEY (direccion_id)
+        REFERENCES DIRECCION(id)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE
+);
