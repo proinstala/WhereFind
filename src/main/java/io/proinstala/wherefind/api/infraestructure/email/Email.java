@@ -32,16 +32,16 @@ public class Email {
         }
 
         // Servidor SMTP
-        props.put("mail.smtp.host", AppSettings.getEmailSettings().getSmtpHost());
+        props.put("mail.smtp.host", emailSettingsDTO.getSmtpHost());
 
         // Se requiere identificación
-        props.put("mail.smtp.auth", AppSettings.getEmailSettings().getSmtpAuth());
+        props.put("mail.smtp.auth", emailSettingsDTO.getSmtpAuth());
 
         // Configuración segura
-        props.put("mail.smtp.starttls.enable", AppSettings.getEmailSettings().getSmtpStarttlsEnable());
+        props.put("mail.smtp.starttls.enable", emailSettingsDTO.getSmtpStarttlsEnable());
 
         // Configuración del puerto
-        props.put("mail.smtp.port", AppSettings.getEmailSettings().getSmtpPort());
+        props.put("mail.smtp.port", emailSettingsDTO.getSmtpPort());
 
         // Se crea una nueva sesión con los datos de conexión y datos de la cuenta
         Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator()
@@ -49,7 +49,7 @@ public class Email {
             @Override
             protected PasswordAuthentication getPasswordAuthentication()
             {
-                return new PasswordAuthentication(AppSettings.getEmailSettings().getEmail(), AppSettings.getEmailSettings().getPassword());
+                return new PasswordAuthentication(emailSettingsDTO.getEmail(), emailSettingsDTO.getPassword());
             }
         });
 
@@ -59,13 +59,13 @@ public class Email {
             Message message = new MimeMessage(session);
 
             // Añade la dirección de quien lo envía
-            message.setFrom(new InternetAddress(AppSettings.getEmailSettings().getEmail()));
+            message.setFrom(new InternetAddress(emailSettingsDTO.getEmail()));
 
             // Añade la dirección del destinatario
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailDestinatario));
 
             // Añade la dirección para la copia oculta
-            message.setRecipients(Message.RecipientType.BCC, InternetAddress.parse(AppSettings.getEmailSettings().getEmail()));
+            message.setRecipients(Message.RecipientType.BCC, InternetAddress.parse(emailSettingsDTO.getEmail()));
 
             //asunto
             message.setSubject(asunto);
