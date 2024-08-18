@@ -2,10 +2,7 @@ package io.proinstala.wherefind.shared.config;
 
 
 import java.io.File;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
+import java.io.FileReader;
 import com.google.gson.Gson;
 import io.proinstala.wherefind.shared.dtos.EmailSettingsDTO;
 
@@ -28,9 +25,9 @@ public class AppSettings {
         try
         {
             // Lee el archivo de configuración de correos electrónicos.
-            try (Reader reader = Files.newBufferedReader(Paths.get(getConfiguracionFullRuta("config/emails.settings.json"))))
+            try (FileReader fileReader = new FileReader(getConfiguracionFullRuta("config/emails.settings.json")))
             {
-                return gson.fromJson(reader, EmailSettingsDTO.class);
+                return gson.fromJson(fileReader, EmailSettingsDTO.class);
             }
         }
         catch (Exception e)
