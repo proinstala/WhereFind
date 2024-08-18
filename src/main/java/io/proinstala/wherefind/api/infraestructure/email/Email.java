@@ -71,7 +71,7 @@ public class Email {
             message.setSubject(asunto);
 
             //cuerpo del mensaje en html
-            message.setContent(texto, "text/html");
+            message.setContent(getContedidoHtml(texto), "text/html; charset=UTF-8");
 
             //envía el mensaje
             Transport.send(message);
@@ -86,5 +86,16 @@ public class Email {
 
         // Devuelve true por considerarse que se ha enviado
         return true;
+    }
+
+    /**
+     * Obtiene el contenido HTML de una cadena proporcionada a partir del envío de la misma.
+     *
+     * @param cuerpo La cadena que representa el contenido en formato HTML.
+     * @return Una representación String del contenido HTML proporcionado.
+     */
+    private static String getContedidoHtml(String cuerpo)
+    {
+        return "<html><head><meta charset=\\\"UTF-8\\\"></head><body>" + cuerpo + "</body></html>";
     }
 }
