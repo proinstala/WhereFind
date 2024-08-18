@@ -11,6 +11,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import io.proinstala.wherefind.shared.config.AppSettings;
+import io.proinstala.wherefind.shared.dtos.EmailSettingsDTO;
 
 
 public class Email {
@@ -20,6 +21,15 @@ public class Email {
     {
         // Se define la variable para guardar las propiedades
         Properties props = new Properties();
+
+        // Se obtiene la configuración del email
+        EmailSettingsDTO  emailSettingsDTO = AppSettings.getEmailSettings();
+
+        // Si no hay configuración, devuelve false
+        if (emailSettingsDTO == null)
+        {
+            return false;
+        }
 
         // Servidor SMTP
         props.put("mail.smtp.host", AppSettings.getEmailSettings().getSmtpHost());
