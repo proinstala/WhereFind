@@ -2,10 +2,7 @@ package io.proinstala.wherefind.shared.config;
 
 
 import java.io.File;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
+import java.io.FileReader;
 import com.google.gson.Gson;
 import io.proinstala.wherefind.shared.dtos.EmailSettingsDTO;
 
@@ -18,37 +15,28 @@ public class AppSettings {
     private static final String APP_NAME = "WhereFind";
 
     /**
-     * Instancia de EmailSettingsDTO que se devuelve en caso de no haber sido inicializada previamente.
-     */
-    private static EmailSettingsDTO emailSettingsDTO = null;
-
-    /**
      * Devuelve la instancia de EmailSettingsDTO, o crea una nueva si no ha sido inicializada previamente.
      *
      * @return La instancia de EmailSettingsDTO.
      */
     public static EmailSettingsDTO getEmailSettings()
     {
-        if (emailSettingsDTO == null)
+        Gson gson = new Gson();
+        try
         {
-            Gson gson = new Gson();
-            try
+            // Lee el archivo de configuración de correos electrónicos.
+            try (FileReader fileReader = new FileReader(getConfiguracionFullRuta("config/emails.settings.json")))
             {
-                // Lee el archivo de configuración de correos electrónicos.
-                try (Reader reader = Files.newBufferedReader(Paths.get(getConfiguracionFullRuta("config/emails.settings.json"))))
-                {
-                    emailSettingsDTO = gson.fromJson(reader, EmailSettingsDTO.class);
-                }
-            }
-            catch (Exception e)
-            {
-                // Maneja la excepción y devuelve una nueva instancia de EmailSettingsDTO en caso de error.
-                e.printStackTrace();
-                emailSettingsDTO = new EmailSettingsDTO();
+                return gson.fromJson(fileReader, EmailSettingsDTO.class);
             }
         }
+        catch (Exception e)
+        {
+            // Maneja la excepción y devuelve una nueva instancia de EmailSettingsDTO en caso de error.
+            e.printStackTrace();
+        }
 
-        return emailSettingsDTO;
+        return null;
     }
 
 

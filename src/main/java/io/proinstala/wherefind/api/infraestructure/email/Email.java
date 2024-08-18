@@ -11,6 +11,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import io.proinstala.wherefind.shared.config.AppSettings;
+import io.proinstala.wherefind.shared.dtos.EmailSettingsDTO;
 
 
 public class Email {
@@ -21,17 +22,26 @@ public class Email {
         // Se define la variable para guardar las propiedades
         Properties props = new Properties();
 
+        // Se obtiene la configuración del email
+        EmailSettingsDTO  emailSettingsDTO = AppSettings.getEmailSettings();
+
+        // Si no hay configuración, devuelve false
+        if (emailSettingsDTO == null)
+        {
+            return false;
+        }
+
         // Servidor SMTP
-        props.put("mail.smtp.host", AppSettings.getEmailSettings().getSmtpHost());
+        props.put("mail.smtp.host", emailSettingsDTO.getSmtpHost());
 
         // Se requiere identificación
-        props.put("mail.smtp.auth", AppSettings.getEmailSettings().getSmtpAuth());
+        props.put("mail.smtp.auth", emailSettingsDTO.getSmtpAuth());
 
         // Configuración segura
-        props.put("mail.smtp.starttls.enable", AppSettings.getEmailSettings().getSmtpStarttlsEnable());
+        props.put("mail.smtp.starttls.enable", emailSettingsDTO.getSmtpStarttlsEnable());
 
         // Configuración del puerto
-        props.put("mail.smtp.port", AppSettings.getEmailSettings().getSmtpPort());
+        props.put("mail.smtp.port", emailSettingsDTO.getSmtpPort());
 
         // Se crea una nueva sesión con los datos de conexión y datos de la cuenta
         Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator()
@@ -39,7 +49,7 @@ public class Email {
             @Override
             protected PasswordAuthentication getPasswordAuthentication()
             {
-                return new PasswordAuthentication(AppSettings.getEmailSettings().getEmail(), AppSettings.getEmailSettings().getPassword());
+                return new PasswordAuthentication(emailSettingsDTO.getEmail(), emailSettingsDTO.getPassword());
             }
         });
 
@@ -49,19 +59,19 @@ public class Email {
             Message message = new MimeMessage(session);
 
             // Añade la dirección de quien lo envía
-            message.setFrom(new InternetAddress(AppSettings.getEmailSettings().getEmail()));
+            message.setFrom(new InternetAddress(emailSettingsDTO.getEmail()));
 
             // Añade la dirección del destinatario
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailDestinatario));
 
             // Añade la dirección para la copia oculta
-            message.setRecipients(Message.RecipientType.BCC, InternetAddress.parse(AppSettings.getEmailSettings().getEmail()));
+            message.setRecipients(Message.RecipientType.BCC, InternetAddress.parse(emailSettingsDTO.getEmail()));
 
             //asunto
             message.setSubject(asunto);
 
             //cuerpo del mensaje en html
-            message.setContent(texto, "text/html");
+            message.setContent(getContedidoHtml(texto), "text/html; charset=UTF-8");
 
             //envía el mensaje
             Transport.send(message);
@@ -76,5 +86,16 @@ public class Email {
 
         // Devuelve true por considerarse que se ha enviado
         return true;
+    }
+
+    /**
+     * Obtiene el contenido HTML de una cadena proporcionada a partir del envío de la misma.
+     *
+     * @param cuerpo La cadena que representa el contenido en formato HTML.
+     * @return Una representación String del contenido HTML proporcionado.
+     */
+    private static String getContedidoHtml(String cuerpo)
+    {
+        return "<html><head><meta charset=\\\"UTF-8\\\"></head><body>" + cuerpo + "</body></html>";
     }
 }
