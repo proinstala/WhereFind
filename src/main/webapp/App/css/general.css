@@ -200,6 +200,11 @@ label {
 .max-width-80 {
     max-width: 80rem;
 }
+.sticky {
+   position: sticky;
+   bottom: 0;
+}
+
 
 
 .transparente {
@@ -241,6 +246,16 @@ label {
     grid-template-rows: 1fr;
     justify-items: center;
     overflow-y: auto;
+}
+
+.main--admin {
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 2fr;
+    justify-items: center;
+    overflow-y: auto;
+    gap: 2rem;
 }
 
 

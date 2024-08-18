@@ -63,11 +63,11 @@ DELIMITER ;
 
 -- Crea la tabla USER
 CREATE TABLE IF NOT EXISTS USER (
-	id INT auto_increment NOT NULL,
-	user_name varchar(100) NOT NULL,
-	password TEXT NOT NULL,
+    id INT auto_increment NOT NULL,
+    user_name varchar(100) NOT NULL,
+    password TEXT NOT NULL,
     rol varchar(100) NOT NULL,
-	activo BOOL DEFAULT TRUE NOT NULL,
+    activo BOOL DEFAULT TRUE NOT NULL,
     nombre varchar(100) NOT NULL,
     apellidos varchar(100) NOT NULL,
     email varchar(200) NOT NULL,
@@ -124,19 +124,19 @@ CREATE TABLE IF NOT EXISTS RECOVERY (
 
 
 CREATE TABLE IF NOT EXISTS PROVINCIA (
-	id INT auto_increment NOT NULL,
-	nombre varchar(100) NOT NULL,
+    id INT auto_increment NOT NULL,
+    nombre varchar(100) NOT NULL,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS LOCALIDAD (
-	id INT auto_increment NOT NULL,
-	nombre varchar(100) NOT NULL,
+    id INT auto_increment NOT NULL,
+    nombre varchar(100) NOT NULL,
     provincia_id INT NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_LOCALIDAD_PROVINCIA FOREIGN KEY (provincia_id)
         REFERENCES PROVINCIA(id)
-        ON DELETE SET NULL
+        ON DELETE RESTRICT
         ON UPDATE CASCADE
 );
 
@@ -233,24 +233,24 @@ INSERT INTO LOCALIDAD (nombre, provincia_id) VALUES ('La Murta', 35);
 INSERT INTO LOCALIDAD (nombre, provincia_id) VALUES ('La Ñora', 35);
 
 CREATE TABLE IF NOT EXISTS DIRECCION (
-	id INT auto_increment NOT NULL,
-	calle varchar(100) NOT NULL,
-	numero varchar(200) NOT NULL,
+    id INT auto_increment NOT NULL,
+    calle varchar(100) NOT NULL,
+    numero varchar(200) NOT NULL,
     codigo_postal INT,
-    localidad_id INT,
-	activo BOOL DEFAULT TRUE NOT NULL,
+    localidad_id INT NOT NULL, 
+    activo BOOL DEFAULT TRUE NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_DIRECCION_LOCALIDAD FOREIGN KEY (localidad_id)
         REFERENCES LOCALIDAD(id)
-        ON DELETE SET NULL
+        ON DELETE RESTRICT
         ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS TIPO_EMPLAZAMIENTO (
-	id INT auto_increment NOT NULL,
-	nombre varchar(100) NOT NULL,
-	descripcion varchar(200) NOT NULL,
-	activo BOOL DEFAULT TRUE NOT NULL,
+    id INT auto_increment NOT NULL,
+    nombre varchar(100) NOT NULL,
+    descripcion varchar(200) NOT NULL,
+    activo BOOL DEFAULT TRUE NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT UC_NOMBRE UNIQUE (nombre)
 );
@@ -270,22 +270,22 @@ INSERT INTO TIPO_EMPLAZAMIENTO (nombre, descripcion) VALUES ('Cajón de herramie
 INSERT INTO TIPO_EMPLAZAMIENTO (nombre, descripcion) VALUES ('Arcon', 'Caja grande y resistente para almacenar.');
 
 CREATE TABLE IF NOT EXISTS EMPLAZAMIENTO (
-	id INT auto_increment NOT NULL,
-	nombre varchar(100) NOT NULL,
-	descripcion varchar(200) NOT NULL,
+    id INT auto_increment NOT NULL,
+    nombre varchar(100) NOT NULL,
+    descripcion varchar(200) NOT NULL,
     tipo_id INT NOT NULL,
-	activo BOOL DEFAULT TRUE NOT NULL,
+    activo BOOL DEFAULT TRUE NOT NULL,
     PRIMARY KEY (id),
-     CONSTRAINT FK_EMPLAZAMIENTO_TIPO FOREIGN KEY (tipo_id)
+    CONSTRAINT FK_EMPLAZAMIENTO_TIPO FOREIGN KEY (tipo_id)
         REFERENCES TIPO_EMPLAZAMIENTO(id)
         ON DELETE RESTRICT
         ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS ALMACEN (
-	id INT auto_increment NOT NULL,
-	nombre varchar(100) NOT NULL,
-	descripcion varchar(200) NOT NULL,
+    id INT auto_increment NOT NULL,
+    nombre varchar(100) NOT NULL,
+    descripcion varchar(200) NOT NULL,
     imagen varchar(200),
     direccion_id INT,
     activo BOOL DEFAULT TRUE NOT NULL,

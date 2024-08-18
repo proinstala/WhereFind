@@ -14,7 +14,7 @@
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >
-    <jsp:param name="titleweb" value="Index" />
+    <jsp:param name="titleweb" value="Modificar Usuario" />
 </jsp:include>
 
 <link href="App/css/formulario.css" rel="stylesheet" type="text/css"/>

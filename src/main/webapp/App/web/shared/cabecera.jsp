@@ -18,7 +18,7 @@
     <div class="contenedor__menu">
         <i class="las la-warehouse" title="Almacen"></i>
         <i class="las la-box" title="Articulo"></i>
-        <i class="las la-map-marked-alt" title="Direccion"></i>
+        <i class="las la-map-marked-alt" title="Direccion" id="btnDireccion"></i>
         <i class="las la-store-alt" title="Proveedor"></i>
 <%
     // ----------------------------------------

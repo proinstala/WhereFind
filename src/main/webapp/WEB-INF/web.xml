@@ -29,7 +29,6 @@
     </servlet-mapping>
 
 
-
 <!-- Mapeo de las url referentes a la cuenta de administrador -->
     <servlet>
         <servlet-name>adminIdentidadListaUsuarios</servlet-name>
@@ -41,6 +40,7 @@
         <url-pattern>/admin/users</url-pattern>
     </servlet-mapping>
 
+
 <!-- Mapeo de las url referentes a la cuenta de usuario -->
     <servlet>
         <servlet-name>identidadLogin</servlet-name>
@@ -51,7 +51,6 @@
         <servlet-name>identidadLogin</servlet-name>
         <url-pattern>/account/login</url-pattern>
     </servlet-mapping>
-
 
     <servlet>
         <servlet-name>identidadRegistrar</servlet-name>
@@ -81,6 +80,18 @@
     <servlet-mapping>
         <servlet-name>identidadRecoveryPassword</servlet-name>
         <url-pattern>/account/recovery</url-pattern>
+    </servlet-mapping>
+    
+    
+    <!-- Mapeo de las url referentes a Direccion -->
+    <servlet>
+        <servlet-name>direccion</servlet-name>
+        <jsp-file>/App/web/direccion/direccion.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>direccion</servlet-name>
+        <url-pattern>/direccion/adminDireccion</url-pattern>
     </servlet-mapping>
 
 

@@ -1,0 +1,51 @@
+
+/*El contenedor que contiene todos lo elementos de la tabla*/
+.contenedor__tabla {
+    /*width: 100%;*/
+/*    height: 100%;*/
+    /*padding-top: 3rem;*/
+    
+    /*display: flex;*/
+    padding-bottom: 3rem;
+}
+
+.tabla {
+    border-collapse: collapse; /* Combina border-spacing y bordes */
+    width: 100%; /* Ajusta la tabla al 100% del contenedor */
+}
+
+.tabla th, .tabla td {
+    border: 1px solid #000; /* Define un borde sólido negro */
+    padding: 5px; /* Define el padding dentro de las celdas */
+    text-align: left; /* Alinea el texto a la izquierda */
+}
+
+.tabla th {
+    background-color: #f2f2f2; /* Color de fondo para encabezados */
+}
+
+.tabla thead {
+   position: sticky;
+   top: 7rem;
+}
+
+
+
+.contenedor__tabla--botones {
+    display: flex;
+    flex-wrap: nowrap;
+    background-color: var(--blanco);
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 2rem;
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+    position: sticky;
+    top: -2rem;
+}
+@media (max-width: 800px) {
+    .contenedor__formulario--footer {
+        justify-content: space-evenly;
+    }
+}
+
