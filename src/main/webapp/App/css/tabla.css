@@ -1,11 +1,6 @@
 
 /*El contenedor que contiene todos lo elementos de la tabla*/
 .contenedor__tabla {
-    /*width: 100%;*/
-/*    height: 100%;*/
-    /*padding-top: 3rem;*/
-    
-    /*display: flex;*/
     padding-bottom: 3rem;
 }
 
@@ -15,18 +10,65 @@
 }
 
 .tabla th, .tabla td {
-    border: 1px solid #000; /* Define un borde sólido negro */
+    border: 1px solid black; /* Define un borde sólido negro */
     padding: 5px; /* Define el padding dentro de las celdas */
     text-align: left; /* Alinea el texto a la izquierda */
 }
 
 .tabla th {
-    background-color: #f2f2f2; /* Color de fondo para encabezados */
+    border: 1px solid black; /* Define un borde sólido negro */
+}
+
+.tabla th {
+    background-color: var(--borde_input_formulario); /* Color de fondo para encabezados */
+    background-color: #ffc93b;
+    position: relative;
+    z-index: 1; /* Asegura que los encabezados estén por encima del contenido */
+    color: black;
+    text-align: center;
 }
 
 .tabla thead {
    position: sticky;
    top: 7rem;
+   z-index: 2; /* Asegura que thead se mantenga sobre el resto del contenido */
+}
+
+.tabla thead::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: black; /* Borde superior */
+    z-index: 3;
+}
+
+.tabla thead::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: black; /* Asegura que el borde inferior del thead sea visible */
+    z-index: 3;
+}
+
+/* Estilo para filas pares */
+.tabla tr:nth-child(even) {
+    background-color: #F5F5F5; /* Color de fondo para las filas pares */
+}
+
+.tabla tbody tr:hover {
+    cursor: pointer;
+    background: #005FA5;
+    background: #0073C8;
+    color: white;
+    
 }
 
 
@@ -35,17 +77,25 @@
     display: flex;
     flex-wrap: nowrap;
     background-color: var(--blanco);
-    justify-content: flex-end;
+    justify-content: flex-start;
     align-items: flex-end;
     gap: 2rem;
     padding-top: 2rem;
     padding-bottom: 3rem;
     position: sticky;
     top: -2rem;
+    
+    button {
+        width: 4rem;
+        height: 4rem;
+        font-size: 2rem;
+    }
+    
 }
 @media (max-width: 800px) {
-    .contenedor__formulario--footer {
-        justify-content: space-evenly;
+    .contenedor__tabla--botones {
+        
     }
 }
+
 

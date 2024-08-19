@@ -70,8 +70,17 @@
 
                 <div class="contenedor__tabla--botones">
                     
-                    <div class="form__btn_circle margin-right-auto">
+                    <div class="form__btn_circle">
                         <button id="btnBuscar" title="Buscar"><i class="las la-search"></i></button>
+                    </div>
+                    <div class="form__btn_circle">
+                        <button id="btnBuscar" title="Crear"><i class="las la-plus"></i></button>
+                    </div>
+                    <div class="form__btn_circle">
+                        <button id="btnBuscar" title="Borrar"><i class="las la-minus"></i></button>
+                    </div>
+                    <div class="form__btn_circle">
+                        <button id="btnBuscar" title="Modificar"><i class="las la-pen"></i></button>
                     </div>
                 </div>
                 
@@ -284,12 +293,14 @@
                     </table>
                 </div>
                 
+                <!-- boton en footer con posicionamiento stiky
                 <div class="contenedor__formulario--footer sticky">
                     
                     <div class="form__btn_circle">
                         <button id="btnCancelar" title="Cancelar"><i class="las la-times"></i></button>
                     </div>
                 </div>
+                -->
 
             </div> <!-- Fin contenedor__formulario -->
             
