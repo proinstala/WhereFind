@@ -15,16 +15,16 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
     // Sentencias para trabajar con mysql
     //---------------------------------------------
     // Obtiene toda la lista de usuarios
-    private static final String SQL_SELECT_ALL_USERS = "SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email, imagen FROM USER WHERE activo = TRUE;";
+    private static final String SQL_SELECT_ALL_USERS = "SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email, imagen, activo FROM USER WHERE activo = TRUE;";
 
     // Obtiene un usuario en concreto que coincidan su user_name y su password
-    private static final String SQL_SELECT_GET_USER = "SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email, imagen FROM USER WHERE activo = TRUE AND user_name=? AND password=ENCRYPT_DATA_BASE64(?);";
+    private static final String SQL_SELECT_GET_USER = "SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email, imagen, activo FROM USER WHERE activo = TRUE AND user_name=? AND password=ENCRYPT_DATA_BASE64(?);";
 
     // Obtiene un usuario en concreto que coincidan su user_name y su password
-    private static final String SQL_SELECT_GET_USER_BY_ID = "SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email, imagen FROM USER WHERE activo = TRUE AND id=?;";
+    private static final String SQL_SELECT_GET_USER_BY_ID = "SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email, imagen, activo FROM USER WHERE activo = TRUE AND id=?;";
 
     // Obtiene un usuario en concreto que coincidan su user_name y su password
-    private static final String SQL_SELECT_GET_USER_BY_USER_OR_EMAIL = "SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email, imagen FROM USER WHERE activo = TRUE AND (user_name=? OR email=?);";
+    private static final String SQL_SELECT_GET_USER_BY_USER_OR_EMAIL = "SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email, imagen, activo FROM USER WHERE activo = TRUE AND (user_name=? OR email=?);";
 
 
 
@@ -64,7 +64,8 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
                     resultSet.getString("nombre"),
                     resultSet.getString("apellidos"),
                     resultSet.getString("email"),
-                    resultSet.getString("imagen")
+                    resultSet.getString("imagen"),
+                    resultSet.getBoolean("activo")
             );
         } catch (SQLException e) {
             e.printStackTrace();

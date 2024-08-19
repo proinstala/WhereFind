@@ -19,4 +19,5 @@ public class UserDTO {
     private String apellidos;
     private String email;
     private String imagen;
+    private boolean activo;
 }

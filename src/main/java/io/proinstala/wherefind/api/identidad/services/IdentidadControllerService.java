@@ -432,7 +432,7 @@ public class IdentidadControllerService extends BaseService {
             // Crea y guarda los datos del usuario
             UserDTO userDTO = null;
             try {
-                userDTO = userService.add(new UserDTO(-1, nombreUsuario, passwordUsuario, "User", nombreRealUsuario, apellidoRealUsuario, emailUsuario, imagenUsuario));
+                userDTO = userService.add(new UserDTO(-1, nombreUsuario, passwordUsuario, "User", nombreRealUsuario, apellidoRealUsuario, emailUsuario, imagenUsuario, true));
 
             } catch (Exception ex) {
                 ex.printStackTrace();
