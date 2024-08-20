@@ -39,7 +39,8 @@ public class IdentidadController  extends BaseHttpServlet {
         UPDATE,
         UPDATEPASSWORD,
         CREATE,
-        RECOVERY
+        RECOVERY,
+        ACTIVAR
     }
 
     /**
@@ -168,6 +169,27 @@ public class IdentidadController  extends BaseHttpServlet {
         // Se llama al servicio para procese la acción requerida
         identidadServicio.deleteUser(actionController);
     }
+
+    /**
+     * Maneja la solicitud para activar y desactivar un usuario específico.
+     *
+     * EndPoint - PUT : /api/identidad/activar/{id}/{activacion : 1 = Activo, 0 = Desactivado/eliminado}
+     *
+     * @param actionController el controlador de acción.
+     */
+    protected void apiActivateUser(ActionController actionController)
+    {
+        // Se comprueba que el usuario está logueado y sea administrador
+        if (!UserSession.isUserLogIn(actionController.server(), true))
+        {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+
+        // Se llama al servicio para procese la acción requerida
+        identidadServicio.activarUser(actionController);
+    }
+
 
     /**
      * Maneja la solicitud para actualizar la información de un usuario específico.
@@ -336,6 +358,10 @@ public class IdentidadController  extends BaseHttpServlet {
         switch(actionController.actionType()){
             case ActionType.DELETE :
                 apiDeleteUser(actionController);
+                break;
+
+            case ActionType.ACTIVAR :
+                apiActivateUser(actionController);
                 break;
 
             case ActionType.UPDATE :

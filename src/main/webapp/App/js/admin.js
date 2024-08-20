@@ -1,4 +1,5 @@
-import { solicitudGet } from './comunes.mjs';
+import { solicitudGet, solicitudPut } from './comunes.mjs';
+import { mostrarMensaje, mostrarMensajeError } from './alertasSweetAlert2.mjs';
 
 const adminLoadListUsers = (idElement) => {
 
@@ -50,8 +51,10 @@ const adminLoadListUsers = (idElement) => {
                 });
 
                 row.addEventListener('dblclick', () => {
-                    USER_SELECTED = row.getAttribute("data-id");
-                    redireccion(URL_USER_EDIT + "/" + USER_SELECTED);
+                    //USER_SELECTED = row.getAttribute("data-id");
+                    //redireccion(URL_USER_EDIT + "/" + USER_SELECTED);
+                    ActivarUser(element.id, (element.activo) ? 0 : 1);
+
                 });
         }
     }
@@ -59,6 +62,24 @@ const adminLoadListUsers = (idElement) => {
     solicitudGet("api/identidad/users", adminLoadListUsersCallBack, idElement, true);
 }
 
+
+function ActivarUser(usuarioId, activar) {
+
+    solicitudPut(`api/identidad/activar/${usuarioId}/${activar}`, "", true)
+    .then(response => {
+        if (response.isError === 1) {
+            mostrarMensajeError("No se puede cambiar la activación del usuario", response.result);
+        } else {
+            mostrarMensaje("Activación Usuario.", `Se han modificado correctamente la activación del usuario`, "success");
+        }
+    })
+    .catch(error => {
+        // Maneja el error aquí
+        console.error("Error:", error);
+        mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
+    });
+
+}
 
 let URL_USER_EDIT;
 let USER_SELECTED;
@@ -77,7 +98,7 @@ function redireccion(url) {
 $(document).ready(function () {
     const btnModificar = document.querySelector('#btnModificar');
     btnModificar.addEventListener('click', () => {
-        redireccion(URL_USER_EDIT + "/" + USER_SELECTED);
+        //redireccion(URL_USER_EDIT + "/" + USER_SELECTED);
     });
 });
 

@@ -734,4 +734,67 @@ public class IdentidadControllerService extends BaseService {
     }
 
 
+    /**
+     * Activa o desactiva un usuario de la base de datos.
+     *
+     * @param actionController Controlador de acción
+     */
+    public void activarUser(ActionController actionController)
+    {
+        // Respuesta de la acción actual
+        ResponseDTO responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
+
+        // Comprueba que hay más de 1 parámetro
+        if (actionController.parametros().length <= 2)
+        {
+            // Crea la respuesta con un error
+            responseDTO = getResponseError(LocaleApp.ERROR_FALTAN_PARAMETROS);
+        }
+        else
+        {
+
+            // Obtiene el id del usuario desde el parámetro 1 de la lista de parámetros
+            int id = actionController.getIntFromParametros(1);
+
+            // Obtiene el estado de la activacion del usuario desde el parámetro 1 de la lista de parámetros
+            boolean activo = actionController.getBooleanFromParametros(2);
+
+            // Si el id es mayor que -1 significa que hay en principio un id válido que se puede procesar
+            if (id == -1)
+            {
+                // Crea la respuesta con un error
+                responseDTO = getResponseError(LocaleApp.ERROR_PARAMETRO_NO_CORRECTO);
+            }
+            else
+            {
+                // Conecta con el Gestor de Permanencia
+                IUserService userService = GestionPersistencia.getUserService();
+
+                // Obtiene los datos del usuario
+                UserDTO userDTO = userService.getUserById(id);
+
+                // Si el usuario no es nulo
+                if (userDTO != null)
+                {
+                    // Se vacía el password por motivos de seguridad
+                    userDTO.setPassword("");
+
+                    // Se asigna el nuevo estado al userDTO
+                    userDTO.setActivo(activo);
+
+                    // Se elimina el usuario
+                    if (userService.activar(userDTO))
+                    {
+                        // Como la acción se ha ejecutado correctamente se crea la respuesta acorde a la misma
+                        responseDTO = getResponseOk(LocaleApp.INFO_DELETE_USER, userDTO, 0);
+                    }
+                }
+            }
+        }
+
+        // Devuelve la respuesta al navegador del usuario en formato json
+        responseJson(actionController.server().response(), responseDTO);
+    }
+
+
 }
