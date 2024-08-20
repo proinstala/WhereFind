@@ -26,8 +26,10 @@
 </jsp:include>
 
 
+<link href="App/css/general.css" rel="stylesheet" type="text/css"/>
 <link href="App/css/formulario.css" rel="stylesheet" type="text/css"/>
 <link href="App/css/tabla.css" rel="stylesheet" type="text/css"/>
+<link href="App/css/checkbox.css" rel="stylesheet" type="text/css"/>
 
 <div class="contenedor__general">
     <div class="contenedor">

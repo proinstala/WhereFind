@@ -15,7 +15,7 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
     // Sentencias para trabajar con mysql
     //---------------------------------------------
     // Obtiene toda la lista de usuarios
-    private static final String SQL_SELECT_ALL_USERS = "SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email, imagen, activo FROM USER WHERE activo = TRUE;";
+    private static final String SQL_SELECT_ALL_USERS = "SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email, imagen, activo FROM USER;";
 
     // Obtiene un usuario en concreto que coincidan su user_name y su password
     private static final String SQL_SELECT_GET_USER = "SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email, imagen, activo FROM USER WHERE activo = TRUE AND user_name=? AND password=ENCRYPT_DATA_BASE64(?);";

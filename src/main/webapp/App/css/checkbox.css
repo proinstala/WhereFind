@@ -1,0 +1,49 @@
+.checkbox-style {
+    margin: auto;
+    text-align: center;
+}
+
+.checkbox-style input[type=checkbox] {
+    display: none;
+}
+
+.checkbox-style label {
+    --size: 40px;
+
+    cursor: pointer;
+    width: var(--size);
+    height: calc(var(--size) / 2);
+    background: grey;
+    display: block;
+    border-radius: 100px;
+    position: relative;
+    margin: auto;
+}
+
+.checkbox-style label:after {
+    content: '';
+    position: absolute;
+    top: 6%;
+    left: 2.5%;
+    width: calc(50% - 5%);
+    height: calc(100% - 11%);
+    background: #fff;
+    border-radius: 90px;
+    transition: 0.3s;
+}
+
+.checkbox-style input:checked + label {
+    margin: auto;
+    background: var(--primario);
+}
+
+
+
+.checkbox-style input:checked + label:after {
+    left: calc(100% - 2.5%);
+    transform: translateX(-100%);
+}
+
+.checkbox-style label:active:after {
+    width: 55%;
+}

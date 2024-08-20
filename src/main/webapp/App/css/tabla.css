@@ -67,8 +67,9 @@
     cursor: pointer;
     background: #005FA5;
     background: #0073C8;
+    background: rgba(0, 95, 165, 1);
     color: white;
-    
+
 }
 
 
@@ -84,18 +85,49 @@
     padding-bottom: 3rem;
     position: sticky;
     top: -2rem;
-    
+
     button {
         width: 4rem;
         height: 4rem;
         font-size: 2rem;
     }
-    
+
 }
 @media (max-width: 800px) {
     .contenedor__tabla--botones {
-        
+
     }
 }
 
+
+
+/* Regla tabla usuarios */
+
+.tabla tbody tr.selected {
+    background: rgba(0, 95, 165, 0.5);
+}
+
+.tabla tbody tr.selected:hover {
+    background: rgba(0, 95, 165, 0.35);
+}
+
+
+tr.user-deleted:not(.selected) {
+    background: rgba(255, 0, 0, 0.10) !important;
+}
+
+.tabla tbody tr.user-deleted:not(.selected):hover {
+    background: rgba(255, 0, 0, 0.05) !important;
+    color: black !important;
+}
+
+
+tr.user-admin:not(.selected) {
+    background: rgba(0, 255, 0, 0.10) !important;
+}
+
+.tabla tbody tr.user-admin:not(.selected):hover {
+    background: rgba(0, 255, 0, 0.05) !important;
+    color: black !important;
+}
 
