@@ -1,4 +1,4 @@
-package io.proinstala.wherefind.api.identidad.controllers;
+ package io.proinstala.wherefind.api.identidad.controllers;
 
 
 import jakarta.servlet.http.HttpServletRequest;
