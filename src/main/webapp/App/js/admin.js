@@ -6,7 +6,7 @@ const adminLoadListUsers = (idElement) => {
 
         let tableRef = document.getElementById(idElement).getElementsByTagName('tbody')[0];
 
-        function ResetSelected() {
+        function resetSelected() {
             for (const row of tableRef.rows){
 
                 if (row) {
@@ -15,7 +15,7 @@ const adminLoadListUsers = (idElement) => {
             }
         }
 
-        function UsuarioActivoOrEspecial(row, user) {
+        function usuarioActivoOrEspecial(row, user) {
 
             if (user.activo) {
 
@@ -37,7 +37,7 @@ const adminLoadListUsers = (idElement) => {
             row.setAttribute("data-id", element.id);
             row.innerHTML =
                 "<td>" + element.id + "</td>" +
-                "<td><div div class='checkbox-style'><input type='checkbox' "+UsuarioActivoOrEspecial(row, element)+" force-disabed=true disabled readonly id='switch-" + element.id + "' /> <label for='switch-" + element.id + "'></label></div></td> " +
+                "<td><div div class='checkbox-style'><input type='checkbox' "+usuarioActivoOrEspecial(row, element)+" force-disabed=true disabled readonly id='switch-" + element.id + "' /> <label for='switch-" + element.id + "'></label></div></td> " +
                 "<td>" + element.userName + "</td>"+
                 "<td>" +element.nombre+ "</td>"+
                 "<td>" +element.apellidos+ "</td>"+
@@ -45,13 +45,13 @@ const adminLoadListUsers = (idElement) => {
 
                 row.addEventListener('click', () => {
                     USER_SELECTED = row.getAttribute("data-id");
-                    ResetSelected();
+                    resetSelected();
                     row.classList.add("selected");
                 });
 
                 row.addEventListener('dblclick', () => {
                     USER_SELECTED = row.getAttribute("data-id");
-                    Redireccion(URL_USER_EDIT + "/" + USER_SELECTED);
+                    redireccion(URL_USER_EDIT + "/" + USER_SELECTED);
                 });
         }
     }
@@ -69,7 +69,7 @@ const adminListUsersConfig = (urlUserEditar) => {
 
 
 
-function Redireccion(url) {
+function redireccion(url) {
     window.location.href = url;
 }
 
@@ -77,7 +77,7 @@ function Redireccion(url) {
 $(document).ready(function () {
     const btnModificar = document.querySelector('#btnModificar');
     btnModificar.addEventListener('click', () => {
-        Redireccion(URL_USER_EDIT + "/" + USER_SELECTED);
+        redireccion(URL_USER_EDIT + "/" + USER_SELECTED);
     });
 });
 
