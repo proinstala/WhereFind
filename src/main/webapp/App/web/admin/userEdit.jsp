@@ -42,45 +42,20 @@
 
                 <div class="contenedor__formulario--cabecera conBotones">
                     <div>
-                        <h1>Usuarios</h1>
+                        <h1>Modificar usuario</h1>
                     </div>
                     <div class="form__btn_circle">
                         <button id="btnCancelar" title="Cancelar"><i class="las la-times"></i></button>
                     </div>
                 </div>
 
-                <div class="contenedor__tabla--botones">
-
-                    <%-- <div class="form__btn_circle">
-                        <button id="btnBuscar" title="Buscar"><i class="las la-search"></i></button>
-                    </div>
-                    <div class="form__btn_circle">
-                        <button id="btnBuscar" title="Crear"><i class="las la-plus"></i></button>
-                    </div>
-                    --%>
-                    <%-- <div class="form__btn_circle">
-                        <button id="btnBorrar" title="Borrar"><i class="las la-minus"></i></button>
-                    </div> --%>
-                    <div class="form__btn_circle">
-                        <button id="btnModificar" title="Modificar"><i class="las la-pen"></i></button>
-                    </div>
-                </div>
 
                 <div class="contenedor__tabla">
-                    <table id="admin-list-users" class="tabla">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Activo</th>
-                                <th>Usuario</th>
-                                <th>Nombre</th>
-                                <th>Apellidos</th>
-                                <th>Rol</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+
+
+<h1>HOLA</h1>
+
+
                 </div>
             </div> <!-- Fin contenedor__formulario -->
         </div> <!-- Fin main -->
@@ -92,7 +67,7 @@
     </div>
 </div>
 
-<script src="App/js/comunes.mjs" type="module"></script>
+<%-- <script src="App/js/comunes.mjs" type="module"></script>
 <script src="App/js/admin.js" type="module" defer></script>
 
 <script  type="module">
@@ -101,7 +76,7 @@
     adminListUsersConfig("<%= UrlAdmin.USER_EDIT.getUri() %>");
 
     adminLoadListUsers("admin-list-users");
-</script>
+</script> --%>
 
 
 

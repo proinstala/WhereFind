@@ -1,8 +1,9 @@
 
+<%@page import="io.proinstala.wherefind.shared.consts.urls.enums.UrlAdmin"%>
 <%@page import="io.proinstala.wherefind.shared.controllers.actions.ActionServer"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="io.proinstala.wherefind.api.identidad.UserSession"%>
 
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <link href="App/css/cabecera.css" rel="stylesheet" type="text/css"/>
 
 <div class="cabecera">
@@ -28,7 +29,7 @@
     {
 %>
 
-        <a href="admin/users"><i class="las la-users-cog" title="Usuarios"></i></a>
+        <a href="<%= UrlAdmin.USER_LISTA.getUri() %>"><i class="las la-users-cog" title="Usuarios"></i></a>
 
 <%
     }

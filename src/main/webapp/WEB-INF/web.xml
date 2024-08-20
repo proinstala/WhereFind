@@ -40,6 +40,16 @@
         <url-pattern>/admin/users</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>adminIdentidadEditarUsuario</servlet-name>
+        <jsp-file>/App/web/admin/userEdit.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>adminIdentidadEditarUsuario</servlet-name>
+        <url-pattern>/admin/users/edit/*</url-pattern>
+    </servlet-mapping>
+
 
 <!-- Mapeo de las url referentes a la cuenta de usuario -->
     <servlet>
@@ -81,8 +91,8 @@
         <servlet-name>identidadRecoveryPassword</servlet-name>
         <url-pattern>/account/recovery</url-pattern>
     </servlet-mapping>
-    
-    
+
+
     <!-- Mapeo de las url referentes a Direccion -->
     <servlet>
         <servlet-name>direccion</servlet-name>

@@ -44,17 +44,45 @@ const adminLoadListUsers = (idElement) => {
                 "<td>" + element.rol + "</td>";
 
                 row.addEventListener('click', () => {
-                    console.log("Id : " + row.getAttribute("data-id"));
+                    USER_SELECTED = row.getAttribute("data-id");
                     ResetSelected();
                     row.classList.add("selected");
                 });
+
+                row.addEventListener('dblclick', () => {
+                    USER_SELECTED = row.getAttribute("data-id");
+                    Redireccion(URL_USER_EDIT + "/" + USER_SELECTED);
+                });
         }
-
-
     }
 
     solicitudGet("api/identidad/users", adminLoadListUsersCallBack, idElement, true);
 }
 
 
-export { adminLoadListUsers };
+let URL_USER_EDIT;
+let USER_SELECTED;
+
+const adminListUsersConfig = (urlUserEditar) => {
+    URL_USER_EDIT = urlUserEditar;
+}
+
+
+
+function Redireccion(url) {
+    window.location.href = url;
+}
+
+
+$(document).ready(function () {
+    const btnModificar = document.querySelector('#btnModificar');
+    btnModificar.addEventListener('click', () => {
+        Redireccion(URL_USER_EDIT + "/" + USER_SELECTED);
+    });
+});
+
+
+
+
+
+export { adminListUsersConfig, adminLoadListUsers };
