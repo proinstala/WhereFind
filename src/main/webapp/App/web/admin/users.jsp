@@ -97,9 +97,6 @@
 
 <script  type="module">
     import { adminLoadListUsers, adminListUsersConfig } from './App/js/admin.js';
-
-    adminListUsersConfig("<%= UrlAdmin.USER_EDIT.getUri() %>");
-
     adminLoadListUsers("admin-list-users", <%= UserSession.getUserLogin(request).getId() %>);
 </script>
 

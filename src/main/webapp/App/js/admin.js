@@ -1,6 +1,13 @@
 import { solicitudGet, solicitudPut } from './comunes.mjs';
 import { mostrarMensaje, mostrarMensajeError, mostrarMensajeAdvertencia } from './alertasSweetAlert2.mjs';
 
+// Configuración de las urls
+const URL_USER_EDIT = "admin/users/edit";
+
+// Usuario seleccionado
+let USER_SELECTED;
+
+
 
 /**
  * Carga una lista de usuarios excluyendo un usuario específico de la opción de activación/desactivación.
@@ -145,13 +152,6 @@ function activarUser(usuarioId, activar) {
     });
 }
 
-let URL_USER_EDIT;
-let USER_SELECTED;
-
-const adminListUsersConfig = (urlUserEditar) => {
-    URL_USER_EDIT = urlUserEditar;
-}
-
 
 /**
  * Redirige a la dirección URL proporcionada por el usuario seguro usando HTTPS (si está disponible).
@@ -166,10 +166,10 @@ function redireccion(url) {
 $(document).ready(function () {
     const btnModificar = document.querySelector('#btnModificar');
     btnModificar.addEventListener('click', () => {
-        //redireccion(URL_USER_EDIT + "/" + USER_SELECTED);
+        redireccion(URL_USER_EDIT + "/" + USER_SELECTED);
     });
 });
 
 
 
-export { adminListUsersConfig, adminLoadListUsers };
+export { adminLoadListUsers };
