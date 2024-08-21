@@ -1,12 +1,21 @@
 import { solicitudGet, solicitudPut } from './comunes.mjs';
 import { mostrarMensaje, mostrarMensajeError, mostrarMensajeAdvertencia } from './alertasSweetAlert2.mjs';
 
+
+/**
+ * Carga una lista de usuarios excluyendo un usuario específico de la opción de activación/desactivación.
+ * @param {string} idElement El ID del elemento donde se mostrará la información de los usuarios cargados.
+ * @param {number} [excludeUser=-1] El número de identificación (ID) del usuario a excluir, por defecto es -1.
+ */
 const adminLoadListUsers = (idElement, excludeUser = -1) => {
 
     const adminLoadListUsersCallBack = (response, idElement)  => {
 
         let tableRef = document.getElementById(idElement).getElementsByTagName('tbody')[0];
 
+        /**
+         * Esta función reinicia los elementos seleccionados previamente en una interfaz de usuario.
+         */
         function resetSelected() {
             for (const row of tableRef.rows){
 
@@ -16,6 +25,13 @@ const adminLoadListUsers = (idElement, excludeUser = -1) => {
             }
         }
 
+        /**
+         * Añade una clase CSS a la fila de un usuario según su estado y rol en el sistema.
+         * Si el usuario está activo, añadirá la clase "user-admin" si es administrador o no añadirá nada si no lo es.
+         * En cambio, si el usuario NO está activo, añadirá la clase "user-deleted".
+         * @param {HTMLElement} row - Elemento HTML donde se agregará la clase CSS correspondiente.
+         * @param {Object} user - Objeto que contiene información del usuario, como su estado (activo/no activo) y rol ("Admin" o cualquier otro).
+         */
         function usuarioActivoOrEspecial(row, user) {
             if (user.activo) {
 
@@ -104,6 +120,13 @@ const adminLoadListUsers = (idElement, excludeUser = -1) => {
 }
 
 
+/**
+ * Esta función activa o desactiva a un usuario de un sistema, según los parámetros proporcionados.
+ * Realiza una solicitud PUT a la API y gestiona la respuesta para mostrar mensajes al usuario en caso de exito o error.
+ * @param {number} usuarioId - El identificador numérico del usuario en el sistema.
+ * @param {int} activar - Un entero 0 o 1 que indica si se desea activar (true) o desactivar (false) al usuario.
+ * @return {Promise<boolean>} Una promesa que se resuelve a false en caso de error y true en caso contrario.
+ */
 function activarUser(usuarioId, activar) {
     return solicitudPut(`api/identidad/activar/${usuarioId}/${activar}`, "", true)
     .then(response => {
@@ -130,6 +153,11 @@ const adminListUsersConfig = (urlUserEditar) => {
 }
 
 
+/**
+ * Redirige a la dirección URL proporcionada por el usuario seguro usando HTTPS (si está disponible).
+ * Convierte una cadena de URL no segura en segura, si es posible.
+ * @param {string} url - La dirección URL para redireccionar al usuario a. Por favor, proporcione la dirección completa con http o https.
+ */
 function redireccion(url) {
     window.location.href = url;
 }
