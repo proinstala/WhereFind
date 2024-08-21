@@ -58,18 +58,6 @@ const adminLoadListUsers = (idElement) => {
             const checkboxLabel = document.createElement('label');
             checkboxLabel.setAttribute('for', `switch-${element.id}`);
 
-            checkboxLabel.addEventListener('click', function(event) {
-                event.preventDefault(); // Evitar el comportamiento predeterminado del label
-                checkboxInput.checked = !checkboxInput.checked; // Invertir el estado del checkbox
-
-                // Opcional: realizar alguna acción cuando el estado cambie
-                if (checkboxInput.checked) {
-                    console.log('Checkbox is now checked');
-                } else {
-                    console.log('Checkbox is now unchecked');
-                }
-            });
-
             // Construir la celda
             checkboxDiv.appendChild(checkboxInput);
             checkboxDiv.appendChild(checkboxLabel);
@@ -87,6 +75,18 @@ const adminLoadListUsers = (idElement) => {
             const cell6 = row.insertCell();
             cell6.textContent = element.rol;
 
+            // Evento para cambiar el estado del checkbox
+            checkboxLabel.addEventListener('click', function(event) {
+                event.preventDefault(); // Evitar el comportamiento predeterminado del label
+                let nuevoEstado = !checkboxInput.checked; // Invertir el estado del checkbox
+
+                // Intenta cambiar el estado de activación del usuario
+                activarUser(element.id, nuevoEstado ? 1 : 0).then(response => {
+                    if (response) {
+                        checkboxInput.checked = nuevoEstado; // Invertir el estado del checkbox
+                    }
+                })
+            });
 
             // Evento para detectar click en la fila y marcar la fila selecionada
             row.addEventListener('click', () => {
@@ -94,7 +94,6 @@ const adminLoadListUsers = (idElement) => {
                 resetSelected();
                 row.classList.add("selected");
             });
-
         }
     }
 
@@ -103,21 +102,21 @@ const adminLoadListUsers = (idElement) => {
 
 
 function activarUser(usuarioId, activar) {
-
-    solicitudPut(`api/identidad/activar/${usuarioId}/${activar}`, "", true)
+    return solicitudPut(`api/identidad/activar/${usuarioId}/${activar}`, "", true)
     .then(response => {
         if (response.isError === 1) {
             mostrarMensajeError("No se puede cambiar la activación del usuario", response.result);
         } else {
             mostrarMensaje("Activación Usuario.", `Se han modificado correctamente la activación del usuario`, "success");
         }
+        return response.isError != 1;
     })
     .catch(error => {
         // Maneja el error aquí
         console.error("Error:", error);
         mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
+        return false;
     });
-
 }
 
 let URL_USER_EDIT;
@@ -126,7 +125,6 @@ let USER_SELECTED;
 const adminListUsersConfig = (urlUserEditar) => {
     URL_USER_EDIT = urlUserEditar;
 }
-
 
 
 function redireccion(url) {
@@ -140,8 +138,6 @@ $(document).ready(function () {
         //redireccion(URL_USER_EDIT + "/" + USER_SELECTED);
     });
 });
-
-
 
 
 
