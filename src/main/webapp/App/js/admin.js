@@ -17,45 +17,84 @@ const adminLoadListUsers = (idElement) => {
         }
 
         function usuarioActivoOrEspecial(row, user) {
-
             if (user.activo) {
 
                 if (user.rol == "Admin") {
                     row?.classList.add("user-admin");
                 }
-
-                return "checked"
             }
             else {
                 row?.classList.add("user-deleted");
             }
         }
 
-
+        //TODO: BLOQUEAR AL USUARIO ACTUAL PARA QUE NO PUEDA DESACTIVARSE A SI MISMO
 
         for (const element of response.user){
+            // Crear una nueva fila en la tabla
             let row = tableRef.insertRow();
-            row.setAttribute("data-id", element.id);
-            row.innerHTML =
-                "<td>" + element.id + "</td>" +
-                "<td><div div class='checkbox-style'><input type='checkbox' "+usuarioActivoOrEspecial(row, element)+" force-disabed=true disabled readonly id='switch-" + element.id + "' /> <label for='switch-" + element.id + "'></label></div></td> " +
-                "<td>" + element.userName + "</td>"+
-                "<td>" +element.nombre+ "</td>"+
-                "<td>" +element.apellidos+ "</td>"+
-                "<td>" + element.rol + "</td>";
 
-                row.addEventListener('click', () => {
-                    USER_SELECTED = row.getAttribute("data-id");
-                    resetSelected();
-                    row.classList.add("selected");
-                });
+            // Asigna la clase a la fila en caso de ser admin o estar eliminado
+            usuarioActivoOrEspecial(row, element);
 
-                row.addEventListener('dblclick', () => {
-                    //USER_SELECTED = row.getAttribute("data-id");
-                    //redireccion(URL_USER_EDIT + "/" + USER_SELECTED);
-                    ActivarUser(element.id, (element.activo) ? 0 : 1);
+            // Crear y agregar celdas a la fila
+            const cell1 = row.insertCell();
+            cell1.textContent = element.id;
 
-                });
+            const cell2 = row.insertCell();
+            const checkboxDiv = document.createElement('div');
+            checkboxDiv.classList.add('checkbox-style');
+
+            const checkboxInput = document.createElement('input');
+            checkboxInput.type = 'checkbox';
+            checkboxInput.id = `switch-${element.id}`;
+            checkboxInput.disabled = true;
+            checkboxInput.readOnly = true;
+
+            // Asigna el estado de la activación del usuario
+            checkboxInput.checked = element.activo;
+
+            // Crear el label asociado al checkbox
+            const checkboxLabel = document.createElement('label');
+            checkboxLabel.setAttribute('for', `switch-${element.id}`);
+
+            checkboxLabel.addEventListener('click', function(event) {
+                event.preventDefault(); // Evitar el comportamiento predeterminado del label
+                checkboxInput.checked = !checkboxInput.checked; // Invertir el estado del checkbox
+
+                // Opcional: realizar alguna acción cuando el estado cambie
+                if (checkboxInput.checked) {
+                    console.log('Checkbox is now checked');
+                } else {
+                    console.log('Checkbox is now unchecked');
+                }
+            });
+
+            // Construir la celda
+            checkboxDiv.appendChild(checkboxInput);
+            checkboxDiv.appendChild(checkboxLabel);
+            cell2.appendChild(checkboxDiv);
+
+            const cell3 = row.insertCell();
+            cell3.textContent = element.userName;
+
+            const cell4 = row.insertCell();
+            cell4.textContent = element.nombre;
+
+            const cell5 = row.insertCell();
+            cell5.textContent = element.apellidos;
+
+            const cell6 = row.insertCell();
+            cell6.textContent = element.rol;
+
+
+            // Evento para detectar click en la fila y marcar la fila selecionada
+            row.addEventListener('click', () => {
+                USER_SELECTED = element.id;
+                resetSelected();
+                row.classList.add("selected");
+            });
+
         }
     }
 
@@ -63,7 +102,7 @@ const adminLoadListUsers = (idElement) => {
 }
 
 
-function ActivarUser(usuarioId, activar) {
+function activarUser(usuarioId, activar) {
 
     solicitudPut(`api/identidad/activar/${usuarioId}/${activar}`, "", true)
     .then(response => {
