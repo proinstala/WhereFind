@@ -10,7 +10,16 @@
         return;
     }
 
-    UserDTO userDTO = UserSession.getUserLogin(request);
+    UserDTO userDTO;
+    if (request.getAttribute("userDTOByAdmin") != null) {
+        // Código si el atributo existe
+        userDTO = (UserDTO)request.getAttribute("userDTOByAdmin");
+    }
+    else
+    {
+        userDTO = UserSession.getUserLogin(request);
+    }
+
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >

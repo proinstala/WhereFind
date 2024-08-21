@@ -96,7 +96,7 @@
 <script src="App/js/admin.js" type="module" defer></script>
 
 <script  type="module">
-    import { adminLoadListUsers, adminListUsersConfig } from './App/js/admin.js';
+    import { adminLoadListUsers } from './App/js/admin.js';
     adminLoadListUsers("admin-list-users", <%= UserSession.getUserLogin(request).getId() %>);
 </script>
 
