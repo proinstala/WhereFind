@@ -100,7 +100,7 @@
 
     adminListUsersConfig("<%= UrlAdmin.USER_EDIT.getUri() %>");
 
-    adminLoadListUsers("admin-list-users");
+    adminLoadListUsers("admin-list-users", <%= UserSession.getUserLogin(request).getId() %>);
 </script>
 
 

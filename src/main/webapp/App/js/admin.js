@@ -1,7 +1,7 @@
 import { solicitudGet, solicitudPut } from './comunes.mjs';
-import { mostrarMensaje, mostrarMensajeError } from './alertasSweetAlert2.mjs';
+import { mostrarMensaje, mostrarMensajeError, mostrarMensajeAdvertencia } from './alertasSweetAlert2.mjs';
 
-const adminLoadListUsers = (idElement) => {
+const adminLoadListUsers = (idElement, excludeUser = -1) => {
 
     const adminLoadListUsersCallBack = (response, idElement)  => {
 
@@ -27,8 +27,6 @@ const adminLoadListUsers = (idElement) => {
                 row?.classList.add("user-deleted");
             }
         }
-
-        //TODO: BLOQUEAR AL USUARIO ACTUAL PARA QUE NO PUEDA DESACTIVARSE A SI MISMO
 
         for (const element of response.user){
             // Crear una nueva fila en la tabla
@@ -78,8 +76,13 @@ const adminLoadListUsers = (idElement) => {
             // Evento para cambiar el estado del checkbox
             checkboxLabel.addEventListener('click', function(event) {
                 event.preventDefault(); // Evitar el comportamiento predeterminado del label
-                let nuevoEstado = !checkboxInput.checked; // Invertir el estado del checkbox
 
+                if (excludeUser != -1 && excludeUser === element.id) {
+                    mostrarMensajeAdvertencia("Acción no permitida", "No se puede activar/desactivar a si mismo.");
+                    return;
+                }
+
+                let nuevoEstado = !checkboxInput.checked; // Invertir el estado del checkbox
                 // Intenta cambiar el estado de activación del usuario
                 activarUser(element.id, nuevoEstado ? 1 : 0).then(response => {
                     if (response) {
