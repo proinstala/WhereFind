@@ -224,15 +224,19 @@ public class IdentidadController  extends BaseHttpServlet {
         // Se comprueba que el request lleve el parametro reset
         boolean isReset = actionController.server().getRequestParameter("reset", "0").equals("1");
 
+        // Se comprueba que se este editando por un administrador
+        boolean isResetByAdmin = UserSession.getSessionValue(actionController.server().request(), "idUserEditByAdmin") != null;
+
+
         // Se comprueba que el usuario está logueado y sea administrador
-        if (!isReset && !UserSession.isUserLogIn(actionController.server(), false))
+        if (!isReset && !UserSession.isUserLogIn(actionController.server(), isResetByAdmin))
         {
             responseError403(actionController.server().response(), "");
             return;
         }
 
         // Se llama al servicio para procese la acción requerida
-        identidadServicio.updatePasswordUser(actionController, isReset);
+        identidadServicio.updatePasswordUser(actionController, isReset || isResetByAdmin);
     }
 
     /**

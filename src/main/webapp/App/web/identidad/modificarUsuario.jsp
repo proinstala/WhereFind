@@ -38,6 +38,9 @@
         return;
     }
 
+    // Se define la variable para determinar si es un admin el que esta editando los datos del usuario
+    boolean isEditByAdmin = false;
+
     UserDTO userDTO;
     if (request.getAttribute("userDTOByAdmin") != null) {
         // Código si el atributo existe
@@ -45,6 +48,9 @@
 
         // Guarda el id del usuario que esta editando el administrador en su sesión
         UserSession.setSessionValue(request, "idUserEditByAdmin", userDTO.getId());
+
+        // Indicamos que sí, es un admin editando al usuario
+        isEditByAdmin = true;
     }
     else
     {
@@ -158,11 +164,23 @@
                     <form class="formulario" name="frmModificarPassword" id="frmModificarPassword">
                         <input type="hidden" name="usuario_id" id="passwordUsuario_id" value="<%=userDTO.getId()%>">
 
+<%
+                    // ----------------------------------------
+                    // Si no es un admin el que edita al usuario
+                    // ----------------------------------------
+                    if (!isEditByAdmin)
+                    {
+%>
                         <div class="form__input">
                             <input type="password" name="passwordUsuario" id="passwordUsuario" placeholder="Introduce tu password actual">
                             <label for="passwordUsuario">Password Actual</label>
                         </div>
-
+<%
+                    }
+                    // ----------------------------------------
+                    // Si no es un admin el que edita al usuario
+                    // ----------------------------------------
+%>
                         <div class="form__input">
                             <input type="password" name="nuevoPassword" id="nuevoPassword" placeholder="Introduce el nuevo password">
                             <label for="nuevoPassword">Nuevo Password</label>
