@@ -270,4 +270,39 @@ public class UserSession {
             return true;
         }
     }
+
+    /**
+     * Obtiene el valor basado en la clave proporcionada desde la sesión.
+     *
+     * @param request HttpServletRequest actual.
+     * @param key Clave (identificador) asociado con el valor que se desea recuperar en la sesión.
+     *
+     * @return El objeto recuperado de la sesión correspondiente a la clave dada, o null si no existe ningún objeto para esa clave.
+     */
+    public static Object getSessionValue(HttpServletRequest request, String key)
+    {
+        // Recupera la sesión actual desde el request
+        HttpSession session = request.getSession();
+
+        // Recupera el valor del dato de la session
+        return session.getAttribute(key);
+    }
+
+
+    /**
+     * Establece el valor basado en la clave proporcionada. El nuevo valor se asociará con esa clave en la sesión actual del usuario.
+    *
+    * @param request HttpServletRequest actual.
+    * @param key Clave (identificador) asociada con el valor que desea almacenar en la sesión.
+    * @param value Nuevo objeto que desee almacenar en sesión bajo la clave proporcionada.
+    */
+    public static void setSessionValue(HttpServletRequest request, String key, Object value)
+    {
+        // Recupera la sesión actual desde el request
+        HttpSession session = request.getSession();
+
+        // Guarda el valor del dato de la session
+        session.setAttribute(key, value);
+    }
+
 }

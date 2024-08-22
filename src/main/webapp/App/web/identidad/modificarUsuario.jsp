@@ -3,7 +3,21 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="io.proinstala.wherefind.shared.controllers.actions.ActionServer"%>
 <%@page import="io.proinstala.wherefind.api.identidad.UserSession"%>
-<%
+
+<%! 
+
+    private String forceDisabled(HttpServletRequest request)
+    {
+        if (request.getAttribute("userDTOByAdmin") == null) {
+            // Código si el atributo existe
+            return " force-disabed=true disabled readonly ";
+        }
+
+        return "";
+    }
+%>
+
+<% 
     // Si no se está logueado se manda al usuario al login.jsp
     if(UserSession.redireccionarIsUserNotLogIn(new ActionServer(request, response))){
         // Detiene la ejecución de este servlet
@@ -14,12 +28,14 @@
     if (request.getAttribute("userDTOByAdmin") != null) {
         // Código si el atributo existe
         userDTO = (UserDTO)request.getAttribute("userDTOByAdmin");
+        
+        // Guarda el id del usuario que esta editando el administrador en su sesión
+        UserSession.setSessionValue(request, "idUserEditByAdmin", userDTO.getId());
     }
     else
     {
         userDTO = UserSession.getUserLogin(request);
     }
-
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >
@@ -63,12 +79,12 @@
                         </div>
 
                         <div class="form__input">
-                            <input type="text" name="nombreUsuario" id="nombreUsuario" placeholder="Introduce tu nombre de usuario" value="<%=userDTO.getUserName()%>" force-disabed=true disabled readonly>
+                            <input type="text" name="nombreUsuario" id="nombreUsuario" placeholder="Introduce tu nombre de usuario" value="<%=userDTO.getUserName()%>" <%= forceDisabled(request) %>>
                             <label for="nombreUsuario">Usuario</label>
                         </div>
 
                         <div class="form__input disable">
-                            <input type="text" name="rolUsuario" id="rolUsuario" placeholder="Introduce el rol del usuario" value="<%=userDTO.getRol()%>" force-disabed=true disabled readonly>
+                            <input type="text" name="rolUsuario" id="rolUsuario" placeholder="Introduce el rol del usuario" value="<%=userDTO.getRol()%>" <%= forceDisabled(request) %>>
                             <label for="rolUsuario">Rol</label>
                         </div>
 

@@ -263,7 +263,13 @@ public class IdentidadControllerService extends BaseService {
                     String emailUsuario = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_EMAIL, userDTO.getEmail());
                     String imagenUsuario = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_IMAGEN, userDTO.getImagen());
 
-                    if (isValidParametro(nombreUsuario, 1, 100)
+                    // Solo se usarán en caso de que que este definido el valor idUserEditByAdmin en la sesión del usuario
+                    String userName = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_USERNAME, userDTO.getUserName());
+                    String rolUsuario = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_ROL, userDTO.getRol());
+
+                    if (isValidParametro(userName, 1, 100)
+                        && isValidParametro(rolUsuario, 1, 100)
+                        && isValidParametro(nombreUsuario, 1, 100)
                         && isValidParametro(apellidosUsuario, 1, 100)
                         && isValidParametro(emailUsuario, 1, 200))
                     {
@@ -272,6 +278,20 @@ public class IdentidadControllerService extends BaseService {
                         userDTO.setApellidos(apellidosUsuario);
                         userDTO.setEmail(emailUsuario);
                         userDTO.setImagen(imagenUsuario);
+
+                        // Si esta definido el valor idUserEditByAdmin en la sesión del usuario
+                        if (UserSession.getSessionValue(actionController.server().request(), "idUserEditByAdmin") != null)
+                        {
+                            // Obtine el id del usuario que esta editando el admin desde la sesión del mismo
+                            int idUserEditByAdmin = (int)UserSession.getSessionValue(actionController.server().request(), "idUserEditByAdmin");
+                            // Si los ids coinciden
+                            if (idUserEditByAdmin == id)
+                            {
+                                // Asigna los valores extra que solo el admin puede cambiar
+                                userDTO.setUserName(userName);
+                                userDTO.setRol(rolUsuario);
+                            }
+                        }
 
                         try {
                             // Se guardan los cambios del usuario
