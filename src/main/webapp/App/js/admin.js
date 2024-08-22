@@ -16,7 +16,7 @@ let USER_SELECTED;
  */
 const adminLoadListUsers = (idElement, excludeUser = -1) => {
 
-    const adminLoadListUsersCallBack = (response, idElement)  => {
+    const adminLoadListUsersCallBack = (response)  => {
 
         let tableRef = document.getElementById(idElement).getElementsByTagName('tbody')[0];
 
@@ -123,7 +123,22 @@ const adminLoadListUsers = (idElement, excludeUser = -1) => {
         }
     }
 
-    solicitudGet("api/identidad/users", adminLoadListUsersCallBack, idElement, true);
+    return solicitudGet("api/identidad/users", idElement, true)
+        .then(response => {
+        if (response.isError === 1) {
+            mostrarMensajeError("Se ha producido un error", response.result);
+        } else {
+            adminLoadListUsersCallBack(response);
+        }
+        return response.isError != 1;
+    })
+    .catch(error => {
+        // Maneja el error aquí
+        console.error("Error:", error);
+        mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
+        return false;
+    });
+
 }
 
 
