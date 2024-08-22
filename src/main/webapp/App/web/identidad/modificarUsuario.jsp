@@ -4,7 +4,7 @@
 <%@page import="io.proinstala.wherefind.shared.controllers.actions.ActionServer"%>
 <%@page import="io.proinstala.wherefind.api.identidad.UserSession"%>
 
-<%! 
+<%!
 
     private String forceDisabled(HttpServletRequest request)
     {
@@ -15,9 +15,21 @@
 
         return "";
     }
+
+    private String getSelectValue(String rolUsuario, String rolUsuarioPorDefecto )
+    {
+        String resultado = "value='" + rolUsuario + "'";
+        if (rolUsuario.equals(rolUsuarioPorDefecto))
+        {
+            resultado += " selected";
+        }
+
+        return resultado;
+    }
+
 %>
 
-<% 
+<%
     // Si no se está logueado se manda al usuario al login.jsp
     if(UserSession.redireccionarIsUserNotLogIn(new ActionServer(request, response))){
         // Detiene la ejecución de este servlet
@@ -28,7 +40,7 @@
     if (request.getAttribute("userDTOByAdmin") != null) {
         // Código si el atributo existe
         userDTO = (UserDTO)request.getAttribute("userDTOByAdmin");
-        
+
         // Guarda el id del usuario que esta editando el administrador en su sesión
         UserSession.setSessionValue(request, "idUserEditByAdmin", userDTO.getId());
     }
@@ -83,8 +95,11 @@
                             <label for="nombreUsuario">Usuario</label>
                         </div>
 
-                        <div class="form__input disable">
-                            <input type="text" name="rolUsuario" id="rolUsuario" placeholder="Introduce el rol del usuario" value="<%=userDTO.getRol()%>" <%= forceDisabled(request) %>>
+                        <div class="form__input">
+                            <select name="rolUsuario" id="rolUsuario" placeholder="Introduce el rol del usuario" <%= forceDisabled(request) %>>
+                                <option <%= getSelectValue("Admin", userDTO.getRol()) %>>Admin</option>
+                                <option <%= getSelectValue("User", userDTO.getRol()) %>>User</option>
+                            </select>
                             <label for="rolUsuario">Rol</label>
                         </div>
 

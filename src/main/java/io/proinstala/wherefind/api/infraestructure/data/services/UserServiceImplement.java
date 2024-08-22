@@ -38,7 +38,7 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
     private static final String SQL_UPDATE_USER_PASSWORD = "UPDATE USER SET password=ENCRYPT_DATA_BASE64(?) WHERE id=?;";
 
     // Actualiza los datos generales a un usuario
-    private static final String SQL_UPDATE_USER = "UPDATE USER SET user_name=?, nombre=?, apellidos=?, email=?, imagen=? WHERE id=?;";
+    private static final String SQL_UPDATE_USER = "UPDATE USER SET user_name=?, nombre=?, apellidos=?, email=?, imagen=?, rol=? WHERE id=?;";
 
     // Marca a un usuario como eliminado
     private static final String SQL_DELETE_USER = "UPDATE USER SET activo=false WHERE id=?;";
@@ -132,7 +132,8 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
             ps.setString(3, userDTO.getApellidos());
             ps.setString(4, userDTO.getEmail());
             ps.setString(5, userDTO.getImagen());
-            ps.setInt(6, userDTO.getId());
+            ps.setString(6, userDTO.getRol());
+            ps.setInt(7, userDTO.getId());
 
             // Ejecutar la actualización y obtener el número de filas afectadas
             rowsAffected = ps.executeUpdate();
