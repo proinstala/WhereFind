@@ -6,9 +6,11 @@
 
 <%!
 
-    private String forceDisabled(HttpServletRequest request)
+    private String forceDisabled(HttpServletRequest request, UserDTO userDTO)
     {
-        if (request.getAttribute("userDTOByAdmin") == null) {
+        // Desactiva los campos si, está editando un usuario normal o lo que se está editando es su propio usuario como admin.
+        if (request.getAttribute("userDTOByAdmin") == null || userDTO.getId() == UserSession.getUserLogin(request).getId())
+        {
             // Código si el atributo existe
             return " force-disabed=true disabled readonly ";
         }
@@ -91,12 +93,12 @@
                         </div>
 
                         <div class="form__input">
-                            <input type="text" name="nombreUsuario" id="nombreUsuario" placeholder="Introduce tu nombre de usuario" value="<%=userDTO.getUserName()%>" <%= forceDisabled(request) %>>
+                            <input type="text" name="nombreUsuario" id="nombreUsuario" placeholder="Introduce tu nombre de usuario" value="<%=userDTO.getUserName()%>" <%= forceDisabled(request, userDTO) %>>
                             <label for="nombreUsuario">Usuario</label>
                         </div>
 
                         <div class="form__input">
-                            <select name="rolUsuario" id="rolUsuario" placeholder="Introduce el rol del usuario" <%= forceDisabled(request) %>>
+                            <select name="rolUsuario" id="rolUsuario" placeholder="Introduce el rol del usuario" <%= forceDisabled(request, userDTO) %>>
                                 <option <%= getSelectValue("Admin", userDTO.getRol()) %>>Admin</option>
                                 <option <%= getSelectValue("User", userDTO.getRol()) %>>User</option>
                             </select>
