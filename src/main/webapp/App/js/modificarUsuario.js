@@ -56,11 +56,11 @@ $(document).ready(function () {
     });
 
     btnCancelar.addEventListener('click', () => {
-        window.location.href = 'dashboard';
+        window.location.href = btnCancelar.dataset.uri;
     });
 
     btnCancelarPassword.addEventListener('click', () => {
-        window.location.href = 'dashboard';
+        window.location.href = btnCancelarPassword.dataset.uri;
     });
 
     btnDeshacerCambiosUsuario.addEventListener('click', () => {

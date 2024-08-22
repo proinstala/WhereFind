@@ -1,4 +1,5 @@
 
+<%@page import="io.proinstala.wherefind.shared.consts.urls.enums.UrlApp"%>
 <%@page import="io.proinstala.wherefind.shared.dtos.UserDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="io.proinstala.wherefind.shared.controllers.actions.ActionServer"%>
@@ -27,6 +28,18 @@
         }
 
         return resultado;
+    }
+
+    private String getUrlCancelar(boolean isEditByAdmin)
+    {
+        if (isEditByAdmin)
+        {
+            return UrlAdmin.USER_LISTA.getUri();
+        }
+        else
+        {
+            return UrlApp.HOME.getUri();
+        }
     }
 
 %>
@@ -145,7 +158,7 @@
                     </div>
 
                     <div class="form__btn_circle">
-                        <button id="btnCancelar" title="Cancelar"><i class="las la-times"></i></button>
+                        <button id="btnCancelar" title="Cancelar" data-uri="<%= getUrlCancelar(isEditByAdmin) %>"><i class="las la-times"></i></button>
                     </div>
                 </div>
 
@@ -207,7 +220,7 @@
                     </div>
 
                     <div class="form__btn_circle">
-                        <button id="btnCancelarPassword" title="Cancelar"><i class="las la-times"></i></button>
+                        <button id="btnCancelarPassword" title="Cancelar" data-uri="<%= getUrlCancelar(isEditByAdmin) %>"><i class="las la-times"></i></button>
                     </div>
                 </div>
 
