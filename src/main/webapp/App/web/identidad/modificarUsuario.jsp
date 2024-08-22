@@ -51,7 +51,7 @@
                         <div class="form__input grid-row-span-2">
                             <div>
                                 <div class="contenedor__formulario--imagen--redondo">
-                                    <img src="<%=userDTO.getImagen()%>" name="imgUsuario" id="imgUsuario" alt="logo usuario">
+                                    <img src="<%=userDTO.getImagen()%>" id="imgUsuario" alt="logo usuario">
                                 </div>
 
                                 <label for="btnFoto" class="input_foto">
