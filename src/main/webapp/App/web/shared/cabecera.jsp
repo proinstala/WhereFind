@@ -56,3 +56,9 @@
 </div>
 
 <script src="App/js/cabecera.js" type="text/javascript" defer></script>
+
+
+
+
+
+<%@ include file="/App/web/shared/breadcrumbs.jsp" %>
