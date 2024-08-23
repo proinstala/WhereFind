@@ -1,6 +1,8 @@
 package io.proinstala.wherefind.api.infraestructure.data;
 
+import io.proinstala.wherefind.api.infraestructure.data.interfaces.IProvinciaService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IUserService;
+import io.proinstala.wherefind.api.infraestructure.data.services.ProvinciaServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.UserServiceImplement;
 
 /**
@@ -15,5 +17,9 @@ public class GestionPersistencia {
      */
     public static IUserService getUserService() {
         return new UserServiceImplement();
+    }
+    
+    public static IProvinciaService getProvinciaService() {
+        return new ProvinciaServiceImplement();
     }
 }

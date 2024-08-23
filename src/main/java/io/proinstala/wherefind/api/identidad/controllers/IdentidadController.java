@@ -1,4 +1,4 @@
- package io.proinstala.wherefind.api.identidad.controllers;
+package io.proinstala.wherefind.api.identidad.controllers;
 
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,7 +16,7 @@ import jakarta.servlet.annotation.WebServlet;
  * Controlador de la identidad que maneja las solicitudes HTTP relacionadas con la gestión de usuarios.
  */
 @WebServlet(urlPatterns = IdentidadController.BASE_API_IDENTIDAD + "/*")
-public class IdentidadController  extends BaseHttpServlet {
+public class IdentidadController extends BaseHttpServlet {
 
     /**
      * Base de la URL para las API de identidad.

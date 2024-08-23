@@ -349,8 +349,6 @@
     </div>
 </div>
 
-        <!-- comment 
-<script src="App/js/modificarUsuario.js" type="module" defer></script>
-        -->
+<script src="App/js/direeccion.js" type="module" defer></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>
