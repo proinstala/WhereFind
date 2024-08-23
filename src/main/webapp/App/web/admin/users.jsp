@@ -31,6 +31,7 @@
 <link href="App/css/formulario.css" rel="stylesheet" type="text/css"/>
 <link href="App/css/tabla.css" rel="stylesheet" type="text/css"/>
 <link href="App/css/checkbox.css" rel="stylesheet" type="text/css"/>
+<link href="App/css/adminUsers.css" rel="stylesheet" type="text/css"/>
 
 <div class="contenedor__general">
     <div class="contenedor">
@@ -64,6 +65,12 @@
                     <div class="form__btn_circle">
                         <button id="btnModificar" title="Modificar"><i class="las la-pen"></i></button>
                     </div>
+
+                    <div class="form__input">
+                        <input type="text" class="input-busqueda" name="buscarUsuario" id="buscarUsuario" placeholder="Introduce los datos a buscar">
+                        <i class="input-busqueda-lupa las la-search"></i>
+                        <label for="buscarUsuario">Buscar usuario</label>
+                    </div>
                 </div>
 
                 <div class="contenedor__tabla">
@@ -96,11 +103,8 @@
 <script src="App/js/admin.js" type="module" defer></script>
 
 <script  type="module">
-    import { adminLoadListUsers, adminListUsersConfig } from './App/js/admin.js';
-
-    adminListUsersConfig("<%= UrlAdmin.USER_EDIT.getUri() %>");
-
-    adminLoadListUsers("admin-list-users");
+    import { adminLoadListUsers } from './App/js/admin.js';
+    adminLoadListUsers("admin-list-users", <%= UserSession.getUserLogin(request).getId() %>);
 </script>
 
 

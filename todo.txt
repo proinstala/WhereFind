@@ -58,8 +58,8 @@
 + Al guardar los datos modificados de un usuario se vuelve a activar los campos desactivados
 + Llevar webapp\App\web\config\emails.settings.json al directorio del usuario
 + Revisar orden de titulo y descripción en las alertas de los mensajes
++ Poder gestionar los usuarios con un usuario Admin
 - Revisar como poder mejorar la clase persistencia, que use el patrón singlenton
-- Poder gestionar los usuarios con un usuario Admin
 - Que el servidor notifique que la base de datos no es accesible en vez de producir una excepción
 - Gestionar error cuando se usa un email ya usado.
 - Cambiar jquery por javascript puro

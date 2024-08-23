@@ -32,6 +32,27 @@ public record ActionController(String fullUri, String uri, Object actionType, St
         return id;
     }
 
+    /**
+     * Obtiene un valor boolean de los parámetros en una posición específica.
+     *
+     * @param index el índice del parámetro en el arreglo.
+     * @return el valor entero del parámetro en la posición especificada, o -1 si ocurre una excepción de formato.
+     */
+    public Boolean getBooleanFromParametros(int index)
+    {
+        int resultado;
+        try
+        {
+            resultado = getIntFromParametros(index);
+        }
+        catch (NumberFormatException e)
+        {
+            resultado = -1;
+        }
+
+        return resultado == 1;
+    }
+
     public String  getServerUrlBase()
     {
         return server.request().getScheme() + "://" +

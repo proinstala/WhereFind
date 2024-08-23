@@ -41,12 +41,11 @@ const solicitudPut = (url, idElement, mostrarLoad) => {
  * Realiza una solicitud GET.
  *
  * @param {string} url         - La URL a la que se enviará la solicitud.
- * @param {function} callBack  - Método que recibirá el resultado.
  * @param {string} idElement   - Id del formulario.
  * @param {string} mostrarLoad - Bloquea la UI mostrando una alerta con una animación de espera.
  */
-const solicitudGet = (url, callBack, idElement, mostrarLoad) => {
-    solicitudGetFetch(url, callBack, idElement, mostrarLoad);
+const solicitudGet = (url, idElement, mostrarLoad) => {
+    return solicitudGetFetch(url, idElement, mostrarLoad);
 };
 
 
@@ -120,17 +119,16 @@ function solicitudPutFetch(url, data, idElement, mostrarLoad) {
  * Realiza una solicitud GET utilizando fetch.
  *
  * @param {string} url         - La URL a la que se enviará la solicitud.
- * @param {function} callBack  - Método que recibirá el resultado.
  * @param {string} idElement   - Id del elemento que donde se inyectará los datos.
  * @param {string} mostrarLoad - Bloquea la UI mostrando una alerta con una animación de espera.
  */
-function solicitudGetFetch(url, callBack, idElement, mostrarLoad) {
+function solicitudGetFetch(url, idElement, mostrarLoad) {
 
     if (mostrarLoad) {
         mostrarLoading();
     }
 
-    fetch(url, {
+    return fetch(url, {
         method: 'GET'
     })
     .then(response => {
@@ -145,7 +143,7 @@ function solicitudGetFetch(url, callBack, idElement, mostrarLoad) {
             ocultarLoading();
         }
 
-        callBack(response, idElement);
+        return response;
     })
     .catch(error => {
         console.error("Error:", error);

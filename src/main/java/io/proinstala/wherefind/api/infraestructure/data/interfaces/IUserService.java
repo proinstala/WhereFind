@@ -97,4 +97,12 @@ public interface IUserService {
      * @return Número de intentos para la contraseña de recuperación
      */
     public boolean getRecoveryIntentos(String id);
+
+    /**
+     * Activa o desactiva un usuario de la base de datos.
+     *
+     * @param userDTO el objeto UserDTO que representa al usuario a eliminar.
+     * @return true si la eliminación fue exitosa, false en caso contrario.
+     */
+    public boolean activar(UserDTO userDTO);
 }

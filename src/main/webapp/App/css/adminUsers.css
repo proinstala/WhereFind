@@ -1,0 +1,16 @@
+.contenedor__tabla--botones .form__input:has(#buscarUsuario) {
+    max-width: 5rem;
+    right: 0;
+    position: absolute;
+}
+
+.input-busqueda-lupa {
+    top: 30px;
+    position: absolute;
+}
+
+.input-busqueda {
+    padding-left: 24px !important;
+}
+
+

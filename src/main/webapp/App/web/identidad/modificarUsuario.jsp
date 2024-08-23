@@ -1,8 +1,49 @@
 
+<%@page import="io.proinstala.wherefind.shared.consts.urls.enums.UrlApp"%>
 <%@page import="io.proinstala.wherefind.shared.dtos.UserDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="io.proinstala.wherefind.shared.controllers.actions.ActionServer"%>
 <%@page import="io.proinstala.wherefind.api.identidad.UserSession"%>
+
+<%!
+
+    private String forceDisabled(HttpServletRequest request, UserDTO userDTO)
+    {
+        // Desactiva los campos si, está editando un usuario normal o lo que se está editando es su propio usuario como admin.
+        if (request.getAttribute("userDTOByAdmin") == null || userDTO.getId() == UserSession.getUserLogin(request).getId())
+        {
+            // Código si el atributo existe
+            return " force-disabed=true disabled readonly ";
+        }
+
+        return "";
+    }
+
+    private String getSelectValue(String rolUsuario, String rolUsuarioPorDefecto )
+    {
+        String resultado = "value='" + rolUsuario + "'";
+        if (rolUsuario.equals(rolUsuarioPorDefecto))
+        {
+            resultado += " selected";
+        }
+
+        return resultado;
+    }
+
+    private String getUrlCancelar(boolean isEditByAdmin)
+    {
+        if (isEditByAdmin)
+        {
+            return UrlAdmin.USER_LISTA.getUri();
+        }
+        else
+        {
+            return UrlApp.HOME.getUri();
+        }
+    }
+
+%>
+
 <%
     // Si no se está logueado se manda al usuario al login.jsp
     if(UserSession.redireccionarIsUserNotLogIn(new ActionServer(request, response))){
@@ -10,7 +51,24 @@
         return;
     }
 
-    UserDTO userDTO = UserSession.getUserLogin(request);
+    // Se define la variable para determinar si es un admin el que esta editando los datos del usuario
+    boolean isEditByAdmin = false;
+
+    UserDTO userDTO;
+    if (request.getAttribute("userDTOByAdmin") != null) {
+        // Código si el atributo existe
+        userDTO = (UserDTO)request.getAttribute("userDTOByAdmin");
+
+        // Guarda el id del usuario que esta editando el administrador en su sesión
+        UserSession.setSessionValue(request, "idUserEditByAdmin", userDTO.getId());
+
+        // Indicamos que sí, es un admin editando al usuario
+        isEditByAdmin = true;
+    }
+    else
+    {
+        userDTO = UserSession.getUserLogin(request);
+    }
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >
@@ -42,7 +100,7 @@
                         <div class="form__input grid-row-span-2">
                             <div>
                                 <div class="contenedor__formulario--imagen--redondo">
-                                    <img src="<%=userDTO.getImagen()%>" name="imgUsuario" id="imgUsuario" alt="logo usuario">
+                                    <img src="<%=userDTO.getImagen()%>" id="imgUsuario" alt="logo usuario">
                                 </div>
 
                                 <label for="btnFoto" class="input_foto">
@@ -54,12 +112,15 @@
                         </div>
 
                         <div class="form__input">
-                            <input type="text" name="nombreUsuario" id="nombreUsuario" placeholder="Introduce tu nombre de usuario" value="<%=userDTO.getUserName()%>" force-disabed=true disabled readonly>
+                            <input type="text" name="nombreUsuario" id="nombreUsuario" placeholder="Introduce tu nombre de usuario" value="<%=userDTO.getUserName()%>" <%= forceDisabled(request, userDTO) %>>
                             <label for="nombreUsuario">Usuario</label>
                         </div>
 
-                        <div class="form__input disable">
-                            <input type="text" name="rolUsuario" id="rolUsuario" placeholder="Introduce el rol del usuario" value="<%=userDTO.getRol()%>" force-disabed=true disabled readonly>
+                        <div class="form__input">
+                            <select name="rolUsuario" id="rolUsuario" placeholder="Introduce el rol del usuario" <%= forceDisabled(request, userDTO) %>>
+                                <option <%= getSelectValue("Admin", userDTO.getRol()) %>>Admin</option>
+                                <option <%= getSelectValue("User", userDTO.getRol()) %>>User</option>
+                            </select>
                             <label for="rolUsuario">Rol</label>
                         </div>
 
@@ -97,7 +158,7 @@
                     </div>
 
                     <div class="form__btn_circle">
-                        <button id="btnCancelar" title="Cancelar"><i class="las la-times"></i></button>
+                        <button id="btnCancelar" title="Cancelar" data-uri="<%= getUrlCancelar(isEditByAdmin) %>"><i class="las la-times"></i></button>
                     </div>
                 </div>
 
@@ -116,11 +177,23 @@
                     <form class="formulario" name="frmModificarPassword" id="frmModificarPassword">
                         <input type="hidden" name="usuario_id" id="passwordUsuario_id" value="<%=userDTO.getId()%>">
 
+<%
+                    // ----------------------------------------
+                    // Si no es un admin el que edita al usuario
+                    // ----------------------------------------
+                    if (!isEditByAdmin)
+                    {
+%>
                         <div class="form__input">
                             <input type="password" name="passwordUsuario" id="passwordUsuario" placeholder="Introduce tu password actual">
                             <label for="passwordUsuario">Password Actual</label>
                         </div>
-
+<%
+                    }
+                    // ----------------------------------------
+                    // Si no es un admin el que edita al usuario
+                    // ----------------------------------------
+%>
                         <div class="form__input">
                             <input type="password" name="nuevoPassword" id="nuevoPassword" placeholder="Introduce el nuevo password">
                             <label for="nuevoPassword">Nuevo Password</label>
@@ -147,7 +220,7 @@
                     </div>
 
                     <div class="form__btn_circle">
-                        <button id="btnCancelarPassword" title="Cancelar"><i class="las la-times"></i></button>
+                        <button id="btnCancelarPassword" title="Cancelar" data-uri="<%= getUrlCancelar(isEditByAdmin) %>"><i class="las la-times"></i></button>
                     </div>
                 </div>
 

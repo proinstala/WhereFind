@@ -21,7 +21,7 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
     private static final String SQL_SELECT_GET_USER = "SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email, imagen, activo FROM USER WHERE activo = TRUE AND user_name=? AND password=ENCRYPT_DATA_BASE64(?);";
 
     // Obtiene un usuario en concreto que coincidan su user_name y su password
-    private static final String SQL_SELECT_GET_USER_BY_ID = "SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email, imagen, activo FROM USER WHERE activo = TRUE AND id=?;";
+    private static final String SQL_SELECT_GET_USER_BY_ID = "SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email, imagen, activo FROM USER WHERE id=?;";
 
     // Obtiene un usuario en concreto que coincidan su user_name y su password
     private static final String SQL_SELECT_GET_USER_BY_USER_OR_EMAIL = "SELECT id, user_name, DECRYPT_DATA_BASE64(password) AS password, rol, nombre, apellidos, email, imagen, activo FROM USER WHERE activo = TRUE AND (user_name=? OR email=?);";
@@ -38,10 +38,13 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
     private static final String SQL_UPDATE_USER_PASSWORD = "UPDATE USER SET password=ENCRYPT_DATA_BASE64(?) WHERE id=?;";
 
     // Actualiza los datos generales a un usuario
-    private static final String SQL_UPDATE_USER = "UPDATE USER SET user_name=?, nombre=?, apellidos=?, email=?, imagen=? WHERE id=?;";
+    private static final String SQL_UPDATE_USER = "UPDATE USER SET user_name=?, nombre=?, apellidos=?, email=?, imagen=?, rol=? WHERE id=?;";
 
     // Marca a un usuario como eliminado
     private static final String SQL_DELETE_USER = "UPDATE USER SET activo=false WHERE id=?;";
+
+    // Marca a un usuario como eliminado o activo
+    private static final String SQL_ACTIVAR_USER = "UPDATE USER SET activo=? WHERE id=?;";
 
     // Obtiene el número de intentos de un enlace de verificación
     private static final String SQL_RECOVERY_GET_INTENTOS = "SELECT RECOVERY_GET_INTENTOS(?) AS intentos;";
@@ -129,7 +132,8 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
             ps.setString(3, userDTO.getApellidos());
             ps.setString(4, userDTO.getEmail());
             ps.setString(5, userDTO.getImagen());
-            ps.setInt(6, userDTO.getId());
+            ps.setString(6, userDTO.getRol());
+            ps.setInt(7, userDTO.getId());
 
             // Ejecutar la actualización y obtener el número de filas afectadas
             rowsAffected = ps.executeUpdate();
@@ -203,6 +207,44 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
 
         return rowAfectadas > 0;
     }
+
+    /**
+     * Activa o desactiva un usuario de la base de datos.
+     *
+     * @param userDTO el objeto UserDTO que representa al usuario a eliminar.
+     * @return true si la eliminación fue exitosa, false en caso contrario.
+     */
+    @Override
+    public boolean activar(UserDTO userDTO) {
+        // Para recoger el numero de filas afectadas
+        int rowAfectadas = 0;
+        try
+        {
+            // Se crea la conexion
+            Connection conexion  = getConnection();
+
+            // Preparo un PreparedStatement con la sentencia necesaria para saber el numero de filas
+            PreparedStatement sentencia = conexion.prepareStatement(SQL_ACTIVAR_USER);
+
+            // Le paso los parametros al PreparedStatement
+            sentencia.setBoolean(1, userDTO.isActivo());
+            sentencia.setInt(2, userDTO.getId());
+
+            // Ejecuto la sentencia preparada
+            rowAfectadas = sentencia.executeUpdate();
+
+            // Cerramos todo lo que hemos usado
+            sentencia.close();
+            conexion.close();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        return rowAfectadas > 0;
+    }
+
 
     /**
      * Obtiene un usuario de la base de datos basado en su nombre de usuario y contraseña.

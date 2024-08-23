@@ -263,7 +263,13 @@ public class IdentidadControllerService extends BaseService {
                     String emailUsuario = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_EMAIL, userDTO.getEmail());
                     String imagenUsuario = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_IMAGEN, userDTO.getImagen());
 
-                    if (isValidParametro(nombreUsuario, 1, 100)
+                    // Solo se usarán en caso de que que este definido el valor idUserEditByAdmin en la sesión del usuario
+                    String userName = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_USERNAME, userDTO.getUserName());
+                    String rolUsuario = actionController.server().getRequestParameter(FormParametros.PARAM_USUARIO_ROL, userDTO.getRol());
+
+                    if (isValidParametro(userName, 1, 100)
+                        && isValidParametro(rolUsuario, 1, 100)
+                        && isValidParametro(nombreUsuario, 1, 100)
                         && isValidParametro(apellidosUsuario, 1, 100)
                         && isValidParametro(emailUsuario, 1, 200))
                     {
@@ -272,6 +278,20 @@ public class IdentidadControllerService extends BaseService {
                         userDTO.setApellidos(apellidosUsuario);
                         userDTO.setEmail(emailUsuario);
                         userDTO.setImagen(imagenUsuario);
+
+                        // Si esta definido el valor idUserEditByAdmin en la sesión del usuario
+                        if (UserSession.getSessionValue(actionController.server().request(), "idUserEditByAdmin") != null)
+                        {
+                            // Obtine el id del usuario que esta editando el admin desde la sesión del mismo
+                            int idUserEditByAdmin = (int)UserSession.getSessionValue(actionController.server().request(), "idUserEditByAdmin");
+                            // Si los ids coinciden
+                            if (idUserEditByAdmin == id)
+                            {
+                                // Asigna los valores extra que solo el admin puede cambiar
+                                userDTO.setUserName(userName);
+                                userDTO.setRol(rolUsuario);
+                            }
+                        }
 
                         try {
                             // Se guardan los cambios del usuario
@@ -731,6 +751,69 @@ public class IdentidadControllerService extends BaseService {
     public static boolean isValidParametro(String parametro, int minSize, int maxSize)
     {
         return !parametro.isBlank() && parametro.length() >= minSize && parametro.length() <= maxSize;
+    }
+
+
+    /**
+     * Activa o desactiva un usuario de la base de datos.
+     *
+     * @param actionController Controlador de acción
+     */
+    public void activarUser(ActionController actionController)
+    {
+        // Respuesta de la acción actual
+        ResponseDTO responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
+
+        // Comprueba que hay más de 1 parámetro
+        if (actionController.parametros().length <= 2)
+        {
+            // Crea la respuesta con un error
+            responseDTO = getResponseError(LocaleApp.ERROR_FALTAN_PARAMETROS);
+        }
+        else
+        {
+
+            // Obtiene el id del usuario desde el parámetro 1 de la lista de parámetros
+            int id = actionController.getIntFromParametros(1);
+
+            // Obtiene el estado de la activacion del usuario desde el parámetro 1 de la lista de parámetros
+            boolean activo = actionController.getBooleanFromParametros(2);
+
+            // Si el id es mayor que -1 significa que hay en principio un id válido que se puede procesar
+            if (id == -1)
+            {
+                // Crea la respuesta con un error
+                responseDTO = getResponseError(LocaleApp.ERROR_PARAMETRO_NO_CORRECTO);
+            }
+            else
+            {
+                // Conecta con el Gestor de Permanencia
+                IUserService userService = GestionPersistencia.getUserService();
+
+                // Obtiene los datos del usuario
+                UserDTO userDTO = userService.getUserById(id);
+
+                // Si el usuario no es nulo
+                if (userDTO != null)
+                {
+                    // Se vacía el password por motivos de seguridad
+                    userDTO.setPassword("");
+
+                    // Se asigna el nuevo estado al userDTO
+                    userDTO.setActivo(activo);
+
+                    // Se elimina el usuario
+                    if (userService.activar(userDTO))
+                    {
+                        // Como la acción se ha ejecutado correctamente se crea la respuesta acorde a la misma
+                        responseDTO = getResponseOk(LocaleApp.INFO_DELETE_USER, userDTO, 0);
+                    }
+                }
+            }
+        }
+
+        // Devuelve la respuesta al navegador del usuario en formato json
+        responseJson(actionController.server().response(), responseDTO);
     }
 
 
