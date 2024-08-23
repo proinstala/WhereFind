@@ -8,6 +8,19 @@ const URL_USER_EDIT = "admin/users/edit";
 let USER_SELECTED;
 
 
+$(document).ready(function () {
+    const btnModificar = document.querySelector('#btnModificar');
+    btnModificar.addEventListener('click', () => {
+        redireccion(URL_USER_EDIT + "/" + USER_SELECTED);
+    });
+
+    onSeleccionarUserFromList(false);
+});
+
+function onSeleccionarUserFromList(seleccionado) {
+    $("#btnModificar").prop('disabled', !seleccionado);
+}
+
 
 /**
  * Carga una lista de usuarios excluyendo un usuario específico de la opción de activación/desactivación.
@@ -119,6 +132,9 @@ const adminLoadListUsers = (idElement, excludeUser = -1) => {
                 USER_SELECTED = element.id;
                 resetSelected();
                 row.classList.add("selected");
+
+                // Indicar que se ha seleccionado un usuario
+                onSeleccionarUserFromList(true);
             });
         }
     }
@@ -178,12 +194,6 @@ function redireccion(url) {
 }
 
 
-$(document).ready(function () {
-    const btnModificar = document.querySelector('#btnModificar');
-    btnModificar.addEventListener('click', () => {
-        redireccion(URL_USER_EDIT + "/" + USER_SELECTED);
-    });
-});
 
 
 
