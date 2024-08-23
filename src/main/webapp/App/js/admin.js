@@ -14,6 +14,32 @@ $(document).ready(function () {
         redireccion(URL_USER_EDIT + "/" + USER_SELECTED);
     });
 
+    const buscarUsuario = document.querySelector('#buscarUsuario');
+    buscarUsuario?.addEventListener('keyup', () => {
+
+            // Obtener el valor del input y convertirlo a minúsculas
+            const filter = buscarUsuario.value.toLowerCase();
+
+            // Obtener todas las filas del cuerpo de la tabla
+            const table = document.getElementById('admin-list-users');
+            const tr = table.getElementsByTagName('tr');
+
+            // Recorrer todas las filas de la tabla (excepto el encabezado)
+            for (let i = 1; i < tr.length; i++) {
+                let row = tr[i];
+                let textContent = row.textContent || row.innerText;
+
+                // Verificar si la fila contiene el texto del input
+                if (textContent.toLowerCase().indexOf(filter) > -1) {
+                    row.style.display = ''; // Mostrar la fila
+                } else {
+                    row.style.display = 'none'; // Ocultar la fila
+                }
+            }
+
+    });
+
+
     onSeleccionarUserFromList(false);
 });
 
