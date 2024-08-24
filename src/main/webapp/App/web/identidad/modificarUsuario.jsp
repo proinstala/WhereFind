@@ -84,7 +84,7 @@
 
         <div class="main">
 
-            <div class="contenedor__formulario max-width-100" id="form_usuario">
+            <div class="contenedor__formulario formulario--3_filas max-width-100" id="form_usuario">
 
                 <div class="contenedor__formulario--cabecera">
                     <div>
@@ -165,7 +165,7 @@
             </div> <!-- Fin contenedor__formulario (usuario)-->
 
             <!-- Formulario para modificar el password de usuario -->
-            <div style="display: none;" class="contenedor__formulario max-width-100" id="form_password">
+            <div style="display: none;" class="contenedor__formulario formulario--3_filas max-width-100" id="form_password">
 
                 <div class="contenedor__formulario--cabecera">
                     <div>

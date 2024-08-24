@@ -39,9 +39,9 @@
 
         <div class="main">
 
-            <div class="contenedor__formulario max-width-120" id="form_busqueda">
+            <div class="contenedor__formulario formulario--3_filas max-width-120" id="form_busqueda">
 
-                <div class="contenedor__formulario--cabecera conBotones">
+                <div class="contenedor__formulario--cabecera conBotones margin-bottom-5">
                     <div>
                         <h1>Usuarios</h1>
                     </div>

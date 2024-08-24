@@ -6,6 +6,7 @@
 
 
 .contenedor__grid--3c {
+    width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 2rem;
@@ -14,6 +15,7 @@
 
 .seccion {
     display: flex;
+    width: 100%;
     background-color: white;
     border-radius: 1.5rem;
     padding: 1rem;

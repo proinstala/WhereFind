@@ -176,11 +176,20 @@ label {
 .no-margin {
     margin:0;
 }
+.margin-top-1 {
+    margin-top: 1rem;
+}
+.margin-bottom-5 {
+    margin-bottom: 5rem
+}
 .margin-right-auto {
     margin-right: auto;
 }
 .no-padding {
     padding: 0;
+}
+.padidin-top-1 {
+    padding-top: 1rem;
 }
 .centrar-texto {
     text-align: center;
@@ -236,7 +245,7 @@ label {
     display: grid;
     margin: 0;
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr auto; /* Barra superior, contenido, barra inferior */
+    grid-template-rows: auto auto 1fr auto; /* Barra superior, migas de pan, contenido, barra inferior */
 }
 
 .main {

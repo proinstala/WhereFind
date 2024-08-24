@@ -6,18 +6,19 @@
     <div class="contenedor">
 
         <%@ include file="../shared/cabecera.jsp" %>
+        <div class="main">
+            <div class="contenedor__grid--3c">
+                <div class="seccion">
+                    <p>Almacenes</p>
+                </div>
+                <div class="seccion">
+                    <p>Articulos</p>
+                </div>
+                <div class="seccion">
+                    <p>Otros</p>
+                </div>
 
-        <div class="contenedor__grid--3c">
-            <div class="seccion">
-                <p>Almacenes</p>
             </div>
-            <div class="seccion">
-                <p>Articulos</p>
-            </div>
-            <div class="seccion">
-                <p>Otros</p>
-            </div>
-
         </div>
 
         <div class="barra__inferior">

@@ -26,7 +26,7 @@
 
         <div class="main">
 
-            <div class="contenedor__formulario max-width-120" id="form_busqueda">
+            <div class="contenedor__formulario formulario--4_filas max-width-120" id="form_busqueda">
 
                 <div class="contenedor__formulario--cabecera conBotones">
                     <div>

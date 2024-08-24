@@ -7,7 +7,6 @@
     border-radius: 1.5rem;
     background-color: var(--blanco);
     display: grid;
-/*    grid-template-rows: auto auto auto;*/
 }
 
 @media (max-width: 800px), (max-height: 800px) {
@@ -17,6 +16,14 @@
         grid-template-rows: 1fr;
         padding: 3rem;
     }
+}
+
+.formulario--3_filas {
+    grid-template-rows: auto auto 1fr;
+}
+
+.formulario--4_filas {
+    grid-template-rows: auto auto auto 1fr;
 }
 
 .contenedor__formulario--cabecera {
