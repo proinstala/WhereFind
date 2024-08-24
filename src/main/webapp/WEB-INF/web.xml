@@ -40,6 +40,12 @@
         <url-pattern>/admin/users</url-pattern>
     </servlet-mapping>
 
+
+    <servlet-mapping> <!-- Solo es temporal -->
+        <servlet-name>adminIdentidadListaUsuarios</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+
 <!-- Mapeo de las url referentes a la cuenta de usuario -->
     <servlet>
         <servlet-name>identidadLogin</servlet-name>
@@ -71,6 +77,12 @@
         <url-pattern>/account/modificar</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping> <!-- Solo es temporal -->
+        <servlet-name>identidadModificar</servlet-name>
+        <url-pattern>/account</url-pattern>
+    </servlet-mapping>
+
+
     <servlet>
         <servlet-name>identidadRecoveryPassword</servlet-name>
         <jsp-file>/App/web/identidad/recoveryPassword.jsp</jsp-file>
@@ -91,6 +103,11 @@
     <servlet-mapping>
         <servlet-name>direccion</servlet-name>
         <url-pattern>/direccion/adminDireccion</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping> <!-- Solo es temporal -->
+        <servlet-name>direccion</servlet-name>
+        <url-pattern>/direccion</url-pattern>
     </servlet-mapping>
 
 
