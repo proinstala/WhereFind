@@ -44,7 +44,7 @@ const solicitudPut = (url, idElement, mostrarLoad) => {
  * @param {string} idElement   - Id del formulario.
  * @param {string} mostrarLoad - Bloquea la UI mostrando una alerta con una animación de espera.
  */
-const solicitudGet = (url, idElement, mostrarLoad) => {
+const solicitudGet = (url, idElement, mostrarLoad) => {   
     return solicitudGetFetch(url, idElement, mostrarLoad);
 };
 
@@ -114,6 +114,7 @@ function solicitudPutFetch(url, data, idElement, mostrarLoad) {
         formDisable(idElement, false, false);
     });
 }
+
 
 /**
  * Realiza una solicitud GET utilizando fetch.

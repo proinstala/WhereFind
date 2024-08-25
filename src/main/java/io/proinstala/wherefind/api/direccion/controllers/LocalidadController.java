@@ -1,7 +1,7 @@
 
 package io.proinstala.wherefind.api.direccion.controllers;
 
-import io.proinstala.wherefind.api.direccion.services.ProvinciaControllerService;
+import io.proinstala.wherefind.api.direccion.services.LocalidadControllerService;
 import io.proinstala.wherefind.api.identidad.UserSession;
 import io.proinstala.wherefind.shared.controllers.BaseHttpServlet;
 import static io.proinstala.wherefind.shared.controllers.BaseHttpServlet.responseError403;
@@ -10,28 +10,28 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-
 /**
  * Controlador de API direccion que maneja las solicitudes HTTP relacionadas con la gestión de provincias.
  */
-@WebServlet(urlPatterns = ProvinciaController.BASE_API_PROVINCIA + "/*")
-public class ProvinciaController extends BaseHttpServlet {
+@WebServlet(urlPatterns = LocalidadController.BASE_API_LOCALIDAD + "/*")
+public class LocalidadController extends BaseHttpServlet {
     
     /**
-     * Base de la URL para las API de provincia.
+     * Base de la URL para las API de localidad.
      */
-    protected static final String BASE_API_PROVINCIA = "/api/provincia";
+    protected static final String BASE_API_LOCALIDAD = "/api/localidad";
     
-    private final ProvinciaControllerService provinciaServicio = new ProvinciaControllerService();
-
+    private final LocalidadControllerService localidadServicio = new LocalidadControllerService();
+    
     /**
      * Tipos de acción que este controlador puede manejar.
      */
     enum ActionType {
         ERROR,
-        PROVINCIA,
-        PROVINCIAS
+        LOCALIDAD,
+        LOCALIDADES
     }
+    
     
     /**
      * Obtiene la base de la URL de la API direccion.
@@ -40,7 +40,7 @@ public class ProvinciaController extends BaseHttpServlet {
      */
     @Override
     protected String getBaseApi() {
-        return BASE_API_PROVINCIA;
+        return BASE_API_LOCALIDAD;
     }
     
     /**
@@ -58,7 +58,7 @@ public class ProvinciaController extends BaseHttpServlet {
             action = action.toUpperCase();
 
             // Recorre todos los ActionType
-            for (ProvinciaController.ActionType accion : ProvinciaController.ActionType.values()) {
+            for (LocalidadController.ActionType accion : LocalidadController.ActionType.values()) {
 
                 // Conprueba que action esté entre los ActionType
                 if (action.equals(accion.name())) {
@@ -72,14 +72,14 @@ public class ProvinciaController extends BaseHttpServlet {
         return ProvinciaController.ActionType.ERROR;
     }
     
-    protected void apiGetProvincias(ActionController actionController) {
+    protected void apiGetLocalidades(ActionController actionController) {
         // Se comprueba que el usuario está logueado y sea administrador
         if (!UserSession.isUserLogIn(actionController.server(), false)) {
             responseError403(actionController.server().response(), "");
             return;
         }
         
-        provinciaServicio.getProvincias(actionController);
+        localidadServicio.getLocalidades(actionController);
     }
     
     @Override
@@ -91,10 +91,11 @@ public class ProvinciaController extends BaseHttpServlet {
         System.out.println("EndPoint GET : " + actionController.parametros()[0]);
         
         switch(actionController.actionType()) {
-            case ActionType.PROVINCIA -> System.out.println("SE PIDE PROVINCIA");
-            case ActionType.PROVINCIAS -> apiGetProvincias(actionController);
+            case LocalidadController.ActionType.LOCALIDAD -> System.out.println("SE PIDE PROVINCIA");
+            case LocalidadController.ActionType.LOCALIDADES -> apiGetLocalidades(actionController);
               
             default -> responseError403(actionController.server().response(), "");
         }
     }
+    
 }

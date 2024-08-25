@@ -41,7 +41,7 @@ function validarFormulario(nombreForm) {
                             mostrarMensajeError("Acceso Denegado", response.result);
                         } else {
                             const acceso = () => window.location.replace(response.result);
-                            mostrarMensaje(`Bienvenido ${response.user.nombre}`, "Acceso Permitido.", "success", (response.isUrl)? acceso : null);
+                            mostrarMensaje(`Bienvenido ${response.data.nombre}`, "Acceso Permitido.", "success", (response.isUrl)? acceso : null);
                         }
             })
                     .catch(error => {

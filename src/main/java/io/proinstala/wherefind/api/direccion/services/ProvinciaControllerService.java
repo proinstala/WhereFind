@@ -19,10 +19,10 @@ public class ProvinciaControllerService extends BaseService {
         ResponseDTO responseDTO;
         
         // onecta con el Gestor de Permanencia
-        IProvinciaService provinciaService = GestionPersistencia.getProvinciaService();
+        IProvinciaService provinciaServiceImp = GestionPersistencia.getProvinciaService();
         
         //Obtiene la lista de Provincias
-        List<ProvinciaDTO> listaProvinciaDTO = provinciaService.getAllProvincias();
+        List<ProvinciaDTO> listaProvinciaDTO = provinciaServiceImp.getAllProvincias();
         
         if (listaProvinciaDTO != null) {
             responseDTO = getResponseOk("OK", listaProvinciaDTO, 0);

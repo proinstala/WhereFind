@@ -47,20 +47,14 @@
                         
                         <div class="form__input">
                             <select name="provincia" id="provincia">
-                                <option value="0">Todas</option>
-                                <option value="1">Murcia</option>
-                                <option value="2">Alicante</option>
-                                <option value="3">Barcelona</option>
+                                <option value="-1">Todas</option>
                             </select>
                             <label for="provincia">Provincia</label>
                         </div>
                         
                         <div class="form__input">
                             <select name="localidad" id="localidad">
-                                <option value="0">Todas</option>
-                                <option value="1">Murcia</option>
-                                <option value="2">Cartagena</option>
-                                <option value="3">Santomera</option>
+                                <option value="-1">Todas</option>
                             </select>
                             <label for="localidad">Localidad</label>
                         </div>
@@ -349,6 +343,6 @@
     </div>
 </div>
 
-<script src="App/js/direeccion.js" type="module" defer></script>
+<script src="App/js/direccion.js" type="module" defer></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>
