@@ -1,8 +1,10 @@
 package io.proinstala.wherefind.api.infraestructure.data;
 
+import io.proinstala.wherefind.api.infraestructure.data.interfaces.IDireccionService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.ILocalidadService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IProvinciaService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IUserService;
+import io.proinstala.wherefind.api.infraestructure.data.services.DireccionServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.LocalidadServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.ProvinciaServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.UserServiceImplement;
@@ -28,4 +30,9 @@ public class GestorPersistencia {
     public static ILocalidadService getLocalidadService() {
         return new LocalidadServiceImplement();
     }
+    
+    public static IDireccionService getDireccionService() {
+        return new DireccionServiceImplement();
+    }
+    
 }

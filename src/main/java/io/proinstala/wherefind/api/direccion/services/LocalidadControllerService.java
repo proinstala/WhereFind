@@ -26,7 +26,7 @@ public class LocalidadControllerService extends BaseService {
         // Conecta con el Gestor de Persistencia
         ILocalidadService localidadServiceImp = GestorPersistencia.getLocalidadService();
 
-        List<LocalidadDTO> listaLocalidadDTO = null;
+        List<LocalidadDTO> listaLocalidadesDTO = null;
 
 
         String jsonProvincia = actionController.server().getRequestParameter("jsonProvincia", "");

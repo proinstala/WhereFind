@@ -1,7 +1,7 @@
 
 package io.proinstala.wherefind.api.direccion.services;
 
-import io.proinstala.wherefind.api.infraestructure.data.GestionPersistencia;
+import io.proinstala.wherefind.api.infraestructure.data.GestorPersistencia;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IDireccionService;
 import io.proinstala.wherefind.shared.consts.textos.LocaleApp;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
@@ -21,7 +21,7 @@ public class DireccionControllerService extends BaseService{
         //Respuesta de la acción actual
         ResponseDTO responseDTO;
         
-        IDireccionService direccionServiceImp = GestionPersistencia.getDireccionService();
+        IDireccionService direccionServiceImp = GestorPersistencia.getDireccionService();
         
         List<DireccionDTO> listaDireccionesDTO = null;
         
