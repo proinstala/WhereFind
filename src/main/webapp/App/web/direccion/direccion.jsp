@@ -65,21 +65,21 @@
                 <div class="contenedor__tabla--botones">
                     
                     <div class="form__btn_circle">
-                        <button id="btnBuscar" title="Buscar"><i class="las la-search"></i></button>
+                        <button form="frmBuscarDireccion" id="btnBuscar" title="Buscar" type="submit"><i class="las la-search"></i></button>
                     </div>
                     <div class="form__btn_circle">
-                        <button id="btnBuscar" title="Crear"><i class="las la-plus"></i></button>
+                        <button id="btnCrear" title="Crear"><i class="las la-plus"></i></button>
                     </div>
                     <div class="form__btn_circle">
-                        <button id="btnBuscar" title="Borrar"><i class="las la-minus"></i></button>
+                        <button id="btnEliminar" title="Eliminar"><i class="las la-minus"></i></button>
                     </div>
                     <div class="form__btn_circle">
-                        <button id="btnBuscar" title="Modificar"><i class="las la-pen"></i></button>
+                        <button id="btnModificar" title="Modificar"><i class="las la-pen"></i></button>
                     </div>
                 </div>
                 
                 <div class="contenedor__tabla">
-                    <table class="tabla">
+                    <table class="tabla" id="tablaDireciones">
                         <thead>
                             <tr>
                                 <th>Id</th>
@@ -91,198 +91,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Juan de diego</td>
-                                <td>15</td>
-                                <td>30580</td>
-                                <td>Alquerias</td>
-                                <td>Murcia</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Vereda los cipreses</td>
-                                <td>21</td>
-                                <td>30162</td>
-                                <td>Santa Cruz</td>
-                                <td>Murcia</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Juan de diego</td>
-                                <td>15</td>
-                                <td>30580</td>
-                                <td>Alquerias</td>
-                                <td>Murcia</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Vereda los cipreses</td>
-                                <td>21</td>
-                                <td>30162</td>
-                                <td>Santa Cruz</td>
-                                <td>Murcia</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Juan de diego</td>
-                                <td>15</td>
-                                <td>30580</td>
-                                <td>Alquerias</td>
-                                <td>Murcia</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Vereda los cipreses</td>
-                                <td>21</td>
-                                <td>30162</td>
-                                <td>Santa Cruz</td>
-                                <td>Murcia</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Juan de diego</td>
-                                <td>15</td>
-                                <td>30580</td>
-                                <td>Alquerias</td>
-                                <td>Murcia</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Vereda los cipreses</td>
-                                <td>21</td>
-                                <td>30162</td>
-                                <td>Santa Cruz</td>
-                                <td>Murcia</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Juan de diego</td>
-                                <td>15</td>
-                                <td>30580</td>
-                                <td>Alquerias</td>
-                                <td>Murcia</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Vereda los cipreses</td>
-                                <td>21</td>
-                                <td>30162</td>
-                                <td>Santa Cruz</td>
-                                <td>Murcia</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Juan de diego</td>
-                                <td>15</td>
-                                <td>30580</td>
-                                <td>Alquerias</td>
-                                <td>Murcia</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Vereda los cipreses</td>
-                                <td>21</td>
-                                <td>30162</td>
-                                <td>Santa Cruz</td>
-                                <td>Murcia</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Juan de diego</td>
-                                <td>15</td>
-                                <td>30580</td>
-                                <td>Alquerias</td>
-                                <td>Murcia</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Vereda los cipreses</td>
-                                <td>21</td>
-                                <td>30162</td>
-                                <td>Santa Cruz</td>
-                                <td>Murcia</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Juan de diego</td>
-                                <td>15</td>
-                                <td>30580</td>
-                                <td>Alquerias</td>
-                                <td>Murcia</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Vereda los cipreses</td>
-                                <td>21</td>
-                                <td>30162</td>
-                                <td>Santa Cruz</td>
-                                <td>Murcia</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Juan de diego</td>
-                                <td>15</td>
-                                <td>30580</td>
-                                <td>Alquerias</td>
-                                <td>Murcia</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Vereda los cipreses</td>
-                                <td>21</td>
-                                <td>30162</td>
-                                <td>Santa Cruz</td>
-                                <td>Murcia</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Juan de diego</td>
-                                <td>15</td>
-                                <td>30580</td>
-                                <td>Alquerias</td>
-                                <td>Murcia</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Vereda los cipreses</td>
-                                <td>21</td>
-                                <td>30162</td>
-                                <td>Santa Cruz</td>
-                                <td>Murcia</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Juan de diego</td>
-                                <td>15</td>
-                                <td>30580</td>
-                                <td>Alquerias</td>
-                                <td>Murcia</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Vereda los cipreses</td>
-                                <td>21</td>
-                                <td>30162</td>
-                                <td>Santa Cruz</td>
-                                <td>Murcia</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Juan de diego</td>
-                                <td>15</td>
-                                <td>30580</td>
-                                <td>Alquerias</td>
-                                <td>Murcia</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Vereda los cipreses</td>
-                                <td>21</td>
-                                <td>30162</td>
-                                <td>Santa Cruz</td>
-                                <td>Murcia</td>
-                            </tr>
+                            <!-- El contenido se cargar desde javaScript -->
                         </tbody>
                     </table>
                 </div>

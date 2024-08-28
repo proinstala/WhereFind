@@ -1,7 +1,7 @@
 
 package io.proinstala.wherefind.api.direccion.controllers;
 
-import io.proinstala.wherefind.api.direccion.services.LocalidadControllerService;
+import io.proinstala.wherefind.api.direccion.services.DireccionControllerService;
 import io.proinstala.wherefind.api.identidad.UserSession;
 import io.proinstala.wherefind.shared.controllers.BaseHttpServlet;
 import static io.proinstala.wherefind.shared.controllers.BaseHttpServlet.responseError403;
@@ -12,25 +12,26 @@ import jakarta.servlet.http.HttpServletResponse;
 
 
 /**
- * Controlador de API direccion que maneja las solicitudes HTTP relacionadas con la gestión de localidades.
+ * Controlador de API direccion que maneja las solicitudes HTTP relacionadas con la gestión de direccion.
  */
-@WebServlet(urlPatterns = LocalidadController.BASE_API_LOCALIDAD + "/*")
-public class LocalidadController extends BaseHttpServlet {
+@WebServlet(urlPatterns = DireccionController.BASE_API_DIRECCION + "/*")
+public class DireccionController extends BaseHttpServlet {
     
     /**
      * Base de la URL para las API de localidad.
      */
-    protected static final String BASE_API_LOCALIDAD = "/api/localidad";
+    protected static final String BASE_API_DIRECCION = "/api/direccion";
     
-    private final LocalidadControllerService localidadServicio = new LocalidadControllerService();
+    private final DireccionControllerService direccionServicio = new DireccionControllerService();
+    
     
     /**
      * Tipos de acción que este controlador puede manejar.
      */
     enum ActionType {
         ERROR,
-        LOCALIDAD,
-        LOCALIDADES
+        DIRECCION,
+        FINDDIRECCIONES
     }
     
     
@@ -41,7 +42,7 @@ public class LocalidadController extends BaseHttpServlet {
      */
     @Override
     protected String getBaseApi() {
-        return BASE_API_LOCALIDAD;
+        return BASE_API_DIRECCION;
     }
     
     /**
@@ -51,8 +52,7 @@ public class LocalidadController extends BaseHttpServlet {
      * @return el tipo de acción correspondiente, o {@code ActionType.ERROR} si no se encuentra.
      */
     @Override
-    protected Object getActionType(String action)
-    {
+    protected Object getActionType(String action) {
         // Si la acción no es nula
         if (action != null && !action.isBlank()) {
             // Convierte el texto en mayúsculas
@@ -73,14 +73,14 @@ public class LocalidadController extends BaseHttpServlet {
         return ActionType.ERROR;
     }
     
-    protected void apiGetLocalidades(ActionController actionController) {
+    protected void apiFindDirecciones(ActionController actionController) {
         // Se comprueba que el usuario está logueado
         if (!UserSession.isUserLogIn(actionController.server(), false)) {
             responseError403(actionController.server().response(), "");
             return;
         }
         
-        localidadServicio.getLocalidades(actionController);
+        direccionServicio.findDirecciones(actionController);
     }
     
     @Override
@@ -92,8 +92,8 @@ public class LocalidadController extends BaseHttpServlet {
         System.out.println("EndPoint GET : " + actionController.parametros()[0]);
         
         switch((ActionType) actionController.actionType()) {
-            case LOCALIDAD -> System.out.println("SE PIDE PROVINCIA");
-            case LOCALIDADES -> apiGetLocalidades(actionController);
+            case DIRECCION -> System.out.println("SE PIDE DIRECCION");
+            case FINDDIRECCIONES -> apiFindDirecciones(actionController);
               
             default -> responseError403(actionController.server().response(), "");
         }

@@ -10,8 +10,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProvinciaDTO {
+public class DireccionDTO {
     
     private int id;
-    private String nombre;
+    private String calle;
+    private String numero;
+    private Integer codigoPostal;
+    private LocalidadDTO localidad;
+    private boolean activo;
 }

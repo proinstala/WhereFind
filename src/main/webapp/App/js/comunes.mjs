@@ -265,4 +265,4 @@ const detectarCambiosFormulario = (idForm, callBack) => {
 
 
 
-export { solicitudPost, solicitudGet, solicitudPut, setImageSelected, resetCamposForm, detectarCambiosFormulario };
+export { solicitudPost, solicitudGet, solicitudPut, setImageSelected, resetCamposForm, detectarCambiosFormulario, getDatosForm };

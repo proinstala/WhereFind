@@ -4,7 +4,6 @@ package io.proinstala.wherefind.api.direccion.services;
 import com.google.gson.Gson;
 import io.proinstala.wherefind.api.infraestructure.data.GestionPersistencia;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.ILocalidadService;
-import io.proinstala.wherefind.shared.consts.textos.FormParametros;
 import io.proinstala.wherefind.shared.consts.textos.LocaleApp;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
 import io.proinstala.wherefind.shared.dtos.LocalidadDTO;
@@ -27,7 +26,7 @@ public class LocalidadControllerService extends BaseService {
         // Conecta con el Gestor de Persistencia
         ILocalidadService localidadServiceImp = GestionPersistencia.getLocalidadService();
         
-        List<LocalidadDTO> listaLocalidadDTO = null;
+        List<LocalidadDTO> listaLocalidadesDTO = null;
         
         
         String jsonProvincia = actionController.server().getRequestParameter("jsonProvincia", "");
@@ -37,15 +36,15 @@ public class LocalidadControllerService extends BaseService {
             ProvinciaDTO provinciaDTO = gson.fromJson(jsonProvincia, ProvinciaDTO.class);
             
             //Obtiene la lista de Provincias
-            listaLocalidadDTO = localidadServiceImp.getLocalidadesOfProvincia(provinciaDTO);
+            listaLocalidadesDTO = localidadServiceImp.getLocalidadesOfProvincia(provinciaDTO);
         } else {
             //Obtiene la lista de Provincias
-            listaLocalidadDTO = localidadServiceImp.getAllLocalidades();
+            listaLocalidadesDTO = localidadServiceImp.getAllLocalidades();
         }
         
         
-        if (listaLocalidadDTO != null) {
-            responseDTO = getResponseOk("OK", listaLocalidadDTO, 0);
+        if (listaLocalidadesDTO != null) {
+            responseDTO = getResponseOk("OK", listaLocalidadesDTO, 0);
         } else {
             //Crea la respuesta con un error
             responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR, new ArrayList<>());

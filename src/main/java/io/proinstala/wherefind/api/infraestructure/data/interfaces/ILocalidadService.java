@@ -5,6 +5,7 @@ import io.proinstala.wherefind.shared.dtos.LocalidadDTO;
 import io.proinstala.wherefind.shared.dtos.ProvinciaDTO;
 import java.util.List;
 
+
 public interface ILocalidadService {
     
     public List<LocalidadDTO> getAllLocalidades();

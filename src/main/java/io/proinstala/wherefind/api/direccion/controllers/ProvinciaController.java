@@ -53,12 +53,12 @@ public class ProvinciaController extends BaseHttpServlet {
     protected Object getActionType(String action)
     {
         // Si la acción no es nula
-        if (action != "") {
+        if (action != null && !action.isBlank()) {
             // Convierte el texto en mayúsculas
             action = action.toUpperCase();
 
             // Recorre todos los ActionType
-            for (ProvinciaController.ActionType accion : ProvinciaController.ActionType.values()) {
+            for (ActionType accion : ActionType.values()) {
 
                 // Conprueba que action esté entre los ActionType
                 if (action.equals(accion.name())) {
@@ -69,7 +69,7 @@ public class ProvinciaController extends BaseHttpServlet {
         }
 
         // Devuelve el ActionType de error por no encontrar un ActionType coincidente
-        return ProvinciaController.ActionType.ERROR;
+        return ActionType.ERROR;
     }
     
     protected void apiGetProvincias(ActionController actionController) {
@@ -90,9 +90,9 @@ public class ProvinciaController extends BaseHttpServlet {
         // Imprime en la salida del servidor el EndPoint
         System.out.println("EndPoint GET : " + actionController.parametros()[0]);
         
-        switch(actionController.actionType()) {
-            case ActionType.PROVINCIA -> System.out.println("SE PIDE PROVINCIA");
-            case ActionType.PROVINCIAS -> apiGetProvincias(actionController);
+        switch((ActionType) actionController.actionType()) {
+            case PROVINCIA -> System.out.println("SE PIDE PROVINCIA");
+            case PROVINCIAS -> apiGetProvincias(actionController);
               
             default -> responseError403(actionController.server().response(), "");
         }

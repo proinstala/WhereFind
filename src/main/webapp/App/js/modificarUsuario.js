@@ -156,13 +156,9 @@ function validarFormulario(idForm) {
                         }
                     });
         },
-       // Función error de respuesta
+        //Función error de respuesta
         errorPlacement: function (error, element) {
             error.insertAfter(element); // Esto colocará el mensaje de error después del elemento con error
-        },
-        complete: function () {
-            console.log("complete");
-            formDisable(false, idForm);
         }
     });//Fin Validate
 }
@@ -229,7 +225,7 @@ function validarFormularioPassword(idForm) {
                         }
                     });
         },
-       // Función error de respuesta
+        //Función error de respuesta
         errorPlacement: function (error, element) {
             error.insertAfter(element); // Esto colocará el mensaje de error después del elemento con error
         }
