@@ -1,6 +1,12 @@
 <%@page import="io.proinstala.wherefind.shared.consts.urls.enums.UrlApp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<div class="breadcrumb-container">
+
     <style>
+        .breadcrumb-container {
+            height: 1.7em;
+        }
+
         .breadcrumb {
             margin-left : 1.5em;
             list-style: none;
@@ -21,7 +27,6 @@
 
 
         .breadcrumb li.active {
-            font-size: 1.5em;
             font-weight: 600;
         }
 
@@ -43,7 +48,7 @@
         }
 
         .breadcrumb li.active::before {
-            font-size: 48px;
+
         }
 
         .breadcrumb li[data-id="inicio"]::before {
@@ -179,3 +184,4 @@
             }
         %>
     </ul>
+</div>
