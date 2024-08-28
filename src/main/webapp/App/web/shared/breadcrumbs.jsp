@@ -1,6 +1,13 @@
 <%@page import="io.proinstala.wherefind.shared.consts.urls.enums.UrlApp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<div class="breadcrumb-container">
+
     <style>
+        .breadcrumb-container {
+            height: 1.7em;
+            margin-bottom: 10px;
+        }
+
         .breadcrumb {
             margin-left : 1.5em;
             list-style: none;
@@ -21,7 +28,6 @@
 
 
         .breadcrumb li.active {
-            font-size: 1.5em;
             font-weight: 600;
         }
 
@@ -43,12 +49,26 @@
         }
 
         .breadcrumb li.active::before {
-            font-size: 48px;
+
         }
 
         .breadcrumb li[data-id="inicio"]::before {
-            content: "\f015";
+            content: "";
         }
+
+        .breadcrumb li[data-id="inicio"] a {
+            padding: 10px;
+            text-decoration: none;
+        }
+
+        .breadcrumb li[data-id="inicio"] a i {
+            cursor: pointer;
+            font-size: 24px;
+            margin-left: -20px;
+            margin-top: 1px;
+            position: absolute;
+        }
+
 
         .breadcrumb li[data-id="account"]::before {
             content: "\f007";
@@ -155,7 +175,7 @@
 <%= uri %><br> --%>
 
     <ul class="breadcrumb">
-        <li data-id="inicio" class="las"><a href="<%= uriHome %>">Inicio</a></li>
+        <li data-id="inicio"><a href="<%= uriHome %>"><i class="las la-home"></i></a></li>
         <%
             String path = uriHome;
             for (int i = 1; i < uriParts.length; i++)
@@ -179,3 +199,4 @@
             }
         %>
     </ul>
+</div>

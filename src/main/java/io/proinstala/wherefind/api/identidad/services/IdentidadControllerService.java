@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.proinstala.wherefind.api.identidad.UserSession;
-import io.proinstala.wherefind.api.infraestructure.data.GestionPersistencia;
+import io.proinstala.wherefind.api.infraestructure.data.GestorPersistencia;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IUserService;
 import io.proinstala.wherefind.api.infraestructure.email.Email;
 import io.proinstala.wherefind.shared.consts.textos.FormParametros;
@@ -112,7 +112,7 @@ public class IdentidadControllerService extends BaseService {
             else
             {
                 // Conecta con el Gestor de Permanencia
-                IUserService userService = GestionPersistencia.getUserService();
+                IUserService userService = GestorPersistencia.getUserService();
 
                 // Obtiene los datos del usuario
                 UserDTO userDTO = userService.getUserById(id);
@@ -141,7 +141,7 @@ public class IdentidadControllerService extends BaseService {
         ResponseDTO responseDTO;
 
         // Conecta con el Gestor de Permanencia
-        IUserService userService = GestionPersistencia.getUserService();
+        IUserService userService = GestorPersistencia.getUserService();
 
         // Obtiene la lista de usuarios
         List<UserDTO> listaUserDTO = userService.getAllUsers();
@@ -193,7 +193,7 @@ public class IdentidadControllerService extends BaseService {
             else
             {
                 // Conecta con el Gestor de Permanencia
-                IUserService userService = GestionPersistencia.getUserService();
+                IUserService userService = GestorPersistencia.getUserService();
 
                 // Obtiene los datos del usuario
                 UserDTO userDTO = userService.getUserById(id);
@@ -249,7 +249,7 @@ public class IdentidadControllerService extends BaseService {
             else
             {
                 // Conecta con el Gestor de Permanencia
-                IUserService userService = GestionPersistencia.getUserService();
+                IUserService userService = GestorPersistencia.getUserService();
 
                 // Obtiene los datos del usuario
                 UserDTO userDTO = userService.getUserById(id);
@@ -358,7 +358,7 @@ public class IdentidadControllerService extends BaseService {
             else
             {
                 // Conecta con el Gestor de Permanencia
-                IUserService userService = GestionPersistencia.getUserService();
+                IUserService userService = GestorPersistencia.getUserService();
 
                 // Obtiene los datos del usuario
                 UserDTO userDTO = userService.getUserById(id);
@@ -447,7 +447,7 @@ public class IdentidadControllerService extends BaseService {
             && isValidParametro(emailUsuario, 1, 200))
         {
             // Conecta con el Gestor de Permanencia
-            IUserService userService = GestionPersistencia.getUserService();
+            IUserService userService = GestorPersistencia.getUserService();
 
             // Crea y guarda los datos del usuario
             UserDTO userDTO = null;
@@ -497,7 +497,7 @@ public class IdentidadControllerService extends BaseService {
         if (!nombreUsuario.isBlank())
         {
             // Conecta con el Gestor de Permanencia
-            IUserService userService = GestionPersistencia.getUserService();
+            IUserService userService = GestorPersistencia.getUserService();
 
             // Busca al usuario por el nombre de usuario o email
             UserDTO userDTO = null;
@@ -663,7 +663,7 @@ public class IdentidadControllerService extends BaseService {
         }
 
         // Conectar con el Gestor de Permanencia y obtener UserService
-        IUserService userService = GestionPersistencia.getUserService();
+        IUserService userService = GestorPersistencia.getUserService();
 
         // Consulta al usuario en la base de datos usando el email proporcionado,
         // almacenando los datos del usuario obtenidos en 'userDTO'
@@ -708,7 +708,7 @@ public class IdentidadControllerService extends BaseService {
     public static boolean verificarIntento(String hash)
     {
         // Conectar con el Gestor de Permanencia y obtener UserService
-        IUserService userService = GestionPersistencia.getUserService();
+        IUserService userService = GestorPersistencia.getUserService();
 
         // Consulta que el hash del recovery solo tenga 1 intento de recuperación
         return userService.getRecoveryIntentos(hash);
@@ -788,7 +788,7 @@ public class IdentidadControllerService extends BaseService {
             else
             {
                 // Conecta con el Gestor de Permanencia
-                IUserService userService = GestionPersistencia.getUserService();
+                IUserService userService = GestorPersistencia.getUserService();
 
                 // Obtiene los datos del usuario
                 UserDTO userDTO = userService.getUserById(id);

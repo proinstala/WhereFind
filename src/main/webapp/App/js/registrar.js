@@ -120,7 +120,7 @@ function validarFormulario(idForm) {
                         mostrarMensajeError("No se puede registrar", response.result);
                     } else {
                         const acceso = () => window.location.replace(response.result);
-                        mostrarMensaje("Creado Usuario.", `Se ha creado correctamente el usuario de ${response.user.nombre}`, "success", (response.isUrl) ? acceso : null);
+                        mostrarMensaje("Creado Usuario.", `Se ha creado correctamente el usuario de ${response.data.nombre}`, "success", (response.isUrl) ? acceso : null);
                     }
                 })
                 .catch(error => {

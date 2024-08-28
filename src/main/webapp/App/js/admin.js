@@ -90,7 +90,7 @@ const adminLoadListUsers = (idElement, excludeUser = -1) => {
             }
         }
 
-        for (const element of response.user){
+        for (const element of response.data){
             // Crear una nueva fila en la tabla
             let row = tableRef.insertRow();
 

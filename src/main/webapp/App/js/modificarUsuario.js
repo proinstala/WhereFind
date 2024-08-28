@@ -140,7 +140,7 @@ function validarFormulario(idForm) {
                                             mostrarMensajeError("No se puede actualizar los datos", response.result);
                                         } else {
                                             //const acceso = () => window.location.replace(response.result);
-                                            mostrarMensaje("Modificado Usuario.", `Se han modificado correctamente los datos el usuario de ${response.user.nombre}`, "success");
+                                            mostrarMensaje("Modificado Usuario.", `Se han modificado correctamente los datos el usuario de ${response.data.nombre}`, "success");
                                             datosOriginalesFormulario = getDatosOriginalesForm(idForm);
                                         }
                                     })
@@ -210,7 +210,7 @@ function validarFormularioPassword(idForm) {
                                         if (response.isError === 1) {
                                             mostrarMensajeError("No se puede actualizar los datos", response.result);
                                         } else {
-                                            mostrarMensaje("Modificado Usuario.", `Se han modificado correctamente los datos el usuario de ${response.user.nombre}`, "success");
+                                            mostrarMensaje("Modificado Usuario.", `Se han modificado correctamente los datos el usuario de ${response.data.nombre}`, "success");
                                             resetCamposForm(idForm);
                                         }
                                     })
