@@ -2,7 +2,7 @@ package io.proinstala.wherefind.api.identidad;
 
 import java.io.IOException;
 
-import io.proinstala.wherefind.api.infraestructure.data.GestionPersistencia;
+import io.proinstala.wherefind.api.infraestructure.data.GestorPersistencia;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IUserService;
 import io.proinstala.wherefind.shared.consts.urls.enums.UrlApp;
 import io.proinstala.wherefind.shared.consts.urls.enums.UrlIdentidad;
@@ -28,7 +28,7 @@ public class UserSession {
     public static UserDTO login(String userName, String password, ActionServer server)
     {
         // Conecta con el Gestor de Permanencia
-        IUserService userService = GestionPersistencia.getUserService();
+        IUserService userService = GestorPersistencia.getUserService();
 
         // Obtiene los datos del usuario
         UserDTO userDTO = userService.getUser(userName, password);

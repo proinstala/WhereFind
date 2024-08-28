@@ -2,7 +2,7 @@ package io.proinstala.wherefind.api.admin;
 import java.io.IOException;
 
 import io.proinstala.wherefind.api.identidad.UserSession;
-import io.proinstala.wherefind.api.infraestructure.data.GestionPersistencia;
+import io.proinstala.wherefind.api.infraestructure.data.GestorPersistencia;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IUserService;
 import io.proinstala.wherefind.shared.controllers.BaseHttpServlet;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
@@ -106,7 +106,7 @@ public class UserEditController extends BaseHttpServlet{
         else
         {
             // Conecta con el Gestor de Permanencia
-            IUserService userService = GestionPersistencia.getUserService();
+            IUserService userService = GestorPersistencia.getUserService();
 
             // Obtiene los datos del usuario
             userDTO = userService.getUserById(id);

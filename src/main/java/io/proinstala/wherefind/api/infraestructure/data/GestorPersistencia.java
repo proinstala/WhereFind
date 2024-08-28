@@ -10,7 +10,7 @@ import io.proinstala.wherefind.api.infraestructure.data.services.UserServiceImpl
 /**
  * Clase GestionPersistencia que gestiona la persistencia y proporciona servicios relacionados con los usuarios.
  */
-public class GestionPersistencia {
+public class GestorPersistencia {
 
     /**
      * Obtiene una instancia del servicio de usuarios.
@@ -20,11 +20,11 @@ public class GestionPersistencia {
     public static IUserService getUserService() {
         return new UserServiceImplement();
     }
-    
+
     public static IProvinciaService getProvinciaService() {
         return new ProvinciaServiceImplement();
     }
-    
+
     public static ILocalidadService getLocalidadService() {
         return new LocalidadServiceImplement();
     }
