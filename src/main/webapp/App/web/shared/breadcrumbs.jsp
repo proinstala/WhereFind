@@ -5,6 +5,7 @@
     <style>
         .breadcrumb-container {
             height: 1.7em;
+            margin-bottom: 10px;
         }
 
         .breadcrumb {
@@ -52,8 +53,22 @@
         }
 
         .breadcrumb li[data-id="inicio"]::before {
-            content: "\f015";
+            content: "";
         }
+
+        .breadcrumb li[data-id="inicio"] a {
+            padding: 10px;
+            text-decoration: none;
+        }
+
+        .breadcrumb li[data-id="inicio"] a i {
+            cursor: pointer;
+            font-size: 24px;
+            margin-left: -20px;
+            margin-top: 1px;
+            position: absolute;
+        }
+
 
         .breadcrumb li[data-id="account"]::before {
             content: "\f007";
@@ -160,7 +175,7 @@
 <%= uri %><br> --%>
 
     <ul class="breadcrumb">
-        <li data-id="inicio" class="las"><a href="<%= uriHome %>">Inicio</a></li>
+        <li data-id="inicio"><a href="<%= uriHome %>"><i class="las la-home"></i></a></li>
         <%
             String path = uriHome;
             for (int i = 1; i < uriParts.length; i++)
