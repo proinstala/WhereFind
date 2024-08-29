@@ -3,6 +3,10 @@
 <%@page import="io.proinstala.wherefind.shared.controllers.actions.ActionServer"%>
 <%@page import="io.proinstala.wherefind.api.identidad.UserSession"%>
 <%@page import="io.proinstala.wherefind.shared.consts.urls.enums.UrlAdmin"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="io.proinstala.wherefind.shared.dtos.CardDTO"%>
+
 <%
     // Se declara e instancia un ActionServer
     ActionServer actionServer = new ActionServer(request, response);
@@ -20,6 +24,18 @@
         BaseHttpServlet.responseError403(actionServer.response(), "");
         return;
     }
+
+    // Se obtiene la lista de tarjetas
+    List<CardDTO> tarjetas = new ArrayList<>();
+
+    // Se agregan las tarjetas a la lista
+    tarjetas.add(new CardDTO("las la-map-marked-alt", "Direcciones", "Gestione todas las direcciones, provincias y localidades.", "direccion"));
+    tarjetas.add(new CardDTO("las la-envelope", "Email", "Configura todo lo referente a la configuración interna de email de la app.", "#"));
+    tarjetas.add(new CardDTO("las la-users-cog", "Usuarios", "Visualiza y administra todos los usuarios registrado en la app.", UrlAdmin.USER_LISTA.getUri()));
+
+    // Se agrega la lista a los atributos de la petición
+    request.setAttribute("cards", tarjetas);
+
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >
@@ -49,30 +65,7 @@
                     </div>
                 </div>
 
-
-                <div class="cards">
-                    <jsp:include page="/App/web/shared/card.jsp" >
-                        <jsp:param name="iconCard" value="las la-map-marked-alt" />
-                        <jsp:param name="titleCard" value="Direcciones" />
-                        <jsp:param name="descriptionCard" value="Gestione todas las direcciones, provincias y localidades." />
-                        <jsp:param name="urlCard" value="#" />
-                    </jsp:include>
-
-                    <jsp:include page="/App/web/shared/card.jsp" >
-                        <jsp:param name="iconCard" value="las la-envelope" />
-                        <jsp:param name="titleCard" value="Email" />
-                        <jsp:param name="descriptionCard" value="Configura todo lo referente a la configuración interna de email de la app." />
-                        <jsp:param name="urlCard" value="#" />
-                    </jsp:include>
-
-                    <jsp:include page="/App/web/shared/card.jsp" >
-                        <jsp:param name="iconCard" value="las la-users-cog" />
-                        <jsp:param name="titleCard" value="Usuarios" />
-                        <jsp:param name="descriptionCard" value="Visualiza y administra todos los usuarios registrado en la app." />
-                        <jsp:param name="urlCard" value="<%= UrlAdmin.USER_LISTA.getUri() %>" />
-                    </jsp:include>
-
-                </div>
+                <%@ include file="/App/web/shared/cardContainer.jsp" %>
 
             </div>
             </div> <!-- Fin contenedor__formulario -->

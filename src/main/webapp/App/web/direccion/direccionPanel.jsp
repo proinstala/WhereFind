@@ -20,6 +20,18 @@
         BaseHttpServlet.responseError403(actionServer.response(), "");
         return;
     }
+
+    // Se obtiene la lista de tarjetas
+    List<CardDTO> tarjetas = new ArrayList<>();
+
+    // Se agregan las tarjetas a la lista
+    tarjetas.add(new CardDTO("las la-map-marked-alt", "Direcciones", "Gestione todas las direcciones.", "direccion/adminDireccion"));
+    tarjetas.add(new CardDTO("las la-city", "Localidades", "Gestione todas las Localidades.", "#"));
+    tarjetas.add(new CardDTO("las la-sitemap", "Provincias", "Gestione todas las provincias.", "#"));
+
+    // Se agrega la lista a los atributos de la petición
+    request.setAttribute("cards", tarjetas);
+
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >
@@ -50,37 +62,7 @@
                 </div>
 
 
-                <div class="cards">
-                    <jsp:include page="/App/web/shared/card.jsp" >
-                        <jsp:param name="iconCard" value="las la-map-marked-alt" />
-                        <jsp:param name="titleCard" value="Direcciones" />
-                        <jsp:param name="descriptionCard" value="Gestione todas las direcciones." />
-                        <jsp:param name="urlCard" value="direccion/adminDireccion" />
-                    </jsp:include>
-
-                    <jsp:include page="/App/web/shared/card.jsp" >
-                        <jsp:param name="iconCard" value="las la-city" />
-                        <jsp:param name="titleCard" value="Localidades" />
-                        <jsp:param name="descriptionCard" value="Gestione todas las Localidades" />
-                        <jsp:param name="urlCard" value="#" />
-                    </jsp:include>
-
-                    <jsp:include page="/App/web/shared/card.jsp" >
-                        <jsp:param name="iconCard" value="las la-sitemap" />
-                        <jsp:param name="titleCard" value="Provincias" />
-                        <jsp:param name="descriptionCard" value="Gestione todas las provincias." />
-                        <jsp:param name="urlCard" value="#" />
-                    </jsp:include>
-
-                    <jsp:include page="/App/web/shared/card.jsp" >
-                        <jsp:param name="iconCard" value="las la-sitemap" />
-                        <jsp:param name="titleCard" value="Playa" />
-                        <jsp:param name="descriptionCard" value="Gestione todas las playas." />
-                        <jsp:param name="urlCard" value="#" />
-                    </jsp:include>
-
-
-                </div>
+                <%@ include file="/App/web/shared/cardContainer.jsp" %>
 
             </div>
             </div> <!-- Fin contenedor__formulario -->
