@@ -31,6 +31,17 @@
 
 <!-- Mapeo de las url referentes a la cuenta de administrador -->
     <servlet>
+        <servlet-name>adminPanel</servlet-name>
+        <jsp-file>/App/web/admin/administrar.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>adminPanel</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
         <servlet-name>adminIdentidadListaUsuarios</servlet-name>
         <jsp-file>/App/web/admin/users.jsp</jsp-file>
     </servlet>
@@ -41,10 +52,6 @@
     </servlet-mapping>
 
 
-    <servlet-mapping> <!-- Solo es temporal -->
-        <servlet-name>adminIdentidadListaUsuarios</servlet-name>
-        <url-pattern>/admin</url-pattern>
-    </servlet-mapping>
 
 <!-- Mapeo de las url referentes a la cuenta de usuario -->
     <servlet>

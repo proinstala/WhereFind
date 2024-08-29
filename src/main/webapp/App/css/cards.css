@@ -1,0 +1,97 @@
+.circle {
+    width: 48px;
+    height: 48px;
+    background-color:  var(--primario);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 40px;
+    font-style: normal;
+    margin-right: 7px;
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    margin: 10px;
+    padding: 10px;
+    width: 330px;
+    min-height: 150px;
+    display: grid;
+    grid-template-rows: 20px 50px 1fr 50px;
+    border-radius: 10px;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
+    transition: all 0.2s;
+    position: relative;
+}
+
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--primario);
+    border-radius: 10px;
+    opacity: 0.10;
+    z-index: 0;
+}
+
+.card:hover::before {
+    opacity: 0.15;
+}
+
+.card:hover {
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.4);
+    transform: scale(1.01);
+}
+
+.card__link,
+.card__exit,
+.card__icon {
+    position: relative;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.9);
+}
+
+.card__link::after {
+    position: absolute;
+    top: 25px;
+    left: 0;
+    content: "";
+    width: 0%;
+    height: 3px;
+    background-color: rgba(0, 0, 0, 0.6);
+    transition: all 0.5s;
+}
+
+.card__link:hover::after {
+    width: 100%;
+}
+
+
+
+.card__title {
+    display: flex;
+    grid-row: 2/4;
+    font-weight: 400;
+    color: #00000080;
+}
+
+.card__descripcion {
+    grid-row: 4/5;
+    align-self: center;
+}
+
+.card__apply {
+    grid-row: 5/5;
+    align-self: center;
+}

@@ -157,7 +157,7 @@
 
 
         // Admin
-        urlMappingName.put("admin".toLowerCase(), "Administar");
+        urlMappingName.put("admin".toLowerCase(), "Administrar");
         urlMappingName.put("users".toLowerCase(), "Usuarios");
         urlMappingName.put("edit".toLowerCase(), "Editar");
 
