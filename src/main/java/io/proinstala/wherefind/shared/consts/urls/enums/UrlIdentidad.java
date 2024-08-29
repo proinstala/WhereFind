@@ -3,7 +3,7 @@ package io.proinstala.wherefind.shared.consts.urls.enums;
 public enum UrlIdentidad {
     LOGIN("account/login"),
     REGISTRAR("account/registrar"),
-    MODIFICAR("account/modificarUsuario"),
+    MODIFICAR("account/modificar"),
     RECOVERY("account/recovery");
 
 

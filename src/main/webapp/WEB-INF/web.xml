@@ -84,8 +84,14 @@
         <url-pattern>/account/modificar</url-pattern>
     </servlet-mapping>
 
-    <servlet-mapping> <!-- Solo es temporal -->
-        <servlet-name>identidadModificar</servlet-name>
+
+    <servlet>
+        <servlet-name>identidadPanel</servlet-name>
+        <jsp-file>/App/web/identidad/accountPanel.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>identidadPanel</servlet-name>
         <url-pattern>/account</url-pattern>
     </servlet-mapping>
 
