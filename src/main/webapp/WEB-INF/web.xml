@@ -103,6 +103,16 @@
 
     <!-- Mapeo de las url referentes a Direccion -->
     <servlet>
+        <servlet-name>direccionPanel</servlet-name>
+        <jsp-file>/App/web/direccion/direccionPanel.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>direccionPanel</servlet-name>
+        <url-pattern>/direccion</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>direccion</servlet-name>
         <jsp-file>/App/web/direccion/direccion.jsp</jsp-file>
     </servlet>
@@ -111,11 +121,5 @@
         <servlet-name>direccion</servlet-name>
         <url-pattern>/direccion/adminDireccion</url-pattern>
     </servlet-mapping>
-
-    <servlet-mapping> <!-- Solo es temporal -->
-        <servlet-name>direccion</servlet-name>
-        <url-pattern>/direccion</url-pattern>
-    </servlet-mapping>
-
 
 </web-app>
