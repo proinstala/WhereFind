@@ -264,5 +264,44 @@ const detectarCambiosFormulario = (idForm, callBack) => {
 };
 
 
+/*FUNCIONES DE FILAS DE TABLA *************************************************/
 
-export { solicitudPost, solicitudGet, solicitudPut, setImageSelected, resetCamposForm, detectarCambiosFormulario, getDatosForm };
+/**
+ * Función que asigna un evento de clic a cada fila de una tabla para que se pueda seleccionar.
+ * @param {Element} nodeTableBody - El elemento <tbody> de la tabla cuyo evento de clic se asignará a cada fila.
+ */
+function addRowSelected(nodeTableBody) {
+    const rows = nodeTableBody.querySelectorAll('tr');
+    rows.forEach(row => {
+       row.addEventListener('click', markRow); //Al hacer clic, se llamará a la función markRow
+    });
+}
+
+/**
+ * Función que maneja el evento de selección de una fila de la tabla.
+ * @param {Event} event - El objeto del evento que contiene información sobre el clic.
+ */
+function markRow(event) {
+    //Obtener la fila seleccionada a través del evento
+    const row = event.currentTarget; 
+    
+    const tableBody = row.parentElement;
+    const table = tableBody.parentElement;
+    
+    //Obtener todas las filas del mismo tbody (padre)
+    const rows = tableBody.querySelectorAll('tr');
+    
+    resetRowsSelected(rows); //Reiniciar. Remover la clase ('selected') de todas las filas
+    table.setAttribute('data-rowSelected', row.id);  //Asignar el ID de la fila seleccionada al atributo ('data-rowSelected') de la tabla padre de la fila.
+    row.classList.add("selected"); //Añadir la clase 'selected' a la fila actual para marcarla como seleccionada
+}
+
+/**
+ * Función que reinicia la selección de todas las filas eliminando la clase 'selected'.
+ * @param {NodeList} rows - Una lista de nodos de todas las filas de la tabla.
+ */
+function resetRowsSelected(rows) {
+    rows.forEach(row => row.classList.remove("selected"));
+}
+
+export { solicitudPost, solicitudGet, solicitudPut, setImageSelected, resetCamposForm, detectarCambiosFormulario, getDatosForm, addRowSelected };

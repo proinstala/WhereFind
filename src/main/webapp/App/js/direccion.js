@@ -1,5 +1,5 @@
 
-import { solicitudGet, getDatosForm } from './comunes.mjs';
+import { solicitudGet, getDatosForm, addRowSelected } from './comunes.mjs';
 import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from './alertasSweetAlert2.mjs';
 
 const idSelectProvincia = "#provincia";
@@ -7,6 +7,9 @@ const idSelectLocalidad = "#localidad";
 const idFormBusquedaDireccion = "#frmBuscarDireccion";
 const idTablaDirecciones = "#tablaDireciones";
 const idBtnBuscar = "#btnBuscar";
+
+// Configuración de las urls
+const URL_MODIFICAR_DIRECCION = "direccion/edit";
 
 $(document).ready(function () {
     const selectProvincia = document.querySelector(idSelectProvincia);
@@ -153,79 +156,30 @@ function validarFormulario(idForm) {
     });//Fin Validate
 }
 
+/**
+ * Función que rellena una tabla HTML con las direcciones proporcionadas.
+ * @param {Array} direcciones - Un array de objetos de direcciones que contiene los datos para cada fila de la tabla.
+ */
 function rellenarTablaDirecciones(direcciones) {
-    
+    //Selecciona el cuerpo del <tbody> de la tabla utilizando el ID de la tabla
     const cuerpoTablaDirecciones = document.querySelector(`${idTablaDirecciones} tbody`);
-    
-    //Crear el contenido HTML con todas las opciones
+    console.log(direcciones);
+    //Crear el contenido HTML de todas las filas a partir de los datos de direcciones
     let filasHTML = direcciones.map(direccion => {
         return `<tr id="${direccion.id}">
-                <td data-name="id">${direccion.id}</td>
-                <td data-name="calle">${direccion.calle}</td>
-                <td data-name="numero">${direccion.numero}</td>
-                <td data-name="codigoPostal">${(direccion.codigoPostal !== 0) ? direccion.codigoPostal : '' }</td>
-                <td data-name="localidad" data-value="${direccion.localidad.id}">${direccion.localidad.nombre}</td>
-                <td data-name="provincia" data-value="${direccion.localidad.provincia.id}">${direccion.localidad.provincia.nombre}</td>
+                <td>${direccion.id}</td>
+                <td>${direccion.calle}</td>
+                <td>${direccion.numero}</td>
+                <td>${(direccion.codigoPostal !== 0) ? direccion.codigoPostal : '' }</td>
+                <td>${direccion.localidad.nombre}</td>
+                <td>${direccion.localidad.provincia.nombre}</td>
                 </tr>`;
     }).join('');
     
-    // Asignar el contenido HTML directamente al select, reemplazando cualquier contenido existente
+    
+    //Asignar el contenido HTML generado al cuerpo de la tabla, reemplazando cualquier contenido existente
     cuerpoTablaDirecciones.innerHTML = filasHTML;
+    
+    //Añadir eventos de selección de filas a la tabla recién generada
+    addRowSelected(cuerpoTablaDirecciones);
 }
-
-function rellenarTablaDirecciones2(direcciones) {
-    const cuerpoTablaDirecciones = document.querySelector(`${idTablaDirecciones} tbody`);
-    
-    // Crear un fragmento de documento para almacenar las filas
-    const fragment = document.createDocumentFragment();
-    
-    // Iterar sobre cada dirección para crear las filas
-    direcciones.forEach(direccion => {
-        // Crear el elemento tr para cada dirección
-        const tr = document.createElement('tr');
-        tr.id = direccion.id;
-        
-        // Crear y añadir cada celda td
-        const tdId = document.createElement('td');
-        tdId.setAttribute('data-name', 'id');
-        tdId.textContent = direccion.id;
-        tr.appendChild(tdId);
-
-        const tdCalle = document.createElement('td');
-        tdCalle.setAttribute('data-name', 'calle');
-        tdCalle.textContent = direccion.calle;
-        tr.appendChild(tdCalle);
-
-        const tdNumero = document.createElement('td');
-        tdNumero.setAttribute('data-name', 'numero');
-        tdNumero.textContent = direccion.numero;
-        tr.appendChild(tdNumero);
-
-        const tdCodigoPostal = document.createElement('td');
-        tdCodigoPostal.setAttribute('data-name', 'codigoPostal');
-        tdCodigoPostal.textContent = (direccion.codigoPostal !== 0) ? direccion.codigoPostal : '';
-        tr.appendChild(tdCodigoPostal);
-
-        const tdLocalidad = document.createElement('td');
-        tdLocalidad.setAttribute('data-name', 'localidad');
-        tdLocalidad.setAttribute('data-value', direccion.localidad.id);
-        tdLocalidad.textContent = direccion.localidad.nombre;
-        tr.appendChild(tdLocalidad);
-
-        const tdProvincia = document.createElement('td');
-        tdProvincia.setAttribute('data-name', 'provincia');
-        tdProvincia.setAttribute('data-value', direccion.localidad.provincia.id);
-        tdProvincia.textContent = direccion.localidad.provincia.nombre;
-        tr.appendChild(tdProvincia);
-
-        // Añadir el elemento tr al fragmento
-        fragment.appendChild(tr);
-    });
-    
-    // Limpiar el contenido actual del tbody
-    cuerpoTablaDirecciones.innerHTML = '';
-    
-    // Añadir el fragmento al tbody de la tabla
-    cuerpoTablaDirecciones.appendChild(fragment);
-}
-

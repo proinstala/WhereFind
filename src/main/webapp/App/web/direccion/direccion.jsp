@@ -79,7 +79,7 @@
                 </div>
                 
                 <div class="contenedor__tabla">
-                    <table class="tabla" id="tablaDireciones">
+                    <table class="tabla" id="tablaDireciones" data-rowSelected = "-1">
                         <thead>
                             <tr>
                                 <th>Id</th>
@@ -107,42 +107,6 @@
 
             </div> <!-- Fin contenedor__formulario -->
             
-            <!-- 
-            <div class="contenedor__tabla " id="contenedorTabla">
-                <table border="1" cellpadding="5" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Calle</th>
-                            <th>Número</th>
-                            <th>Codigo Posta</th>
-                            <th>Localidad</th>
-                            <th>Provincia</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Juan de diego</td>
-                            <td>15</td>
-                            <td>30580</td>
-                            <td>Alquerias</td>
-                            <td>Murcia</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Vereda los cipreses</td>
-                            <td>21</td>
-                            <td>30162</td>
-                            <td>Santa Cruz</td>
-                            <td>Murcia</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            -->
-           
-
         </div> <!-- Fin main -->
 
         <div class="barra__inferior">

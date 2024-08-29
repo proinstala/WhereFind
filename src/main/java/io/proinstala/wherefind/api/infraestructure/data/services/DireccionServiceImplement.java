@@ -22,7 +22,7 @@ public class DireccionServiceImplement extends BaseMySql implements IDireccionSe
         return new DireccionDTO(
                 rs.getInt("d.id"),
                 rs.getString("d.calle"),
-                rs.getString("d.numero"),
+                (rs.getString("d.numero") != null) ? rs.getString("d.numero") : "",
                 rs.getInt("d.codigo_postal"),
                 new LocalidadDTO(
                         rs.getInt("l.id"), 
