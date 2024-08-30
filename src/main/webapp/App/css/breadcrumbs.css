@@ -105,7 +105,7 @@
     --breadcrumb-color:  rgba(255, 200, 0, 0.65);
     --breadcrumb-color-hover:  rgba(255, 200, 0, 0.85);
     --breadcrumb-size: 40px;
-    --breadcrumb-font-size : 20px;
+    --breadcrumb-font-size : 25px;
   }
 
 
@@ -131,7 +131,7 @@
   ul.breadcrumb li a {
     overflow: hidden;
     border-radius: var(--breadcrumb-size);
-    transition: all 0.2s;
+    transition: all 0.3s;
     text-decoration: none;
     height: var(--breadcrumb-size);
     color: #FFFFFF; /* Equivalent to darken(var(--breadcrumb-color-fondo), 5%) */
@@ -149,12 +149,15 @@
   ul.breadcrumb li a .icon {
     display: inline-block;
     font-size: var(--breadcrumb-font-size);
+    font-weight: 600;
+    padding-top: 7px;
+
   }
 
   /* Text styles */
   ul.breadcrumb li a .text {
     display: none;
-    opacity: 0;/
+    opacity: 0;
   }
 
   /* Hover effect on breadcrumb items */
@@ -168,7 +171,9 @@
   }
 
   ul.breadcrumb li a:hover .icon {
-    font-size: 22px;
+    font-size: var(--breadcrumb-font-size);
+    font-weight: 600;
+    margin-top: 0px;
   }
 
 
@@ -186,5 +191,5 @@
   ul.breadcrumb li:last-child:hover a {
     width: calc(var(--breadcrumb-size) + 10px);
     height: calc(var(--breadcrumb-size) + 10px);
-    line-height: calc(var(--breadcrumb-size) + 10px);
+    line-height: calc(var(--breadcrumb-size) + 12px);
   }
