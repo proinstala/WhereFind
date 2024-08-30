@@ -71,10 +71,10 @@
                         <button id="btnCrear" title="Crear"><i class="las la-plus"></i></button>
                     </div>
                     <div class="form__btn_circle">
-                        <button id="btnEliminar" title="Eliminar"><i class="las la-minus"></i></button>
+                        <button id="btnEliminar" title="Eliminar" disabled><i class="las la-minus"></i></button>
                     </div>
                     <div class="form__btn_circle">
-                        <button id="btnModificar" title="Modificar"><i class="las la-pen"></i></button>
+                        <button id="btnModificar" title="Modificar" disabled><i class="las la-pen"></i></button>
                     </div>
                 </div>
                 
