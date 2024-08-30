@@ -1,0 +1,96 @@
+.breadcrumb-container {
+    height: 1.7em;
+    margin-bottom: 10px;
+}
+
+.breadcrumb {
+    margin-left : 1.5em;
+    list-style: none;
+    padding: 0;
+}
+.breadcrumb li {
+    display: inline;
+    margin-right: 5px;
+    font-size: 1.2em;
+}
+.breadcrumb li::after {
+    content: ">";
+    margin-left: 5px;
+}
+.breadcrumb li:last-child::after {
+    content: "";
+}
+
+
+.breadcrumb li.active {
+    font-weight: 600;
+}
+
+.breadcrumb li,
+.breadcrumb li a  {
+    color: rgba(255,255,255, 0.95);
+}
+
+.breadcrumb li a  {
+    text-decoration: none;
+}
+
+.breadcrumb li::before {
+    content: "\f015";
+    margin-right: 5px;
+    font-size: 24px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.breadcrumb li.active::before {
+
+}
+
+.breadcrumb li[data-id="inicio"]::before {
+    content: "";
+}
+
+.breadcrumb li[data-id="inicio"] a {
+    padding: 10px;
+    text-decoration: none;
+}
+
+.breadcrumb li[data-id="inicio"] a i {
+    cursor: pointer;
+    font-size: 24px;
+    margin-left: -20px;
+    margin-top: 1px;
+    position: absolute;
+}
+
+
+.breadcrumb li[data-id="account"]::before {
+    content: "\f007";
+}
+
+.breadcrumb li[data-id="modificar"]::before {
+    content: "\f4ff";
+}
+
+
+.breadcrumb li[data-id="admin"]::before {
+    content: "\f505";
+}
+
+.breadcrumb li[data-id="users"]::before {
+    content: "\f0c0";
+}
+
+.breadcrumb li[data-id="edit"]::before {
+    content: "\f4ff";
+}
+
+
+.breadcrumb li[data-id="direccion"]::before {
+    content: "\f041";
+}
+
+.breadcrumb li[data-id="adminDireccion"]::before {
+    content: "\f2b9";
+}
