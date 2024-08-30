@@ -85,6 +85,11 @@
                 if (!uriParts[i].isEmpty())
                 {
                     path += "/" + uriParts[i];
+                    if (uriParts[i].equals("dashboard"))
+                    {
+                        continue;
+                    }
+
                     if (i == uriParts.length - 1)
                     {
         %>
