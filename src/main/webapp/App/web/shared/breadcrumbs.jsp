@@ -26,6 +26,20 @@
 
             return apparentTexto;
         }
+
+        String getUrlMiga(String[] partes, int index, String uriHome)
+        {
+            String path = uriHome;
+            for (int i = 1; i <= index; i++)
+            {
+                if (!partes[i].isEmpty())
+                {
+                    path += "/" + partes[i];
+                }
+            }
+
+            return path;
+        }
     %>
 
 
@@ -84,13 +98,12 @@
             {
                 if (!uriParts[i].isEmpty())
                 {
-
                     if (uriParts[i].equals("dashboard"))
                     {
                         continue;
                     }
 
-                    path += "/" + uriParts[i];
+                    path = getUrlMiga(uriParts, i, uriHome);
         %>
                         <li data-id="<%= uriParts[i] %>">
                             <a href="<%= path %>">
