@@ -77,33 +77,39 @@
 <%= uri %><br> --%>
 
     <ul class="breadcrumb">
-        <li data-id="inicio"><a href="<%= uriHome %>"><i class="las la-home"></i></a></li>
         <%
             String path = uriHome;
-            for (int i = 1; i < uriParts.length; i++)
+            //for (int i = 1; i < uriParts.length; i++)
+            for (int i = uriParts.length - 1; i >= 1; i--)
             {
                 if (!uriParts[i].isEmpty())
                 {
-                    path += "/" + uriParts[i];
+
                     if (uriParts[i].equals("dashboard"))
                     {
                         continue;
                     }
 
-                    if (i == uriParts.length - 1)
-                    {
+                    path += "/" + uriParts[i];
         %>
-                        <li class="las active" data-id="<%= uriParts[i] %>"><%= getTextoMiga(uriParts[i]) %></li>
+                        <li data-id="<%= uriParts[i] %>">
+                            <a href="<%= path %>">
+                                <span class="icon las"></span>
+                                <span class="text"><%= getTextoMiga(uriParts[i]) %></span>
+                            </a>
+                        </li>
         <%
-                    }
-                    else
-                    {
-        %>
-                        <li class="las" data-id="<%= uriParts[i] %>"><a href="<%= path %>"><%= getTextoMiga(uriParts[i]) %></a></li>
-        <%
-                    }
                 }
             }
         %>
+
+
+        <li>
+            <a href="<%= uriHome %>">
+                <span class="icon las la-home"></span>
+                <span class="text"></span>
+            </a>
+        </li>
+
     </ul>
 </div>

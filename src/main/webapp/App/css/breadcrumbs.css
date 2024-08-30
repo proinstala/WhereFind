@@ -3,7 +3,7 @@
     margin-bottom: 10px;
 }
 
-.breadcrumb {
+/* .breadcrumb {
     margin-left : 1.5em;
     list-style: none;
     padding: 0;
@@ -63,34 +63,128 @@
     margin-top: 1px;
     position: absolute;
 }
+*/
 
-
-.breadcrumb li[data-id="account"]::before {
+.breadcrumb li[data-id="account"] a span.icon::before {
     content: "\f007";
 }
 
-.breadcrumb li[data-id="modificar"]::before {
+.breadcrumb li[data-id="modificar"] a span.icon::before {
     content: "\f4ff";
 }
 
 
-.breadcrumb li[data-id="admin"]::before {
+.breadcrumb li[data-id="admin"] a span.icon::before {
     content: "\f505";
 }
 
-.breadcrumb li[data-id="users"]::before {
+.breadcrumb li[data-id="users"] a span.icon::before {
     content: "\f0c0";
 }
 
-.breadcrumb li[data-id="edit"]::before {
+.breadcrumb li[data-id="edit"] a span.icon::before {
     content: "\f4ff";
 }
 
 
-.breadcrumb li[data-id="direccion"]::before {
+.breadcrumb li[data-id="direccion"] a span.icon::before {
     content: "\f041";
 }
 
-.breadcrumb li[data-id="adminDireccion"]::before {
+.breadcrumb li[data-id="adminDireccion"] a span.icon::before {
     content: "\f2b9";
 }
+
+
+
+
+
+
+:root {
+    --breadcrumb-color-fondo: var(--primario);
+    --breadcrumb-color:  rgba(255, 200, 0, 0.65);
+    --breadcrumb-color-hover:  rgba(255, 200, 0, 0.85);
+    --breadcrumb-size: 40px;
+    --breadcrumb-font-size : 20px;
+  }
+
+
+
+  /* Breadcrumb styles */
+  ul.breadcrumb {
+    /* margin-left: var(--breadcrumb-size); */
+    display: inline-block;
+    list-style: none;
+  }
+
+  ul.breadcrumb li {
+    float: right;
+    padding: calc(var(--breadcrumb-size) / 10);
+    background-color: var(--breadcrumb-color-fondo);
+    border-radius: var(--breadcrumb-size);
+    position: relative;
+    margin-left: calc(-1 * var(--breadcrumb-size));
+    transition: all 0.2s;
+    margin-top: 3px;
+  }
+
+  ul.breadcrumb li a {
+    overflow: hidden;
+    border-radius: var(--breadcrumb-size);
+    transition: all 0.2s;
+    text-decoration: none;
+    height: var(--breadcrumb-size);
+    color: #FFFFFF; /* Equivalent to darken(var(--breadcrumb-color-fondo), 5%) */
+    background-color: var(--breadcrumb-color);
+    text-align: center;
+    min-width: var(--breadcrumb-size);
+    display: block;
+    line-height: var(--breadcrumb-size);
+    padding-left: calc(var(--breadcrumb-size) + 2px);
+    padding-right: calc(var(--breadcrumb-size) / 2 + var(--breadcrumb-size) / 6);
+    /* width: var(--breadcrumb-size); */
+  }
+
+  /* Icon styles */
+  ul.breadcrumb li a .icon {
+    display: inline-block;
+    font-size: var(--breadcrumb-font-size);
+  }
+
+  /* Text styles */
+  ul.breadcrumb li a .text {
+    display: none;
+    opacity: 0;/
+  }
+
+  /* Hover effect on breadcrumb items */
+  ul.breadcrumb li a:hover {
+    background-color: var(--breadcrumb-color-hover);
+  }
+
+  ul.breadcrumb li a:hover .text {
+    display: inline-block;
+    opacity: 1;
+  }
+
+  ul.breadcrumb li a:hover .icon {
+    font-size: 22px;
+  }
+
+
+
+  /* Styles for the last breadcrumb item */
+  ul.breadcrumb li:last-child a {
+    padding: 0;
+  }
+
+  ul.breadcrumb li:last-child:hover {
+    padding: calc(var(--breadcrumb-size) / 10 - 2px);
+    margin-top: 0;
+  }
+
+  ul.breadcrumb li:last-child:hover a {
+    width: calc(var(--breadcrumb-size) + 10px);
+    height: calc(var(--breadcrumb-size) + 10px);
+    line-height: calc(var(--breadcrumb-size) + 10px);
+  }
