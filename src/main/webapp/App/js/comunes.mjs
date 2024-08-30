@@ -36,7 +36,6 @@ const solicitudPut = (url, idElement, mostrarLoad) => {
     return solicitudPutFetch(url, data, idElement, mostrarLoad);
 };
 
-
 /**
  * Realiza una solicitud GET.
  *
@@ -47,7 +46,6 @@ const solicitudPut = (url, idElement, mostrarLoad) => {
 const solicitudGet = (url, idElement, mostrarLoad) => {   
     return solicitudGetFetch(url, idElement, mostrarLoad);
 };
-
 
 /**
  * Realiza una solicitud POST utilizando fetch.
@@ -115,7 +113,6 @@ function solicitudPutFetch(url, data, idElement, mostrarLoad) {
     });
 }
 
-
 /**
  * Realiza una solicitud GET utilizando fetch.
  *
@@ -151,7 +148,7 @@ function solicitudGetFetch(url, idElement, mostrarLoad) {
         mostrarMensaje("Error", "No se ha podido realizar la acción por un error en el servidor.", "error");
     })
     .finally(() => {
-        console.log("complete");
+        //console.log("complete");
     });
 }
 
@@ -263,6 +260,81 @@ const detectarCambiosFormulario = (idForm, callBack) => {
     });
 };
 
+/**
+ * Realiza una solicitud GET para obtener datos y cargar un select HTML con las opciones recibidas.
+ * @param {HTMLElement} nodoInputSelect - El elemento select donde se cargarán las opciones.
+ * @param {string} url - La URL a la que se realizará la solicitud GET.
+ * @param {string} firstOption - (Opcional) Texto de la primera opción a mostrar en el select.
+ * @param {Function} callback - (Opcional) Función callback que se ejecuta después de llenar el select.
+ */
+function cargarInputSelect(nodoInputSelect, url, firstOption, callback) {
+    //Validar que el elemento select es válido
+    if (!(nodoInputSelect instanceof HTMLElement)) {
+        console.error("nodoInputSelect no es un elemento HTML válido.");
+        return;
+    }
+
+    //Validar que la URL es una cadena no vacía
+    if (typeof url !== 'string' || url.trim() === '') {
+        console.error("La URL proporcionada no es válida.");
+        mostrarMensajeError("Error", "URL no válida.");
+        return;
+    }
+    
+    //Realiza una solicitud GET a la URL especificada.
+    solicitudGet(url, "", false)
+        .then(response => {
+        if (response.isError === 1) {
+            mostrarMensajeError("Se ha producido un error", response.result);
+            return; // Salir de la función si hay un error
+        } 
+        //Llena el elemento select con los datos recibidos y la primera opción opcional.
+        fillInputSelect(nodoInputSelect, response.data, firstOption);
+
+        //Ejecutar el callback si se proporciona y es una función válida
+        if (callback && typeof callback === 'function') {
+            try {
+                callback();
+            } catch (callbackError) {
+                console.error("Error al ejecutar el callback:", callbackError);
+                mostrarMensajeError("Error", "Error al ejecutar la acción posterior.");
+            }
+        }
+    })
+    .catch(error => {
+        //Manejar errores de la solicitud
+        console.error("Error:", error);
+        mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
+    });
+}
+
+/**
+ * Rellena un elemento select HTML con opciones basadas en los datos proporcionados.
+ * @param {HTMLElement} nodeInputSelect - El elemento select que se va a llenar con las opciones.
+ * @param {Array} datos - Un array de objetos con las propiedades 'id' y 'nombre' para crear las opciones.
+ * @param {string} optionGenerico - (Opcional) Texto para una opción genérica que se añade al principio del select.
+ */
+function fillInputSelect(nodeInputSelect, datos, optionGenerico) {
+    
+    //Si se proporciona la opción genérica, se agrega como la primera opción del select.
+    if(optionGenerico) {
+        nodeInputSelect.innerHTML = `<option value="${-1}">${optionGenerico}</option>`;
+    } else {
+        nodeInputSelect.innerHTML = '';
+    }
+    
+    const fragment = document.createDocumentFragment(); // Crear un fragmento de documento.
+    datos.forEach((dato) => {
+        const elementOption = document.createElement('OPTION');
+        elementOption.setAttribute('value', dato.id);
+        elementOption.textContent = dato.nombre;
+        fragment.appendChild(elementOption);
+    });
+    
+    //Agregar el fragmento completo al select, actualizando su contenido en una sola operación.
+    nodeInputSelect.appendChild(fragment);
+}
+
 
 /*FUNCIONES DE FILAS DE TABLA *************************************************/
 
@@ -304,4 +376,4 @@ function resetRowsSelected(rows) {
     rows.forEach(row => row.classList.remove("selected"));
 }
 
-export { solicitudPost, solicitudGet, solicitudPut, setImageSelected, resetCamposForm, detectarCambiosFormulario, getDatosForm, addRowSelected };
+export { solicitudPost, solicitudGet, solicitudPut, setImageSelected, resetCamposForm, detectarCambiosFormulario, getDatosForm, addRowSelected, fillInputSelect, cargarInputSelect };
