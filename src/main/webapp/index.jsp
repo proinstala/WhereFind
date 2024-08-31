@@ -7,7 +7,6 @@
         // Detiene la ejecución de este servlet
         return;
     }
-
 %>
 
 <jsp:include page="App/web/shared/head.jsp" >

@@ -79,7 +79,7 @@
                 </div>
                 
                 <div class="contenedor__tabla">
-                    <table class="tabla" id="tablaDireciones" data-rowSelected = "-1">
+                    <table class="tabla" id="tablaDireciones" data-rowselected = "-1">
                         <thead>
                             <tr>
                                 <th>Id</th>

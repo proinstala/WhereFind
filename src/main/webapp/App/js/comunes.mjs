@@ -335,9 +335,6 @@ function fillInputSelect(nodeInputSelect, datos, optionGenerico) {
     nodeInputSelect.appendChild(fragment);
 }
 
-
-/*FUNCIONES DE FILAS DE TABLA *************************************************/
-
 /**
  * Función que asigna un evento de clic a cada fila de una tabla para que se pueda seleccionar.
  * @param {Element} nodeTableBody - El elemento <tbody> de la tabla cuyo evento de clic se asignará a cada fila.
@@ -364,7 +361,7 @@ function markRow(event) {
     const rows = tableBody.querySelectorAll('tr');
     
     resetRowsSelected(rows); //Reiniciar. Remover la clase ('selected') de todas las filas
-    table.setAttribute('data-rowSelected', row.id);  //Asignar el ID de la fila seleccionada al atributo ('data-rowSelected') de la tabla padre de la fila.
+    table.setAttribute('data-rowselected', row.id);  //Asignar el ID de la fila seleccionada al atributo ('data-rowSelected') de la tabla padre de la fila.
     row.classList.add("selected"); //Añadir la clase 'selected' a la fila actual para marcarla como seleccionada
 }
 
@@ -376,4 +373,57 @@ function resetRowsSelected(rows) {
     rows.forEach(row => row.classList.remove("selected"));
 }
 
-export { solicitudPost, solicitudGet, solicitudPut, setImageSelected, resetCamposForm, detectarCambiosFormulario, getDatosForm, addRowSelected, fillInputSelect, cargarInputSelect };
+/**
+ * Observa los cambios en el atributo 'data-rowSelected' de una tabla y ejecuta un callback
+ * cuando el valor del atributo cambia.
+ * @param {HTMLElement} tabla - El elemento HTML (tabla) que se va a observar.
+ * @param {Function} callback - La función callback que se ejecutará cuando el atributo cambie.
+ */
+function observeRowSelectedChange(tabla, callback) {
+    //Verifica que la tabla sea un elemento HTML válido
+    if (!tabla || !(tabla instanceof HTMLElement)) {
+        console.error('El elemento proporcionado no es un nodo HTML válido.');
+        return; //Sale de la función si la tabla no es válida
+    }
+    
+    /**
+     * Función que se ejecuta cuando se detectan cambios en los atributos del elemento observado.
+     * @param {MutationRecord[]} mutationsList - Lista de objetos MutationRecord que describen los cambios detectados.
+     */
+    function handleAttributeChange(mutationsList) {
+        for (let mutation of mutationsList) {
+            //Verifica si el tipo de mutación es de atributos y si el atributo modificado es 'data-rowselected'
+            if (mutation.type === 'attributes' && mutation.attributeName === 'data-rowselected') {
+                // Obtener el nuevo valor del atributo
+                const nuevoValor = tabla.getAttribute('data-rowselected'); //data-rowSelected
+                //Ejecuta el callback con un valor booleano indicando si el nuevo valor es mayor a 0
+                callback(nuevoValor > 0);
+            }
+        }
+    }
+
+    //Crea un observador de mutaciones configurado para ejecutar la función handleAttributeChange
+    const observer = new MutationObserver(handleAttributeChange);
+
+    //Configuración del observador: observar cambios en los atributos del elemento
+    const config = { attributes: true };
+
+    //Inicia el observador sobre la tabla con las opciones configuradas
+    observer.observe(tabla, config);
+}
+
+
+
+
+export { solicitudPost,
+        solicitudGet,
+        solicitudPut,
+        setImageSelected,
+        resetCamposForm,
+        detectarCambiosFormulario,
+        getDatosForm,
+        addRowSelected,
+        fillInputSelect,
+        cargarInputSelect,
+        observeRowSelectedChange
+        };

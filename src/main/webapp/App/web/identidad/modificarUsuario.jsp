@@ -6,7 +6,6 @@
 <%@page import="io.proinstala.wherefind.api.identidad.UserSession"%>
 
 <%!
-
     private String forceDisabled(HttpServletRequest request, UserDTO userDTO)
     {
         // Desactiva los campos si, está editando un usuario normal o lo que se está editando es su propio usuario como admin.
@@ -41,7 +40,6 @@
             return UrlApp.HOME.getUri();
         }
     }
-
 %>
 
 <%

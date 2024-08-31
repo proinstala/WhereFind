@@ -15,7 +15,6 @@ $(document).ready(function () {
     });
     
     btnDireccion.addEventListener('click', () => {
-        console.log("hola");
         window.location.href = ('direccion/adminDireccion');
     });
 });

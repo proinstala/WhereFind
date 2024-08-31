@@ -1,5 +1,5 @@
 
-import { solicitudGet, getDatosForm, addRowSelected, fillInputSelect, cargarInputSelect } from './comunes.mjs';
+import { solicitudGet, getDatosForm, addRowSelected, fillInputSelect, cargarInputSelect, observeRowSelectedChange } from './comunes.mjs';
 import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from './alertasSweetAlert2.mjs';
 
 const idSelectProvincia = "#provincia";
@@ -7,6 +7,7 @@ const idSelectLocalidad = "#localidad";
 const idFormBusquedaDireccion = "#frmBuscarDireccion";
 const idTablaDirecciones = "#tablaDireciones";
 const idBtnBuscar = "#btnBuscar";
+const idBtnModificar = "#btnModificar";
 
 // Configuración de las urls
 const URL_MODIFICAR_DIRECCION = "direccion/edit";
@@ -16,6 +17,8 @@ $(document).ready(function () {
     const selectlocalidad = document.querySelector(idSelectLocalidad);
     const formBusquedaDireccion = document.querySelector(idFormBusquedaDireccion);
     const btnBuscar = document.querySelector(idBtnBuscar);
+    const btnModificar = document.querySelector(idBtnModificar);
+    const tablaDirecciones = document.querySelector(idTablaDirecciones);
     
     //Añade un evento de cambio al select de provincias y actualiza el select de localidades según la provincia seleccionada.
     const cargaInputSelectLocalidad = () => {
@@ -40,9 +43,21 @@ $(document).ready(function () {
     
     validarFormulario(idFormBusquedaDireccion);
     
-    //Dispara el evento de clic en el botón
+    //Dispara el evento de clic en el botón para que haga una busqueda inicial.
     btnBuscar.click();
+    
+    observeRowSelectedChange(tablaDirecciones, onDetectarFilaSeleccionada);
+    
+    btnModificar.addEventListener('click', () => {
+        const idDireccion = tablaDirecciones.getAttribute('data-rowselected'); //data-rowSelected
+        window.location.href = (`direccion/modificarDireccion?idDireccion=${idDireccion}`);
+    });
 });
+
+function onDetectarFilaSeleccionada(hayFilaSeleccionada) {
+    $("#btnEliminar").prop('disabled', !hayFilaSeleccionada);
+    $("#btnModificar").prop('disabled', !hayFilaSeleccionada);
+}
 
 
 function validarFormulario(idForm) {
@@ -103,9 +118,11 @@ function validarFormulario(idForm) {
  * @param {Array} direcciones - Un array de objetos de direcciones que contiene los datos para cada fila de la tabla.
  */
 function rellenarTablaDirecciones(direcciones) {
-    //Selecciona el cuerpo del <tbody> de la tabla utilizando el ID de la tabla
-    const cuerpoTablaDirecciones = document.querySelector(`${idTablaDirecciones} tbody`);
-    console.log(direcciones);
+    const tablaDirecciones = document.querySelector(idTablaDirecciones);
+    const cuerpoTablaDirecciones = tablaDirecciones.querySelector('tbody');
+    
+    tablaDirecciones.setAttribute('data-rowselected', -1); //Establece a -1 el rowselected para indicar que no se ha seleccionado ninguna fila.
+    
     //Crear el contenido HTML de todas las filas a partir de los datos de direcciones
     let filasHTML = direcciones.map(direccion => {
         return `<tr id="${direccion.id}">
