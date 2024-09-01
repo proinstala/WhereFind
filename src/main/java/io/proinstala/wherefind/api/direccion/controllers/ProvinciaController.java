@@ -6,6 +6,7 @@ import io.proinstala.wherefind.api.identidad.UserSession;
 import io.proinstala.wherefind.shared.controllers.BaseHttpServlet;
 import static io.proinstala.wherefind.shared.controllers.BaseHttpServlet.responseError403;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
+import io.proinstala.wherefind.shared.tools.Tools;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -89,6 +90,8 @@ public class ProvinciaController extends BaseHttpServlet {
         
         // Imprime en la salida del servidor el EndPoint
         System.out.println("EndPoint GET : " + actionController.parametros()[0]);
+        
+        Tools.wait(500); //PRUEBAS PARA BORRAR
         
         switch((ActionType) actionController.actionType()) {
             case PROVINCIA -> System.out.println("SE PIDE PROVINCIA");

@@ -15,6 +15,7 @@ import java.util.List;
 
 public class DireccionServiceImplement extends BaseMySql implements IDireccionService {
 
+    private static final String SQL_SELECT_DIRECCION_BY_ID = "SELECT d.*, l.*, p.* FROM DIRECCION d INNER JOIN LOCALIDAD l ON(d.localidad_id = l.id) INNER JOIN PROVINCIA p ON(l.provincia_id = p.id) WHERE d.id = ?;";
     private static final String SQL_SELECT_DIRECCIONES = "SELECT d.*, l.*, p.* FROM DIRECCION d INNER JOIN LOCALIDAD l ON(d.localidad_id = l.id) INNER JOIN PROVINCIA p ON(l.provincia_id = p.id);"; 
     
     private static DireccionDTO getDireccionFromResultSet(ResultSet rs) throws SQLException {
@@ -38,8 +39,25 @@ public class DireccionServiceImplement extends BaseMySql implements IDireccionSe
     
     
     @Override
-    public DireccionDTO getDireccionById() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public DireccionDTO getDireccionById(int idDireccion) {
+        DireccionDTO direccionDTO = null;
+        
+        try (Connection conexion = getConnection(); 
+                PreparedStatement ps = conexion.prepareStatement(SQL_SELECT_DIRECCION_BY_ID)) {
+            
+            ps.setInt(1, idDireccion);
+            
+            //Ejecutar la consulta y obtener el ResultSet dentro de otro bloque try-with-resources
+            try (ResultSet resultSet = ps.executeQuery()) {
+                while (resultSet.next()) {
+                    direccionDTO = getDireccionFromResultSet(resultSet); //Crear un objeto DireccionDTO a partir del ResultSet
+                }
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return direccionDTO;
     }
 
     @Override

@@ -17,6 +17,33 @@ import java.util.List;
  */
 public class DireccionControllerService extends BaseService{
     
+    public void getDireccionById(ActionController actionController) {
+        ResponseDTO responseDTO;
+        DireccionDTO direccionDTO;
+        
+        IDireccionService direccionServiceImp = GestorPersistencia.getDireccionService();
+        
+        int idDireccion = -1;
+        try {
+            String id = actionController.server().getRequestParameter("idDireccion", "-1");
+            idDireccion = Integer.parseInt(id);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        
+        direccionDTO = direccionServiceImp.getDireccionById(idDireccion);
+        
+        if (direccionDTO != null) {
+            responseDTO = getResponseOk("OK", direccionDTO, 0);
+        } else {
+            //Crea la respuesta con un error
+            responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR, new ArrayList<>());
+        }
+        
+        //Devuelve la respuesta al navegador del usuario en formato json
+        responseJson(actionController.server().response(), responseDTO);
+    }
+    
     public void findDirecciones(ActionController actionController) {
         //Respuesta de la acción actual
         ResponseDTO responseDTO;

@@ -56,7 +56,7 @@
                         </div>
 
                         <div class="form__input">
-                            <input type="text" name="codigoPostal" id="codigoPostal" placeholder="Introduce el código postal"value="">
+                            <input type="number" name="codigoPostal" id="codigoPostal" placeholder="Introduce el código postal"value="">
                             <label for="codigoPostal">Código Postal</label>
                         </div>
 
@@ -78,13 +78,12 @@
                 </div>
 
                 <div class="contenedor__formulario--footer">
-
                     <div class="form__btn_circle">
                         <button form="frmModificarDireccion" id="btnGuardar" title="Guardar" type="submit" disabled><i class="las la-save"></i></button>
                     </div>
 
                     <div class="form__btn_circle">
-                        <button id="btnDeshacerCambiosDireccion" title="Deshacer cambios" disabled><i class="las la-redo-alt"></i></button>
+                        <button id="btnDeshacerCambiosDireccion" title="Deshacer cambios"><i class="las la-redo-alt"></i></button>
                     </div>
 
                     <div class="form__btn_circle">

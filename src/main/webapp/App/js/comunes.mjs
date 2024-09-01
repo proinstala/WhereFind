@@ -121,7 +121,7 @@ function solicitudPutFetch(url, data, idElement, mostrarLoad) {
  * @param {string} mostrarLoad - Bloquea la UI mostrando una alerta con una animación de espera.
  */
 function solicitudGetFetch(url, idElement, mostrarLoad) {
-
+    debugger;
     if (mostrarLoad) {
         mostrarLoading();
     }
@@ -262,12 +262,14 @@ const detectarCambiosFormulario = (idForm, callBack) => {
 
 /**
  * Realiza una solicitud GET para obtener datos y cargar un select HTML con las opciones recibidas.
- * @param {HTMLElement} nodoInputSelect - El elemento select donde se cargarán las opciones.
- * @param {string} url - La URL a la que se realizará la solicitud GET.
- * @param {string} firstOption - (Opcional) Texto de la primera opción a mostrar en el select.
- * @param {Function} callback - (Opcional) Función callback que se ejecuta después de llenar el select.
+ * 
+ * @param {HTMLElement} nodoInputSelect - El elemento select donde se cargarán las opciones. Debe ser un elemento HTML válido.
+ * @param {string} url - La URL a la que se realizará la solicitud GET para obtener los datos.
+ * @param {string} [firstOption=''] - (Opcional) Texto para una primera opción a mostrar en el select, usualmente un texto de guía.
+ * @param {string} [selectOption] - (Opcional) Valor de la opción que debe seleccionarse automáticamente después de cargar las opciones.
+ * @param {Function} [callback] - (Opcional) Función callback que se ejecuta después de llenar el select. Debe ser una función válida.
  */
-function cargarInputSelect(nodoInputSelect, url, firstOption, callback) {
+function cargarInputSelect(nodoInputSelect, url, firstOption = '', selectOption, callback) {
     //Validar que el elemento select es válido
     if (!(nodoInputSelect instanceof HTMLElement)) {
         console.error("nodoInputSelect no es un elemento HTML válido.");
@@ -290,6 +292,10 @@ function cargarInputSelect(nodoInputSelect, url, firstOption, callback) {
         } 
         //Llena el elemento select con los datos recibidos y la primera opción opcional.
         fillInputSelect(nodoInputSelect, response.data, firstOption);
+        
+        if (selectOption) {
+            seleccionarValorSelect(nodoInputSelect, selectOption);
+        }
 
         //Ejecutar el callback si se proporciona y es una función válida
         if (callback && typeof callback === 'function') {
@@ -333,6 +339,33 @@ function fillInputSelect(nodeInputSelect, datos, optionGenerico) {
     
     //Agregar el fragmento completo al select, actualizando su contenido en una sola operación.
     nodeInputSelect.appendChild(fragment);
+}
+
+/**
+ * Selecciona un valor en un nodo <select> y devuelve una promesa.
+ * @param {HTMLSelectElement} selectNode - El nodo <select> en el que se desea seleccionar un valor.
+ * @param {string} value - El valor que se desea seleccionar.
+ * @returns {Promise<void>} - Una promesa que se resuelve cuando se selecciona el valor.
+ */
+function seleccionarValorSelect(selectNode, value) {
+    return new Promise((resolve, reject) => {
+        if (!(selectNode instanceof HTMLSelectElement)) {
+            reject(new Error("El primer argumento debe ser un nodo select."));
+            return;
+        }
+
+        // Busca y selecciona la opción con el valor especificado
+        const optionToSelect = Array.from(selectNode.options).find(
+            (option) => option.value === value.toString(10)
+        );
+
+        if (optionToSelect) {
+            selectNode.value = value;
+            resolve(); // Resuelve la promesa si el valor fue seleccionado correctamente
+        } else {
+            reject(new Error(`El valor "${value}" no se encontró en el select ${selectNode.name}`));
+        }
+    });
 }
 
 /**
@@ -425,5 +458,6 @@ export { solicitudPost,
         addRowSelected,
         fillInputSelect,
         cargarInputSelect,
-        observeRowSelectedChange
+        observeRowSelectedChange,
+        seleccionarValorSelect
         };

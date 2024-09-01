@@ -39,7 +39,7 @@ $(document).ready(function () {
         });
     };
     
-    cargarInputSelect(selectProvincia, "api/provincia/provincias", 'Todas', cargaInputSelectLocalidad);
+    cargarInputSelect(selectProvincia, "api/provincia/provincias", 'Todas', false, cargaInputSelectLocalidad);
     
     validarFormulario(idFormBusquedaDireccion);
     

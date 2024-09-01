@@ -6,6 +6,7 @@ import io.proinstala.wherefind.api.identidad.UserSession;
 import io.proinstala.wherefind.shared.controllers.BaseHttpServlet;
 import static io.proinstala.wherefind.shared.controllers.BaseHttpServlet.responseError403;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
+import io.proinstala.wherefind.shared.tools.Tools;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,8 +24,7 @@ public class DireccionController extends BaseHttpServlet {
     protected static final String BASE_API_DIRECCION = "/api/direccion";
     
     private final DireccionControllerService direccionServicio = new DireccionControllerService();
-    
-    
+       
     /**
      * Tipos de acción que este controlador puede manejar.
      */
@@ -33,7 +33,6 @@ public class DireccionController extends BaseHttpServlet {
         DIRECCION,
         FINDDIRECCIONES
     }
-    
     
     /**
      * Obtiene la base de la URL de la API direccion.
@@ -83,6 +82,16 @@ public class DireccionController extends BaseHttpServlet {
         direccionServicio.findDirecciones(actionController);
     }
     
+    protected void apiGetDireccion(ActionController actionController) {
+        // Se comprueba que el usuario está logueado
+        if (!UserSession.isUserLogIn(actionController.server(), false)) {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+        
+        direccionServicio.getDireccionById(actionController);
+    }
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         // Obtiene la información de la petición a la API
@@ -91,8 +100,10 @@ public class DireccionController extends BaseHttpServlet {
         // Imprime en la salida del servidor el EndPoint
         System.out.println("EndPoint GET : " + actionController.parametros()[0]);
         
+        Tools.wait(500); //PRUEBAS PARA BORRAR
+        
         switch((ActionType) actionController.actionType()) {
-            case DIRECCION -> System.out.println("SE PIDE DIRECCION");
+            case DIRECCION -> apiGetDireccion(actionController);
             case FINDDIRECCIONES -> apiFindDirecciones(actionController);
               
             default -> responseError403(actionController.server().response(), "");
