@@ -92,7 +92,7 @@ public class LocalidadController extends BaseHttpServlet {
         // Imprime en la salida del servidor el EndPoint
         System.out.println("EndPoint GET : " + actionController.parametros()[0]);
         
-        Tools.wait(500); //PRUEBAS PARA BORRAR
+        //Tools.wait(500); //PRUEBAS PARA BORRAR
         
         switch((ActionType) actionController.actionType()) {
             case LOCALIDAD -> System.out.println("SE PIDE PROVINCIA");

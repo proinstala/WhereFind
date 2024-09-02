@@ -83,7 +83,7 @@
                     </div>
 
                     <div class="form__btn_circle">
-                        <button id="btnDeshacerCambiosDireccion" title="Deshacer cambios"><i class="las la-redo-alt"></i></button>
+                        <button id="btnDeshacerCambiosDireccion" title="Deshacer cambios" disabled><i class="las la-redo-alt" ></i></button>
                     </div>
 
                     <div class="form__btn_circle">

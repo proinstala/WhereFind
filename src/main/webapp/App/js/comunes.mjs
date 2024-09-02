@@ -121,7 +121,6 @@ function solicitudPutFetch(url, data, idElement, mostrarLoad) {
  * @param {string} mostrarLoad - Bloquea la UI mostrando una alerta con una animación de espera.
  */
 function solicitudGetFetch(url, idElement, mostrarLoad) {
-    debugger;
     if (mostrarLoad) {
         mostrarLoading();
     }
@@ -253,8 +252,11 @@ function resetCamposForm(idForm) {
  */
 const detectarCambiosFormulario = (idForm, callBack) => {
     let form_original_data = $(idForm).serialize();
+    console.log("antes: " + form_original_data);
     $(idForm).on('keyup change paste', 'input, select, textarea', function(){
         if (callBack !== null) {
+            console.log("funcion - old:" + form_original_data);
+            console.log("funcion - new:" + $(idForm).serialize());
             callBack($(idForm).serialize() !== form_original_data);
         }
     });

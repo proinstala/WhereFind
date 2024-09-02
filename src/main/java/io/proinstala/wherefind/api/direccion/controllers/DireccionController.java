@@ -5,11 +5,13 @@ import io.proinstala.wherefind.api.direccion.services.DireccionControllerService
 import io.proinstala.wherefind.api.identidad.UserSession;
 import io.proinstala.wherefind.shared.controllers.BaseHttpServlet;
 import static io.proinstala.wherefind.shared.controllers.BaseHttpServlet.responseError403;
+import static io.proinstala.wherefind.shared.controllers.BaseHttpServlet.responseError404;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
-import io.proinstala.wherefind.shared.tools.Tools;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 
 /**
@@ -31,7 +33,8 @@ public class DireccionController extends BaseHttpServlet {
     enum ActionType {
         ERROR,
         DIRECCION,
-        FINDDIRECCIONES
+        FINDDIRECCIONES,
+        UPDATE
     }
     
     /**
@@ -92,6 +95,26 @@ public class DireccionController extends BaseHttpServlet {
         direccionServicio.getDireccionById(actionController);
     }
     
+    /**
+     * Maneja la solicitud para actualizar la información de un direccion específica.
+     *
+     * EndPoint - PUT : /api/direccion/update/{id}
+     *
+     * @param actionController el controlador de acción.
+     */
+    protected void apiUpdateDireccion(ActionController actionController)
+    {
+        // Se comprueba que el usuario está logueado y sea administrador
+        if (!UserSession.isUserLogIn(actionController.server(), false))
+        {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+
+        // Se llama al servicio para procese la acción requerida
+        //direccionServicio.updateDireccion(actionController);
+    }
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         // Obtiene la información de la petición a la API
@@ -100,7 +123,7 @@ public class DireccionController extends BaseHttpServlet {
         // Imprime en la salida del servidor el EndPoint
         System.out.println("EndPoint GET : " + actionController.parametros()[0]);
         
-        Tools.wait(500); //PRUEBAS PARA BORRAR
+        //Tools.wait(500); //PRUEBAS PARA BORRAR
         
         switch((ActionType) actionController.actionType()) {
             case DIRECCION -> apiGetDireccion(actionController);
@@ -108,6 +131,32 @@ public class DireccionController extends BaseHttpServlet {
               
             default -> responseError403(actionController.server().response(), "");
         }
+    }
+    
+    /**
+     * Maneja las solicitudes PUT.
+     *
+     * @param request  la solicitud HTTP.
+     * @param response la respuesta HTTP.
+     * @throws ServletException si ocurre un error en el servlet.
+     * @throws IOException      si ocurre un error de entrada/salida.
+     */
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Obtiene la información de la petición a la API
+        ActionController actionController = getActionController(request, response);
+
+        // Imprime en la salida del servidor el EndPoint
+        System.out.println("EndPoint PUT : " + actionController.parametros()[0]);
+
+        switch((ActionType) actionController.actionType()) {
+            case UPDATE -> apiUpdateDireccion(actionController);
+            
+            default -> responseError404(actionController.server().response(), "");
+        }
+        
     }
     
 }

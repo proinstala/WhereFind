@@ -1,5 +1,5 @@
 
-import { solicitudGet, getDatosForm, fillInputSelect, cargarInputSelect, seleccionarValorSelect } from './comunes.mjs';
+import { solicitudGet, getDatosForm, fillInputSelect, cargarInputSelect, seleccionarValorSelect, detectarCambiosFormulario } from './comunes.mjs';
 import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from './alertasSweetAlert2.mjs';
 
 const idSelectProvincia = "#provincia";
@@ -9,7 +9,10 @@ const idInputCalle = "#calle";
 const idInputNumero = "#numero";
 const idInputCodigoPostal = "#codigoPostal";
 const idFormDireccion = "#frmModificarDireccion";
+const idBtnGuardar = "#btnGuardar";
+const idBtnCancelar = "#btnCancelar";
 const idBtnDeshacerCambiosDireccion = "#btnDeshacerCambiosDireccion";
+const idFromModificarDireccion = "#frmModificarDireccion";
 
 let oldDireccion;
 
@@ -18,13 +21,28 @@ $(document).ready(function () {
     const selectLocalidad = document.querySelector(idSelectLocalidad);
     const inputIdDireccion = document.querySelector(idInputIdDireccion);
     const btnDeshacerCambiosDireccion = document.querySelector(idBtnDeshacerCambiosDireccion);
+    const btnCancelar = document.querySelector(idBtnCancelar);
+    
+    validarFormulario(idFromModificarDireccion);
     
     getDireccion(inputIdDireccion.value);
     
     btnDeshacerCambiosDireccion.addEventListener('click', () => {
+        console.log("oldDireccion: " + oldDireccion);
         fillFielsDireccion(oldDireccion);
     });
+    
+    btnCancelar.addEventListener('click', () => {
+        window.location.href = "direccion/adminDireccion";
+    });
+    
 });
+
+function onDetectarCambiosModificarDireccion(hayCambios) {
+    console.log(hayCambios);
+    $(idBtnGuardar).prop('disabled', !hayCambios);
+    $(idBtnDeshacerCambiosDireccion).prop('disabled', !hayCambios);
+}
 
 
 function getDireccion(idDireccion) {
@@ -33,7 +51,6 @@ function getDireccion(idDireccion) {
                 if (response.isError === 1) {
                     mostrarMensajeError("Se ha producido un error", response.result);
                 } else {
-                    debugger;
                     oldDireccion = response.data;
                     fillFielsDireccion(oldDireccion);
                 }
@@ -48,44 +65,136 @@ function getDireccion(idDireccion) {
 
 function fillFielsDireccion(direccion) {
     const form = document.querySelector(idFormDireccion);
-    
+
     const inputCalle = form.querySelector(idInputCalle);
     const inputNumero = form.querySelector(idInputNumero);
     const inputCodigoPostal = form.querySelector(idInputCodigoPostal);
     const selectProvincia = form.querySelector(idSelectProvincia);
     const selectLocalidad = form.querySelector(idSelectLocalidad);
-    
+
     inputCalle.value = direccion.calle;
     inputNumero.value = direccion.numero;
     inputCodigoPostal.value = direccion.codigoPostal;
-    
+
     cargarInputSelect(selectProvincia, "api/provincia/provincias", '', direccion.localidad.provincia.id, () => {
-            //Crea un objeto con la información de la provincia seleccionada (id y nombre).
-            const jsonProvincia = {
-                id: selectProvincia.value,
-                nombre: selectProvincia.textContent 
-            };
+        //Crea un objeto con la información de la provincia seleccionada (id y nombre).
+        const jsonProvincia = {
+            id: selectProvincia.value,
+            nombre: selectProvincia.textContent
+        };
 
-            const jsonProvinciaString = JSON.stringify(jsonProvincia); //Convierte el objeto jsonProvincia a una cadena JSON.
-            const encodedJsonProvincia = encodeURIComponent(jsonProvinciaString); //Codifica la cadena JSON para que sea segura al incluirla en la URL.
+        const jsonProvinciaString = JSON.stringify(jsonProvincia); //Convierte el objeto jsonProvincia a una cadena JSON.
+        const encodedJsonProvincia = encodeURIComponent(jsonProvinciaString); //Codifica la cadena JSON para que sea segura al incluirla en la URL.
 
-            //Llama a cargarInputSelect para llenar el select de localidades con los datos obtenidos del select provincia.
-            cargarInputSelect(selectLocalidad, `api/localidad/localidades?jsonProvincia=${encodedJsonProvincia}`, '', direccion.localidad.id, () => {
-                selectProvincia.addEventListener('change', (e) => {
-                    const optionSelected = e.target.selectedOptions[0]; //Obtiene la opción seleccionada del select.
+        //Llama a cargarInputSelect para llenar el select de localidades con los datos obtenidos del select provincia.
+        cargarInputSelect(selectLocalidad, `api/localidad/localidades?jsonProvincia=${encodedJsonProvincia}`, '', direccion.localidad.id, () => {
+            selectProvincia.addEventListener('change', (e) => {
+                const optionSelected = e.target.selectedOptions[0]; //Obtiene la opción seleccionada del select.
 
-                    //Crea un objeto con la información de la provincia seleccionada (id y nombre).
-                    const jsonProvincia = {
-                        id: optionSelected.value,
-                        nombre: optionSelected.textContent 
-                    };
+                //Crea un objeto con la información de la provincia seleccionada (id y nombre).
+                const jsonProvincia = {
+                    id: optionSelected.value,
+                    nombre: optionSelected.textContent
+                };
 
-                    const jsonProvinciaString = JSON.stringify(jsonProvincia); //Convierte el objeto jsonProvincia a una cadena JSON.
-                    const encodedJsonProvincia = encodeURIComponent(jsonProvinciaString); //Codifica la cadena JSON para que sea segura al incluirla en la URL.
+                const jsonProvinciaString = JSON.stringify(jsonProvincia); //Convierte el objeto jsonProvincia a una cadena JSON.
+                const encodedJsonProvincia = encodeURIComponent(jsonProvinciaString); //Codifica la cadena JSON para que sea segura al incluirla en la URL.
 
-                    //Llama a cargarInputSelect para llenar el select de localidades con los datos obtenidos del select provincia.
-                    cargarInputSelect(selectLocalidad, `api/localidad/localidades?jsonProvincia=${encodedJsonProvincia}`, 'Seleccione');
-                });
+                //Llama a cargarInputSelect para llenar el select de localidades con los datos obtenidos del select provincia.
+                cargarInputSelect(selectLocalidad, `api/localidad/localidades?jsonProvincia=${encodedJsonProvincia}`, 'Seleccione');
             });
+            
+            onDetectarCambiosModificarDireccion(false);
+            detectarCambiosFormulario(idFormDireccion, onDetectarCambiosModificarDireccion);
+
+        });
     });
+}
+
+function validarFormulario(idForm) {
+    $(idForm).validate({
+        rules: {
+            calle: {
+                required: true,
+                maxlength: 100
+            },
+            numero: {
+                required: true,
+                maxlength: 6
+            },
+            codigoPostal: {
+                min: 0,
+                max: 999999
+            },
+            provincia: {
+                required: true,
+                min: 1,
+                max: 999999
+            },
+            localidad: {
+                required: true,
+                min: 1,
+                max: 999999
+            }
+        },//Fin de reglas ----------------
+        messages: {
+            calle: {
+                required: "Debe introducir el nombre de calle.",
+                maxlength: "Longitud máx 100 caracteres."
+            },
+            numero: {
+                required: "Debe introducir el numero de la dirección.",
+                maxlength: "Longitud máx 6 caracteres."
+            },
+            codigoPostal: {
+                min: "No puede introducir numeros negativos.",
+                max: "Valor introducido no válido."
+            },
+            provincia: {
+                required: "Debe seleccionar una provincia.",
+                min: "Valor seleccionado no válido.",
+                max: "Valor seleccionado no válido."
+            },
+            localidad: {
+                required: "Debe seleccionar una localidad.",
+                min: "Valor seleccionado no válido.",
+                max: "Valor seleccionado no válido."
+            }
+        },//Fin de msg  ------------------
+
+        submitHandler: function () {
+            mostrarMensajeOpcion("Modificar Dirección", '¿Quieres realmente modificar los datos?')
+                    .then((result) => {
+                        if (result.isConfirmed) {
+                            const direccionIdInput = document.querySelector('#direccion_id');
+                            const direccionId = direccionIdInput ? direccionIdInput.value : -1;
+
+                            solicitudPut(`api/direccion/update/${direccionId}`, idForm, true)
+                                    .then(response => {
+                                        if (response.isError === 1) {
+                                            mostrarMensajeError("No se puede actualizar los datos", response.result);
+                                        } else {
+                                            mostrarMensaje("Modificada Dirección.", `Se han modificado correctamente los datos de dirección ${response.data.id}`, "success");
+                                            oldDireccion = response.data;
+                                            onDetectarCambiosModificarDireccion(false);
+                                            detectarCambiosFormulario(idFormDireccion, onDetectarCambiosModificarDireccion);
+                                        }
+                                    })
+                                    .catch(error => {
+                                        // Maneja el error aquí
+                                        console.error("Error:", error);
+                                        mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
+                                    });
+                        } else if (result.isDenied) {
+                            //denegado
+                        } else if (result.isDismissed) {
+                            //cancelado
+                        }
+                    });
+        },
+        //Función error de respuesta
+        errorPlacement: function (error, element) {
+            error.insertAfter(element); // Esto colocará el mensaje de error después del elemento con error
+        }
+    });//Fin Validate
 }
