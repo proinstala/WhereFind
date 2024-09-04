@@ -101,6 +101,24 @@ INSERT INTO LOCALIDAD (nombre, provincia_id) VALUES ('La Murta', 35);
 INSERT INTO LOCALIDAD (nombre, provincia_id) VALUES ('La Ñora', 35);
 
 
+/* Sentencias SQL para rellenar de datos la tabla LOCALIDAD de Alicante */
+INSERT INTO LOCALIDAD (nombre, provincia_id) VALUES ('Alicante', 3);
+INSERT INTO LOCALIDAD (nombre, provincia_id) VALUES ('Elche', 3);
+INSERT INTO LOCALIDAD (nombre, provincia_id) VALUES ('Benidorm', 3);
+INSERT INTO LOCALIDAD (nombre, provincia_id) VALUES ('Alcoy', 3);
+INSERT INTO LOCALIDAD (nombre, provincia_id) VALUES ('Elda', 3);
+INSERT INTO LOCALIDAD (nombre, provincia_id) VALUES ('Orihuela', 3);
+INSERT INTO LOCALIDAD (nombre, provincia_id) VALUES ('Torrevieja', 3);
+INSERT INTO LOCALIDAD (nombre, provincia_id) VALUES ('Denia', 3);
+INSERT INTO LOCALIDAD (nombre, provincia_id) VALUES ('Villena', 3);
+INSERT INTO LOCALIDAD (nombre, provincia_id) VALUES ('San Vicente del Raspeig', 3);
+INSERT INTO LOCALIDAD (nombre, provincia_id) VALUES ('Santa Pola', 3);
+INSERT INTO LOCALIDAD (nombre, provincia_id) VALUES ('Petrer', 3);
+INSERT INTO LOCALIDAD (nombre, provincia_id) VALUES ('La Vila Joiosa', 3);
+INSERT INTO LOCALIDAD (nombre, provincia_id) VALUES ('Novelda', 3);
+INSERT INTO LOCALIDAD (nombre, provincia_id) VALUES ('Aspe', 3);
+
+
 /*Sentencias sql para rellenar de datos la tabla TIPO_EMPLAZAMIENTO */
 INSERT INTO TIPO_EMPLAZAMIENTO (nombre, descripcion) VALUES ('Estantería', 'Estructura para almacenar objetos en varios niveles.');
 INSERT INTO TIPO_EMPLAZAMIENTO (nombre, descripcion) VALUES ('Leja', 'Repisa o estante pequeño.');

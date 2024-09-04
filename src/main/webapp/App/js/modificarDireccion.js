@@ -1,5 +1,5 @@
 
-import { solicitudGet, getDatosForm, fillInputSelect, cargarInputSelect, seleccionarValorSelect, detectarCambiosFormulario } from './comunes.mjs';
+import { solicitudGet, solicitudPut, getDatosForm, fillInputSelect, cargarInputSelect, seleccionarValorSelect, detectarCambiosFormulario } from './comunes.mjs';
 import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from './alertasSweetAlert2.mjs';
 
 const idSelectProvincia = "#provincia";
@@ -52,6 +52,7 @@ function getDireccion(idDireccion) {
                     mostrarMensajeError("Se ha producido un error", response.result);
                 } else {
                     oldDireccion = response.data;
+                    console.log(oldDireccion);
                     fillFielsDireccion(oldDireccion);
                 }
             })
@@ -74,8 +75,10 @@ function fillFielsDireccion(direccion) {
 
     inputCalle.value = direccion.calle;
     inputNumero.value = direccion.numero;
-    inputCodigoPostal.value = direccion.codigoPostal;
-
+    if(direccion.codigoPostal) {
+        inputCodigoPostal.value = direccion.codigoPostal;
+    }
+    
     cargarInputSelect(selectProvincia, "api/provincia/provincias", '', direccion.localidad.provincia.id, () => {
         //Crea un objeto con la información de la provincia seleccionada (id y nombre).
         const jsonProvincia = {
@@ -176,6 +179,8 @@ function validarFormulario(idForm) {
                                         } else {
                                             mostrarMensaje("Modificada Dirección.", `Se han modificado correctamente los datos de dirección ${response.data.id}`, "success");
                                             oldDireccion = response.data;
+                                            console.log("respuesta: ");
+                                            console.log(oldDireccion);
                                             onDetectarCambiosModificarDireccion(false);
                                             detectarCambiosFormulario(idFormDireccion, onDetectarCambiosModificarDireccion);
                                         }

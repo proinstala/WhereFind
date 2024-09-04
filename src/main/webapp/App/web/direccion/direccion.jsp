@@ -30,7 +30,7 @@
 
                 <div class="contenedor__formulario--cabecera conBotones">
                     <div>
-                        <h1>Dirección</h1>
+                        <h1>Direcciones</h1>
                     </div>
                     <div class="form__btn_circle">
                         <button id="btnCancelar" title="Cancelar"><i class="las la-times"></i></button>

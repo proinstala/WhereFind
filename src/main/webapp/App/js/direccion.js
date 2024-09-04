@@ -129,7 +129,7 @@ function rellenarTablaDirecciones(direcciones) {
                 <td>${direccion.id}</td>
                 <td>${direccion.calle}</td>
                 <td>${direccion.numero}</td>
-                <td>${(direccion.codigoPostal !== 0) ? direccion.codigoPostal : '' }</td>
+                <td>${(direccion.codigoPostal !== 0 && direccion.codigoPostal !== undefined) ? direccion.codigoPostal : '' }</td>
                 <td>${direccion.localidad.nombre}</td>
                 <td>${direccion.localidad.provincia.nombre}</td>
                 </tr>`;

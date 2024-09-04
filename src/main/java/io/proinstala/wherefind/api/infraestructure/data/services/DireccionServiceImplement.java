@@ -17,6 +17,7 @@ public class DireccionServiceImplement extends BaseMySql implements IDireccionSe
 
     private static final String SQL_SELECT_DIRECCION_BY_ID = "SELECT d.*, l.*, p.* FROM DIRECCION d INNER JOIN LOCALIDAD l ON(d.localidad_id = l.id) INNER JOIN PROVINCIA p ON(l.provincia_id = p.id) WHERE d.id = ?;";
     private static final String SQL_SELECT_DIRECCIONES = "SELECT d.*, l.*, p.* FROM DIRECCION d INNER JOIN LOCALIDAD l ON(d.localidad_id = l.id) INNER JOIN PROVINCIA p ON(l.provincia_id = p.id);"; 
+    private static final String SQL_UPDATE_DIRECCION = "UPDATE DIRECCION SET calle = ?, numero = ?, codigo_postal = ?, localidad_id = ? WHERE id = ?;";
     
     private static DireccionDTO getDireccionFromResultSet(ResultSet rs) throws SQLException {
        
@@ -24,7 +25,7 @@ public class DireccionServiceImplement extends BaseMySql implements IDireccionSe
                 rs.getInt("d.id"),
                 rs.getString("d.calle"),
                 (rs.getString("d.numero") != null) ? rs.getString("d.numero") : "",
-                rs.getInt("d.codigo_postal"),
+                (Integer)rs.getObject("d.codigo_postal"),
                 new LocalidadDTO(
                         rs.getInt("l.id"), 
                         rs.getString("l.nombre"),
@@ -87,8 +88,6 @@ public class DireccionServiceImplement extends BaseMySql implements IDireccionSe
         // Añadir el punto y coma final
         sentenciaSQL.append(";");
         
-        
-
         // Uso de try-with-resources para garantizar el cierre de recursos
         try (Connection conexion = getConnection(); 
                 PreparedStatement ps = conexion.prepareStatement(sentenciaSQL.toString())) {
@@ -122,6 +121,35 @@ public class DireccionServiceImplement extends BaseMySql implements IDireccionSe
         }
 
         return listaDireccionesDTO;
+    }
+
+    
+    @Override
+    public boolean updateDireccion(DireccionDTO direccionDTO) {
+        // Contador de filas afectadas
+        int rowsAffected = 0;
+        
+        // Usar try-with-resources para asegurar el cierre automático de recursos
+        try (Connection connection = getConnection();
+             PreparedStatement ps = connection.prepareStatement(SQL_UPDATE_DIRECCION)) {
+
+            // Establecer los parámetros en el PreparedStatement
+            ps.setString(1, direccionDTO.getCalle());
+            ps.setString(2, direccionDTO.getNumero());
+            ps.setObject(3, direccionDTO.getCodigoPostal());
+            ps.setInt(4, direccionDTO.getLocalidad().getId());
+            ps.setInt(5, direccionDTO.getId());
+            
+            // Ejecutar la actualización y obtener el número de filas afectadas
+            rowsAffected = ps.executeUpdate();
+        
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        
+        // Retornar true si se ha hecho en update
+        return rowsAffected > 0;
     }
     
 }

@@ -9,4 +9,5 @@ public interface IDireccionService {
     
     public DireccionDTO getDireccionById(int idDireccion);
     public List<DireccionDTO> findDirecciones(String calle, int localidad, int provincia);
+    public boolean updateDireccion(DireccionDTO direccionDTO);
 }

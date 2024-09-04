@@ -112,7 +112,7 @@ public class DireccionController extends BaseHttpServlet {
         }
 
         // Se llama al servicio para procese la acción requerida
-        //direccionServicio.updateDireccion(actionController);
+        direccionServicio.updateDireccion(actionController);
     }
     
     @Override
