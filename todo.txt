@@ -63,4 +63,4 @@
 - Que el servidor notifique que la base de datos no es accesible en vez de producir una excepción
 - Gestionar error cuando se usa un email ya usado.
 - Cambiar jquery por javascript puro
-- Crear sistema de migas de pan
++ Crear sistema de migas de pan
