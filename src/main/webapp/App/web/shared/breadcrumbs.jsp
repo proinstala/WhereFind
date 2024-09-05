@@ -104,9 +104,15 @@
                     }
 
                     path = getUrlMiga(uriParts, i, uriHome);
+
+                    String link = "";
+                    if (i != uriParts.length -1)
+                    {
+                        link = "href=\"" + path + "\"";
+                    }
         %>
                         <li data-id="<%= uriParts[i] %>">
-                            <a href="<%= path %>">
+                            <a <%= link %>>
                                 <span class="icon las"></span>
                                 <span class="text"><%= getTextoMiga(uriParts[i]) %></span>
                             </a>
