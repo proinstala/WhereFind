@@ -13,14 +13,6 @@
         return;
     }
 
-    // Si el usuario está logueado pero no es administrado
-    if (!UserSession.isUserLogIn(actionServer, true))
-    {
-        // Obtiene un error 403
-        BaseHttpServlet.responseError403(actionServer.response(), "");
-        return;
-    }
-
     // Se obtiene la lista de tarjetas
     List<CardDTO> tarjetas = new ArrayList<>();
 
