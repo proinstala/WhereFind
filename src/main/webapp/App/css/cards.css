@@ -94,4 +94,17 @@
 .card__apply {
     grid-row: 5/5;
     align-self: center;
+    padding-top: 15px;
+    padding-bottom: 10px;
+}
+
+.card__link-main {
+    text-decoration: none;
+}
+
+.card__link-main:hover {
+
+    .card__link::after {
+        width: 100%;
+    }
 }
