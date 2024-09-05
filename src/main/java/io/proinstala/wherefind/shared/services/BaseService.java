@@ -98,4 +98,20 @@ public abstract class BaseService {
     }
 
 
+    /**
+     * Método que verifica si un parámetro es válido según determinadas condiciones de longitud.
+     *
+     * @param parametro El string a validar. Debe ser no blanco, menor de maxSize y mayor que minSize caracteres.
+     * @param minSize   Tamaño mínimo permitido para el parámetro.
+     * @param maxSize   Tamaño máximo permitido para el parámetro.
+     *
+     * @return boolean Indica si el parámetros cumple las condiciones de longitud establecidas (no blanco y entre minSize y maxSize caracteres).
+     */
+    public static boolean isValidParametro(String parametro, int minSize, int maxSize)
+    {
+        return !parametro.isBlank() && parametro.length() >= minSize && parametro.length() <= maxSize;
+    }
+
+
+
 }
