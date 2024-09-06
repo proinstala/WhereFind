@@ -2,11 +2,8 @@ package io.proinstala.wherefind.api.admin;
 import java.io.IOException;
 
 import io.proinstala.wherefind.api.identidad.UserSession;
-import io.proinstala.wherefind.api.infraestructure.data.GestorPersistencia;
-import io.proinstala.wherefind.api.infraestructure.data.interfaces.IUserService;
 import io.proinstala.wherefind.shared.controllers.BaseHttpServlet;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
-import io.proinstala.wherefind.shared.dtos.UserDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.*;
@@ -93,7 +90,6 @@ public class UserEditController extends BaseHttpServlet{
         }
 
         boolean isError = false;
-        UserDTO userDTO = null;
 
         // Obtiene el id del usuario desde el parámetro 1 de la lista de parámetros
         int id = actionController.getIntFromParametros(1);
@@ -102,16 +98,6 @@ public class UserEditController extends BaseHttpServlet{
         {
             // Obtiene un error 403
             isError = true;
-        }
-        else
-        {
-            // Conecta con el Gestor de Permanencia
-            IUserService userService = GestorPersistencia.getUserService();
-
-            // Obtiene los datos del usuario
-            userDTO = userService.getUserById(id);
-
-            isError = userDTO == null;
         }
 
         if(isError)
@@ -122,7 +108,7 @@ public class UserEditController extends BaseHttpServlet{
         }
 
         // Se establece un atributo en la solicitud actual con los datos del usuario recuperado que serán accesibles para la vista correspondiente
-        actionController.server().request().setAttribute("userDTOByAdmin", userDTO);
+        actionController.server().request().setAttribute("userIdByAdmin", id);
         actionController.server().request().setAttribute("isEditarByAdmin", true);
 
         try
