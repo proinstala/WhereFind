@@ -13,15 +13,11 @@
         for (CardDTO tarjeta : cards)
         {
 %>
-            <div class="card">
-                <h2 class="card__title"><i class="circle <%= tarjeta.classIcon()%>"></i> <%= tarjeta.titulo()%></h2>
-                <p class="card__descripcion">
-                    <%= tarjeta.descripcion() %>
-                </p>
-                <p class="card__apply">
-                    <a class="card__link" href="<%= tarjeta.url() %>">Ir ahora <i class="las la-arrow-right"></i></a>
-                </p>
-            </div>
+                <a class="card card__link-main" href="<%= tarjeta.url() %>">
+                    <h2 class="card__title"><i class="circle <%= tarjeta.classIcon()%>"></i> <%= tarjeta.titulo()%></h2>
+                    <p class="card__descripcion"><%= tarjeta.descripcion() %></p>
+                    <div class="card__apply"><span class="card__link">Ir ahora <i class="las la-arrow-right"></i></span></div>
+                </a>
 <%
         }
     }

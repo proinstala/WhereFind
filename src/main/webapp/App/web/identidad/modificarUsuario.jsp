@@ -9,7 +9,7 @@
     private String forceDisabled(HttpServletRequest request, UserDTO userDTO)
     {
         // Desactiva los campos si, está editando un usuario normal o lo que se está editando es su propio usuario como admin.
-        if (request.getAttribute("userDTOByAdmin") == null || userDTO.getId() == UserSession.getUserLogin(request).getId())
+        if (request.getAttribute("userIdByAdmin") == null || userDTO.getId() == UserSession.getUserLogin(request).getId())
         {
             // Código si el atributo existe
             return " force-disabed=true disabled readonly ";
@@ -53,9 +53,19 @@
     boolean isEditByAdmin = false;
 
     UserDTO userDTO;
-    if (request.getAttribute("userDTOByAdmin") != null) {
+    if (request.getAttribute("userIdByAdmin") != null) {
         // Código si el atributo existe
-        userDTO = (UserDTO)request.getAttribute("userDTOByAdmin");
+        userDTO = new UserDTO();
+
+        userDTO.setId((int)request.getAttribute("userIdByAdmin"));
+        userDTO.setUserName("");
+        userDTO.setPassword("");
+        userDTO.setRol("");
+        userDTO.setNombre("");
+        userDTO.setApellidos("");
+        userDTO.setEmail("");
+        userDTO.setImagen("");
+        userDTO.setActivo(true);
 
         // Guarda el id del usuario que esta editando el administrador en su sesión
         UserSession.setSessionValue(request, "idUserEditByAdmin", userDTO.getId());
@@ -94,6 +104,20 @@
                 <div class="contenedor__formulario--main">
                     <form class="formulario" name="frmModificarUsuario" id="frmModificarUsuario">
                         <input type="hidden" name="usuario_id" id="usuario_id" value="<%=userDTO.getId()%>">
+<%
+                    // ----------------------------------------
+                    // Si es un admin el que edita al usuario
+                    // ----------------------------------------
+                    if (isEditByAdmin)
+                    {
+%>
+                        <input type="hidden" name="usuario_need_load" id="usuario_need_load" value="1">
+<%
+                    }
+                    // ----------------------------------------
+                    // Si es un admin el que edita al usuario
+                    // ----------------------------------------
+%>
 
                         <div class="form__input grid-row-span-2">
                             <div>

@@ -1,41 +1,69 @@
-import { setImageSelected, solicitudPut, resetCamposForm, detectarCambiosFormulario } from './comunes.mjs';
+import { setImageSelected, solicitudGet, solicitudPut, resetCamposForm, detectarCambiosFormulario } from './comunes.mjs';
 import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from './alertasSweetAlert2.mjs';
 
 let datosOriginalesFormulario;
 
+
+function setImgSrc(json, idKeyJson, idImg) {
+    if (json.hasOwnProperty(idKeyJson)) {
+        const imgElement = document.querySelector(`[id="${idImg}"]`);
+        if (imgElement) {
+            imgElement.src = json[idKeyJson];
+        }
+    }
+}
+
+function setFormValue(json, idKeyJson, idInput) {
+    if (json.hasOwnProperty(idKeyJson)) {
+        const inputElement = document.querySelector(`[id="${idInput}"]`);
+        if (inputElement) {
+            inputElement.value = json[idKeyJson];
+        }
+    }
+}
+
+
 $(document).ready(function () {
     const idFormModificarUsuario = '#frmModificarUsuario';
     const idFormModificarPassword = '#frmModificarPassword';
+    const usuarioIdInput = document.querySelector('#usuario_id');
+    const usuarioId = usuarioIdInput ? usuarioIdInput.value : -1;
 
-    datosOriginalesFormulario = getDatosOriginalesForm(idFormModificarUsuario);
+    const usuarioNeddLoadInput = document.querySelector('#usuario_need_load');
+    const usuarioNeedLoad = usuarioNeddLoadInput ? usuarioNeddLoadInput.value : 0;
 
-    validarFormulario(idFormModificarUsuario);
-    validarFormularioPassword(idFormModificarPassword);
 
-    detectarCambiosFormulario(idFormModificarUsuario, onDetectarCambiosModificarUsuario);
-    detectarCambiosFormulario(idFormModificarPassword, onDetectarCambiosModificarPassword);
+    const continuarCarga = () => {
 
-    const btnCancelar = document.querySelector('#btnCancelar');
-    const btnCancelarPassword = document.querySelector('#btnCancelarPassword');
-    const btnDeshacerCambiosUsuario = document.querySelector('#btnDeshacerCambiosUsuario');
-    const btnDeshacerCambiosPassword = document.querySelector('#btnDeshacerCambiosPassword');
-    const btnPassword = document.querySelector('#btnPassword');
-    const btnUsuario = document.querySelector('#btnUsuario');
+        datosOriginalesFormulario = getDatosOriginalesForm(idFormModificarUsuario);
 
-    const btnFoto = document.querySelector('#btnFoto');
-    const contenedorImg = document.querySelector('#imgUsuario');
-    const inputHide64 = document.querySelector('#imagenUsuarioB64');
-    const labelInputFoto = document.querySelector('#textoImagen');
+        validarFormulario(idFormModificarUsuario);
+        validarFormularioPassword(idFormModificarPassword);
 
-    const divFormUsuario = document.querySelector('#form_usuario');
-    const divFormPassword = document.querySelector('#form_password');
+        detectarCambiosFormulario(idFormModificarUsuario, onDetectarCambiosModificarUsuario);
+        detectarCambiosFormulario(idFormModificarPassword, onDetectarCambiosModificarPassword);
 
-    btnFoto.addEventListener('change', (e) => {
-        const defaultUserImg = contenedorImg.src;
-        const fileImg = e.target.files[0];
+        const btnCancelar = document.querySelector('#btnCancelar');
+        const btnCancelarPassword = document.querySelector('#btnCancelarPassword');
+        const btnDeshacerCambiosUsuario = document.querySelector('#btnDeshacerCambiosUsuario');
+        const btnDeshacerCambiosPassword = document.querySelector('#btnDeshacerCambiosPassword');
+        const btnPassword = document.querySelector('#btnPassword');
+        const btnUsuario = document.querySelector('#btnUsuario');
 
-        //Establece la imagen seleccionada.
-        setImageSelected(fileImg, contenedorImg, inputHide64, defaultUserImg, 2)
+        const btnFoto = document.querySelector('#btnFoto');
+        const contenedorImg = document.querySelector('#imgUsuario');
+        const inputHide64 = document.querySelector('#imagenUsuarioB64');
+        const labelInputFoto = document.querySelector('#textoImagen');
+
+        const divFormUsuario = document.querySelector('#form_usuario');
+        const divFormPassword = document.querySelector('#form_password');
+
+        btnFoto.addEventListener('change', (e) => {
+            const defaultUserImg = contenedorImg.src;
+            const fileImg = e.target.files[0];
+
+            //Establece la imagen seleccionada.
+            setImageSelected(fileImg, contenedorImg, inputHide64, defaultUserImg, 2)
             .then((result) => {
                 if (result) {
                     console.log("Imagen establecida correctamente.");
@@ -53,18 +81,18 @@ $(document).ready(function () {
                 console.error('Error:', error);
                 btnFoto.value = '';
             });
-    });
+        });
 
-    btnCancelar.addEventListener('click', () => {
-        window.location.href = btnCancelar.dataset.uri;
-    });
+        btnCancelar.addEventListener('click', () => {
+            window.location.href = btnCancelar.dataset.uri;
+        });
 
-    btnCancelarPassword.addEventListener('click', () => {
-        window.location.href = btnCancelarPassword.dataset.uri;
-    });
+        btnCancelarPassword.addEventListener('click', () => {
+            window.location.href = btnCancelarPassword.dataset.uri;
+        });
 
-    btnDeshacerCambiosUsuario.addEventListener('click', () => {
-        setDatosForm(idFormModificarUsuario, datosOriginalesFormulario, '#imagenUsuarioB64');
+        btnDeshacerCambiosUsuario.addEventListener('click', () => {
+            setDatosForm(idFormModificarUsuario, datosOriginalesFormulario, '#imagenUsuarioB64');
     });
 
     btnDeshacerCambiosPassword.addEventListener('click', () => {
@@ -73,6 +101,39 @@ $(document).ready(function () {
 
     btnPassword.addEventListener('click',() => mostrarContenedor(divFormPassword, divFormUsuario, 'grid'));
     btnUsuario.addEventListener('click',() => mostrarContenedor(divFormUsuario, divFormPassword, 'grid'));
+};
+
+    if (usuarioNeedLoad == 1 && usuarioId > 0) {
+        solicitudGet(`api/identidad/user/${usuarioId}`, idFormModificarUsuario, true)
+        .then(response => {
+            if (response.isError === 1) {
+                mostrarMensajeError("No se ha podido obtener los datos del usuario", response.result);
+            } else {
+                setFormValue(response.data, "apellidos", "apellidoRealUsuario");
+                setFormValue(response.data, "email", "emailUsuario");
+                setFormValue(response.data, "imagen", "imagenUsuarioB64");
+                setFormValue(response.data, "nombre", "nombreRealUsuario");
+                setFormValue(response.data, "rol", "rolUsuario");
+                setFormValue(response.data, "userName", "nombreUsuario");
+                setImgSrc(response.data, "imagen", "imgUsuario");
+
+                continuarCarga();
+            }
+        })
+        .catch(error => {
+            // Maneja el error aquí
+            console.error("Error:", error);
+            mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
+            continuarCarga();
+        });
+
+    }
+    else {
+        continuarCarga();
+    }
+
+
+
 
 });
 
