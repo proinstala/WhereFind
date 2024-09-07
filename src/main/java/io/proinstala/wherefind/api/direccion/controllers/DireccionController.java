@@ -15,7 +15,14 @@ import java.io.IOException;
 
 
 /**
- * Controlador de API direccion que maneja las solicitudes HTTP relacionadas con la gestión de direccion.
+ * Controlador de solicitudes HTTP para manejar operaciones relacionadas con direcciones.
+ *
+ * <p>Esta clase extiende {@link BaseHttpServlet} y se encarga de recibir y procesar las solicitudes HTTP 
+ * relacionadas con direcciones a través de la API definida. Utiliza el servicio {@link DireccionControllerService} 
+ * para realizar las operaciones de negocio y construir las respuestas adecuadas.</p>
+ *
+ * <p>La clase define una enumeración interna {@link ActionType} para representar los diferentes tipos de acción 
+ * que puede manejar. La base de la URL para las API de direcciones se define como {@code /api/direccion}.</p>
  */
 @WebServlet(urlPatterns = DireccionController.BASE_API_DIRECCION + "/*")
 public class DireccionController extends BaseHttpServlet {
@@ -25,6 +32,7 @@ public class DireccionController extends BaseHttpServlet {
      */
     protected static final String BASE_API_DIRECCION = "/api/direccion";
     
+    //Servicio encargado de manejar la lógica de negocio para las direcciones
     private final DireccionControllerService direccionServicio = new DireccionControllerService();
        
     /**
@@ -75,6 +83,14 @@ public class DireccionController extends BaseHttpServlet {
         return ActionType.ERROR;
     }
     
+    /**
+     * Maneja la solicitud para buscar direcciones.
+     *
+     * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio 
+     * de direcciones para buscar las direcciones y devolver la respuesta en formato JSON.</p>
+     *
+     * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
+     */
     protected void apiFindDirecciones(ActionController actionController) {
         // Se comprueba que el usuario está logueado
         if (!UserSession.isUserLogIn(actionController.server(), false)) {
@@ -85,6 +101,14 @@ public class DireccionController extends BaseHttpServlet {
         direccionServicio.findDirecciones(actionController);
     }
     
+    /**
+     * Maneja la solicitud para obtener una dirección específica.
+     *
+     * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio 
+     * de direcciones para obtener la dirección por ID y devolver la respuesta en formato JSON.</p>
+     *
+     * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
+     */
     protected void apiGetDireccion(ActionController actionController) {
         // Se comprueba que el usuario está logueado
         if (!UserSession.isUserLogIn(actionController.server(), false)) {
@@ -94,16 +118,18 @@ public class DireccionController extends BaseHttpServlet {
         
         direccionServicio.getDireccionById(actionController);
     }
-    
+      
     /**
-     * Maneja la solicitud para actualizar la información de un direccion específica.
+     * Maneja la solicitud para actualizar la información de una dirección específica.
      *
+     * <p>Verifica si el usuario está autenticado y tiene los permisos necesarios. Si es así, 
+     * delega la operación al servicio de direcciones para actualizar la dirección y devolver la respuesta.</p>
+     * 
      * EndPoint - PUT : /api/direccion/update/{id}
      *
-     * @param actionController el controlador de acción.
+     * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
      */
-    protected void apiUpdateDireccion(ActionController actionController)
-    {
+    protected void apiUpdateDireccion(ActionController actionController) {
         // Se comprueba que el usuario está logueado y sea administrador
         if (!UserSession.isUserLogIn(actionController.server(), false))
         {
@@ -111,10 +137,19 @@ public class DireccionController extends BaseHttpServlet {
             return;
         }
 
-        // Se llama al servicio para procese la acción requerida
         direccionServicio.updateDireccion(actionController);
     }
     
+    /**
+     * Maneja las solicitudes HTTP GET para las acciones definidas.
+     *
+     * <p>Obtiene la acción solicitada y determina el tipo de acción. Según el tipo, realiza 
+     * la operación correspondiente llamando a los métodos adecuados o devuelve un error si 
+     * la acción no es válida.</p>
+     *
+     * @param request  la solicitud HTTP recibida.
+     * @param response la respuesta HTTP que se enviará.
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         // Obtiene la información de la petición a la API
@@ -122,8 +157,6 @@ public class DireccionController extends BaseHttpServlet {
         
         // Imprime en la salida del servidor el EndPoint
         System.out.println("EndPoint GET : " + actionController.parametros()[0]);
-        
-        //Tools.wait(500); //PRUEBAS PARA BORRAR
         
         switch((ActionType) actionController.actionType()) {
             case DIRECCION -> apiGetDireccion(actionController);
@@ -134,10 +167,14 @@ public class DireccionController extends BaseHttpServlet {
     }
     
     /**
-     * Maneja las solicitudes PUT.
+     * Maneja las solicitudes HTTP PUT para las acciones definidas.
      *
-     * @param request  la solicitud HTTP.
-     * @param response la respuesta HTTP.
+     * <p>Obtiene la acción solicitada y determina el tipo de acción. Según el tipo, realiza 
+     * la operación correspondiente llamando a los métodos adecuados o devuelve un error si 
+     * la acción no es válida.</p>
+     *
+     * @param request  la solicitud HTTP recibida.
+     * @param response la respuesta HTTP que se enviará.
      * @throws ServletException si ocurre un error en el servlet.
      * @throws IOException      si ocurre un error de entrada/salida.
      */
@@ -156,7 +193,6 @@ public class DireccionController extends BaseHttpServlet {
             
             default -> responseError404(actionController.server().response(), "");
         }
-        
     }
     
 }

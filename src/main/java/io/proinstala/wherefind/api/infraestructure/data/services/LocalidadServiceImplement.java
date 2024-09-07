@@ -10,6 +10,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementación del servicio de acceso a datos para localidades.
+ * 
+ * <p>Esta clase implementa la interfaz {@link ILocalidadService} y proporciona métodos para 
+ * realizar operaciones de acceso a datos relacionadas con las localidades en la base de datos.</p>
+ * 
+ * <p>Utiliza consultas SQL para recuperar datos de la base de datos y transforma los resultados 
+ * en objetos {@link LocalidadDTO} y {@link ProvinciaDTO}. La clase maneja las conexiones 
+ * a la base de datos, las declaraciones preparadas y el procesamiento de resultados.</p>
+ * 
+ */
 public class LocalidadServiceImplement extends BaseMySql implements ILocalidadService {
 
     //Obtiene todas la lista de provincias.
@@ -40,20 +51,24 @@ public class LocalidadServiceImplement extends BaseMySql implements ILocalidadSe
                 new ProvinciaDTO(rs.getInt("p.id"), rs.getString("p.nombre")));
     }
     
-
     /**
      * Obtiene una lista de todas las localidades desde la base de datos.
      *
-     * @return una lista de {@link LocalidadDTO} que contiene todas las
-     * localidades obtenidas de la base de datos. Si ocurre un error durante la
-     * ejecución, se devuelve {@code null}.
+     * <p>Este método ejecuta una consulta SQL para recuperar todas las localidades 
+     * y sus provincias asociadas. Los resultados se transforman en una lista de objetos 
+     * {@link LocalidadDTO}.</p>
+     *
+     * @return Una lista de {@link LocalidadDTO} que contiene todas las localidades obtenidas
+     *         de la base de datos. Si ocurre un error durante la ejecución, se devuelve {@code null}.
      */
     @Override
     public List<LocalidadDTO> getAllLocalidades() {
         List<LocalidadDTO> listaLocalidadDTO = new ArrayList<>();
 
         // Uso de try-with-resources para garantizar el cierre de recursos
-        try (Connection conexion = getConnection(); PreparedStatement ps = conexion.prepareStatement(SQL_SELECT_ALL_LOCALIDADES); ResultSet resultSet = ps.executeQuery()) {
+        try (Connection conexion = getConnection(); 
+                PreparedStatement ps = conexion.prepareStatement(SQL_SELECT_ALL_LOCALIDADES); 
+                ResultSet resultSet = ps.executeQuery()) {
 
             while (resultSet.next()) {
                 LocalidadDTO localidadDTO = getLocalidadFromResultSet(resultSet);
@@ -69,15 +84,19 @@ public class LocalidadServiceImplement extends BaseMySql implements ILocalidadSe
 
         return listaLocalidadDTO;
     }
-
+    
     /**
-    * Obtiene una lista de localidades que pertenecen a una provincia específica.
-    * 
-    * @param provincia El objeto ProvinciaDTO que contiene la información de la provincia,
-    *                  específicamente el ID de la provincia que se utilizará para buscar las localidades.
-    * @return Una lista de objetos LocalidadDTO que representan las localidades de la provincia.
-    *         Devuelve null si ocurre un error durante la operación.
-    */
+     * Obtiene una lista de localidades que pertenecen a una provincia específica.
+     *
+     * <p>Este método ejecuta una consulta SQL utilizando el ID de la provincia para recuperar
+     * todas las localidades asociadas a dicha provincia. Los resultados se transforman en 
+     * una lista de objetos {@link LocalidadDTO}.</p>
+     *
+     * @param provincia El objeto {@link ProvinciaDTO} que contiene la información de la provincia,
+     *                  específicamente el ID de la provincia que se utilizará para buscar las localidades.
+     * @return Una lista de objetos {@link LocalidadDTO} que representan las localidades de la provincia.
+     *         Devuelve {@code null} si ocurre un error durante la operación.
+     */
     @Override
     public List<LocalidadDTO> getLocalidadesOfProvincia(ProvinciaDTO provincia) {
         List<LocalidadDTO> listaLocalidadDTO = new ArrayList<>();

@@ -6,14 +6,21 @@ import io.proinstala.wherefind.api.identidad.UserSession;
 import io.proinstala.wherefind.shared.controllers.BaseHttpServlet;
 import static io.proinstala.wherefind.shared.controllers.BaseHttpServlet.responseError403;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
-import io.proinstala.wherefind.shared.tools.Tools;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
 /**
- * Controlador de API direccion que maneja las solicitudes HTTP relacionadas con la gestión de provincias.
+ * Controlador de solicitudes HTTP para manejar operaciones relacionadas con provincias.
+ *
+ * Esta clase extiende {@link BaseHttpServlet} y se encarga de recibir y procesar las solicitudes HTTP 
+ * relacionadas con provincias a través de la API definida. Utiliza el servicio {@link ProvinciaControllerService} 
+ * para realizar las operaciones de negocio y construir las respuestas adecuadas.
+ *
+ *
+ * La clase define una enumeración interna {@link ActionType} para representar los diferentes tipos de acción 
+ * que puede manejar. La base de la URL para las API de provincias se define como {@code /api/provincia}.
  */
 @WebServlet(urlPatterns = ProvinciaController.BASE_API_PROVINCIA + "/*")
 public class ProvinciaController extends BaseHttpServlet {
@@ -73,6 +80,16 @@ public class ProvinciaController extends BaseHttpServlet {
         return ActionType.ERROR;
     }
     
+    
+    /**
+     * Maneja la solicitud para obtener la lista de provincias.
+     *
+     * Este método verifica que el usuario esté autenticado y tenga los permisos necesarios. Luego, delega 
+     * la solicitud al servicio {@link ProvinciaControllerService} para obtener las provincias y enviar la respuesta 
+     * adecuada.
+     *
+     * @param actionController el {@link ActionController} que maneja la solicitud y la respuesta.
+     */
     protected void apiGetProvincias(ActionController actionController) {
         // Se comprueba que el usuario está logueado y sea administrador
         if (!UserSession.isUserLogIn(actionController.server(), false)) {
@@ -83,6 +100,16 @@ public class ProvinciaController extends BaseHttpServlet {
         provinciaServicio.getProvincias(actionController);
     }
     
+    /**
+     * Maneja las solicitudes HTTP GET para esta API.
+     *
+     * Este método procesa las solicitudes GET, obtiene el controlador de acción correspondiente y decide 
+     * qué acción tomar según el tipo de acción determinado. Imprime en la salida del servidor el endpoint 
+     * solicitado y delega la ejecución de la acción a métodos específicos según el tipo de acción.
+     *
+     * @param request el objeto {@link HttpServletRequest} que contiene la información de la solicitud.
+     * @param response el objeto {@link HttpServletResponse} que se utiliza para enviar la respuesta.
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         // Obtiene la información de la petición a la API

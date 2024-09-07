@@ -14,11 +14,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Servicio que maneja operaciones relacionadas con localidades.
  *
- * @author David
+ * Esta clase se encarga de gestionar las solicitudes sobre localidades y construir 
+ * las respuestas adecuadas para dichas solicitudes. Extiende {@link BaseService} y utiliza servicios 
+ * específicos para interactuar con la capa de persistencia.
  */
 public class LocalidadControllerService extends BaseService {
 
+    /**
+     * Maneja la solicitud para obtener una lista de localidades.
+     *
+     * <p>Este método procesa la solicitud del cliente para obtener localidades. Dependiendo de los 
+     * parámetros recibidos, puede devolver todas las localidades o solo las localidades de una 
+     * provincia específica. Si se proporciona un JSON con los datos de la provincia, se filtrarán 
+     * las localidades correspondientes a esa provincia. En caso contrario, se devolverán todas 
+     * las localidades disponibles.</p>
+     *
+     * <p>La respuesta se construye y se envía al cliente en formato JSON utilizando {@link ActionController}.</p>
+     *
+     * @param actionController el controlador de la acción actual que maneja la solicitud y la respuesta.
+     */
     public void getLocalidades(ActionController actionController) {
         //Respuesta de la acción actual
         ResponseDTO responseDTO;

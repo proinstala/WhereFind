@@ -31,4 +31,24 @@ public class FormParametros {
 
     /** Imagen del usuario. */
     public static final String PARAM_USUARIO_IMAGEN = "imagenUsuarioB64";
+    
+    
+    
+    //Direccion ----------------------------------------------------------------
+    
+    /** Nombre de la calle de la dirección. */
+    public static final String PARAM_DIRECCION_CALLE = "calle";
+    
+    /** Número de la dirección. */
+    public static final String PARAM_DIRECCION_NUMERO = "numero";
+    
+    /** Códgigo postal de la dirección. */
+    public static final String PARAM_DIRECCION_CODIGO_POSTAL = "codigoPostal";
+    
+    /** Localidad de la dirección. */
+    public static final String PARAM_DIRECCION_LOCALIDAD = "localidad";
+    
+    /** Provincia de la dirección. */
+    public static final String PARAM_DIRECCION_PROVINCIA = "provincia";
+    
 }

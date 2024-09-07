@@ -6,14 +6,21 @@ import io.proinstala.wherefind.api.identidad.UserSession;
 import io.proinstala.wherefind.shared.controllers.BaseHttpServlet;
 import static io.proinstala.wherefind.shared.controllers.BaseHttpServlet.responseError403;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
-import io.proinstala.wherefind.shared.tools.Tools;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
 /**
- * Controlador de API direccion que maneja las solicitudes HTTP relacionadas con la gestión de localidades.
+ * Controlador de solicitudes HTTP para manejar operaciones relacionadas con localidades.
+ *
+ * Esta clase extiende {@link BaseHttpServlet} y se encarga de recibir y procesar las solicitudes HTTP 
+ * relacionadas con localidades a través de la API definida. Utiliza el servicio {@link LocalidadControllerService} 
+ * para realizar las operaciones de negocio y construir las respuestas adecuadas.
+ *
+ *
+ * La clase define una enumeración interna {@link ActionType} para representar los diferentes tipos de acción 
+ * que puede manejar. La base de la URL para las API de localidades se define como {@code /api/localidad}.
  */
 @WebServlet(urlPatterns = LocalidadController.BASE_API_LOCALIDAD + "/*")
 public class LocalidadController extends BaseHttpServlet {
@@ -36,7 +43,7 @@ public class LocalidadController extends BaseHttpServlet {
     
     
     /**
-     * Obtiene la base de la URL de la API direccion.
+     * Obtiene la base de la URL de la API localidad.
      *
      * @return la base de la URL de la API.
      */
@@ -74,6 +81,14 @@ public class LocalidadController extends BaseHttpServlet {
         return ActionType.ERROR;
     }
     
+    /**
+     * Maneja la solicitud para obtener todas las localidades.
+     *
+     * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio de localidades 
+     * para obtener la lista de localidades y devolver la respuesta en formato JSON.</p>
+     *
+     * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
+     */
     protected void apiGetLocalidades(ActionController actionController) {
         // Se comprueba que el usuario está logueado
         if (!UserSession.isUserLogIn(actionController.server(), false)) {
@@ -84,6 +99,16 @@ public class LocalidadController extends BaseHttpServlet {
         localidadServicio.getLocalidades(actionController);
     }
     
+    /**
+     * Maneja las solicitudes HTTP GET para las acciones definidas.
+     *
+     * <p>Obtiene la acción solicitada y determina el tipo de acción. Según el tipo, realiza 
+     * la operación correspondiente llamando a los métodos adecuados o devuelve un error si 
+     * la acción no es válida.</p>
+     *
+     * @param request  la solicitud HTTP recibida.
+     * @param response la respuesta HTTP que se enviará.
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         // Obtiene la información de la petición a la API
@@ -91,8 +116,6 @@ public class LocalidadController extends BaseHttpServlet {
         
         // Imprime en la salida del servidor el EndPoint
         System.out.println("EndPoint GET : " + actionController.parametros()[0]);
-        
-        //Tools.wait(500); //PRUEBAS PARA BORRAR
         
         switch((ActionType) actionController.actionType()) {
             case LOCALIDAD -> System.out.println("SE PIDE PROVINCIA");

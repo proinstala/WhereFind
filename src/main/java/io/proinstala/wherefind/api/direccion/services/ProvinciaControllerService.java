@@ -11,14 +11,30 @@ import io.proinstala.wherefind.shared.services.BaseService;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Servicio que maneja operaciones relacionadas con provincias.
+ *
+ * Esta clase se encarga de gestionar las solicitudes sobre provincias y construir 
+ * las respuestas adecuadas para dichas solicitudes. Extiende {@link BaseService} y utiliza servicios 
+ * específicos para interactuar con la capa de persistencia.
+ */
 public class ProvinciaControllerService extends BaseService {
 
+    /**
+     * Maneja la solicitud para obtener todas las provincias.
+     *
+     * Este método interactúa con el servicio de provincias para obtener una lista completa de todas las 
+     * provincias disponibles. Luego, construye una respuesta {@link ResponseDTO} que indica el estado de 
+     * la solicitud. Si la obtención de provincias es exitosa, se envía una respuesta con la lista de provincias. 
+     * En caso de error, se devuelve una respuesta con un mensaje de error.
+     *
+     * @param actionController el {@link ActionController} que maneja la solicitud y la respuesta.
+     */
     public void getProvincias(ActionController actionController) {
         //Respuesta de la acción actual
         ResponseDTO responseDTO;
 
-        // onecta con el Gestor de Permanencia
+        // Conecta con el Gestor de Persistencia
         IProvinciaService provinciaServiceImp = GestorPersistencia.getProvinciaService();
 
         //Obtiene la lista de Provincias
