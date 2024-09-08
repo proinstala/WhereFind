@@ -48,5 +48,8 @@ public class LocaleApp {
     
     /** Mensaje para indicar que los datos han sido modificados correctamente. */
     public static final String INFO_UPDATE_OK = "Se han modificado los datos correctamente.";
+    
+    /** Mensaje para indicar que los datos han sido creados correctamente. */
+    public static final String INFO_CREATE_OK = "Se han creado los datos correctamente.";
 
 }

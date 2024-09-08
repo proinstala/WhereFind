@@ -1,6 +1,7 @@
 
 package io.proinstala.wherefind.api.direccion.services;
 
+import com.google.gson.Gson;
 import io.proinstala.wherefind.api.infraestructure.data.GestorPersistencia;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IDireccionService;
 import io.proinstala.wherefind.shared.consts.textos.FormParametros;
@@ -179,5 +180,36 @@ public class DireccionControllerService extends BaseService{
         }
         responseJson(actionController.server().response(), responseDTO);
     }    
+    
+    public void createDireccion(ActionController actionController) {
+        //Respuesta de la acción actual
+        ResponseDTO responseDTO;
+        
+        IDireccionService direccionServiceImp = GestorPersistencia.getDireccionService();
+        
+        String jsonDireccion = actionController.server().getRequestParameter("direccionJSON", "");
+        
+        DireccionDTO direccionDTO = null;
+        if(jsonDireccion != null && !jsonDireccion.isBlank()) {
+            Gson gson = new Gson();
+            direccionDTO = gson.fromJson(jsonDireccion, DireccionDTO.class); //Despues de pruebas meter directamente esto dentro de el metodo de createDireccion
+            
+            if (direccionDTO.getCodigoPostal() == 0) {
+                direccionDTO.setCodigoPostal(null);
+            }
+            
+            direccionDTO = direccionServiceImp.createDireccion(direccionDTO);
+        }
+        
+        if(direccionDTO != null) {
+            responseDTO = getResponseOk(LocaleApp.INFO_CREATE_OK, direccionDTO, 0);
+        } else {
+            //Crea la respuesta con un error
+            responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
+        }
+        
+        //Devuelve la respuesta al navegador del usuario en formato json
+        responseJson(actionController.server().response(), responseDTO);
+    }
    
 }

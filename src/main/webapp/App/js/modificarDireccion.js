@@ -12,7 +12,6 @@ const idFormDireccion = "#frmModificarDireccion";
 const idBtnGuardar = "#btnGuardar";
 const idBtnCancelar = "#btnCancelar";
 const idBtnDeshacerCambiosDireccion = "#btnDeshacerCambiosDireccion";
-const idFromModificarDireccion = "#frmModificarDireccion";
 
 let oldDireccion;
 
@@ -23,7 +22,7 @@ $(document).ready(function () {
     const btnDeshacerCambiosDireccion = document.querySelector(idBtnDeshacerCambiosDireccion);
     const btnCancelar = document.querySelector(idBtnCancelar);
     
-    validarFormulario(idFromModificarDireccion);
+    validarFormulario(idFormDireccion);
     
     getDireccion(inputIdDireccion.value);
     

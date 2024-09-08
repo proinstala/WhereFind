@@ -42,7 +42,8 @@ public class DireccionController extends BaseHttpServlet {
         ERROR,
         DIRECCION,
         FINDDIRECCIONES,
-        UPDATE
+        UPDATE,
+        CREATE
     }
     
     /**
@@ -141,6 +142,29 @@ public class DireccionController extends BaseHttpServlet {
     }
     
     /**
+     * Maneja la creación de una nueva dirección utilizando los datos proporcionados en la solicitud.
+     *
+     * <p>Este método primero verifica si el usuario está autenticado. 
+     * Si el usuario no está logueado, se envía una respuesta de error 
+     * 403 (prohibido) y se interrumpe el procesamiento. Si el usuario está autenticado y autorizado, 
+     * se llama al servicio de direcciones para realizar la creación de la dirección.</p>
+     *
+     * @param actionController el controlador de acción que contiene la información de la solicitud, 
+     *                         incluyendo los datos necesarios para crear una nueva dirección.
+     */
+    protected void apiCreateDireccion(ActionController actionController) {
+        // Se comprueba que el usuario está logueado
+        if (!UserSession.isUserLogIn(actionController.server(), false))
+        {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+
+        direccionServicio.createDireccion(actionController); 
+    }
+    
+    
+    /**
      * Maneja las solicitudes HTTP GET para las acciones definidas.
      *
      * <p>Obtiene la acción solicitada y determina el tipo de acción. Según el tipo, realiza 
@@ -191,6 +215,39 @@ public class DireccionController extends BaseHttpServlet {
         switch((ActionType) actionController.actionType()) {
             case UPDATE -> apiUpdateDireccion(actionController);
             
+            default -> responseError404(actionController.server().response(), "");
+        }
+    }
+    
+    /**
+     * Maneja las solicitudes HTTP POST para las acciones definidas.
+     *
+     * <p>Este método se encarga de procesar las solicitudes POST que llegan al servlet. Primero, 
+     * obtiene un objeto {@link ActionController} a partir del {@link HttpServletRequest} y 
+     * {@link HttpServletResponse}. Luego, imprime en el log el punto de entrada (endPoint) 
+     * de la solicitud para fines de depuración. Dependiendo del tipo de acción ({@link ActionType}) 
+     * especificado en la solicitud, ejecuta la acción correspondiente. Si el tipo de acción no 
+     * coincide con ninguno de los casos definidos, se devuelve un error 404 (no encontrado).</p>
+     *
+     * @param request el objeto {@link HttpServletRequest} que contiene la solicitud del cliente.
+     * @param response el objeto {@link HttpServletResponse} que se utiliza para enviar una respuesta al cliente.
+     * @throws ServletException si ocurre un error en el procesamiento del servlet.
+     * @throws IOException si ocurre un error de entrada/salida durante el procesamiento de la solicitud o respuesta.
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Obtiene la información de la petición a la API
+        ActionController actionController = getActionController(request, response);
+
+        // Imprime en la salida del servidor el EndPoint
+        System.out.println("EndPoint POST : " + actionController.parametros()[0]);
+
+        // Dependiendo del ActionType, realizará una acción
+        switch((ActionType) actionController.actionType()){
+            case CREATE -> apiCreateDireccion(actionController);
+
             default -> responseError404(actionController.server().response(), "");
         }
     }

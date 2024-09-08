@@ -8,15 +8,17 @@ const idFormBusquedaDireccion = "#frmBuscarDireccion";
 const idTablaDirecciones = "#tablaDireciones";
 const idBtnBuscar = "#btnBuscar";
 const idBtnModificar = "#btnModificar";
+const idBtnCrear = "#btnCrear";
 
 // Configuración de las urls
 const URL_MODIFICAR_DIRECCION = "direccion/edit";
 
 $(document).ready(function () {
     const selectProvincia = document.querySelector(idSelectProvincia);
-    const selectlocalidad = document.querySelector(idSelectLocalidad);
+    const selectLocalidad = document.querySelector(idSelectLocalidad);
     const formBusquedaDireccion = document.querySelector(idFormBusquedaDireccion);
     const btnBuscar = document.querySelector(idBtnBuscar);
+    const btnCrear = document.querySelector(idBtnCrear);
     const btnModificar = document.querySelector(idBtnModificar);
     const tablaDirecciones = document.querySelector(idTablaDirecciones);
     
@@ -35,7 +37,7 @@ $(document).ready(function () {
             const encodedJsonProvincia = encodeURIComponent(jsonProvinciaString); //Codifica la cadena JSON para que sea segura al incluirla en la URL.
 
             //Llama a cargarInputSelect para llenar el select de localidades con los datos obtenidos del select provincia.
-            cargarInputSelect(selectlocalidad, `api/localidad/localidades?jsonProvincia=${encodedJsonProvincia}`, 'Todas');
+            cargarInputSelect(selectLocalidad, `api/localidad/localidades?jsonProvincia=${encodedJsonProvincia}`, 'Todas');
         });
     };
     
@@ -51,6 +53,10 @@ $(document).ready(function () {
     btnModificar.addEventListener('click', () => {
         const idDireccion = tablaDirecciones.getAttribute('data-rowselected'); //data-rowSelected
         window.location.href = (`direccion/modificarDireccion?idDireccion=${idDireccion}`);
+    });
+    
+    btnCrear.addEventListener('click', () => {
+        window.location.href = (`direccion/crearDireccion`);
     });
 });
 

@@ -48,7 +48,7 @@ const messageBox = (titulo = "titulo", contenido = "contenido", icon = "success"
  * @param {function} callback - Una función de retorno que se ejecuta cuando se confirma el mensaje.
  */
 const mostrarMensaje = (titulo = "titulo", contenido = "contenido", icon = "success", callback = null) => {
-    messageBox(titulo, contenido, icon, callback, 2000);
+    messageBox(titulo, contenido, icon, callback, 3000);
 };
 
 

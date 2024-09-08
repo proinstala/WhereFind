@@ -137,5 +137,17 @@
         <servlet-name>modificarDireccion</servlet-name>
         <url-pattern>/direccion/modificarDireccion</url-pattern>
     </servlet-mapping>
+    
+    
+    
+    <servlet>
+        <servlet-name>crearDireccion</servlet-name>
+        <jsp-file>/App/web/direccion/crearDireccion.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>crearDireccion</servlet-name>
+        <url-pattern>/direccion/crearDireccion</url-pattern>
+    </servlet-mapping>
 
 </web-app>

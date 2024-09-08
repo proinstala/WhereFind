@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,10 @@ public class DireccionServiceImplement extends BaseMySql implements IDireccionSe
      */
     private static final String SQL_UPDATE_DIRECCION = "UPDATE DIRECCION SET calle = ?, numero = ?, codigo_postal = ?, localidad_id = ? WHERE id = ?;";
     
+    /**
+     * Consulta SQL para crear una nueva dirección.
+     */
+    private static final String SQL_CREATE_DIRECCION = "INSERT INTO DIRECCION (calle, numero, codigo_postal, localidad_id) VALUES (?,?,?,?);";
     
     /**
      * Transforma un objeto {@link ResultSet} en una instancia de {@link DireccionDTO}.
@@ -250,6 +255,58 @@ public class DireccionServiceImplement extends BaseMySql implements IDireccionSe
         
         // Retornar true si se ha hecho en update
         return rowsAffected > 0;
+    }
+
+    /**
+     * Crea una nueva dirección en la base de datos.
+     *
+     * <p>Este método inserta una nueva dirección en la base de datos utilizando los valores 
+     * proporcionados en el objeto {@link DireccionDTO}. La inserción se realiza mediante una 
+     * declaración preparada, y el ID generado automáticamente por la base de datos se recupera 
+     * y se asigna al objeto {@link DireccionDTO}. Si la inserción es exitosa, el objeto 
+     * {@link DireccionDTO} se devuelve con el ID asignado. En caso de error, se captura la 
+     * excepción y se devuelve {@code null}.</p>
+     *
+     * <p>El método utiliza un bloque try-with-resources para asegurar el cierre automático de 
+     * los recursos de conexión y declaración, incluso en caso de error.</p>
+     *
+     * @param direccionDTO el objeto {@link DireccionDTO} que contiene los datos de la dirección 
+     *                     a insertar. El objeto debe tener los valores de calle, número, código 
+     *                     postal y el ID de la localidad.
+     * @return el objeto {@link DireccionDTO} con el ID asignado si la inserción fue exitosa, 
+     *         o {@code null} si ocurrió un error durante la inserción.
+     */
+    @Override
+    public DireccionDTO createDireccion(DireccionDTO direccionDTO) {
+        try (Connection connection = getConnection(); PreparedStatement ps = connection.prepareStatement(
+                SQL_CREATE_DIRECCION,
+                Statement.RETURN_GENERATED_KEYS)) {
+
+            // Configura los parámetros del PreparedStatement
+            ps.setString(1, direccionDTO.getCalle());
+            ps.setString(2, direccionDTO.getNumero());
+            ps.setObject(3, direccionDTO.getCodigoPostal());
+            ps.setInt(4, direccionDTO.getLocalidad().getId());
+
+            // Ejecuta la inserción
+            int affectedRows = ps.executeUpdate();
+
+            if (affectedRows > 0) {
+                // Obtiene el ID generado
+                try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        int generatedId = generatedKeys.getInt(1);
+                        direccionDTO.setId(generatedId); // Asigna el ID generado al objeto
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null; // Manejo de errores
+        }
+
+        return direccionDTO; // Devuelve el objeto con el ID asignado
     }
     
 }

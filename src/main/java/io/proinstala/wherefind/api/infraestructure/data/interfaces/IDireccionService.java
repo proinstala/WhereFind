@@ -51,4 +51,25 @@ public interface IDireccionService {
      * @return {@code true} si la actualización se realizó con éxito, o {@code false} si ocurrió un error o no se actualizó ninguna fila.
      */
     public boolean updateDireccion(DireccionDTO direccionDTO);
+    
+    /**
+     * Crea una nueva dirección en la base de datos.
+     *
+     * Este método inserta una nueva dirección en la base de datos utilizando los valores 
+     * proporcionados en el objeto {@link DireccionDTO}. Si la inserción es exitosa, el 
+     * objeto {@link DireccionDTO} se devuelve con el ID generado automáticamente por la 
+     * base de datos asignado. En caso de error durante la inserción, el método devuelve 
+     * {@code null}.
+     *
+     * <p>La implementación debe manejar el proceso de inserción y asignar el ID generado 
+     * al objeto {@link DireccionDTO}. El manejo adecuado de los recursos y la captura de 
+     * excepciones son esenciales para garantizar la integridad de los datos.</p>
+     *
+     * @param direccionDTO el objeto {@link DireccionDTO} que contiene los datos de la 
+     *                     dirección a insertar. El objeto debe tener los valores de calle, 
+     *                     número, código postal y el ID de la localidad.
+     * @return el objeto {@link DireccionDTO} con el ID asignado si la inserción fue exitosa, 
+     *         o {@code null} si ocurrió un error durante la inserción.
+     */
+    public DireccionDTO createDireccion(DireccionDTO direccionDTO);
 }

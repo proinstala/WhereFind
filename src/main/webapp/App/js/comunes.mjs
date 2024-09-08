@@ -13,15 +13,28 @@ function getDatosForm (idForm) {
 }
 
 /**
- * Realiza una solicitud POST.
+ * Realiza una solicitud HTTP POST a una URL especificada.
  *
- * @param {string} url         - La URL a la que se enviará la solicitud.
- * @param {string} idElement   - Id del formulario.
- * @param {string} mostrarLoad - Bloquea la UI mostrando una alerta con una animación de espera.
+ * <p>Este método envía una solicitud POST a la URL proporcionada. Puede utilizar datos 
+ * opcionales que se pasan al método o extraer datos del formulario asociado con el 
+ * identificador {@code idElement}. Además, puede mostrar una alerta con una animación de 
+ * espera si se indica {@code mostrarLoad}.</p>
+ *
+ * @param {string} url         - La URL a la que se enviará la solicitud POST.
+ * @param {string} idElement   - El identificador del formulario del cual se extraerán los datos 
+ *                               si no se proporciona el parámetro {@code data}.
+ * @param {boolean} mostrarLoad - Un valor booleano que indica si se debe mostrar una animación 
+ *                                 de espera mientras se realiza la solicitud.
+ * @param {Object} [data]      - Datos opcionales a enviar con la solicitud POST. Si no se 
+ *                               proporciona, se extraerán los datos del formulario con el 
+ *                               identificador {@code idElement}.
+ * @returns {Promise}          - Una promesa que representa el resultado de la solicitud POST. 
+ *                               La promesa se resuelve con el resultado de la función 
+ *                               {@code solicitudPostFetch}.
  */
-const solicitudPost = (url, idElement, mostrarLoad) => {
-    let data = getDatosForm(idElement);
-    return solicitudPostFetch(url, data, idElement, mostrarLoad);
+const solicitudPost = (url, idElement, mostrarLoad, data) => {
+    const dataForm = (data)? data : getDatosForm(idElement);
+    return solicitudPostFetch(url, dataForm, idElement, mostrarLoad);
 };
 
 /**
@@ -61,6 +74,7 @@ function solicitudPostFetch(url, data, idElement, mostrarLoad) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
+            //'Content-Type': 'application/json' 
         },
         body: data
     })
