@@ -1,5 +1,5 @@
 
-import {solicitudPost, fillInputSelect, cargarInputSelect, detectarCambiosFormulario } from './comunes.mjs';
+import {solicitudPost, fillInputSelect, cargarInputSelect, vaciarSelect, detectarCambiosFormulario, resetCamposForm } from './comunes.mjs';
 import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from './alertasSweetAlert2.mjs';
 
 const idSelectProvincia = "#provincia";
@@ -32,10 +32,12 @@ $(document).ready(function () {
 
             const jsonProvinciaString = JSON.stringify(jsonProvincia); //Convierte el objeto jsonProvincia a una cadena JSON.
             const encodedJsonProvincia = encodeURIComponent(jsonProvinciaString); //Codifica la cadena JSON para que sea segura al incluirla en la URL.
-
+            
             //Llama a cargarInputSelect para llenar el select de localidades con los datos obtenidos del select provincia.
             cargarInputSelect(selectLocalidad, `api/localidad/localidades?jsonProvincia=${encodedJsonProvincia}`, '');
         });
+        //onDetectarCambiosCrearDireccion(false);
+        detectarCambiosFormulario(idFormDireccion, onDetectarCambiosCrearDireccion);
     };
     
     cargarInputSelect(selectProvincia, "api/provincia/provincias", 'Seleccione una provincia', false, cargaInputSelectLocalidad);
@@ -48,13 +50,19 @@ $(document).ready(function () {
     });
     
     btnDeshacerCambiosDireccion.addEventListener('click', () => {
-        console.log("getDireccionJson ------------------------------------------------");
-        getDireccionJson();
-        console.log("getDireccionJson2 ------------------------------------------------");
-        getDireccionJson2();
+        resetCamposForm(idFormDireccion);
+        vaciarSelect(selectLocalidad);
+        onDetectarCambiosCrearDireccion(false);
+        detectarCambiosFormulario(idFormDireccion, onDetectarCambiosCrearDireccion);
     });
     
 });
+
+
+function onDetectarCambiosCrearDireccion(hayCambios) {
+    $("#btnGuardar").prop('disabled', !hayCambios);
+    $("#btnDeshacerCambiosDireccion").prop('disabled', !hayCambios);
+}
 
 
 function validarFormulario(idForm) {

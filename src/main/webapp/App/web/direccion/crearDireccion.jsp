@@ -61,7 +61,7 @@
                         
                         <div class="form__input">
                             <select name="localidad" id="localidad">
-                                <option value="-1">Selecciona</option>
+                                
                             </select>
                             <label for="localidad">Localidad</label>
                         </div>
@@ -71,11 +71,11 @@
 
                 <div class="contenedor__formulario--footer">
                     <div class="form__btn_circle">
-                        <button form="frmCrearDireccion" id="btnGuardar" title="Guardar" type="submit"><i class="las la-save"></i></button>
+                        <button form="frmCrearDireccion" id="btnGuardar" title="Guardar" type="submit" disabled><i class="las la-save"></i></button>
                     </div>
 
                     <div class="form__btn_circle">
-                        <button id="btnDeshacerCambiosDireccion" title="Deshacer cambios"><i class="las la-redo-alt" ></i></button>
+                        <button id="btnDeshacerCambiosDireccion" title="Deshacer cambios" disabled><i class="las la-redo-alt" ></i></button>
                     </div>
 
                     <div class="form__btn_circle">

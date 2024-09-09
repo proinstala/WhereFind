@@ -27,7 +27,6 @@ $(document).ready(function () {
     getDireccion(inputIdDireccion.value);
     
     btnDeshacerCambiosDireccion.addEventListener('click', () => {
-        console.log("oldDireccion: " + oldDireccion);
         fillFielsDireccion(oldDireccion);
     });
     
@@ -38,7 +37,6 @@ $(document).ready(function () {
 });
 
 function onDetectarCambiosModificarDireccion(hayCambios) {
-    console.log(hayCambios);
     $(idBtnGuardar).prop('disabled', !hayCambios);
     $(idBtnDeshacerCambiosDireccion).prop('disabled', !hayCambios);
 }

@@ -332,6 +332,7 @@ function cargarInputSelect(nodoInputSelect, url, firstOption = '', selectOption,
 
 /**
  * Rellena un elemento select HTML con opciones basadas en los datos proporcionados.
+ * 
  * @param {HTMLElement} nodeInputSelect - El elemento select que se va a llenar con las opciones.
  * @param {Array} datos - Un array de objetos con las propiedades 'id' y 'nombre' para crear las opciones.
  * @param {string} optionGenerico - (Opcional) Texto para una opción genérica que se añade al principio del select.
@@ -342,7 +343,7 @@ function fillInputSelect(nodeInputSelect, datos, optionGenerico) {
     if(optionGenerico) {
         nodeInputSelect.innerHTML = `<option value="${-1}">${optionGenerico}</option>`;
     } else {
-        nodeInputSelect.innerHTML = '';
+        vaciarSelect(nodeInputSelect);
     }
     
     const fragment = document.createDocumentFragment(); // Crear un fragmento de documento.
@@ -382,6 +383,16 @@ function seleccionarValorSelect(selectNode, value) {
             reject(new Error(`El valor "${value}" no se encontró en el select ${selectNode.name}`));
         }
     });
+}
+
+/**
+ * Vacía todas las opciones de un elemento <select> en el DOM.
+ *
+ * @param {HTMLSelectElement} nodeInputSelect - El nodo <select> que se desea vaciar. 
+ *                                              Debe ser un elemento HTMLSelectElement válido.
+ */
+function vaciarSelect(nodeInputSelect) {
+    nodeInputSelect.options.length = 0; // Establece la longitud de las opciones del <select> a 0, eliminando todas las opciones
 }
 
 /**
@@ -475,5 +486,6 @@ export { solicitudPost,
         fillInputSelect,
         cargarInputSelect,
         observeRowSelectedChange,
-        seleccionarValorSelect
+        seleccionarValorSelect,
+        vaciarSelect
         };
