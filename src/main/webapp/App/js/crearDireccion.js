@@ -40,6 +40,7 @@ $(document).ready(function () {
         detectarCambiosFormulario(idFormDireccion, onDetectarCambiosCrearDireccion);
     };
     
+    //Carga el select provicia.
     cargarInputSelect(selectProvincia, "api/provincia/provincias", 'Seleccione una provincia', false, cargaInputSelectLocalidad);
     
     validarFormulario(idFormDireccion);
@@ -118,15 +119,14 @@ function validarFormulario(idForm) {
 
         submitHandler: function () {
             debugger;
-            const direccionJSON = getDireccionJson2();
+            const direccionJSON = getDireccionJson();
             solicitudPost(`api/direccion/create`, idForm, true, direccionJSON)
                     .then(response => {
                         if (response.isError === 1) {
                             mostrarMensajeError("No se puede crear los datos", response.result);
                         } else {
-                            mostrarMensaje("Dirección Creada.", `Se ha creado la dirección con id "${response.data.id}" correctamente`, "success");
-                            console.log("respuesta: ");
-                            console.log(response.data);
+                            const redireccionar = () => window.location.href = "direccion/adminDireccion";
+                            mostrarMensaje("Dirección Creada.", `Se ha creado la dirección con id "${response.data.id}" correctamente`, "success", redireccionar);
                         }
                     })
                     .catch(error => {
@@ -143,49 +143,12 @@ function validarFormulario(idForm) {
 }
 
 function getDireccionJson() {
-    const selectLocalidad = document.querySelector(idSelectLocalidad);
-    const selectProvincia = document.querySelector(idSelectProvincia);
-    
-    const direccionJSON = {
-        id: "0",
-        calle: document.querySelector(idInputCalle).value,
-        numero: document.querySelector(idInputNumero).value,
-        codigoPostal: document.querySelector(idInputCodigoPostal).value || "0",
-        localidad: {
-            id: selectLocalidad.value,
-            nombre: selectLocalidad.selectedOptions[0].textContent,
-            provincia: {
-                id: selectProvincia.value,
-                nombre: selectProvincia.selectedOptions[0].textContent
-            }
-        }
-    };
-
-    const data = {
-        direccionJSON: JSON.stringify(direccionJSON)
-    };
-    const stringDireccionJSON = JSON.stringify(direccionJSON);
-    const encodeDireccionJSON = encodeURIComponent(stringDireccionJSON);
-    
-    let datos = `direccionJSON=${encodeDireccionJSON}`;
-    console.log(datos);
-    
-    return datos;
-}
-
-function getDireccionJson2() {
     // Guardar referencias de los elementos del DOM
     const selectLocalidad = document.querySelector(idSelectLocalidad);
     const selectProvincia = document.querySelector(idSelectProvincia);
     const inputCalle = document.querySelector(idInputCalle);
     const inputNumero = document.querySelector(idInputNumero);
     const inputCodigoPostal = document.querySelector(idInputCodigoPostal);
-    
-    // Validar que los elementos existan antes de acceder a sus valores
-    if (!selectLocalidad || !selectProvincia || !inputCalle || !inputNumero || !inputCodigoPostal) {
-        console.error('Error: Algunos de los elementos del DOM no se encontraron.');
-        return null;
-    }
 
     // Construcción del objeto JSON con validación del código postal
     const direccionJSON = {
@@ -208,6 +171,5 @@ function getDireccionJson2() {
         direccionJSON: JSON.stringify(direccionJSON)
     }).toString();
     
-    console.log(data);
     return data;
 }
