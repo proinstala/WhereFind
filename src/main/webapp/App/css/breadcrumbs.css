@@ -21,33 +21,33 @@
 }
 
 
-.breadcrumb li[data-id="account"] a span.icon::before {
+.breadcrumb li[data-id="account"] a span.icon i::before {
     content: "\f007";
 }
 
-.breadcrumb li[data-id="modificar"] a span.icon::before {
+.breadcrumb li[data-id="modificar"] a span.icon i::before {
     content: "\f4ff";
 }
 
 
-.breadcrumb li[data-id="admin"] a span.icon::before {
+.breadcrumb li[data-id="admin"] a span.icon i::before {
     content: "\f505";
 }
 
-.breadcrumb li[data-id="users"] a span.icon::before {
+.breadcrumb li[data-id="users"] a span.icon i::before {
     content: "\f0c0";
 }
 
-.breadcrumb li[data-id="edit"] a span.icon::before {
+.breadcrumb li[data-id="edit"] a span.icon i::before {
     content: "\f4ff";
 }
 
 
-.breadcrumb li[data-id="direccion"] a span.icon::before {
+.breadcrumb li[data-id="direccion"] a span.icon i::before {
     content: "\f041";
 }
 
-.breadcrumb li[data-id="adminDireccion"] a span.icon::before {
+.breadcrumb li[data-id="adminDireccion"] a span.icon i::before {
     content: "\f2b9";
 }
 
@@ -97,7 +97,12 @@
     display: inline-block;
     font-size: var(--breadcrumb-font-size);
     font-weight: 600;
+  }
 
+  ul.breadcrumb li a .icon i::before {
+    margin: auto;
+    height: 16px;
+    width: 16px;
   }
 
   /* Text styles */
@@ -130,7 +135,7 @@
 
 
   ul.breadcrumb li:last-child a .icon {
-    margin-top: 6px;
+    margin-top: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -158,3 +163,5 @@
       color: var(--breadcrumb-font-color-hover);
     }
   }
+
+
