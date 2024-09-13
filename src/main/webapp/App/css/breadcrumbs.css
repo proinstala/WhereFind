@@ -6,8 +6,8 @@
   --breadcrumb-color-hover:  var(--secundario);
   --breadcrumb-color-hover-home:  var(--secundario-brillo);
 
-  --breadcrumb-size: 40px;
-  --breadcrumb-font-size : 27px;
+  --breadcrumb-size: 30px;
+  --breadcrumb-font-size : 20px;
   --breadcrumb-font-color : var(--primario);
   --breadcrumb-font-color-hover : var(--blanco);
 }
@@ -16,7 +16,8 @@
 
 .breadcrumb-container {
     height: 1.7em;
-    margin-bottom: 10px;
+    margin-top: -19px;
+
 }
 
 
@@ -89,7 +90,6 @@
     line-height: var(--breadcrumb-size);
     padding-left: calc(var(--breadcrumb-size) + 2px);
     padding-right: calc(var(--breadcrumb-size) / 2 + var(--breadcrumb-size) / 6);
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
   }
 
   /* Icon styles */
@@ -109,7 +109,6 @@
   /* Hover effect on breadcrumb items */
   ul.breadcrumb li a:hover {
     background-color: var(--breadcrumb-color-hover);
-    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.35);
 
     .icon {
       color: var(--breadcrumb-font-color-hover);
@@ -148,7 +147,6 @@
 
   ul.breadcrumb li:first-child a {
     background-color: var(--breadcrumb-color-hover);
-    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.35);
 
     .icon {
       color: var(--breadcrumb-font-color-hover);
