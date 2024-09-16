@@ -504,7 +504,6 @@ function deleteRowSelectedTable(idTabla) {
                 if (fila.id === idDireccion) {
                     // Si encontramos la fila, la eliminamos
                     fila.remove();
-                    onDetectarFilaSeleccionada(false);
                     tabla.setAttribute('data-rowselected', -1);
                     console.log(`Fila con id ${idDireccion} eliminada.`);
                 }
