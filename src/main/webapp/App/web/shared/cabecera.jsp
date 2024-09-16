@@ -34,21 +34,6 @@
         <i class="las la-box" title="Articulo"></i>
         <i class="las la-map-marked-alt" title="Direccion" id="btnDireccion"></i>
         <i class="las la-store-alt" title="Proveedor"></i>
-<%
-    // ----------------------------------------
-    // Iconos que solo muestra al administrador
-    // ----------------------------------------
-    if (UserSession.isUserLogIn(new ActionServer(request, response), true))
-    {
-%>
-        <a href="<%= UrlAdmin.USER_LISTA.getUri() %>"><i class="las la-users-cog" title="Usuarios"></i></a>
-<%
-    }
-    // ----------------------------------------
-    // Iconos que solo muestra al administrador
-    // ----------------------------------------
-%>
-
     </div>
 
     <div class="contenedor__usuario">

@@ -80,6 +80,7 @@
         // Dirección
         urlMappingName.put("direccion".toLowerCase(), "Dirección");
         urlMappingName.put("adminDireccion".toLowerCase(), "Direcciones");
+        urlMappingName.put("modificarDireccion".toLowerCase(), "Editar Dirección");
 
         String[] uriParts = apparentURI.split("/");
     %>
@@ -113,7 +114,7 @@
         %>
                         <li data-id="<%= uriParts[i] %>">
                             <a <%= link %>>
-                                <span class="icon las"></span>
+                                <span class="icon"> <i class="las"></i></span>
                                 <span class="text"><%= getTextoMiga(uriParts[i]) %></span>
                             </a>
                         </li>
