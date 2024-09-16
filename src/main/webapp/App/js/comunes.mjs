@@ -472,7 +472,50 @@ function observeRowSelectedChange(tabla, callback) {
     observer.observe(tabla, config);
 }
 
-
+/**
+ * Elimina la fila seleccionada en una tabla específica.
+ *
+ * Esta función busca una tabla por su ID, verifica qué fila está seleccionada
+ * según el atributo `data-rowselected` en la tabla, y luego elimina dicha fila
+ * si se encuentra en el `tbody` de la tabla.
+ *
+ * @param {string} idTabla - El selector de la tabla que contiene la fila a eliminar.
+ *                            Debe ser un selector CSS, por ejemplo: '#miTabla'.
+ *
+ */
+function deleteRowSelectedTable(idTabla) {
+    // Selecciona la tabla por su ID
+    const tabla = document.querySelector(idTabla);
+    
+    if (tabla) {
+        const idDireccion = tabla.getAttribute('data-rowselected'); //data-rowSelected
+        
+        // Selecciona el tbody de la tabla
+        const tbody = tabla.querySelector('tbody');
+        
+        // Verifica si el tbody existe
+        if (tbody) {
+            // Obtiene todas las filas (tr) dentro del tbody
+            const filas = tbody.querySelectorAll('tr');
+            
+            // Recorre cada fila usando forEach
+            filas.forEach(fila => {
+                // Verifica si la fila tiene el ID que estamos buscando
+                if (fila.id === idDireccion) {
+                    // Si encontramos la fila, la eliminamos
+                    fila.remove();
+                    onDetectarFilaSeleccionada(false);
+                    tabla.setAttribute('data-rowselected', -1);
+                    console.log(`Fila con id ${idDireccion} eliminada.`);
+                }
+            });
+        } else {
+            console.log('No se encontró el tbody en la tabla.');
+        }
+    } else {
+        console.log(`No se encontró la tabla con id ${idTabla}.`);
+    }
+}
 
 
 export { solicitudPost,
@@ -487,5 +530,6 @@ export { solicitudPost,
         cargarInputSelect,
         observeRowSelectedChange,
         seleccionarValorSelect,
-        vaciarSelect
+        vaciarSelect,
+        deleteRowSelectedTable
         };

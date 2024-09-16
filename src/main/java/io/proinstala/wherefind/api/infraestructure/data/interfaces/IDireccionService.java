@@ -72,4 +72,17 @@ public interface IDireccionService {
      *         o {@code null} si ocurrió un error durante la inserción.
      */
     public DireccionDTO createDireccion(DireccionDTO direccionDTO);
+    
+    /**
+     * Elimina una dirección de la base de datos.
+     *
+     * Este método marca una dirección específica como eliminada en la base de datos,
+     * cambiando su estado a inactivo o eliminándola lógicamente. Devuelve {@code true} 
+     * si la operación se realizó con éxito, es decir, si al menos una fila fue afectada.
+     * En caso de error o si no se afectó ninguna fila, devuelve {@code false}.
+     *
+     * @param direccionId el identificador único de la dirección a eliminar.
+     * @return {@code true} si la dirección fue eliminada con éxito, o {@code false} si ocurrió un error o no se eliminó ninguna fila.
+     */
+    public boolean deleteDireccion(int direccionId);
 }

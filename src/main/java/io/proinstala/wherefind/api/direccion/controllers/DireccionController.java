@@ -43,7 +43,8 @@ public class DireccionController extends BaseHttpServlet {
         DIRECCION,
         FINDDIRECCIONES,
         UPDATE,
-        CREATE
+        CREATE,
+        DELETE
     }
     
     /**
@@ -131,7 +132,7 @@ public class DireccionController extends BaseHttpServlet {
      * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
      */
     protected void apiUpdateDireccion(ActionController actionController) {
-        // Se comprueba que el usuario está logueado y sea administrador
+        // Se comprueba que el usuario está logueado
         if (!UserSession.isUserLogIn(actionController.server(), false))
         {
             responseError403(actionController.server().response(), "");
@@ -139,6 +140,28 @@ public class DireccionController extends BaseHttpServlet {
         }
 
         direccionServicio.updateDireccion(actionController);
+    }
+    
+    /**
+     * Maneja la solicitud para elimnar la información de una dirección específica.
+     *
+     * <p>Verifica si el usuario está autenticado y tiene los permisos necesarios. Si es así, 
+     * delega la operación al servicio de direcciones para actualizar la dirección y devolver la respuesta.</p>
+     * 
+     * EndPoint - PUT : /api/direccion/delete/{id}
+     *
+     * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
+     */
+
+    protected void apiDeleteDireccion(ActionController actionController) {
+        // Se comprueba que el usuario está logueado
+        if (!UserSession.isUserLogIn(actionController.server(), false))
+        {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+
+        direccionServicio.deleteDireccion(actionController);
     }
     
     /**
@@ -214,6 +237,7 @@ public class DireccionController extends BaseHttpServlet {
 
         switch((ActionType) actionController.actionType()) {
             case UPDATE -> apiUpdateDireccion(actionController);
+            case DELETE -> apiDeleteDireccion(actionController);
             
             default -> responseError404(actionController.server().response(), "");
         }

@@ -181,6 +181,70 @@ public class DireccionControllerService extends BaseService{
         responseJson(actionController.server().response(), responseDTO);
     }    
     
+    /**
+     * Elimina una dirección por su identificador.
+     * 
+     * <p>Este método extrae el identificador de la dirección del controlador de acción, utiliza el
+     * servicio de dirección para eliminar la dirección correspondiente, y devuelve la respuesta en
+     * formato JSON.</p>
+     * 
+     * @param actionController El controlador de acción que contiene los parámetros de la solicitud.
+     */
+    public void deleteDireccion(ActionController actionController) {
+        //Respuesta de la acción actual
+        ResponseDTO responseDTO;
+        
+        // Comprueba que hay más de 1 parámetro
+        if (actionController.parametros().length <= 1) {
+            // Crea la respuesta con un error
+            responseDTO = getResponseError(LocaleApp.ERROR_FALTAN_PARAMETROS);
+            responseJson(actionController.server().response(), responseDTO);
+            return;
+        } 
+            
+        // Obtiene el id de la dirección desde el parámetro 1 de la lista de parámetros
+        int id = actionController.getIntFromParametros(1);
+
+        // Si el id es mayor que -1 significa que hay en principio un id válido que se puede procesar
+        // En caso de ser igual a -1 significa que el parámetro introducido no es correcto
+        if (id == -1) {
+            // Crea la respuesta con un error
+            responseDTO = getResponseError(LocaleApp.ERROR_PARAMETRO_NO_CORRECTO);
+            responseJson(actionController.server().response(), responseDTO);
+            return;
+        }
+        
+
+        IDireccionService direccionServiceImp = GestorPersistencia.getDireccionService();
+
+        /*
+        DireccionDTO direccionDTO = direccionServiceImp.getDireccionById(id);
+        
+        if(direccionDTO != null) {
+            responseDTO = getResponseOk(LocaleApp.INFO_UPDATE_OK, direccionDTO, 0);
+        } else {
+            responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
+        }
+        */
+        
+        if(direccionServiceImp.deleteDireccion(id)) {
+            responseDTO = getResponseOk(LocaleApp.INFO_UPDATE_OK, id, 0);
+        } else {
+            responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
+        }
+
+        responseJson(actionController.server().response(), responseDTO);
+    }    
+    
+    /**
+     * Crea una nueva dirección en la base de datos.
+     * 
+     * <p>Este método toma los datos de la nueva dirección en formato JSON desde el controlador de acción,
+     * los deserializa y los envía al servicio de dirección para su creación. Devuelve la respuesta en
+     * formato JSON.</p>
+     * 
+     * @param actionController El controlador de acción que contiene los parámetros de la solicitud.
+     */
     public void createDireccion(ActionController actionController) {
         //Respuesta de la acción actual
         ResponseDTO responseDTO;

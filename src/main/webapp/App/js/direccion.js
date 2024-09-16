@@ -1,5 +1,5 @@
 
-import { solicitudGet, getDatosForm, addRowSelected, fillInputSelect, cargarInputSelect, observeRowSelectedChange } from './comunes.mjs';
+import { solicitudGet, solicitudPut, getDatosForm, addRowSelected, fillInputSelect, cargarInputSelect, observeRowSelectedChange, deleteRowSelectedTable } from './comunes.mjs';
 import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from './alertasSweetAlert2.mjs';
 
 const idSelectProvincia = "#provincia";
@@ -9,6 +9,7 @@ const idTablaDirecciones = "#tablaDireciones";
 const idBtnBuscar = "#btnBuscar";
 const idBtnModificar = "#btnModificar";
 const idBtnCrear = "#btnCrear";
+const idBtnEliminar = "#btnEliminar";
 
 // Configuración de las urls
 const URL_MODIFICAR_DIRECCION = "direccion/edit";
@@ -17,10 +18,12 @@ $(document).ready(function () {
     const selectProvincia = document.querySelector(idSelectProvincia);
     const selectLocalidad = document.querySelector(idSelectLocalidad);
     const formBusquedaDireccion = document.querySelector(idFormBusquedaDireccion);
+    const tablaDirecciones = document.querySelector(idTablaDirecciones);
     const btnBuscar = document.querySelector(idBtnBuscar);
     const btnCrear = document.querySelector(idBtnCrear);
     const btnModificar = document.querySelector(idBtnModificar);
-    const tablaDirecciones = document.querySelector(idTablaDirecciones);
+    const btnEliminar = document.querySelector(idBtnEliminar);
+    
     
     //Añade un evento de cambio al select de provincias y actualiza el select de localidades según la provincia seleccionada.
     const cargaInputSelectLocalidad = () => {
@@ -57,6 +60,11 @@ $(document).ready(function () {
     
     btnCrear.addEventListener('click', () => {
         window.location.href = (`direccion/crearDireccion`);
+    });
+    
+    btnEliminar.addEventListener('click', () => {
+        const idDireccion = tablaDirecciones.getAttribute('data-rowselected'); //data-rowSelected
+        borrarDireccion(idDireccion);
     });
 });
 
@@ -148,3 +156,32 @@ function rellenarTablaDirecciones(direcciones) {
     //Añadir eventos de selección de filas a la tabla recién generada
     addRowSelected(cuerpoTablaDirecciones);
 }
+
+function borrarDireccion(direccionId) {
+    mostrarMensajeOpcion("Borrar Dirección", `¿Quieres realmente borrar los datos de la dirección con id ${direccionId}?`)
+                    .then((result) => {
+                        if (result.isConfirmed) {
+                            solicitudPut(`api/direccion/delete/${direccionId}`, "", true)
+                                    .then(response => {
+                                        if (response.isError === 1) {
+                                            mostrarMensajeError("No se puede borrar los datos", response.result);
+                                        } else {
+                                            mostrarMensaje("Dirección Borrada.", `Se han borrado correctamente los datos de la dirección.`, "success");
+                                           
+                                            //Elimina la fila seleccionada de la tabla.
+                                            deleteRowSelectedTable(idTablaDirecciones);
+                                        }
+                                    })
+                                    .catch(error => {
+                                        // Maneja el error aquí
+                                        console.error("Error:", error);
+                                        mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
+                                    });
+                        } else if (result.isDenied) {
+                            //denegado
+                        } else if (result.isDismissed) {
+                            //cancelado
+                        }
+                    });
+}
+

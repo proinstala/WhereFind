@@ -96,15 +96,6 @@
                         </tbody>
                     </table>
                 </div>
-                
-                <!-- boton en footer con posicionamiento stiky
-                <div class="contenedor__formulario--footer sticky">
-                    
-                    <div class="form__btn_circle">
-                        <button id="btnCancelar" title="Cancelar"><i class="las la-times"></i></button>
-                    </div>
-                </div>
-                -->
 
             </div> <!-- Fin contenedor__formulario -->
             

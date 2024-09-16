@@ -1,4 +1,5 @@
 package io.proinstala.wherefind.shared.consts.textos;
+
 /**
  * Clase LocaleApp que contiene constantes para mensajes de error e información utilizados en la aplicación.
  */

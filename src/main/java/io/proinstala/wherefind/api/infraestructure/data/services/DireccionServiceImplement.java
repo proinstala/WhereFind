@@ -25,24 +25,29 @@ import java.util.List;
 public class DireccionServiceImplement extends BaseMySql implements IDireccionService {
 
     /**
-     * Consulta SQL para obtener una dirección por su identificador.
+     * Sentencia SQL para obtener una dirección por su identificador.
      */
     private static final String SQL_SELECT_DIRECCION_BY_ID = "SELECT d.*, l.*, p.* FROM DIRECCION d INNER JOIN LOCALIDAD l ON(d.localidad_id = l.id) INNER JOIN PROVINCIA p ON(l.provincia_id = p.id) WHERE d.id = ?;";
     
     /**
-     * Consulta SQL para obtener todas las direcciones.
+     * Sentencia SQL para obtener todas las direcciones.
      */
-    private static final String SQL_SELECT_DIRECCIONES = "SELECT d.*, l.*, p.* FROM DIRECCION d INNER JOIN LOCALIDAD l ON(d.localidad_id = l.id) INNER JOIN PROVINCIA p ON(l.provincia_id = p.id);"; 
+    private static final String SQL_SELECT_DIRECCIONES = "SELECT d.*, l.*, p.* FROM DIRECCION d INNER JOIN LOCALIDAD l ON(d.localidad_id = l.id) INNER JOIN PROVINCIA p ON(l.provincia_id = p.id) WHERE d.activo = TRUE;"; 
     
     /**
-     * Consulta SQL para actualizar una dirección específica por su identificador.
+     * Sentencia SQL para actualizar una dirección específica por su identificador.
      */
     private static final String SQL_UPDATE_DIRECCION = "UPDATE DIRECCION SET calle = ?, numero = ?, codigo_postal = ?, localidad_id = ? WHERE id = ?;";
     
     /**
-     * Consulta SQL para crear una nueva dirección.
+     * Sentencia SQL para crear una nueva dirección.
      */
     private static final String SQL_CREATE_DIRECCION = "INSERT INTO DIRECCION (calle, numero, codigo_postal, localidad_id) VALUES (?,?,?,?);";
+    
+    /**
+     * Sentencia SQL para marcar una dirección como eliminada.
+     */
+    private static final String SQL_DELETE_DIRECCION = "UPDATE DIRECCION SET activo=false WHERE id=?;";
     
     /**
      * Transforma un objeto {@link ResultSet} en una instancia de {@link DireccionDTO}.
@@ -158,7 +163,7 @@ public class DireccionServiceImplement extends BaseMySql implements IDireccionSe
         }
 
         //Agregar la cláusula WHERE y la condicion de busqueda por nombre de calle
-        sentenciaSQL.append(" WHERE d.calle LIKE ?");
+        sentenciaSQL.append(" AND d.calle LIKE ?");
 
         //Agregar condicion de busqueda de localidad si se pasa un valor valido de id de localidad.
         if (IdLocalidad != -1) {
@@ -245,6 +250,47 @@ public class DireccionServiceImplement extends BaseMySql implements IDireccionSe
             ps.setObject(3, direccionDTO.getCodigoPostal());
             ps.setInt(4, direccionDTO.getLocalidad().getId());
             ps.setInt(5, direccionDTO.getId());
+            
+            // Ejecutar la actualización y obtener el número de filas afectadas
+            rowsAffected = ps.executeUpdate();
+        
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        // Retornar true si se ha hecho en update
+        return rowsAffected > 0;
+    }
+    
+    /**
+     * Elimina una dirección de la base de datos marcándola como inactiva.
+     * 
+     * <p>Este método actualiza el campo {@code activo} de una dirección específica
+     * para marcarla como eliminada, lo que implica que no será recuperada en futuras
+     * consultas a menos que se consulte explícitamente por direcciones inactivas.
+     * La operación se realiza utilizando una declaración preparada para ejecutar
+     * la sentencia SQL definida por {@code SQL_DELETE_DIRECCION}.</p>
+     *
+     * <p>El método utiliza un bloque try-with-resources para gestionar la conexión y el 
+     * {@link PreparedStatement}, asegurando el cierre adecuado de los recursos, incluso 
+     * en caso de error.</p>
+     *
+     * @param direccionId el identificador de la dirección que se desea eliminar.
+     * @return {@code true} si la dirección fue marcada como eliminada exitosamente,
+     *         {@code false} si no se realizó ninguna modificación o si ocurrió un error.
+     */
+    @Override
+    public boolean deleteDireccion(int direccionId) {
+        
+        // Contador de filas afectadas
+        int rowsAffected = 0;
+        
+        // Usar try-with-resources para asegurar el cierre automático de recursos
+        try (Connection connection = getConnection();
+             PreparedStatement ps = connection.prepareStatement(SQL_DELETE_DIRECCION)) {
+
+            // Establecer los parámetros en el PreparedStatement
+            ps.setInt(1, direccionId);
             
             // Ejecutar la actualización y obtener el número de filas afectadas
             rowsAffected = ps.executeUpdate();
