@@ -32,7 +32,7 @@
 <!-- Mapeo de las url referentes a la cuenta de administrador -->
     <servlet>
         <servlet-name>adminPanel</servlet-name>
-        <jsp-file>/App/web/admin/administrar.jsp</jsp-file>
+        <jsp-file>/App/web/admin/adminPanel.jsp</jsp-file>
     </servlet>
 
     <servlet-mapping>
