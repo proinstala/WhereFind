@@ -55,8 +55,6 @@
 
 
                 <%@ include file="/App/web/shared/cardContainer.jsp" %>
-
-            </div>
             </div> <!-- Fin contenedor__formulario -->
         </div> <!-- Fin main -->
 
