@@ -23,8 +23,8 @@ $(document).ready(function () {
     const btnCrear = document.querySelector(idBtnCrear);
     const btnModificar = document.querySelector(idBtnModificar);
     const btnEliminar = document.querySelector(idBtnEliminar);
-    
-    
+
+
     //Añade un evento de cambio al select de provincias y actualiza el select de localidades según la provincia seleccionada.
     const cargaInputSelectLocalidad = () => {
         selectProvincia.addEventListener('change', (e) => {
@@ -33,7 +33,7 @@ $(document).ready(function () {
             //Crea un objeto con la información de la provincia seleccionada (id y nombre).
             const jsonProvincia = {
                 id: optionSelected.value,
-                nombre: optionSelected.textContent 
+                nombre: optionSelected.textContent
             };
 
             const jsonProvinciaString = JSON.stringify(jsonProvincia); //Convierte el objeto jsonProvincia a una cadena JSON.
@@ -43,25 +43,25 @@ $(document).ready(function () {
             cargarInputSelect(selectLocalidad, `api/localidad/localidades?jsonProvincia=${encodedJsonProvincia}`, 'Todas');
         });
     };
-    
+
     cargarInputSelect(selectProvincia, "api/provincia/provincias", 'Todas', false, cargaInputSelectLocalidad);
-    
+
     validarFormulario(idFormBusquedaDireccion);
-    
+
     //Dispara el evento de clic en el botón para que haga una busqueda inicial.
     btnBuscar.click();
-    
+
     observeRowSelectedChange(tablaDirecciones, onDetectarFilaSeleccionada);
-    
+
     btnModificar.addEventListener('click', () => {
         const idDireccion = tablaDirecciones.getAttribute('data-rowselected'); //data-rowSelected
-        window.location.href = (`direccion/modificarDireccion?idDireccion=${idDireccion}`);
+        window.location.href = (`direccion/adminDireccion/modificarDireccion?idDireccion=${idDireccion}`);
     });
-    
+
     btnCrear.addEventListener('click', () => {
-        window.location.href = (`direccion/crearDireccion`);
+        window.location.href = (`direccion/adminDireccion/crearDireccion`);
     });
-    
+
     btnEliminar.addEventListener('click', () => {
         const idDireccion = tablaDirecciones.getAttribute('data-rowselected'); //data-rowSelected
         borrarDireccion(idDireccion);
@@ -105,7 +105,7 @@ function validarFormulario(idForm) {
         submitHandler: function () {
             const formData = getDatosForm(idForm);
             const url = `api/direccion/finddirecciones?${formData}`;
-            
+
             solicitudGet(url, idSelectLocalidad, false)
                 .then(response => {
                     if (response.isError === 1) {
@@ -118,7 +118,7 @@ function validarFormulario(idForm) {
                     // Maneja el error aquí
                     console.error("Error:", error);
                     mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
-                });   
+                });
         },
         //Función error de respuesta
         errorPlacement: function (error, element) {
@@ -134,9 +134,9 @@ function validarFormulario(idForm) {
 function rellenarTablaDirecciones(direcciones) {
     const tablaDirecciones = document.querySelector(idTablaDirecciones);
     const cuerpoTablaDirecciones = tablaDirecciones.querySelector('tbody');
-    
+
     tablaDirecciones.setAttribute('data-rowselected', -1); //Establece a -1 el rowselected para indicar que no se ha seleccionado ninguna fila.
-    
+
     //Crear el contenido HTML de todas las filas a partir de los datos de direcciones
     let filasHTML = direcciones.map(direccion => {
         return `<tr id="${direccion.id}">
@@ -148,11 +148,11 @@ function rellenarTablaDirecciones(direcciones) {
                 <td>${direccion.localidad.provincia.nombre}</td>
                 </tr>`;
     }).join('');
-    
-    
+
+
     //Asignar el contenido HTML generado al cuerpo de la tabla, reemplazando cualquier contenido existente
     cuerpoTablaDirecciones.innerHTML = filasHTML;
-    
+
     //Añadir eventos de selección de filas a la tabla recién generada
     addRowSelected(cuerpoTablaDirecciones);
 }
@@ -167,10 +167,10 @@ function borrarDireccion(direccionId) {
                                             mostrarMensajeError("No se puede borrar los datos", response.result);
                                         } else {
                                             mostrarMensaje("Dirección Borrada.", `Se han borrado correctamente los datos de la dirección.`, "success");
-                                           
+
                                             //Elimina la fila seleccionada de la tabla.
                                             deleteRowSelectedTable(idTablaDirecciones);
-                                            
+
                                             onDetectarFilaSeleccionada(false);
                                         }
                                     })

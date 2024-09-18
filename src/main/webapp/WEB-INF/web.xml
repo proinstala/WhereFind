@@ -127,7 +127,7 @@
         <servlet-name>direccion</servlet-name>
         <url-pattern>/direccion/adminDireccion</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
         <servlet-name>modificarDireccion</servlet-name>
         <jsp-file>/App/web/direccion/modificarDireccion.jsp</jsp-file>
@@ -135,11 +135,11 @@
 
     <servlet-mapping>
         <servlet-name>modificarDireccion</servlet-name>
-        <url-pattern>/direccion/modificarDireccion</url-pattern>
+        <url-pattern>/direccion/adminDireccion/modificarDireccion</url-pattern>
     </servlet-mapping>
-    
-    
-    
+
+
+
     <servlet>
         <servlet-name>crearDireccion</servlet-name>
         <jsp-file>/App/web/direccion/crearDireccion.jsp</jsp-file>
@@ -147,7 +147,7 @@
 
     <servlet-mapping>
         <servlet-name>crearDireccion</servlet-name>
-        <url-pattern>/direccion/crearDireccion</url-pattern>
+        <url-pattern>/direccion/adminDireccion/crearDireccion</url-pattern>
     </servlet-mapping>
 
 </web-app>
