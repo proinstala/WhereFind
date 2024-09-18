@@ -58,7 +58,7 @@
 
                 <div class="contenedor__formulario--cabecera conBotones margin-bottom-5">
                     <div>
-                        <h1>Administrar</h1>
+                        <h1>Panel de control</h1>
                     </div>
                     <div class="form__btn_circle">
                         <button id="btnCancelar" title="Cancelar"><i class="las la-times"></i></button>
