@@ -1,5 +1,5 @@
 
-<link href="App/css/inicio.css" rel="stylesheet" type="text/css"/>
+<link href="App/css/dashboard/inicio.css" rel="stylesheet" type="text/css"/>
 
 
 <div class="contenedor__general">
