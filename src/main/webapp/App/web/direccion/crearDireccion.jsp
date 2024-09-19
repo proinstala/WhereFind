@@ -58,10 +58,10 @@
                             </select>
                             <label for="provincia">Provincia</label>
                         </div>
-                        
+
                         <div class="form__input">
                             <select name="localidad" id="localidad">
-                                
+
                             </select>
                             <label for="localidad">Localidad</label>
                         </div>
@@ -95,6 +95,6 @@
 </div>
 
 
-<script src="App/js/crearDireccion.js" type="module" defer></script>
+<script src="App/js/direccion/crearDireccion.js" type="module" defer></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>

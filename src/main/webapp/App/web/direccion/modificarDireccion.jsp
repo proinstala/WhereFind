@@ -9,14 +9,14 @@
         // Detiene la ejecución de este servlet
         return;
     }
-    
+
     int direccion_id = -1;
     try {
         direccion_id = Integer.parseInt(request.getParameter("idDireccion"));
     } catch(Exception e) {
         e.printStackTrace();
     }
-    
+
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >
@@ -66,7 +66,7 @@
                             </select>
                             <label for="provincia">Provincia</label>
                         </div>
-                        
+
                         <div class="form__input">
                             <select name="localidad" id="localidad">
                                 <option value="-1">Selecciona</option>
@@ -103,6 +103,6 @@
 </div>
 
 
-<script src="App/js/modificarDireccion.js" type="module" defer></script>
+<script src="App/js/direccion/modificarDireccion.js" type="module" defer></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>
