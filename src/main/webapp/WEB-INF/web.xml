@@ -138,6 +138,10 @@
         <url-pattern>/direccion/adminDireccion/modificarDireccion</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>modificarDireccion</servlet-name>
+        <url-pattern>/direccion/adminDireccion/edit/*</url-pattern>
+    </servlet-mapping>
 
 
     <servlet>

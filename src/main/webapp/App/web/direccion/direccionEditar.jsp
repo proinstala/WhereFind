@@ -1,4 +1,6 @@
 
+<%@page import="io.proinstala.wherefind.shared.controllers.actions.ActionController"%>
+<%@page import="io.proinstala.wherefind.shared.controllers.BaseHttpServlet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="io.proinstala.wherefind.shared.controllers.actions.ActionServer"%>
 <%@page import="io.proinstala.wherefind.api.identidad.UserSession"%>
@@ -16,6 +18,15 @@
     } catch(Exception e) {
         e.printStackTrace();
     }
+
+    if (direccion_id == -1)
+    {
+        ActionController actionController = BaseHttpServlet.getActionControllerFromJSP(request, response, "direccion/adminDireccion/edit");
+        direccion_id = actionController.getIntFromParametros(1);
+    }
+
+
+
 
 %>
 
