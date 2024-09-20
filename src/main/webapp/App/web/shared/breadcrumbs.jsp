@@ -52,7 +52,7 @@
 
 
         // Añadir mapeos de URI real -> URI aparente
-        urlMapping.put("/App/web/identidad/modificarUsuario.jsp".toLowerCase(), "/admin/users/edit");
+        urlMapping.put("/App/web/identidad/identidadUserEditar.jsp".toLowerCase(), "/admin/users/edit");
 
 
 

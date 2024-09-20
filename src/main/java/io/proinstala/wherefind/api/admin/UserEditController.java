@@ -114,7 +114,7 @@ public class UserEditController extends BaseHttpServlet{
         try
         {
             // Se dirige a una página JSP para finalizar el proceso de recuperación de contraseña, manejada por el dispatch del servidor.
-            actionController.server().request().getRequestDispatcher("/App/web/identidad/modificarUsuario.jsp").forward(actionController.server().request(), actionController.server().response());
+            actionController.server().request().getRequestDispatcher("/App/web/identidad/identidadUserEditar.jsp").forward(actionController.server().request(), actionController.server().response());
         }
         catch (ServletException | IOException ex)
         {

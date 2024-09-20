@@ -56,7 +56,7 @@
 <!-- Mapeo de las url referentes a la cuenta de usuario -->
     <servlet>
         <servlet-name>identidadLogin</servlet-name>
-        <jsp-file>/App/web/identidad/login.jsp</jsp-file>
+        <jsp-file>/App/web/identidad/identidadUserlogin.jsp</jsp-file>
     </servlet>
 
     <servlet-mapping>
@@ -66,7 +66,7 @@
 
     <servlet>
         <servlet-name>identidadRegistrar</servlet-name>
-        <jsp-file>/App/web/identidad/registrar.jsp</jsp-file>
+        <jsp-file>/App/web/identidad/identidadUserCrear.jsp</jsp-file>
     </servlet>
 
     <servlet-mapping>
@@ -76,7 +76,7 @@
 
     <servlet>
         <servlet-name>identidadModificar</servlet-name>
-        <jsp-file>/App/web/identidad/modificarUsuario.jsp</jsp-file>
+        <jsp-file>/App/web/identidad/identidadUserEditar.jsp</jsp-file>
     </servlet>
 
     <servlet-mapping>
@@ -87,7 +87,7 @@
 
     <servlet>
         <servlet-name>identidadPanel</servlet-name>
-        <jsp-file>/App/web/identidad/accountPanel.jsp</jsp-file>
+        <jsp-file>/App/web/identidad/identidadPanel.jsp</jsp-file>
     </servlet>
 
     <servlet-mapping>
@@ -98,7 +98,7 @@
 
     <servlet>
         <servlet-name>identidadRecoveryPassword</servlet-name>
-        <jsp-file>/App/web/identidad/recoveryPassword.jsp</jsp-file>
+        <jsp-file>/App/web/identidad/identidadRecoveryPassword.jsp</jsp-file>
     </servlet>
 
     <servlet-mapping>
