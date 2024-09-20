@@ -43,7 +43,7 @@
 
     <servlet>
         <servlet-name>adminIdentidadListaUsuarios</servlet-name>
-        <jsp-file>/App/web/admin/users.jsp</jsp-file>
+        <jsp-file>/App/web/admin/adminUsers.jsp</jsp-file>
     </servlet>
 
     <servlet-mapping>
