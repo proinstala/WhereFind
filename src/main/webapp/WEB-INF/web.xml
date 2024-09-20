@@ -120,7 +120,7 @@
 
     <servlet>
         <servlet-name>direccion</servlet-name>
-        <jsp-file>/App/web/direccion/direccion.jsp</jsp-file>
+        <jsp-file>/App/web/direccion/direccionList.jsp</jsp-file>
     </servlet>
 
     <servlet-mapping>
@@ -130,7 +130,7 @@
 
     <servlet>
         <servlet-name>modificarDireccion</servlet-name>
-        <jsp-file>/App/web/direccion/modificarDireccion.jsp</jsp-file>
+        <jsp-file>/App/web/direccion/direccionEditar.jsp</jsp-file>
     </servlet>
 
     <servlet-mapping>
@@ -142,7 +142,7 @@
 
     <servlet>
         <servlet-name>crearDireccion</servlet-name>
-        <jsp-file>/App/web/direccion/crearDireccion.jsp</jsp-file>
+        <jsp-file>/App/web/direccion/direccionCrear.jsp</jsp-file>
     </servlet>
 
     <servlet-mapping>
