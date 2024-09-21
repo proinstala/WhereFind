@@ -59,16 +59,16 @@
 + Llevar webapp\App\web\config\emails.settings.json al directorio del usuario
 + Revisar orden de titulo y descripción en las alertas de los mensajes
 + Poder gestionar los usuarios con un usuario Admin
++ Crear sistema de migas de pan
++ Que los jsp puedan acceder a los parametros en la url amigables
++ Ver si se puede eliminar el UserEditController y poner la lógica en el jsp
++ Que las migas de pan no muestren los parametros del tipo loquesea/1 , el 1 no debe mostrarse
 - Revisar como poder mejorar la clase persistencia, que use el patrón singlenton
 - Que el servidor notifique que la base de datos no es accesible en vez de producir una excepción
 - Gestionar error cuando se usa un email ya usado.
 - Cambiar jquery por javascript puro
-+ Crear sistema de migas de pan
-+ Que los jsp puedan acceder a los parametros en la url amigables
 - Añadir versión a los archivos js y css para evitar la cache de los navegadores
 - Probar a recolocar las migas
 - Pasar los parámetros a la api con json
 - El sistema de indicación de cargar (circulo de loading) admita multiples peticiones
 - Cambiar todo el sistema de listado de usuarios por el nuevo que ha realizado David.
-- Ver si se puede eliminar el UserEditController y poner la lógica en el jsp
-- Que las migas de pan no muestren los parametros del tipo loquesea/1 , el 1 no debe mostrarse

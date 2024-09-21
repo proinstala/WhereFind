@@ -1,3 +1,4 @@
+<%@page import="java.util.Arrays"%>
 <%@page import="io.proinstala.wherefind.shared.consts.urls.enums.UrlApp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -83,6 +84,13 @@
         urlMappingName.put("modificarDireccion".toLowerCase(), "Editar Dirección");
 
         String[] uriParts = apparentURI.split("/");
+
+        // Verifica si el último elemento es un número
+        if (uriParts.length > 0 && uriParts[uriParts.length - 1].matches("\\d+")) {
+            // Excluir el último elemento si es un número
+            uriParts = Arrays.copyOf(uriParts, uriParts.length - 1);
+        }
+
     %>
 
 
