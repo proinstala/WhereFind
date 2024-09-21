@@ -51,6 +51,15 @@
         <url-pattern>/admin/users</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>adminIdentidadUserEditar</servlet-name>
+        <jsp-file>/App/web/admin/adminUserEditar.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>adminIdentidadUserEditar</servlet-name>
+        <url-pattern>/admin/users/edit/*</url-pattern>
+    </servlet-mapping>
 
 
 <!-- Mapeo de las url referentes a la cuenta de usuario -->
