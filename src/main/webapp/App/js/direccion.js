@@ -170,8 +170,6 @@ function borrarDireccion(direccionId) {
                                            
                                             //Elimina la fila seleccionada de la tabla.
                                             deleteRowSelectedTable(idTablaDirecciones);
-                                            
-                                            onDetectarFilaSeleccionada(false);
                                         }
                                     })
                                     .catch(error => {
