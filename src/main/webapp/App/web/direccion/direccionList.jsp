@@ -108,6 +108,6 @@
     </div>
 </div>
 
-<script src="App/js/direccion/direccion.js" type="module" defer></script>
+<script src="App/js/direccion/direccionList.js" type="module" defer></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>

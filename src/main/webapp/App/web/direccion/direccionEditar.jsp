@@ -21,13 +21,9 @@
 
     if (direccion_id == -1)
     {
-        ActionController actionController = BaseHttpServlet.getActionControllerFromJSP(request, response, "direccion/adminDireccion/edit");
+        ActionController actionController = BaseHttpServlet.getActionControllerFromJSP(request, response, "direccion/direcciones/edit");
         direccion_id = actionController.getIntFromParametros(1);
     }
-
-
-
-
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >
@@ -47,7 +43,7 @@
 
                 <div class="contenedor__formulario--cabecera">
                     <div>
-                        <h1>Modificar Dirección</h1>
+                        <h1>Editar Dirección</h1>
                     </div>
                 </div>
 
@@ -114,6 +110,6 @@
 </div>
 
 
-<script src="App/js/direccion/modificarDireccion.js" type="module" defer></script>
+<script src="App/js/direccion/direccionEditar.js" type="module" defer></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>

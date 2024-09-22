@@ -128,39 +128,33 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>direccion</servlet-name>
+        <servlet-name>direcciones</servlet-name>
         <jsp-file>/App/web/direccion/direccionList.jsp</jsp-file>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>direccion</servlet-name>
-        <url-pattern>/direccion/adminDireccion</url-pattern>
+        <servlet-name>direcciones</servlet-name>
+        <url-pattern>/direccion/direcciones</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>modificarDireccion</servlet-name>
+        <servlet-name>direccionEditar</servlet-name>
         <jsp-file>/App/web/direccion/direccionEditar.jsp</jsp-file>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>modificarDireccion</servlet-name>
-        <url-pattern>/direccion/adminDireccion/modificarDireccion</url-pattern>
+        <servlet-name>direccionEditar</servlet-name>
+        <url-pattern>/direccion/direcciones/edit/*</url-pattern>
     </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>modificarDireccion</servlet-name>
-        <url-pattern>/direccion/adminDireccion/edit/*</url-pattern>
-    </servlet-mapping>
-
 
     <servlet>
-        <servlet-name>crearDireccion</servlet-name>
+        <servlet-name>direccionCrear</servlet-name>
         <jsp-file>/App/web/direccion/direccionCrear.jsp</jsp-file>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>crearDireccion</servlet-name>
-        <url-pattern>/direccion/adminDireccion/crearDireccion</url-pattern>
+        <servlet-name>direccionCrear</servlet-name>
+        <url-pattern>/direccion/direcciones/crear</url-pattern>
     </servlet-mapping>
 
 </web-app>

@@ -80,8 +80,8 @@
 
         // Dirección
         urlMappingName.put("direccion".toLowerCase(), "Dirección");
-        urlMappingName.put("adminDireccion".toLowerCase(), "Direcciones");
-        urlMappingName.put("modificarDireccion".toLowerCase(), "Editar Dirección");
+        urlMappingName.put("direcciones".toLowerCase(), "Direcciones");
+        urlMappingName.put("direccionEditar".toLowerCase(), "Editar Dirección");
 
         String[] uriParts = apparentURI.split("/");
 

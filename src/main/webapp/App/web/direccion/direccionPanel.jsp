@@ -17,7 +17,7 @@
     List<CardDTO> tarjetas = new ArrayList<>();
 
     // Se agregan las tarjetas a la lista
-    tarjetas.add(new CardDTO("las la-map-marked-alt", "Direcciones", "Gestione todas las direcciones.", "direccion/adminDireccion"));
+    tarjetas.add(new CardDTO("las la-map-marked-alt", "Direcciones", "Gestione todas las direcciones.", "direccion/direcciones"));
     tarjetas.add(new CardDTO("las la-city", "Localidades", "Gestione todas las Localidades.", "#"));
     tarjetas.add(new CardDTO("las la-sitemap", "Provincias", "Gestione todas las provincias.", "#"));
 

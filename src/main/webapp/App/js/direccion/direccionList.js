@@ -55,11 +55,12 @@ $(document).ready(function () {
 
     btnModificar.addEventListener('click', () => {
         const idDireccion = tablaDirecciones.getAttribute('data-rowselected'); //data-rowSelected
-        window.location.href = (`direccion/adminDireccion/modificarDireccion?idDireccion=${idDireccion}`);
+        //window.location.href = (`direccion/adminDireccion/modificarDireccion?idDireccion=${idDireccion}`);
+        window.location.href = (`direccion/direcciones/edit/${idDireccion}`);
     });
 
     btnCrear.addEventListener('click', () => {
-        window.location.href = (`direccion/adminDireccion/crearDireccion`);
+        window.location.href = (`direccion/direcciones/crear`);
     });
 
     btnEliminar.addEventListener('click', () => {
@@ -170,8 +171,6 @@ function borrarDireccion(direccionId) {
 
                                             //Elimina la fila seleccionada de la tabla.
                                             deleteRowSelectedTable(idTablaDirecciones);
-
-                                            onDetectarFilaSeleccionada(false);
                                         }
                                     })
                                     .catch(error => {
