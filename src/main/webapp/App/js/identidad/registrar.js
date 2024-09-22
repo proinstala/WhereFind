@@ -1,5 +1,5 @@
-import { solicitudPost, setImageSelected, detectarCambiosFormulario } from './comunes.mjs';
-import { mostrarMensaje, mostrarMensajeError } from './alertasSweetAlert2.mjs';
+import { solicitudPost, setImageSelected, detectarCambiosFormulario } from '../comunes.mjs';
+import { mostrarMensaje, mostrarMensajeError } from '../alertasSweetAlert2.mjs';
 
 
 function onDetectarCambios(hayCambios) {

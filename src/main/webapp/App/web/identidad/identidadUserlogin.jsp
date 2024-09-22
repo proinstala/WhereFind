@@ -4,7 +4,7 @@
     <jsp:param name="titleweb" value="Login" />
 </jsp:include>
 
-    <link rel="stylesheet" href="App/css/login.css">
+    <link rel="stylesheet" href="App/css/identidad/login.css">
     <link href="App/css/formulario.css" rel="stylesheet" type="text/css"/>
 
     <div class="contenedor__general--login">
@@ -45,6 +45,6 @@
     </div>
 
     <script src="App/js/comunes.mjs" type="module"></script>
-    <script src="App/js/login.js" type="module"></script>
+    <script src="App/js/identidad/login.js" type="module"></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>

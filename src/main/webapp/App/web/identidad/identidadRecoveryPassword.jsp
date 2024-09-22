@@ -5,7 +5,7 @@
     <jsp:param name="titleweb" value="He olvidado mi password" />
 </jsp:include>
 
-    <link rel="stylesheet" href="App/css/login.css">
+    <link rel="stylesheet" href="App/css/identidad/login.css">
     <link href="App/css/formulario.css" rel="stylesheet" type="text/css"/>
 
     <div class="contenedor__general--login">
@@ -50,6 +50,6 @@
     </div>
 
     <script src="App/js/comunes.mjs" type="module"></script>
-    <script src="App/js/recovery.js" type="module"></script>
+    <script src="App/js/identidad/recovery.js" type="module"></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>

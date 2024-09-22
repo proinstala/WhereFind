@@ -31,7 +31,7 @@
 <link href="App/css/formulario.css" rel="stylesheet" type="text/css"/>
 <link href="App/css/tabla.css" rel="stylesheet" type="text/css"/>
 <link href="App/css/checkbox.css" rel="stylesheet" type="text/css"/>
-<link href="App/css/adminUsers.css" rel="stylesheet" type="text/css"/>
+<link href="App/css/admin/adminUsers.css" rel="stylesheet" type="text/css"/>
 
 <div class="contenedor__general">
     <div class="contenedor">
@@ -100,10 +100,10 @@
 </div>
 
 <script src="App/js/comunes.mjs" type="module"></script>
-<script src="App/js/admin.js" type="module" defer></script>
+<script src="App/js/admin/admin.js" type="module" defer></script>
 
 <script  type="module">
-    import { adminLoadListUsers } from './App/js/admin.js';
+    import { adminLoadListUsers } from './App/js/admin/admin.js';
     adminLoadListUsers("admin-list-users", <%= UserSession.getUserLogin(request).getId() %>);
 </script>
 

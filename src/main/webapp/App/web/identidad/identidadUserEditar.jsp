@@ -257,6 +257,6 @@
     </div>
 </div>
 
-<script src="App/js/modificarUsuario.js" type="module" defer></script>
+<script src="App/js/identidad/modificarUsuario.js" type="module" defer></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>

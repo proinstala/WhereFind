@@ -1,6 +1,6 @@
 
-import {solicitudPost, fillInputSelect, cargarInputSelect, vaciarSelect, detectarCambiosFormulario, resetCamposForm } from './comunes.mjs';
-import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from './alertasSweetAlert2.mjs';
+import {solicitudPost, fillInputSelect, cargarInputSelect, vaciarSelect, detectarCambiosFormulario, resetCamposForm } from '../comunes.mjs';
+import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from '../alertasSweetAlert2.mjs';
 
 const idSelectProvincia = "#provincia";
 const idSelectLocalidad = "#localidad";
@@ -18,7 +18,7 @@ $(document).ready(function () {
     const selectLocalidad = document.querySelector(idSelectLocalidad);
     const btnDeshacerCambiosDireccion = document.querySelector(idBtnDeshacerCambiosDireccion);
     const btnCancelar = document.querySelector(idBtnCancelar);
-    
+
     //Añade un evento de cambio al select de provincias y actualiza el select de localidades según la provincia seleccionada.
     const cargaInputSelectLocalidad = () => {
         selectProvincia.addEventListener('change', (e) => {
@@ -27,36 +27,36 @@ $(document).ready(function () {
             //Crea un objeto con la información de la provincia seleccionada (id y nombre).
             const jsonProvincia = {
                 id: optionSelected.value,
-                nombre: optionSelected.textContent 
+                nombre: optionSelected.textContent
             };
 
             const jsonProvinciaString = JSON.stringify(jsonProvincia); //Convierte el objeto jsonProvincia a una cadena JSON.
             const encodedJsonProvincia = encodeURIComponent(jsonProvinciaString); //Codifica la cadena JSON para que sea segura al incluirla en la URL.
-            
+
             //Llama a cargarInputSelect para llenar el select de localidades con los datos obtenidos del select provincia.
             cargarInputSelect(selectLocalidad, `api/localidad/localidades?jsonProvincia=${encodedJsonProvincia}`, '');
         });
         //onDetectarCambiosCrearDireccion(false);
         detectarCambiosFormulario(idFormDireccion, onDetectarCambiosCrearDireccion);
     };
-    
+
     //Carga el select provicia.
     cargarInputSelect(selectProvincia, "api/provincia/provincias", 'Seleccione una provincia', false, cargaInputSelectLocalidad);
-    
+
     validarFormulario(idFormDireccion);
-    
-    
+
+
     btnCancelar.addEventListener('click', () => {
         window.location.href = "direccion/adminDireccion";
     });
-    
+
     btnDeshacerCambiosDireccion.addEventListener('click', () => {
         resetCamposForm(idFormDireccion);
         vaciarSelect(selectLocalidad);
         onDetectarCambiosCrearDireccion(false);
         detectarCambiosFormulario(idFormDireccion, onDetectarCambiosCrearDireccion);
     });
-    
+
 });
 
 
@@ -170,6 +170,6 @@ function getDireccionJson() {
     const data = new URLSearchParams({
         direccionJSON: JSON.stringify(direccionJSON)
     }).toString();
-    
+
     return data;
 }

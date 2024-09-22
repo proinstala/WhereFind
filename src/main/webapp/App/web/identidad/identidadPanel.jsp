@@ -2,7 +2,7 @@
 <%@page import="io.proinstala.wherefind.shared.controllers.BaseHttpServlet"%>
 <%@page import="io.proinstala.wherefind.shared.controllers.actions.ActionServer"%>
 <%@page import="io.proinstala.wherefind.api.identidad.UserSession"%>
-<%@page import="io.proinstala.wherefind.shared.consts.urls.enums.UrlAdmin"%>
+<%@page import="io.proinstala.wherefind.shared.consts.urls.enums.UrlIdentidad"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="io.proinstala.wherefind.shared.dtos.CardDTO"%>
@@ -17,25 +17,14 @@
         return;
     }
 
-    // Si el usuario está logueado pero no es administrado
-    if (!UserSession.isUserLogIn(actionServer, true))
-    {
-        // Obtiene un error 403
-        BaseHttpServlet.responseError403(actionServer.response(), "");
-        return;
-    }
-
     // Se obtiene la lista de tarjetas
     List<CardDTO> tarjetas = new ArrayList<>();
 
     // Se agregan las tarjetas a la lista
-    tarjetas.add(new CardDTO("las la-map-marked-alt", "Direcciones", "Gestione todas las direcciones, provincias y localidades.", "direccion"));
-    tarjetas.add(new CardDTO("las la-envelope", "Email", "Configura todo lo referente a la configuración interna de email de la app.", "#"));
-    tarjetas.add(new CardDTO("las la-users-cog", "Usuarios", "Visualiza y administra todos los usuarios registrado en la app.", UrlAdmin.USER_LISTA.getUri()));
+    tarjetas.add(new CardDTO("las la-pen", "Editar datos", "Edite todos sus datos desde un mismo lugar.", UrlIdentidad.MODIFICAR.getUri()));
 
     // Se agrega la lista a los atributos de la petición
     request.setAttribute("cards", tarjetas);
-
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >
@@ -58,7 +47,7 @@
 
                 <div class="contenedor__formulario--cabecera conBotones margin-bottom-5">
                     <div>
-                        <h1>Administrar</h1>
+                        <h1>Panel de control</h1>
                     </div>
                     <div class="form__btn_circle">
                         <button id="btnCancelar" title="Cancelar"><i class="las la-times"></i></button>
@@ -66,8 +55,6 @@
                 </div>
 
                 <%@ include file="/App/web/shared/cardContainer.jsp" %>
-
-            </div>
             </div> <!-- Fin contenedor__formulario -->
         </div> <!-- Fin main -->
 

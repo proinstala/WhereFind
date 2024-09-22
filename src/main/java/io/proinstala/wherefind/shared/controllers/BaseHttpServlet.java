@@ -21,7 +21,7 @@ public abstract class BaseHttpServlet extends HttpServlet {
      * @param baseApi la ruta base de la API.
      * @return la acción que se debe realizar.
      */
-    protected String getAction(HttpServletRequest request, String baseApi)
+    protected static String getAction(HttpServletRequest request, String baseApi)
     {
         // Obtiene la url completa del request actual
         String accion = request.getRequestURI();
@@ -119,19 +119,30 @@ public abstract class BaseHttpServlet extends HttpServlet {
         responseError(response, HttpServletResponse.SC_NOT_FOUND, mensaje);
     }
 
+
     /**
-     * Inicializa la instancia de la clase.
+     * Crea y devuelve un objeto ActionController para manejar la acción HTTP.
      *
-     * @throws ServletException si surge un error durante el proceso de inicio
+     * @param request  la solicitud HTTP recibida.
+     * @param response la respuesta HTTP que se enviará.
+     * @param baseUrl  la url en la que se encuentra actualmente.
+     * @return un objeto ActionController configurado para la acción recibida.
      */
-    // @Override
-    // public void init() throws ServletException {
-    //     super.init();
+    public static ActionController getActionControllerFromJSP(HttpServletRequest request, HttpServletResponse response, String baseUrl)
+    {
+        // Obtiene la url completa del request actual
+        String fullUri       = request.getRequestURI();
 
-    //     // Llamada a la implementación por defecto para asegurar que todos los pasos necesarios se realizan correctamente
-    //     //ServletContext context = getServletContext();
+        // Obtiene la parte de la api, limpiando los datos que no necesitamos
+        String uriApi        = getAction(request, baseUrl);
 
-    //     // Sets la ruta base basada en el path real del contexto servlet.
-    //     //AppSettings.setRutaBase(context.getRealPath(""));
-    // }
+        // Obtine los parámetros usados en la api
+        String[]  parametros = uriApi.replaceFirst("/", "").split("/");
+
+        // Obtine el ActionType del actual request
+        Object actionType = null;
+
+        // Crea el ActionController a partir de los datos extraidos anteriormente
+        return new ActionController(fullUri, uriApi, actionType, parametros, new ActionServer(request, response));
+    }
 }

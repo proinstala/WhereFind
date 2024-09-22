@@ -40,31 +40,31 @@
 
                 <div class="contenedor__formulario--main">
                     <form class="formulario" name="frmBuscarDireccion" id="frmBuscarDireccion">
-                        
+
                         <div class="form__input">
                             <input type="text" name="calle" id="calle">
                             <label for="calle">Calle</label>
                         </div>
-                        
+
                         <div class="form__input">
                             <select name="provincia" id="provincia">
                                 <option value="-1">Todas</option>
                             </select>
                             <label for="provincia">Provincia</label>
                         </div>
-                        
+
                         <div class="form__input">
                             <select name="localidad" id="localidad">
                                 <option value="-1">Todas</option>
                             </select>
                             <label for="localidad">Localidad</label>
                         </div>
-                        
+
                     </form>
                 </div>
 
                 <div class="contenedor__tabla--botones">
-                    
+
                     <div class="form__btn_circle">
                         <button form="frmBuscarDireccion" id="btnBuscar" title="Buscar" type="submit"><i class="las la-search"></i></button>
                     </div>
@@ -78,7 +78,7 @@
                         <button id="btnModificar" title="Modificar" disabled><i class="las la-pen"></i></button>
                     </div>
                 </div>
-                
+
                 <div class="contenedor__tabla">
                     <table class="tabla" id="tablaDireciones" data-rowselected = "-1">
                         <thead>
@@ -98,7 +98,7 @@
                 </div>
 
             </div> <!-- Fin contenedor__formulario -->
-            
+
         </div> <!-- Fin main -->
 
         <div class="barra__inferior">
@@ -108,6 +108,6 @@
     </div>
 </div>
 
-<script src="App/js/direccion.js" type="module" defer></script>
+<script src="App/js/direccion/direccion.js" type="module" defer></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>

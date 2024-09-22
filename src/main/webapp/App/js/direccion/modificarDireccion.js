@@ -1,6 +1,6 @@
 
-import { solicitudGet, solicitudPut, getDatosForm, fillInputSelect, cargarInputSelect, seleccionarValorSelect, detectarCambiosFormulario } from './comunes.mjs';
-import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from './alertasSweetAlert2.mjs';
+import { solicitudGet, solicitudPut, getDatosForm, fillInputSelect, cargarInputSelect, seleccionarValorSelect, detectarCambiosFormulario } from '../comunes.mjs';
+import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from '../alertasSweetAlert2.mjs';
 
 const idSelectProvincia = "#provincia";
 const idSelectLocalidad = "#localidad";
@@ -21,19 +21,19 @@ $(document).ready(function () {
     const inputIdDireccion = document.querySelector(idInputIdDireccion);
     const btnDeshacerCambiosDireccion = document.querySelector(idBtnDeshacerCambiosDireccion);
     const btnCancelar = document.querySelector(idBtnCancelar);
-    
+
     validarFormulario(idFormDireccion);
-    
+
     getDireccion(inputIdDireccion.value);
-    
+
     btnDeshacerCambiosDireccion.addEventListener('click', () => {
         fillFielsDireccion(oldDireccion);
     });
-    
+
     btnCancelar.addEventListener('click', () => {
         window.location.href = "direccion/adminDireccion";
     });
-    
+
 });
 
 function onDetectarCambiosModificarDireccion(hayCambios) {
@@ -75,7 +75,7 @@ function fillFielsDireccion(direccion) {
     if(direccion.codigoPostal) {
         inputCodigoPostal.value = direccion.codigoPostal;
     }
-    
+
     cargarInputSelect(selectProvincia, "api/provincia/provincias", '', direccion.localidad.provincia.id, () => {
         //Crea un objeto con la información de la provincia seleccionada (id y nombre).
         const jsonProvincia = {
@@ -103,7 +103,7 @@ function fillFielsDireccion(direccion) {
                 //Llama a cargarInputSelect para llenar el select de localidades con los datos obtenidos del select provincia.
                 cargarInputSelect(selectLocalidad, `api/localidad/localidades?jsonProvincia=${encodedJsonProvincia}`, 'Seleccione');
             });
-            
+
             onDetectarCambiosModificarDireccion(false);
             detectarCambiosFormulario(idFormDireccion, onDetectarCambiosModificarDireccion);
 

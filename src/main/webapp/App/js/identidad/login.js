@@ -1,5 +1,5 @@
-import { solicitudPost, detectarCambiosFormulario } from './comunes.mjs';
-import { mostrarMensaje, mostrarMensajeError } from './alertasSweetAlert2.mjs';
+import { solicitudPost, detectarCambiosFormulario } from '../comunes.mjs';
+import { mostrarMensaje, mostrarMensajeError } from '../alertasSweetAlert2.mjs';
 
 $(document).ready(function () {
     validarFormulario("#frmLogin");
