@@ -1,3 +1,4 @@
+<%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.Arrays"%>
 <%@page import="io.proinstala.wherefind.shared.consts.urls.enums.UrlApp"%>
@@ -9,10 +10,10 @@
 
     <%!
         // Para mapear las url y saber como procesarlas
-        java.util.Map<String, String> urlMapping = new java.util.HashMap<>();
+        Map<String, String> urlMapping = new HashMap<>();
 
         // Para mapear las url y saber como procesarlas
-        public java.util.Map<String, String> urlMappingName = new java.util.HashMap<>();
+        public Map<String, String> urlMappingName = new HashMap<>();
 
         // Para devolver el texto real modificado y adaptado por parte de una uri
         String getTextoMigaFromUri(String porDefecto, String uri)
