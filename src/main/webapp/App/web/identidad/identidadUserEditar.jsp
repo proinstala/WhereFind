@@ -80,7 +80,7 @@
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >
-    <jsp:param name="titleweb" value="Modificar Usuario" />
+    <jsp:param name="titleweb" value="Editar Usuario" />
 </jsp:include>
 
 <link href="App/css/formulario.css" rel="stylesheet" type="text/css"/>
@@ -96,7 +96,7 @@
 
                 <div class="contenedor__formulario--cabecera">
                     <div>
-                        <h1>Modificar Usuario</h1>
+                        <h1>Editar Usuario</h1>
                     </div>
                 </div>
 
