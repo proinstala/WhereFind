@@ -47,11 +47,13 @@
     content: "\f041";
 }
 
-.breadcrumb li[data-id="adminDireccion"] a span.icon i::before {
+.breadcrumb li[data-id="direcciones"] a span.icon i::before {
     content: "\f2b9";
 }
 
-
+.breadcrumb li[data-id="edit"]:has(+ li[data-id="direcciones"]) a span.icon i::before {
+  content: "\f303";
+}
 
 
 
