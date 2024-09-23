@@ -1,3 +1,4 @@
+<%@page import="java.util.Map"%>
 <%@page import="java.util.Arrays"%>
 <%@page import="io.proinstala.wherefind.shared.consts.urls.enums.UrlApp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -13,8 +14,35 @@
         // Para mapear las url y saber como procesarlas
         public java.util.Map<String, String> urlMappingName = new java.util.HashMap<>();
 
+        // Para devolver el texto real modificado y adaptado por parte de una uri
+        String getTextoMigaFromUri(String porDefecto, String uri)
+        {
+            // Inicializa la variable
+            String apparentTexto = null;
+
+            for (Map.Entry<String, String> entry : urlMappingName.entrySet())
+            {
+                String key = entry.getKey();
+
+                // Comprobamos si la URL termina con la clave
+                if (uri.endsWith(key))
+                {
+                    apparentTexto = entry.getValue();
+                    break;
+                }
+            }
+
+            // Si no se encuentra el mapeo, usar el porDefecto real como respaldo
+            if (apparentTexto == null)
+            {
+                apparentTexto = porDefecto;
+            }
+
+            return apparentTexto;
+        }
+
         // Para devolver el texto real modificado y adaptado
-        String getTextoMiga(String porDefecto)
+        String getTextoMiga(String porDefecto, String uri)
         {
             // Obtener la URI aparente desde el mapa
             String apparentTexto = urlMappingName.get(porDefecto.toLowerCase());
@@ -22,7 +50,7 @@
             // Si no se encuentra el mapeo, usar el porDefecto real como respaldo
             if (apparentTexto == null)
             {
-                apparentTexto = porDefecto;
+                apparentTexto = getTextoMigaFromUri(porDefecto, uri);
             }
 
             return apparentTexto;
@@ -76,12 +104,12 @@
         // Admin
         urlMappingName.put("admin".toLowerCase(), "Administrar");
         urlMappingName.put("users".toLowerCase(), "Usuarios");
-        urlMappingName.put("edit".toLowerCase(), "Editar");
+        urlMappingName.put("users/edit".toLowerCase(), "Modificar Usuario");
 
         // Dirección
         urlMappingName.put("direccion".toLowerCase(), "Dirección");
         urlMappingName.put("direcciones".toLowerCase(), "Direcciones");
-        urlMappingName.put("direccionEditar".toLowerCase(), "Editar Dirección");
+        urlMappingName.put("direcciones/edit".toLowerCase(), "Editar Dirección");
 
 
 
@@ -125,7 +153,7 @@
                         <li data-id="<%= uriParts[i] %>">
                             <a <%= link %>>
                                 <span class="icon"> <i class="las"></i></span>
-                                <span class="text"><%= getTextoMiga(uriParts[i]) %></span>
+                                <span class="text"><%= getTextoMiga(uriParts[i], path) %></span>
                             </a>
                         </li>
         <%
