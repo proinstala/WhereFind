@@ -39,7 +39,7 @@
 }
 
 .breadcrumb li[data-id="edit"] a span.icon i::before {
-    content: "\f4ff";
+    content: "\f303";
 }
 
 
