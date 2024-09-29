@@ -14,7 +14,7 @@
 
     int direccion_id = -1;
     try {
-        direccion_id = Integer.parseInt(request.getParameter("idDireccion"));
+        //direccion_id = Integer.parseInt(request.getParameter("idDireccion"));
     } catch(Exception e) {
         e.printStackTrace();
     }
