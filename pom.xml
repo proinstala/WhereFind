@@ -5,7 +5,7 @@
     <artifactId>WhereFind</artifactId>
     <version>1.0</version>
     <packaging>war</packaging>
-    <name>WhereFind-1.0</name>
+    <name>WhereFind</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -60,6 +60,7 @@
 
 
     <build>
+        <finalName>WhereFind</finalName> <!-- Aquí defines el nombre final del WAR sin la versión -->
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

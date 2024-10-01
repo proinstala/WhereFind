@@ -1,15 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/WhereFind">
-    <Resource
-        name="jdbc/WHERE_FIND_DATA"
-        auth="Container"
-        type="javax.sql.DataSource"
-        maxActive="100"
-        maxIdle="30"
-        maxWait="10000"
-        driverClassName="com.mysql.cj.jdbc.Driver"
-        url="jdbc:mysql://localhost:3306/WHERE_FIND_DATA"
-        username="root"
-        password="12345"
-    />
+  <Resource auth="Container" driverClassName="com.mysql.cj.jdbc.Driver" maxActive="100" maxIdle="30" maxWait="10000" name="jdbc/WHERE_FIND_DATA" password="12345" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/WHERE_FIND_DATA" username="root"/>
 </Context>
