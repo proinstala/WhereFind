@@ -55,7 +55,7 @@
     </div>
 
     <script src="App/js/comunes.mjs" type="module"></script>
-    <script src="App/js/identidad/recovery.js" type="module"></script>
+    <script src="App/js/identidad/identidadRecoveryPassword.js" type="module"></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>
 

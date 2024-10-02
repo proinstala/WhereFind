@@ -45,6 +45,6 @@
     </div>
 
     <script src="App/js/comunes.mjs" type="module"></script>
-    <script src="App/js/identidad/login.js" type="module"></script>
+    <script src="App/js/identidad/identidadUserlogin.js" type="module"></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>

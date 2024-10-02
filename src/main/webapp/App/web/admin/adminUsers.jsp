@@ -100,10 +100,10 @@
 </div>
 
 <script src="App/js/comunes.mjs" type="module"></script>
-<script src="App/js/admin/admin.js" type="module" defer></script>
+<script src="App/js/admin/adminUsers.js" type="module" defer></script>
 
 <script  type="module">
-    import { adminLoadListUsers } from './App/js/admin/admin.js';
+    import { adminLoadListUsers } from './App/js/admin/adminUsers.js';
     adminLoadListUsers("admin-list-users", <%= UserSession.getUserLogin(request).getId() %>);
 </script>
 
