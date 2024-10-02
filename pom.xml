@@ -5,7 +5,7 @@
     <artifactId>WhereFind</artifactId>
     <version>1.0</version>
     <packaging>war</packaging>
-    <name>WhereFind-1.0</name>
+    <name>WhereFind</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
