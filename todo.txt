@@ -72,4 +72,4 @@
 - Pasar los parámetros a la api con json
 - El sistema de indicación de cargar (circulo de loading) admita multiples peticiones
 - Cambiar todo el sistema de listado de usuarios por el nuevo que ha realizado David.
-- Que las migas de pan no muestren los parametros del tipo loquesea/1/2/3/4, el 1, 2, 3 y no deben mostrarse
++ Que las migas de pan no muestren los parametros del tipo loquesea/1/2/3/4, el 1, 2, 3 y no deben mostrarse

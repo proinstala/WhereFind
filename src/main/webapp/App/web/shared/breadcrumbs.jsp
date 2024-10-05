@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.Arrays"%>
@@ -14,6 +16,10 @@
 
         // Para mapear las url y saber como procesarlas
         public Map<String, String> urlMappingName = new HashMap<>();
+
+        // Para determinar cual es la última parte de una url que debe ser añadida a las breadcrumbs
+        public List<String> urlLastBreadCrumbName = new ArrayList<>();
+
 
         // Para devolver el texto real modificado y adaptado por parte de una uri
         String getTextoMigaFromUri(String porDefecto, String uri)
@@ -112,6 +118,8 @@
         urlMappingName.put("direcciones".toLowerCase(), "Direcciones");
         urlMappingName.put("direcciones/edit".toLowerCase(), "Editar Dirección");
 
+        // Añadir las partes que deben ser consideradas como partes finales de las breadcrumbs
+        urlLastBreadCrumbName.add("edit".toLowerCase());
 
 
         String[] uriParts = apparentURI.split("/");
@@ -122,6 +130,23 @@
             uriParts = Arrays.copyOf(uriParts, uriParts.length - 1);
         }
 
+        // Recorrer uriParts desde el último elemento hacia el primero
+        int indexToRemoveFrom = -1;
+
+        // Buscar coincidencia exacta con los elementos en urlLastBreadCrumbName
+        for (int i = uriParts.length - 1; i >= 0; i--) {
+            String part = uriParts[i].toLowerCase();
+            if (urlLastBreadCrumbName.contains(part)) {
+                indexToRemoveFrom = i + 1;
+                break;
+            }
+        }
+
+        // Si encontramos una coincidencia, excluimos desde la coincidencia hasta el final
+        if (indexToRemoveFrom != -1) {
+            //String[] newUriParts = Arrays.copyOfRange(uriParts, 0, indexToRemoveFrom);
+            uriParts = Arrays.copyOf(uriParts, indexToRemoveFrom);
+        }
     %>
 
 
