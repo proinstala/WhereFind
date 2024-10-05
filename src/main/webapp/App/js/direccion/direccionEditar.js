@@ -31,7 +31,7 @@ $(document).ready(function () {
     });
 
     btnCancelar.addEventListener('click', () => {
-        window.location.href = "direccion/adminDireccion";
+        window.location.href = "direccion/direcciones";
     });
 
 });

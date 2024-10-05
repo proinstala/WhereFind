@@ -55,7 +55,6 @@ $(document).ready(function () {
 
     btnModificar.addEventListener('click', () => {
         const idDireccion = tablaDirecciones.getAttribute('data-rowselected'); //data-rowSelected
-        //window.location.href = (`direccion/adminDireccion/modificarDireccion?idDireccion=${idDireccion}`);
         window.location.href = (`direccion/direcciones/edit/${idDireccion}`);
     });
 

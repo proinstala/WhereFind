@@ -47,7 +47,7 @@ $(document).ready(function () {
 
 
     btnCancelar.addEventListener('click', () => {
-        window.location.href = "direccion/adminDireccion";
+        window.location.href = "direccion/direcciones";
     });
 
     btnDeshacerCambiosDireccion.addEventListener('click', () => {
@@ -125,7 +125,7 @@ function validarFormulario(idForm) {
                         if (response.isError === 1) {
                             mostrarMensajeError("No se puede crear los datos", response.result);
                         } else {
-                            const redireccionar = () => window.location.href = "direccion/adminDireccion";
+                            const redireccionar = () => window.location.href = "direccion/direcciones";
                             mostrarMensaje("Dirección Creada.", `Se ha creado la dirección con id "${response.data.id}" correctamente`, "success", redireccionar);
                         }
                     })
