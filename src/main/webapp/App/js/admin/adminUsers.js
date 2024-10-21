@@ -1,5 +1,5 @@
-import { solicitudGet, solicitudPut } from '../comunes.mjs';
-import { mostrarMensaje, mostrarMensajeError, mostrarMensajeAdvertencia } from '../alertasSweetAlert2.mjs';
+import { solicitudGet, solicitudPut } from '../comunes.mjs?v=20241021_184300';
+import { mostrarMensaje, mostrarMensajeError, mostrarMensajeAdvertencia } from '../alertasSweetAlert2.mjs?v=20241021_184300';
 
 // Configuración de las urls
 const URL_USER_EDIT = "admin/users/edit";

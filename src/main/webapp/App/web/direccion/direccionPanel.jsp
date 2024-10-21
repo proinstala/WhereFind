@@ -31,9 +31,9 @@
 </jsp:include>
 
 
-<link href="App/css/general.css" rel="stylesheet" type="text/css"/>
-<link href="App/css/formulario.css" rel="stylesheet" type="text/css"/>
-<link href="App/css/cards.css" rel="stylesheet" type="text/css"/>
+<link href="App/css/general.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
+<link href="App/css/formulario.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
+<link href="App/css/cards.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
 
 
 <div class="contenedor__general">

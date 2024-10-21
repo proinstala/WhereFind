@@ -67,7 +67,7 @@
 - Que el servidor notifique que la base de datos no es accesible en vez de producir una excepción
 - Gestionar error cuando se usa un email ya usado.
 - Cambiar jquery por javascript puro
-- Añadir versión a los archivos js y css para evitar la cache de los navegadores
++ Añadir versión a los archivos js y css para evitar la cache de los navegadores
 - Probar a recolocar las migas
 - Pasar los parámetros a la api con json
 - El sistema de indicación de cargar (circulo de loading) admita multiples peticiones

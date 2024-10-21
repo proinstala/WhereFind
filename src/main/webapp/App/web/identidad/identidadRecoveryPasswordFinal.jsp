@@ -4,8 +4,8 @@
     <jsp:param name="titleweb" value="Cambiar password" />
 </jsp:include>
 
-    <link rel="stylesheet" type="text/css" href="App/css/identidad/login.css">
-    <link rel="stylesheet" type="text/css" href="App/css/formulario.css"/>
+    <link rel="stylesheet" type="text/css" href="App/css/identidad/login.css?v=20241021_184300">
+    <link rel="stylesheet" type="text/css" href="App/css/formulario.css?v=20241021_184300"/>
 
     <div class="contenedor__general--login">
         <div class="login login__password">
@@ -54,8 +54,8 @@
         </div>
     </div>
 
-    <script src="App/js/comunes.mjs" type="module"></script>
-    <script src="App/js/identidad/identidadRecoveryPassword.js" type="module"></script>
+    <script src="App/js/comunes.mjs?v=20241021_184300" type="module"></script>
+    <script src="App/js/identidad/identidadRecoveryPassword.js?v=20241021_184300" type="module"></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>
 

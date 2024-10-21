@@ -1,5 +1,5 @@
 
-import { mostrarMensaje, mostrarLoading, ocultarLoading, mostrarMensajeAdvertencia } from './alertasSweetAlert2.mjs';
+import { mostrarMensaje, mostrarLoading, ocultarLoading, mostrarMensajeAdvertencia } from './alertasSweetAlert2.mjs?v=20241021_184300';
 
 /**
  * Obtiene los datos del formulario.
@@ -15,21 +15,21 @@ function getDatosForm (idForm) {
 /**
  * Realiza una solicitud HTTP POST a una URL especificada.
  *
- * <p>Este método envía una solicitud POST a la URL proporcionada. Puede utilizar datos 
- * opcionales que se pasan al método o extraer datos del formulario asociado con el 
- * identificador {@code idElement}. Además, puede mostrar una alerta con una animación de 
+ * <p>Este método envía una solicitud POST a la URL proporcionada. Puede utilizar datos
+ * opcionales que se pasan al método o extraer datos del formulario asociado con el
+ * identificador {@code idElement}. Además, puede mostrar una alerta con una animación de
  * espera si se indica {@code mostrarLoad}.</p>
  *
  * @param {string} url         - La URL a la que se enviará la solicitud POST.
- * @param {string} idElement   - El identificador del formulario del cual se extraerán los datos 
+ * @param {string} idElement   - El identificador del formulario del cual se extraerán los datos
  *                               si no se proporciona el parámetro {@code data}.
- * @param {boolean} mostrarLoad - Un valor booleano que indica si se debe mostrar una animación 
+ * @param {boolean} mostrarLoad - Un valor booleano que indica si se debe mostrar una animación
  *                                 de espera mientras se realiza la solicitud.
- * @param {Object} [data]      - Datos opcionales a enviar con la solicitud POST. Si no se 
- *                               proporciona, se extraerán los datos del formulario con el 
+ * @param {Object} [data]      - Datos opcionales a enviar con la solicitud POST. Si no se
+ *                               proporciona, se extraerán los datos del formulario con el
  *                               identificador {@code idElement}.
- * @returns {Promise}          - Una promesa que representa el resultado de la solicitud POST. 
- *                               La promesa se resuelve con el resultado de la función 
+ * @returns {Promise}          - Una promesa que representa el resultado de la solicitud POST.
+ *                               La promesa se resuelve con el resultado de la función
  *                               {@code solicitudPostFetch}.
  */
 const solicitudPost = (url, idElement, mostrarLoad, data) => {
@@ -56,7 +56,7 @@ const solicitudPut = (url, idElement, mostrarLoad) => {
  * @param {string} idElement   - Id del formulario.
  * @param {string} mostrarLoad - Bloquea la UI mostrando una alerta con una animación de espera.
  */
-const solicitudGet = (url, idElement, mostrarLoad) => {   
+const solicitudGet = (url, idElement, mostrarLoad) => {
     return solicitudGetFetch(url, idElement, mostrarLoad);
 };
 
@@ -74,7 +74,7 @@ function solicitudPostFetch(url, data, idElement, mostrarLoad) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
-            //'Content-Type': 'application/json' 
+            //'Content-Type': 'application/json'
         },
         body: data
     })
@@ -278,7 +278,7 @@ const detectarCambiosFormulario = (idForm, callBack) => {
 
 /**
  * Realiza una solicitud GET para obtener datos y cargar un select HTML con las opciones recibidas.
- * 
+ *
  * @param {HTMLElement} nodoInputSelect - El elemento select donde se cargarán las opciones. Debe ser un elemento HTML válido.
  * @param {string} url - La URL a la que se realizará la solicitud GET para obtener los datos.
  * @param {string} [firstOption=''] - (Opcional) Texto para una primera opción a mostrar en el select, usualmente un texto de guía.
@@ -298,17 +298,17 @@ function cargarInputSelect(nodoInputSelect, url, firstOption = '', selectOption,
         mostrarMensajeError("Error", "URL no válida.");
         return;
     }
-    
+
     //Realiza una solicitud GET a la URL especificada.
     solicitudGet(url, "", false)
         .then(response => {
         if (response.isError === 1) {
             mostrarMensajeError("Se ha producido un error", response.result);
             return; // Salir de la función si hay un error
-        } 
+        }
         //Llena el elemento select con los datos recibidos y la primera opción opcional.
         fillInputSelect(nodoInputSelect, response.data, firstOption);
-        
+
         if (selectOption) {
             seleccionarValorSelect(nodoInputSelect, selectOption);
         }
@@ -332,20 +332,20 @@ function cargarInputSelect(nodoInputSelect, url, firstOption = '', selectOption,
 
 /**
  * Rellena un elemento select HTML con opciones basadas en los datos proporcionados.
- * 
+ *
  * @param {HTMLElement} nodeInputSelect - El elemento select que se va a llenar con las opciones.
  * @param {Array} datos - Un array de objetos con las propiedades 'id' y 'nombre' para crear las opciones.
  * @param {string} optionGenerico - (Opcional) Texto para una opción genérica que se añade al principio del select.
  */
 function fillInputSelect(nodeInputSelect, datos, optionGenerico) {
-    
+
     //Si se proporciona la opción genérica, se agrega como la primera opción del select.
     if(optionGenerico) {
         nodeInputSelect.innerHTML = `<option value="${-1}">${optionGenerico}</option>`;
     } else {
         vaciarSelect(nodeInputSelect);
     }
-    
+
     const fragment = document.createDocumentFragment(); // Crear un fragmento de documento.
     datos.forEach((dato) => {
         const elementOption = document.createElement('OPTION');
@@ -353,7 +353,7 @@ function fillInputSelect(nodeInputSelect, datos, optionGenerico) {
         elementOption.textContent = dato.nombre;
         fragment.appendChild(elementOption);
     });
-    
+
     //Agregar el fragmento completo al select, actualizando su contenido en una sola operación.
     nodeInputSelect.appendChild(fragment);
 }
@@ -388,7 +388,7 @@ function seleccionarValorSelect(selectNode, value) {
 /**
  * Vacía todas las opciones de un elemento <select> en el DOM.
  *
- * @param {HTMLSelectElement} nodeInputSelect - El nodo <select> que se desea vaciar. 
+ * @param {HTMLSelectElement} nodeInputSelect - El nodo <select> que se desea vaciar.
  *                                              Debe ser un elemento HTMLSelectElement válido.
  */
 function vaciarSelect(nodeInputSelect) {
@@ -412,14 +412,14 @@ function addRowSelected(nodeTableBody) {
  */
 function markRow(event) {
     //Obtener la fila seleccionada a través del evento
-    const row = event.currentTarget; 
-    
+    const row = event.currentTarget;
+
     const tableBody = row.parentElement;
     const table = tableBody.parentElement;
-    
+
     //Obtener todas las filas del mismo tbody (padre)
     const rows = tableBody.querySelectorAll('tr');
-    
+
     resetRowsSelected(rows); //Reiniciar. Remover la clase ('selected') de todas las filas
     table.setAttribute('data-rowselected', row.id);  //Asignar el ID de la fila seleccionada al atributo ('data-rowSelected') de la tabla padre de la fila.
     row.classList.add("selected"); //Añadir la clase 'selected' a la fila actual para marcarla como seleccionada
@@ -445,7 +445,7 @@ function observeRowSelectedChange(tabla, callback) {
         console.error('El elemento proporcionado no es un nodo HTML válido.');
         return; //Sale de la función si la tabla no es válida
     }
-    
+
     /**
      * Función que se ejecuta cuando se detectan cambios en los atributos del elemento observado.
      * @param {MutationRecord[]} mutationsList - Lista de objetos MutationRecord que describen los cambios detectados.
@@ -486,18 +486,18 @@ function observeRowSelectedChange(tabla, callback) {
 function deleteRowSelectedTable(idTabla) {
     // Selecciona la tabla por su ID
     const tabla = document.querySelector(idTabla);
-    
+
     if (tabla) {
         const idDireccion = tabla.getAttribute('data-rowselected'); //data-rowSelected
-        
+
         // Selecciona el tbody de la tabla
         const tbody = tabla.querySelector('tbody');
-        
+
         // Verifica si el tbody existe
         if (tbody) {
             // Obtiene todas las filas (tr) dentro del tbody
             const filas = tbody.querySelectorAll('tr');
-            
+
             // Recorre cada fila usando forEach
             filas.forEach(fila => {
                 // Verifica si la fila tiene el ID que estamos buscando

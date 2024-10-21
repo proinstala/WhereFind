@@ -1,5 +1,5 @@
 
-<link href="App/css/dashboard/inicio.css" rel="stylesheet" type="text/css"/>
+<link href="App/css/dashboard/inicio.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
 
 
 <div class="contenedor__general">
@@ -28,4 +28,4 @@
     </div>
 </div>
 
-<%-- <script src="js/principal.js"></script> --%>
+<%-- <script src="js/principal.js?v=20241021_184300"></script> --%>

@@ -37,7 +37,7 @@
         "**/*.lpi.bak": true,
         "**/*.pas.bak": true,
         "**/backup": true,
-        "target": true
+        "**/target": true
     },
     "explorerExclude.backup": {},
 }

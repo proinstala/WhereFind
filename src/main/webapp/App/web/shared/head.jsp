@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <base href="<%= request.getContextPath() %>/" >
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="App/css/lib/normalize.css">
-    <link rel="stylesheet" href="App/css/lib/lineAwesome1.3.0/css/line-awesome.css">
-    <link rel="stylesheet" href="App/css/lib/sweetalert2.css" type="text/css"/>
-    <link rel="stylesheet" href="App/css/personal-sweetAlert2.css" type="text/css"/>
-    <link rel="stylesheet" href="App/css/general.css">
+    <link rel="stylesheet" href="App/css/lib/normalize.css?v=20241021_184300">
+    <link rel="stylesheet" href="App/css/lib/lineAwesome1.3.0/css/line-awesome.css?v=20241021_184300">
+    <link rel="stylesheet" href="App/css/lib/sweetalert2.css?v=20241021_184300" type="text/css"/>
+    <link rel="stylesheet" href="App/css/personal-sweetAlert2.css?v=20241021_184300" type="text/css"/>
+    <link rel="stylesheet" href="App/css/general.css?v=20241021_184300">
 
     <title><%= request.getParameter("titleweb")%></title>
 </head>

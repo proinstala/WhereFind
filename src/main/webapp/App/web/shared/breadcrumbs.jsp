@@ -6,7 +6,7 @@
 <%@page import="io.proinstala.wherefind.shared.consts.urls.enums.UrlApp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<link href="App/css/breadcrumbs.css" rel="stylesheet" type="text/css"/>
+<link href="App/css/breadcrumbs.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
 
 <div class="breadcrumb-container">
 

@@ -17,7 +17,7 @@
 %>
 
 
-<link href="App/css/cabecera.css" rel="stylesheet" type="text/css"/>
+<link href="App/css/cabecera.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
 
 <div class="cabecera">
     <div class="contenedor__inicio" title="Configuración">
@@ -51,7 +51,7 @@
     </div>
 </div>
 
-<script src="App/js/cabecera.js" type="text/javascript" defer></script>
+<script src="App/js/cabecera.js?v=20241021_184300" type="text/javascript" defer></script>
 
 
 

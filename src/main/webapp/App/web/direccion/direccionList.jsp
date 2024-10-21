@@ -17,8 +17,8 @@
     <jsp:param name="titleweb" value="Dirección"/>
 </jsp:include>
 
-<link href="App/css/formulario.css" rel="stylesheet" type="text/css"/>
-<link href="App/css/tabla.css" rel="stylesheet" type="text/css"/>
+<link href="App/css/formulario.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
+<link href="App/css/tabla.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
 
 <div class="contenedor__general">
     <div class="contenedor">
@@ -108,6 +108,6 @@
     </div>
 </div>
 
-<script src="App/js/direccion/direccionList.js" type="module" defer></script>
+<script src="App/js/direccion/direccionList.js?v=20241021_184300" type="module" defer></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>
