@@ -10,6 +10,7 @@ const idBtnBuscar = "#btnBuscar";
 const idBtnModificar = "#btnModificar";
 const idBtnCrear = "#btnCrear";
 const idBtnEliminar = "#btnEliminar";
+const idImputUserRol = "#userRol";
 
 // Configuración de las urls
 const URL_MODIFICAR_DIRECCION = "direccion/edit";
@@ -134,6 +135,7 @@ function validarFormulario(idForm) {
 function rellenarTablaDirecciones(direcciones) {
     const tablaDirecciones = document.querySelector(idTablaDirecciones);
     const cuerpoTablaDirecciones = tablaDirecciones.querySelector('tbody');
+    const inputUserRol = document.querySelector(idImputUserRol);  //ADmin o User
 
     tablaDirecciones.setAttribute('data-rowselected', -1); //Establece a -1 el rowselected para indicar que no se ha seleccionado ninguna fila.
 

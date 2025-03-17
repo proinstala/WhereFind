@@ -19,7 +19,7 @@
     // Se agregan las tarjetas a la lista
     tarjetas.add(new CardDTO("las la-map-marked-alt", "Direcciones", "Gestione todas las direcciones.", "direccion/direcciones"));
     tarjetas.add(new CardDTO("las la-city", "Localidades", "Gestione todas las Localidades.", "#"));
-    tarjetas.add(new CardDTO("las la-sitemap", "Provincias", "Gestione todas las provincias.", "#"));
+    tarjetas.add(new CardDTO("las la-sitemap", "Provincias", "Gestione todas las provincias.", "direccion/provincias"));
 
     // Se agrega la lista a los atributos de la petición
     request.setAttribute("cards", tarjetas);
@@ -62,14 +62,11 @@
             <p>WhereFind 1.0</p>
         </div>
 
-
+        
     </div>
 </div>
-
-
-
-
-
+            
+<script src="App/js/direccion/direccionPanel.js?v=20241021_184300" type="module" defer></script>
 
 
 <%@ include file="/App/web/shared/foot.jsp" %>

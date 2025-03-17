@@ -156,5 +156,15 @@
         <servlet-name>direccionCrear</servlet-name>
         <url-pattern>/direccion/direcciones/crear</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>provinciaList</servlet-name>
+        <jsp-file>/App/web/direccion/provinciaList.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>provinciaList</servlet-name>
+        <url-pattern>/direccion/provincias</url-pattern>
+    </servlet-mapping>
 
 </web-app>

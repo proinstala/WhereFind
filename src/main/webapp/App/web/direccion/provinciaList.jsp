@@ -1,3 +1,9 @@
+<%-- 
+    Document   : provinciaList
+    Created on : 15 mar 2025, 11:30:45
+    Author     : David
+--%>
+
 
 <%@page import="io.proinstala.wherefind.shared.dtos.UserDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -14,13 +20,11 @@
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >
-    <jsp:param name="titleweb" value="Dirección"/>
+    <jsp:param name="titleweb" value="Provincia"/>
 </jsp:include>
 
 <link href="App/css/formulario.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
 <link href="App/css/tabla.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
-
-<input type="hidden" id="userRol" value="<%=userDTO.getRol()%>">
 
 <div class="contenedor__general">
     <div class="contenedor">
@@ -33,7 +37,7 @@
 
                 <div class="contenedor__formulario--cabecera conBotones">
                     <div>
-                        <h1>Direcciones</h1>
+                        <h1>Provincias</h1>
                     </div>
                     <div class="form__btn_circle">
                         <button id="btnCancelar" title="Cancelar"><i class="las la-times"></i></button>
@@ -41,25 +45,11 @@
                 </div>
 
                 <div class="contenedor__formulario--main">
-                    <form class="formulario" name="frmBuscarDireccion" id="frmBuscarDireccion">
+                    <form class="formulario" name="frmBuscarProvincia" id="frmBuscarProvincia">
 
                         <div class="form__input">
-                            <input type="text" name="calle" id="calle">
-                            <label for="calle">Calle</label>
-                        </div>
-
-                        <div class="form__input">
-                            <select name="provincia" id="provincia">
-                                <option value="-1">Todas</option>
-                            </select>
-                            <label for="provincia">Provincia</label>
-                        </div>
-
-                        <div class="form__input">
-                            <select name="localidad" id="localidad">
-                                <option value="-1">Todas</option>
-                            </select>
-                            <label for="localidad">Localidad</label>
+                            <input type="text" name="nombre" id="nombre">
+                            <label for="calle">Nombre</label>
                         </div>
 
                     </form>
@@ -68,7 +58,7 @@
                 <div class="contenedor__tabla--botones">
 
                     <div class="form__btn_circle">
-                        <button form="frmBuscarDireccion" id="btnBuscar" title="Buscar" type="submit"><i class="las la-search"></i></button>
+                        <button form="frmBuscarProvincia" id="btnBuscar" title="Buscar" type="submit"><i class="las la-search"></i></button>
                     </div>
                     <div class="form__btn_circle">
                         <button id="btnCrear" title="Crear"><i class="las la-plus"></i></button>
@@ -82,15 +72,11 @@
                 </div>
 
                 <div class="contenedor__tabla">
-                    <table class="tabla" id="tablaDireciones" data-rowselected = "-1">
+                    <table class="tabla" id="tablaProvincias" data-rowselected = "-1">
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Calle</th>
-                                <th>Número</th>
-                                <th>Codigo Posta</th>
-                                <th>Localidad</th>
-                                <th>Provincia</th>
+                                <th>Nombre</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -110,6 +96,6 @@
     </div>
 </div>
 
-<script src="App/js/direccion/direccionList.js?v=20241021_184300" type="module" defer></script>
+<script src="App/js/direccion/provinciaList.js?v=20241021_184300" type="module" defer></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>
