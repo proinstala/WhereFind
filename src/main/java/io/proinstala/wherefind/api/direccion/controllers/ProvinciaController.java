@@ -38,7 +38,8 @@ public class ProvinciaController extends BaseHttpServlet {
     enum ActionType {
         ERROR,
         PROVINCIA,
-        PROVINCIAS
+        PROVINCIAS,
+        FIND_PROVINCIAS
     }
     
     /**
@@ -80,6 +81,15 @@ public class ProvinciaController extends BaseHttpServlet {
         return ActionType.ERROR;
     }
     
+    protected void apiFindProvincias(ActionController actionController) {
+        // Se comprueba que el usuario está logueado
+        if (!UserSession.isUserLogIn(actionController.server(), false)) {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+        
+        provinciaServicio.getProvincias(actionController);
+    }
     
     /**
      * Maneja la solicitud para obtener la lista de provincias.
@@ -123,6 +133,7 @@ public class ProvinciaController extends BaseHttpServlet {
         switch((ActionType) actionController.actionType()) {
             case PROVINCIA -> System.out.println("SE PIDE PROVINCIA");
             case PROVINCIAS -> apiGetProvincias(actionController);
+            case FIND_PROVINCIAS -> apiFindProvincias(actionController);
               
             default -> responseError403(actionController.server().response(), "");
         }

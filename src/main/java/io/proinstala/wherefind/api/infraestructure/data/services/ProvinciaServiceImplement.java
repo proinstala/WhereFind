@@ -30,7 +30,9 @@ import java.util.List;
 public class ProvinciaServiceImplement extends BaseMySql implements IProvinciaService {
 
     //Obtiene toda la lista de provincias.
-    private static final String SQL_SELECT_ALL_PROVINCIAS = "SELECT * FROM PROVINCIA";
+    private static final String SQL_SELECT_ALL_PROVINCIAS = "SELECT * FROM PROVINCIA;";
+    
+    
     
     
     /**
@@ -87,6 +89,69 @@ public class ProvinciaServiceImplement extends BaseMySql implements IProvinciaSe
         }
 
         return listaProvinciaDTO;
+    }
+    
+    /**
+     * Busca provincias en la base de datos cuyo nombre coincida total o parcialmente con el parámetro dado.
+     *
+     * <p>Este método construye dinámicamente una consulta SQL para buscar provincias cuyo nombre contenga
+     * el texto proporcionado. Utiliza una consulta con la cláusula LIKE para permitir coincidencias parciales.</p>
+     *
+     * <p>Utiliza un bloque try-with-resources para gestionar la conexión con la base de datos y asegurar
+     * el cierre adecuado de los recursos.</p>
+     *
+     * <p>Si ocurre una excepción SQL durante la ejecución, el método captura la excepción, la imprime en la
+     * consola y devuelve {@code null} para indicar un error.</p>
+     *
+     * @param nombre el nombre o parte del nombre de la provincia a buscar.
+     * @return una lista de {@link ProvinciaDTO} con las provincias que coinciden con el criterio de búsqueda.
+     *         Si ocurre un error durante la ejecución, se devuelve {@code null}.
+     */
+    @Override
+    public List<ProvinciaDTO> findProvincias(String nombre) {
+        List<ProvinciaDTO> listaProvinciasDTO = new ArrayList<>();
+        
+        StringBuilder sentenciaSQL = new StringBuilder(SQL_SELECT_ALL_PROVINCIAS);
+        
+        //Eliminar el punto y coma al final de SQL_SELECT_DIRECCIONES
+        if (sentenciaSQL.charAt(sentenciaSQL.length() - 1) == ';') {
+            sentenciaSQL.deleteCharAt(sentenciaSQL.length() - 1);
+        }
+        
+        //Agrega la cláusula WHERE.
+        sentenciaSQL.append(" WHERE");
+        
+        //Agrega la condicion de busqueda por nombre de provincia
+        sentenciaSQL.append(" nombre LIKE ?");
+        
+        //Añade el punto y coma final
+        sentenciaSQL.append(";");
+        
+        try (Connection conexion = getConnection(); 
+                PreparedStatement ps = conexion.prepareStatement(sentenciaSQL.toString())) {
+
+            int index = 1;
+            ps.setString(index++, '%' + nombre + '%');
+            
+            try (ResultSet resulSet = ps.executeQuery()) {
+                while (resulSet.next()) {
+                    ProvinciaDTO provinciaDTO = getProvinciaFromResultSet(resulSet);
+                    
+                    // Si la provincia es valida, se agrega a la lista.
+                    if (provinciaDTO != null) {
+                        listaProvinciasDTO.add(provinciaDTO);
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null; //Devolver null para indicar un error
+        }
+
+        return listaProvinciasDTO;
+        
+        
     }
     
 }

@@ -49,7 +49,7 @@
 
                         <div class="form__input">
                             <input type="text" name="nombre" id="nombre">
-                            <label for="calle">Nombre</label>
+                            <label for="nombre">Nombre</label>
                         </div>
 
                     </form>

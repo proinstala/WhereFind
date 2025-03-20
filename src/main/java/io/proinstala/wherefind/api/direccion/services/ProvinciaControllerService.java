@@ -3,6 +3,7 @@ package io.proinstala.wherefind.api.direccion.services;
 
 import io.proinstala.wherefind.api.infraestructure.data.GestorPersistencia;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IProvinciaService;
+import io.proinstala.wherefind.shared.consts.textos.FormParametros;
 import io.proinstala.wherefind.shared.consts.textos.LocaleApp;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
 import io.proinstala.wherefind.shared.dtos.ProvinciaDTO;
@@ -47,6 +48,29 @@ public class ProvinciaControllerService extends BaseService {
             responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR, new ArrayList<>());
         }
 
+        //Devuelve la respuesta al navegador del usuario en formato json
+        responseJson(actionController.server().response(), responseDTO);
+    }
+    
+    public void findProvincias(ActionController actionController) {
+        //Respuesta de la acción actual
+        ResponseDTO responseDTO;
+        
+        IProvinciaService provinciaServiceImp = GestorPersistencia.getProvinciaService();
+        
+        List<ProvinciaDTO> listaProvinciasDTO = null;
+        
+        String nombre = actionController.server().getRequestParameter(FormParametros.PARAM_PROVINCIA_NOMBRE, "");
+        
+        listaProvinciasDTO = provinciaServiceImp.findProvincias(nombre);
+        
+        if(listaProvinciasDTO != null) {
+            responseDTO = getResponseOk("OK", listaProvinciasDTO, 0);
+        } else {
+            //Crea la respuesta con un error
+            responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR, new ArrayList<>());
+        }
+        
         //Devuelve la respuesta al navegador del usuario en formato json
         responseJson(actionController.server().response(), responseDTO);
     }

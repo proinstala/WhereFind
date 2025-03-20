@@ -20,4 +20,15 @@ public interface IProvinciaService {
      * @return una lista de {@link ProvinciaDTO} con todas las provincias, o una lista vacía si no hay provincias registradas.
      */
     public List<ProvinciaDTO> getAllProvincias();
+    
+    /**
+     * Busca provincias cuyo nombre coincida total o parcialmente con el parámetro dado.
+     *
+     * Este método devuelve una lista de objetos {@link ProvinciaDTO} que contienen el nombre 
+     * especificado o que coinciden parcialmente con él.
+     *
+     * @param nombre el nombre o parte del nombre de la provincia a buscar.
+     * @return una lista de {@link ProvinciaDTO} que coinciden con el criterio de búsqueda, o una lista vacía si no hay coincidencias.
+     */
+    public List<ProvinciaDTO> findProvincias(String nombre);
 }
