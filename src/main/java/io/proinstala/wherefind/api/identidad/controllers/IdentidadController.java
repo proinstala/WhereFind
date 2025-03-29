@@ -64,7 +64,7 @@ public class IdentidadController extends BaseHttpServlet {
     protected Object getActionType(String action)
     {
         // Si la acción no es nula
-        if (action != "") {
+        if (!action.isBlank()) {
             // Convierte el texto en mayúsculas
             action = action.toUpperCase();
 

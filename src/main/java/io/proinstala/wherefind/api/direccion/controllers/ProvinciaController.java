@@ -5,10 +5,13 @@ import io.proinstala.wherefind.api.direccion.services.ProvinciaControllerService
 import io.proinstala.wherefind.api.identidad.UserSession;
 import io.proinstala.wherefind.shared.controllers.BaseHttpServlet;
 import static io.proinstala.wherefind.shared.controllers.BaseHttpServlet.responseError403;
+import static io.proinstala.wherefind.shared.controllers.BaseHttpServlet.responseError404;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 
 /**
@@ -39,7 +42,10 @@ public class ProvinciaController extends BaseHttpServlet {
         ERROR,
         PROVINCIA,
         PROVINCIAS,
-        FIND_PROVINCIAS
+        FIND_PROVINCIAS,
+        UPDATE,
+        CREATE,
+        DELETE
     }
     
     /**
@@ -88,7 +94,7 @@ public class ProvinciaController extends BaseHttpServlet {
             return;
         }
         
-        provinciaServicio.getProvincias(actionController);
+        provinciaServicio.findProvincias(actionController);
     }
     
     /**
@@ -108,6 +114,80 @@ public class ProvinciaController extends BaseHttpServlet {
         }
         
         provinciaServicio.getProvincias(actionController);
+    }
+    
+     /**
+     * Maneja la solicitud para obtener una provincia específica.
+     *
+     * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio 
+     * de provincias para obtener la provincia por ID y devolver la respuesta en formato JSON.</p>
+     *
+     * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
+     */
+    protected void apiGetProvincia(ActionController actionController) {
+        // Se comprueba que el usuario está logueado
+        if (!UserSession.isUserLogIn(actionController.server(), false)) {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+        
+        provinciaServicio.getProvinciaById(actionController);
+    }
+    
+    /**
+     * Maneja la creación de una nueva provincia utilizando los datos proporcionados en la solicitud.
+     *
+     * <p>Este método primero verifica si el usuario está autenticado y tiene los permisos necesarios. 
+     * Si el usuario no está logueado, se envía una respuesta de error 
+     * 403 (prohibido) y se interrumpe el procesamiento. Si el usuario está autenticado y autorizado, 
+     * se llama al servicio de direcciones para realizar la creación de la dirección.</p>
+     *
+     * @param actionController el controlador de acción que contiene la información de la solicitud, 
+     *                         incluyendo los datos necesarios para crear una nueva dirección.
+     */
+    protected void apiCreateProvincia(ActionController actionController) {
+        // Se comprueba que el usuario está logueado
+        if (!UserSession.isUserLogIn(actionController.server(), true))
+        {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+
+        provinciaServicio.createProvincia(actionController);
+    }
+    
+    /**
+     * Maneja la solicitud para elimnar la información de una provincia específica.
+     *
+     * <p>Verifica si el usuario está autenticado y tiene los permisos necesarios. Si es así, 
+     * delega la operación al servicio de direcciones para actualizar la dirección y devolver la respuesta.</p>
+     * 
+     * EndPoint - PUT : /api/provincia/delete/{id}
+     *
+     * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
+     */
+    protected void apiDeleteProvincia(ActionController actionController) {
+        // Se comprueba que el usuario está logueado y sea administrador
+        if (!UserSession.isUserLogIn(actionController.server(), true))
+        {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+        
+        //direccionServicio.deleteDireccion(actionController);
+        provinciaServicio.deleteProvincia(actionController);
+    }
+    
+    protected void apiUpdateProvincia(ActionController actionController) {
+        // Se comprueba que el usuario está logueado y sea administrador
+        if (!UserSession.isUserLogIn(actionController.server(), true))
+        {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+        
+        //direccionServicio.deleteDireccion(actionController);
+        provinciaServicio.updateProvincia(actionController);
     }
     
     /**
@@ -131,11 +211,74 @@ public class ProvinciaController extends BaseHttpServlet {
         //Tools.wait(500); //PRUEBAS PARA BORRAR
         
         switch((ActionType) actionController.actionType()) {
-            case PROVINCIA -> System.out.println("SE PIDE PROVINCIA");
+            case PROVINCIA -> apiGetProvincia(actionController);
             case PROVINCIAS -> apiGetProvincias(actionController);
             case FIND_PROVINCIAS -> apiFindProvincias(actionController);
               
             default -> responseError403(actionController.server().response(), "");
+        }
+    }
+    
+    /**
+     * Maneja las solicitudes HTTP POST para las acciones definidas.
+     *
+     * <p>Este método se encarga de procesar las solicitudes POST que llegan al servlet. Primero, 
+     * obtiene un objeto {@link ActionController} a partir del {@link HttpServletRequest} y 
+     * {@link HttpServletResponse}. Luego, imprime en el log el punto de entrada (endPoint) 
+     * de la solicitud para fines de depuración. Dependiendo del tipo de acción ({@link ActionType}) 
+     * especificado en la solicitud, ejecuta la acción correspondiente. Si el tipo de acción no 
+     * coincide con ninguno de los casos definidos, se devuelve un error 404 (no encontrado).</p>
+     *
+     * @param request el objeto {@link HttpServletRequest} que contiene la solicitud del cliente.
+     * @param response el objeto {@link HttpServletResponse} que se utiliza para enviar una respuesta al cliente.
+     * @throws ServletException si ocurre un error en el procesamiento del servlet.
+     * @throws IOException si ocurre un error de entrada/salida durante el procesamiento de la solicitud o respuesta.
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Obtiene la información de la petición a la API
+        ActionController actionController = getActionController(request, response);
+
+        // Imprime en la salida del servidor el EndPoint
+        System.out.println("EndPoint POST : " + actionController.parametros()[0]);
+
+        // Dependiendo del ActionType, realizará una acción
+        switch((ActionType) actionController.actionType()){
+            case CREATE -> apiCreateProvincia(actionController);
+
+            default -> responseError404(actionController.server().response(), "");
+        }
+    }
+    
+    /**
+     * Maneja las solicitudes HTTP PUT para las acciones definidas.
+     *
+     * <p>Obtiene la acción solicitada y determina el tipo de acción. Según el tipo, realiza 
+     * la operación correspondiente llamando a los métodos adecuados o devuelve un error si 
+     * la acción no es válida.</p>
+     *
+     * @param request  la solicitud HTTP recibida.
+     * @param response la respuesta HTTP que se enviará.
+     * @throws ServletException si ocurre un error en el servlet.
+     * @throws IOException      si ocurre un error de entrada/salida.
+     */
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Obtiene la información de la petición a la API
+        ActionController actionController = getActionController(request, response);
+
+        // Imprime en la salida del servidor el EndPoint
+        System.out.println("EndPoint PUT : " + actionController.parametros()[0]);
+
+        switch((ActionType) actionController.actionType()) {
+            case UPDATE -> apiUpdateProvincia(actionController);
+            case DELETE -> apiDeleteProvincia(actionController);
+            
+            default -> responseError404(actionController.server().response(), "");
         }
     }
 }

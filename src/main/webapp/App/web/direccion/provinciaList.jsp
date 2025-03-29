@@ -32,7 +32,9 @@
         <%@ include file="../shared/cabecera.jsp" %>
 
         <div class="main">
-            <!-- prueba de cambio -->
+            
+            <input type="hidden" id="userRol" name="userRol" value="<%=userDTO.getRol()%>">
+            
             <div class="contenedor__formulario formulario--4_filas max-width-120" id="form_busqueda">
 
                 <div class="contenedor__formulario--cabecera conBotones">
@@ -61,7 +63,7 @@
                         <button form="frmBuscarProvincia" id="btnBuscar" title="Buscar" type="submit"><i class="las la-search"></i></button>
                     </div>
                     <div class="form__btn_circle">
-                        <button id="btnCrear" title="Crear"><i class="las la-plus"></i></button>
+                        <button id="btnCrear" title="Crear" disabled><i class="las la-plus"></i></button>
                     </div>
                     <div class="form__btn_circle">
                         <button id="btnEliminar" title="Eliminar" disabled><i class="las la-minus"></i></button>

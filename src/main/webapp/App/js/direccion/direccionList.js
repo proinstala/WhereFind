@@ -10,6 +10,7 @@ const idBtnBuscar = "#btnBuscar";
 const idBtnModificar = "#btnModificar";
 const idBtnCrear = "#btnCrear";
 const idBtnEliminar = "#btnEliminar";
+const idBtnCancelar = "#btnCancelar";
 const idImputUserRol = "#userRol";
 
 // Configuración de las urls
@@ -24,6 +25,7 @@ $(document).ready(function () {
     const btnCrear = document.querySelector(idBtnCrear);
     const btnModificar = document.querySelector(idBtnModificar);
     const btnEliminar = document.querySelector(idBtnEliminar);
+    const btnCancelar = document.querySelector(idBtnCancelar);
 
 
     //Añade un evento de cambio al select de provincias y actualiza el select de localidades según la provincia seleccionada.
@@ -66,6 +68,10 @@ $(document).ready(function () {
     btnEliminar.addEventListener('click', () => {
         const idDireccion = tablaDirecciones.getAttribute('data-rowselected'); //data-rowSelected
         borrarDireccion(idDireccion);
+    });
+    
+    btnCancelar.addEventListener('click', () => {
+        window.location.href = "direccion";
     });
 });
 

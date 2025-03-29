@@ -166,5 +166,25 @@
         <servlet-name>provinciaList</servlet-name>
         <url-pattern>/direccion/provincias</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>provinciaCrear</servlet-name>
+        <jsp-file>/App/web/direccion/provinciaCrear.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>provinciaCrear</servlet-name>
+        <url-pattern>/direccion/provincias/crear</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>provinciaEditar</servlet-name>
+        <jsp-file>/App/web/direccion/provinciaEditar.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>provinciaEditar</servlet-name>
+        <url-pattern>/direccion/provincias/edit/*</url-pattern>
+    </servlet-mapping>
 
 </web-app>

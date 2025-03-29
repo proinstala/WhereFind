@@ -119,6 +119,7 @@
         urlMappingName.put("direcciones/edit".toLowerCase(), "Editar Dirección");
         
         urlMappingName.put("provincias".toLowerCase(), "Provincias");
+        urlMappingName.put("provincias/edit".toLowerCase(), "Editar Provincia");
 
         // Añadir las partes que deben ser consideradas como partes finales de las breadcrumbs
         urlLastBreadCrumbName.add("edit".toLowerCase());

@@ -2,13 +2,20 @@ import { solicitudGet, solicitudPut, getDatosForm, addRowSelected, fillInputSele
 import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from '../alertasSweetAlert2.mjs?v=20241021_184300';
 
 const idInputNombre = "#nombre";
-const idFormBusquedaProvincia = "frmBuscarProvincia";
+const idFormBusquedaProvincia = "#frmBuscarProvincia";
 const idTablaProvincias = "#tablaProvincias";
 const idBtnBuscar = "#btnBuscar";
 const idBtnModificar = "#btnModificar";
 const idBtnCrear = "#btnCrear";
 const idBtnEliminar = "#btnEliminar";
+const idBtnCancelar = "#btnCancelar";
 const idImputUserRol = "#userRol";
+
+const ADMIN = 'Admin';
+
+const User = {
+    rol: ""
+};
 
 // Configuración de las urls
 //const URL_MODIFICAR_PROVINCIA = "direccion/edit";
@@ -17,15 +24,51 @@ document.addEventListener("DOMContentLoaded", function () {
     const formBusquedaProvincias = document.querySelector(idFormBusquedaProvincia);
     const tablaProvincias = document.querySelector(idTablaProvincias);
     const btnBuscar = document.querySelector(idBtnBuscar);
+    const btnCrear = document.querySelector(idBtnCrear);
+    const btnModificar = document.querySelector(idBtnModificar);
+    const btnEliminar = document.querySelector(idBtnEliminar);
+    const btnCancelar = document.querySelector(idBtnCancelar);
+    
+    User.rol = document.querySelector(idImputUserRol).value;
+
+    if(User.rol === ADMIN) {
+        btnCrear.disabled = false;
+    }
     
     validarFormulario(idFormBusquedaProvincia);
     
+    observeRowSelectedChange(tablaProvincias, onDetectarFilaSeleccionada);
+
+    btnModificar.addEventListener('click', () => {
+        const idProvincia = tablaProvincias.getAttribute('data-rowselected'); //data-rowSelected
+        window.location.href = (`direccion/provincias/edit/${idProvincia}`);
+    });
+
+    btnCrear.addEventListener('click', () => {
+        window.location.href = (`direccion/provincias/crear`);
+    });
+
+    btnEliminar.addEventListener('click', () => {
+        const idProvincia = tablaProvincias.getAttribute('data-rowselected'); //data-rowSelected
+        borrarProvincia(idProvincia);
+    });
+    
+    btnCancelar.addEventListener('click', () => {
+        window.location.href = "direccion";
+    });
+    
     //Dispara el evento de clic en el botón para que haga una busqueda inicial.
-    //btnBuscar.click();
+    btnBuscar.click();
 });
 
+function onDetectarFilaSeleccionada(hayFilaSeleccionada) {
+    if(User.rol === ADMIN) {
+        $("#btnEliminar").prop('disabled', !hayFilaSeleccionada);
+        $("#btnModificar").prop('disabled', !hayFilaSeleccionada);
+    }
+}
+
 function validarFormulario(idForm) {
-    debugger;
     $(idForm).validate({
         rules: {
             nombre: {
@@ -40,11 +83,10 @@ function validarFormulario(idForm) {
         },//Fin de msg  ------------------
 
         submitHandler: function () {
-            debugger;
             const formData = getDatosForm(idForm);
             const url = `api/provincia/find_provincias?${formData}`;
 
-            solicitudGet(url, idSelectLocalidad, false)
+            solicitudGet(url, "", false)
                 .then(response => {
                     if (response.isError === 1) {
                         mostrarMensajeError("Se ha producido un error", response.result);
@@ -91,4 +133,32 @@ function rellenarTablaProvincias(provincias) {
 
     //Añadir eventos de selección de filas a la tabla recién generada
     addRowSelected(cuerpoTablaProvincias);
+}
+
+function borrarProvincia(provinciaId) {
+    mostrarMensajeOpcion("Borrar Provincia", `¿Quieres realmente borrar los datos de la provincia con id ${provinciaId}?`)
+                    .then((result) => {
+                        if (result.isConfirmed) {
+                            solicitudPut(`api/provincia/delete/${provinciaId}`, "", true)
+                                    .then(response => {
+                                        if (response.isError === 1) {
+                                            mostrarMensajeError("No se puede borrar los datos", response.result);
+                                        } else {
+                                            mostrarMensaje("Provincia Borrada.", `Se han borrado correctamente los datos de la provincia.`, "success");
+
+                                            //Elimina la fila seleccionada de la tabla.
+                                            deleteRowSelectedTable(idTablaProvincias);
+                                        }
+                                    })
+                                    .catch(error => {
+                                        // Maneja el error aquí
+                                        console.error("Error:", error);
+                                        mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
+                                    });
+                        } else if (result.isDenied) {
+                            //denegado
+                        } else if (result.isDismissed) {
+                            //cancelado
+                        }
+                    });
 }

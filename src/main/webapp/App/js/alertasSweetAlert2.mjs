@@ -113,7 +113,10 @@ const mostrarLoading = (mensaje = "Por favor espere.") => {
 };
 
 const ocultarLoading = () => {
-    swal.close();
+    setTimeout(() => {
+        swal.close();
+    
+    }, 400); 
 };
 
 
