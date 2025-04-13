@@ -57,4 +57,12 @@ public class FormParametros {
     /** Nombre de la provincia. */
     public static final String PARAM_PROVINCIA_NOMBRE = "nombre";
     
+    
+    //Localidad ----------------------------------------------------------------
+    
+    /** Nombre de la localidad. */
+    public static final String PARAM_LOCALIDAD_NOMBRE = "nombre";
+    
+    public static final String PARAM_LOCALIDAD_PROVINCIA = "provincia";
+    
 }

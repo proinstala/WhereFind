@@ -87,6 +87,18 @@ public class ProvinciaController extends BaseHttpServlet {
         return ActionType.ERROR;
     }
     
+    
+    /**
+     * Maneja la solicitud para buscar provincias según ciertos criterios.
+     *
+     * <p>Este método primero verifica si el usuario está autenticado. Si el usuario
+     * no está logueado, se devuelve un error 403 (Prohibido) y la ejecución se detiene.
+     * Si el usuario está autenticado, la solicitud se delega al servicio {@link ProvinciaControllerService}
+     * para obtener las provincias filtradas según los parámetros proporcionados.</p>
+     *
+     * @param actionController el controlador de acción que contiene la información de la solicitud
+     *                         y maneja la respuesta.
+     */
     protected void apiFindProvincias(ActionController actionController) {
         // Se comprueba que el usuario está logueado
         if (!UserSession.isUserLogIn(actionController.server(), false)) {
@@ -116,7 +128,7 @@ public class ProvinciaController extends BaseHttpServlet {
         provinciaServicio.getProvincias(actionController);
     }
     
-     /**
+    /**
      * Maneja la solicitud para obtener una provincia específica.
      *
      * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio 
@@ -140,7 +152,7 @@ public class ProvinciaController extends BaseHttpServlet {
      * <p>Este método primero verifica si el usuario está autenticado y tiene los permisos necesarios. 
      * Si el usuario no está logueado, se envía una respuesta de error 
      * 403 (prohibido) y se interrumpe el procesamiento. Si el usuario está autenticado y autorizado, 
-     * se llama al servicio de direcciones para realizar la creación de la dirección.</p>
+     * se llama al servicio de provincia para realizar la creación de la provincia.</p>
      *
      * @param actionController el controlador de acción que contiene la información de la solicitud, 
      *                         incluyendo los datos necesarios para crear una nueva dirección.
@@ -160,7 +172,7 @@ public class ProvinciaController extends BaseHttpServlet {
      * Maneja la solicitud para elimnar la información de una provincia específica.
      *
      * <p>Verifica si el usuario está autenticado y tiene los permisos necesarios. Si es así, 
-     * delega la operación al servicio de direcciones para actualizar la dirección y devolver la respuesta.</p>
+     * delega la operación al servicio de provincias para actualizar la provincia y devolver la respuesta.</p>
      * 
      * EndPoint - PUT : /api/provincia/delete/{id}
      *
@@ -174,7 +186,6 @@ public class ProvinciaController extends BaseHttpServlet {
             return;
         }
         
-        //direccionServicio.deleteDireccion(actionController);
         provinciaServicio.deleteProvincia(actionController);
     }
     
@@ -186,7 +197,6 @@ public class ProvinciaController extends BaseHttpServlet {
             return;
         }
         
-        //direccionServicio.deleteDireccion(actionController);
         provinciaServicio.updateProvincia(actionController);
     }
     

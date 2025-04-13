@@ -186,5 +186,35 @@
         <servlet-name>provinciaEditar</servlet-name>
         <url-pattern>/direccion/provincias/edit/*</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>localidadList</servlet-name>
+        <jsp-file>/App/web/direccion/localidadList.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>localidadList</servlet-name>
+        <url-pattern>/direccion/localidades</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>localidadCrear</servlet-name>
+        <jsp-file>/App/web/direccion/localidadCrear.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>localidadCrear</servlet-name>
+        <url-pattern>/direccion/localidades/crear</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>localidadEditar</servlet-name>
+        <jsp-file>/App/web/direccion/localidadEditar.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>localidadEditar</servlet-name>
+        <url-pattern>/direccion/localidades/edit/*</url-pattern>
+    </servlet-mapping>
 
 </web-app>

@@ -15,7 +15,7 @@ public interface IProvinciaService {
      * Este método devuelve un objeto {@link ProvinciaDTO} que representa la provincia
      * con el identificador proporcionado. Si no se encuentra ninguna provincia con el ID 
      * especificado, el método puede devolver {@code null}. Las implementaciones deben 
-     * manejar adecuadamente los casos en los que el ID no corresponde a ninguna dirección 
+     * manejar adecuadamente los casos en los que el ID no corresponde a ninguna provincia 
      * existente.
      *
      * @param idProvincia el identificador único de la provincia a obtener.

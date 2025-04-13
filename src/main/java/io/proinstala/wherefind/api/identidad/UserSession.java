@@ -162,6 +162,31 @@ public class UserSession {
 
         return false;
     }
+    
+    
+    /**
+    * Redirige al usuario a la página de login si no está logueado o no es administrador (si se requiere).
+    *
+    * @param server Instancia de ActionServer
+    * @param isAdmin Indica si se requiere que el usuario sea administrador
+    * @return true si se redirige al login, false si el usuario cumple los requisitos
+    */
+    public static boolean redireccionarIsUserNotLogIn(ActionServer server, boolean isAdmin) {
+        // Se desactiva la cache del navegador para esta página
+        disableCacheWebBrowser(server);
+
+        // Obtiene el UserDTO del usuario logueado
+        UserDTO userDTO = getUserLogin(server.request());
+
+        // Comprueba si no hay usuario logueado o si se requiere admin y el usuario no lo es
+        if (userDTO == null || (isAdmin && !userDTO.getRol().equalsIgnoreCase("admin"))) {
+            // Redirecciona al usuario a la página de login
+            redireccionar(server.response(), server.request().getContextPath() + "/" + UrlIdentidad.LOGIN.getUri());
+            return true;
+        }
+
+        return false;
+    }
 
     /**
      * Desactiva la cache del navegador.

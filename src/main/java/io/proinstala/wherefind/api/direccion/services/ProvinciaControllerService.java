@@ -89,17 +89,25 @@ public class ProvinciaControllerService extends BaseService {
         responseJson(actionController.server().response(), responseDTO);
     }
     
+    /**
+     * Busca provincias según el nombre proporcionado y devuelve la respuesta en formato JSON.
+     *
+     * <p>Este método obtiene el parámetro de búsqueda desde la solicitud HTTP y lo utiliza para 
+     * recuperar una lista de provincias desde el servicio de persistencia. Si la búsqueda tiene 
+     * éxito, devuelve una respuesta con la lista de provincias encontradas. En caso contrario, 
+     * se envía una respuesta de error.</p>
+     *
+     * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
+     */
     public void findProvincias(ActionController actionController) {
         //Respuesta de la acción actual
         ResponseDTO responseDTO;
         
         IProvinciaService provinciaServiceImp = GestorPersistencia.getProvinciaService();
         
-        List<ProvinciaDTO> listaProvinciasDTO = null;
-        
         String nombre = actionController.server().getRequestParameter(FormParametros.PARAM_PROVINCIA_NOMBRE, "");
         
-        listaProvinciasDTO = provinciaServiceImp.findProvincias(nombre);
+        List<ProvinciaDTO> listaProvinciasDTO = provinciaServiceImp.findProvincias(nombre);
         
         if(listaProvinciasDTO != null) {
             responseDTO = getResponseOk("OK", listaProvinciasDTO, 0);
@@ -113,10 +121,10 @@ public class ProvinciaControllerService extends BaseService {
     }
     
     /**
-     * Crea una nueva dirección en la base de datos.
+     * Crea una nueva provincia en la base de datos.
      * 
-     * <p>Este método toma los datos de la nueva dirección en formato JSON desde el controlador de acción,
-     * los deserializa y los envía al servicio de dirección para su creación. Devuelve la respuesta en
+     * <p>Este método toma los datos de la nueva provincia en formato JSON desde el controlador de acción,
+     * los deserializa y los envía al servicio de provincia para su creación. Devuelve la respuesta en
      * formato JSON.</p>
      * 
      * @param actionController El controlador de acción que contiene los parámetros de la solicitud.
@@ -170,7 +178,7 @@ public class ProvinciaControllerService extends BaseService {
             return;
         } 
             
-        // Obtiene el id de la dirección desde el parámetro 1 de la lista de parámetros
+        // Obtiene el id de la provincia desde el parámetro 1 de la lista de parámetros
         int id = actionController.getIntFromParametros(1);
 
         // Si el id es mayor que -1 significa que hay en principio un id válido que se puede procesar

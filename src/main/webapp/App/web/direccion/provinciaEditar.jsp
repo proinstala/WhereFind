@@ -7,8 +7,8 @@
 <%@page import="io.proinstala.wherefind.api.identidad.UserSession"%>
 
 <%
-    // Si no se está logueado se manda al usuario al login.jsp
-    if(UserSession.redireccionarIsUserNotLogIn(new ActionServer(request, response))){
+    // Comprueba si el usuario esta logueado y es administrador. Si no se cumple, manda al usuario al login.jsp
+    if(UserSession.redireccionarIsUserNotLogIn(new ActionServer(request, response), true)){
         // Detiene la ejecución de este servlet
         return;
     }

@@ -6,9 +6,11 @@ import io.proinstala.wherefind.api.identidad.UserSession;
 import io.proinstala.wherefind.shared.controllers.BaseHttpServlet;
 import static io.proinstala.wherefind.shared.controllers.BaseHttpServlet.responseError403;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 
 /**
@@ -38,7 +40,11 @@ public class LocalidadController extends BaseHttpServlet {
     enum ActionType {
         ERROR,
         LOCALIDAD,
-        LOCALIDADES
+        LOCALIDADES,
+        FIND_LOCALIDADES,
+        UPDATE,
+        CREATE,
+        DELETE
     }
     
     
@@ -82,6 +88,24 @@ public class LocalidadController extends BaseHttpServlet {
     }
     
     /**
+     * Maneja la solicitud para obtener una localidad específica.
+     *
+     * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio 
+     * de localidades para obtener la localidad por ID y devolver la respuesta en formato JSON.</p>
+     *
+     * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
+     */
+    protected void apiGetLocalidad(ActionController actionController) {
+        // Se comprueba que el usuario está logueado
+        if (!UserSession.isUserLogIn(actionController.server(), false)) {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+        
+        localidadServicio.getLocalidadById(actionController);
+    }
+    
+    /**
      * Maneja la solicitud para obtener todas las localidades.
      *
      * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio de localidades 
@@ -97,6 +121,83 @@ public class LocalidadController extends BaseHttpServlet {
         }
         
         localidadServicio.getLocalidades(actionController);
+    }
+    
+    
+    /**
+     * Maneja la solicitud para buscar localidades según ciertos criterios.
+     *
+     * <p>Este método primero verifica si el usuario está autenticado. Si el usuario
+     * no está logueado, se devuelve un error 403 (Prohibido) y la ejecución se detiene.
+     * Si el usuario está autenticado, la solicitud se delega al servicio {@link LocalidadControllerService}
+     * para obtener las localidades filtradas según los parámetros proporcionados.</p>
+     *
+     * @param actionController el controlador de acción que contiene la información de la solicitud
+     *                         y maneja la respuesta.
+     */
+    protected void apiFindLocalidades(ActionController actionController) {
+        // Se comprueba que el usuario está logueado
+        if (!UserSession.isUserLogIn(actionController.server(), false)) {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+        
+        localidadServicio.findLocalidades(actionController);
+    }
+    
+    
+    /**
+     * Maneja la creación de una nueva localidad utilizando los datos proporcionados en la solicitud.
+     *
+     * <p>Este método primero verifica si el usuario está autenticado y tiene los permisos necesarios. 
+     * Si el usuario no está logueado, se envía una respuesta de error 
+     * 403 (prohibido) y se interrumpe el procesamiento. Si el usuario está autenticado y autorizado, 
+     * se llama al servicio de localidad para realizar la creación de la localidad.</p>
+     *
+     * @param actionController el controlador de acción que contiene la información de la solicitud, 
+     *                         incluyendo los datos necesarios para crear una nueva localidad.
+     */
+    protected void apiCreateLocalidad(ActionController actionController) {
+        // Se comprueba que el usuario está logueado
+        if (!UserSession.isUserLogIn(actionController.server(), true))
+        {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+
+        localidadServicio.createLocalidad(actionController);
+    }
+    
+    /**
+     * Maneja la solicitud para elimnar la información de una localidad específica.
+     *
+     * <p>Verifica si el usuario está autenticado y tiene los permisos necesarios. Si es así, 
+     * delega la operación al servicio de provincias para actualizar la localidad y devolver la respuesta.</p>
+     * 
+     * EndPoint - PUT : /api/localidad/delete/{id}
+     *
+     * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
+     */
+    protected void apiDeleteLocalidad(ActionController actionController) {
+        // Se comprueba que el usuario está logueado y sea administrador
+        if (!UserSession.isUserLogIn(actionController.server(), true))
+        {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+        
+        localidadServicio.deleteLocalidad(actionController);
+    }
+    
+    protected void apiUpdateLocalidad(ActionController actionController) {
+        // Se comprueba que el usuario está logueado y sea administrador
+        if (!UserSession.isUserLogIn(actionController.server(), true))
+        {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+        
+        localidadServicio.updateLocalidad(actionController);
     }
     
     /**
@@ -118,10 +219,74 @@ public class LocalidadController extends BaseHttpServlet {
         System.out.println("EndPoint GET : " + actionController.parametros()[0]);
         
         switch((ActionType) actionController.actionType()) {
-            case LOCALIDAD -> System.out.println("SE PIDE PROVINCIA");
+            case LOCALIDAD -> apiGetLocalidad(actionController);
             case LOCALIDADES -> apiGetLocalidades(actionController);
+            case FIND_LOCALIDADES -> apiFindLocalidades(actionController);
               
             default -> responseError403(actionController.server().response(), "");
+        }
+    }
+    
+    /**
+     * Maneja las solicitudes HTTP POST para las acciones definidas.
+     *
+     * <p>Este método se encarga de procesar las solicitudes POST que llegan al servlet. Primero, 
+     * obtiene un objeto {@link ActionController} a partir del {@link HttpServletRequest} y 
+     * {@link HttpServletResponse}. Luego, imprime en el log el punto de entrada (endPoint) 
+     * de la solicitud para fines de depuración. Dependiendo del tipo de acción ({@link ActionType}) 
+     * especificado en la solicitud, ejecuta la acción correspondiente. Si el tipo de acción no 
+     * coincide con ninguno de los casos definidos, se devuelve un error 404 (no encontrado).</p>
+     *
+     * @param request el objeto {@link HttpServletRequest} que contiene la solicitud del cliente.
+     * @param response el objeto {@link HttpServletResponse} que se utiliza para enviar una respuesta al cliente.
+     * @throws ServletException si ocurre un error en el procesamiento del servlet.
+     * @throws IOException si ocurre un error de entrada/salida durante el procesamiento de la solicitud o respuesta.
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Obtiene la información de la petición a la API
+        ActionController actionController = getActionController(request, response);
+
+        // Imprime en la salida del servidor el EndPoint
+        System.out.println("EndPoint POST : " + actionController.parametros()[0]);
+
+        // Dependiendo del ActionType, realizará una acción
+        switch((ActionType) actionController.actionType()){
+            case CREATE -> apiCreateLocalidad(actionController);
+
+            default -> responseError404(actionController.server().response(), "");
+        }
+    }
+    
+    /**
+     * Maneja las solicitudes HTTP PUT para las acciones definidas.
+     *
+     * <p>Obtiene la acción solicitada y determina el tipo de acción. Según el tipo, realiza 
+     * la operación correspondiente llamando a los métodos adecuados o devuelve un error si 
+     * la acción no es válida.</p>
+     *
+     * @param request  la solicitud HTTP recibida.
+     * @param response la respuesta HTTP que se enviará.
+     * @throws ServletException si ocurre un error en el servlet.
+     * @throws IOException      si ocurre un error de entrada/salida.
+     */
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Obtiene la información de la petición a la API
+        ActionController actionController = getActionController(request, response);
+
+        // Imprime en la salida del servidor el EndPoint
+        System.out.println("EndPoint PUT : " + actionController.parametros()[0]);
+
+        switch((ActionType) actionController.actionType()) {
+            case UPDATE -> apiUpdateLocalidad(actionController);
+            case DELETE -> apiDeleteLocalidad(actionController);
+            
+            default -> responseError404(actionController.server().response(), "");
         }
     }
     

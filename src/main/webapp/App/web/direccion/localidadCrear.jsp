@@ -3,7 +3,7 @@
 <%@page import="io.proinstala.wherefind.shared.controllers.actions.ActionServer"%>
 <%@page import="io.proinstala.wherefind.api.identidad.UserSession"%>
 <%
-    // Comprueba si el usuario esta logueado y es administrador. Si no se cumple, manda al usuario al login.jsp
+    // Comprueba si el usuario está logueado y es administrador. Si no se cumple, manda al usuario al login.jsp
     if(UserSession.redireccionarIsUserNotLogIn(new ActionServer(request, response), true)){
         // Detiene la ejecución de este servlet
         return;
@@ -13,7 +13,7 @@
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >
-    <jsp:param name="titleweb" value="Provincia"/>
+    <jsp:param name="titleweb" value="Localidad"/>
 </jsp:include>
 
 <link href="App/css/formulario.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
@@ -24,21 +24,27 @@
 
         <div class="main">
 
-            <div class="contenedor__formulario formulario--3_filas max-width-80" id="form_direccion">
+            <div class="contenedor__formulario formulario--3_filas max-width-80" id="form_localidad">
 
                 <div class="contenedor__formulario--cabecera">
                     <div>
-                        <h1>Crear Provincia</h1>
+                        <h1>Crear Localidad</h1>
                     </div>
                 </div>
 
                 <!-- Formulario para modificar los datos de direccion -->
                 <div class="contenedor__formulario--main">
-                    <form class="formulario" name="frmCrearProvincia" id="frmCrearProvincia">
+                    <form class="formulario" name="frmCrearLocalidad" id="frmCrearLocalidad">
 
                         <div class="form__input">
-                            <input type="text" name="nombre" id="nombre" placeholder="Introduce el nombre de la provincia" value="">
+                            <input type="text" name="nombre" id="nombre" placeholder="Introduce el nombre de la localidad" value="">
                             <label for="nombre">Nombre</label>
+                        </div>
+                        
+                        <div class="form__input">
+                            <select name="provincia" id="provincia">
+                            </select>
+                            <label for="provincia">Provincia</label>
                         </div>
 
                     </form>
@@ -46,11 +52,11 @@
 
                 <div class="contenedor__formulario--footer">
                     <div class="form__btn_circle">
-                        <button form="frmCrearProvincia" id="btnGuardar" title="Guardar" type="submit" disabled><i class="las la-save"></i></button>
+                        <button form="frmCrearLocalidad" id="btnGuardar" title="Guardar" type="submit" disabled><i class="las la-save"></i></button>
                     </div>
 
                     <div class="form__btn_circle">
-                        <button id="btnDeshacerCambiosProvincia" title="Deshacer cambios" disabled><i class="las la-redo-alt" ></i></button>
+                        <button id="btnDeshacerCambiosLocalidad" title="Deshacer cambios" disabled><i class="las la-redo-alt" ></i></button>
                     </div>
 
                     <div class="form__btn_circle">
@@ -58,7 +64,7 @@
                     </div>
                 </div>
 
-            </div> <!-- Fin contenedor__formulario (provincia)-->
+            </div> <!-- Fin contenedor__formulario (localidad)-->
 
         </div> <!-- Fin main -->
 
@@ -70,6 +76,6 @@
 </div>
 
 
-<script src="App/js/direccion/provinciaCrear.js?v=20241021_184300" type="module" defer></script>
+<script src="App/js/direccion/localidadCrear.js?v=20241021_184300" type="module" defer></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>

@@ -77,7 +77,6 @@ function validarFormulario(idForm) {
 }
 
 function getProvinciaJson() {
-    debugger;
     // Guardar referencias de los elementos del DOM
     const inputNombre = document.querySelector(idInputNombre);
 
