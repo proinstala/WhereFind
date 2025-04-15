@@ -1,3 +1,4 @@
+<%@page import="io.proinstala.wherefind.shared.config.AppSettings"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="io.proinstala.wherefind.shared.controllers.actions.ActionServer"%>
 <%@page import="io.proinstala.wherefind.api.identidad.UserSession"%>

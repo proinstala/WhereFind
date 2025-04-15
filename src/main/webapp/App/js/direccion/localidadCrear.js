@@ -70,7 +70,6 @@ function validarFormulario(idForm) {
         },//Fin de msg  ------------------
 
         submitHandler: function () {
-            debugger;
             const localidadJSON = getLocalidadJson();
             console.log(localidadJSON);
             solicitudPost(`api/localidad/create`, idForm, true, localidadJSON)
@@ -96,7 +95,6 @@ function validarFormulario(idForm) {
 }
 
 function getLocalidadJson() {
-    debugger;
     // Guardar referencias de los elementos del DOM
     const inputNombre = document.querySelector(idInputNombre);
     const selectProvincia = document.querySelector(idSelectProvincia);

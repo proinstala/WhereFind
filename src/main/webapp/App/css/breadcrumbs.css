@@ -17,7 +17,7 @@
 .breadcrumb-container {
     height: 1.7em;
     margin-top: -19px;
-
+    z-index: 10;
 }
 
 

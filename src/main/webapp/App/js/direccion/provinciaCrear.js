@@ -51,7 +51,6 @@ function validarFormulario(idForm) {
         },//Fin de msg  ------------------
 
         submitHandler: function () {
-            debugger;
             const provinciaJSON = getProvinciaJson();
             console.log(provinciaJSON);
             solicitudPost(`api/provincia/create`, idForm, true, provinciaJSON)

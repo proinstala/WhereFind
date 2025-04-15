@@ -1,3 +1,4 @@
+<%@page import="io.proinstala.wherefind.shared.config.AppSettings"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="io.proinstala.wherefind.shared.controllers.BaseHttpServlet"%>
 <%@page import="io.proinstala.wherefind.shared.controllers.actions.ActionServer"%>
@@ -23,7 +24,8 @@
 
     // Se agrega la lista a los atributos de la petición
     request.setAttribute("cards", tarjetas);
-
+    
+    //String versionJS = AppSettings
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >
@@ -66,7 +68,7 @@
     </div>
 </div>
             
-<script src="App/js/direccion/direccionPanel.js?v=20241021_184300" type="module" defer></script>
+<script src="App/js/direccion/direccionPanel.js?v=<%=AppSettings.getVersionJS()%>" type="module" defer></script>
 
 
 <%@ include file="/App/web/shared/foot.jsp" %>

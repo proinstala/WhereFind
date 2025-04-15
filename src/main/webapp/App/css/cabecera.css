@@ -34,9 +34,11 @@
 }
 .barra__inferior {
     grid-template-columns: 1fr 1fr 1fr;
-    padding: 0.5rem;
+    padding: 0rem 1rem;
     height: 3rem;
-    background-color: #CCA500;
+    background-color: var(--color_barra_footer);
+    
+    align-items: center;
     
     p {
         margin: 0;

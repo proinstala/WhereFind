@@ -198,3 +198,37 @@ CREATE TABLE IF NOT EXISTS ALMACEN (
         ON DELETE SET NULL
         ON UPDATE CASCADE
 );
+
+
+CREATE TABLE IF NOT EXISTS PROVEEDOR (
+    id INT auto_increment NOT NULL,
+    nombre varchar(100) NOT NULL,
+    descripcion varchar(200) NOT NULL,
+    pagina_web varchar(100),
+    imagen varchar(200),
+    activo BOOL DEFAULT TRUE NOT NULL,
+    direccion_id INT,
+    PRIMARY KEY (id),
+    CONSTRAINT UC_NOMBRE UNIQUE (nombre),
+    CONSTRAINT FK_PROVEEDOR_DIRECCION FOREIGN KEY (direccion_id)
+        REFERENCES DIRECCION(id)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS CONTACTO (
+    id INT auto_increment NOT NULL,
+    nombre varchar(100) NOT NULL,
+    apellido varchar(100),
+    puesto varchar(100),
+    telefono varchar(20),
+    email varchar(20),
+    activo BOOL DEFAULT TRUE NOT NULL,
+    proveedor_id INT,
+    PRIMARY KEY (id),
+    CONSTRAINT UC_NOMBRE UNIQUE (nombre),
+    CONSTRAINT FK_CONTACTO_PROVEEDOR FOREIGN KEY (proveedor_id)
+        REFERENCES PROVEEDOR(id)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE
+);

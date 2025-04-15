@@ -59,6 +59,8 @@ Color Negro         #000000
 
     --negro: #000000;
     --blanco: #FFFFFF;
+    
+    --color_barra_footer: rgba(0,0,0,0.15); 
 }
 html, body {
     margin: 0;

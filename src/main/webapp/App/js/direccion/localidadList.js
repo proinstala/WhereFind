@@ -1,6 +1,8 @@
 
 import { solicitudGet, solicitudPut, getDatosForm, addRowSelected, fillInputSelect, cargarInputSelect, observeRowSelectedChange, deleteRowSelectedTable } from '../comunes.mjs?v=20241021_184300';
-import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from '../alertasSweetAlert2.mjs?v=20241021_184300';
+import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from '../alertasSweetAlert2.mjs';
+import {ROLES} from '../constantes.mjs';
+
 
 const idSelectProvincia = "#provincia";
 const idInputNombre = "#nombre";
@@ -34,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
     User.rol = document.querySelector(idInputUserRol).value;
 
-    if(User.rol === ADMIN) {
+    if(User.rol === ROLES.ADMIN) {
         btnCrear.disabled = false;
     }
     
@@ -67,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function onDetectarFilaSeleccionada(hayFilaSeleccionada) {
-    if(User.rol === ADMIN) {
+    if(User.rol === ROLES.ADMIN) {
         $("#btnEliminar").prop('disabled', !hayFilaSeleccionada);
         $("#btnModificar").prop('disabled', !hayFilaSeleccionada);
     }
@@ -88,7 +90,6 @@ function validarFormulario(idForm) {
         },//Fin de msg  ------------------
 
         submitHandler: function () {
-            debugger;
             const formData = getDatosForm(idForm);
             const url = `api/localidad/find_localidades?${formData}`;
 

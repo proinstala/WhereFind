@@ -13,6 +13,17 @@ import io.proinstala.wherefind.shared.dtos.EmailSettingsDTO;
 public class AppSettings {
 
     private static final String APP_NAME = "WhereFind";
+    
+    public static String APP_VERSION_JS = "";
+    
+    public static String getVersionJS() {
+        return APP_VERSION_JS;
+    }
+    
+    public static void setVersionJS(String version) {
+        APP_VERSION_JS = version;
+    }
+    
 
     /**
      * Devuelve la instancia de EmailSettingsDTO, o crea una nueva si no ha sido inicializada previamente.

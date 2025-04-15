@@ -118,7 +118,6 @@ function validarFormulario(idForm) {
         },//Fin de msg  ------------------
 
         submitHandler: function () {
-            debugger;
             const direccionJSON = getDireccionJson();
             solicitudPost(`api/direccion/create`, idForm, true, direccionJSON)
                     .then(response => {
