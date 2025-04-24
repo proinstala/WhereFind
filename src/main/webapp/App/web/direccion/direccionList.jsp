@@ -17,8 +17,8 @@
     <jsp:param name="titleweb" value="Dirección"/>
 </jsp:include>
 
-<link href="App/css/formulario.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
-<link href="App/css/tabla.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
+<link href="App/css/formulario.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>
+<link href="App/css/tabla.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>
 
 <input type="hidden" id="userRol" value="<%=userDTO.getRol()%>">
 
@@ -110,6 +110,6 @@
     </div>
 </div>
 
-<script src="App/js/direccion/direccionList.js?v=20241021_184300" type="module" defer></script>
+<script src="App/js/direccion/direccionList.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>

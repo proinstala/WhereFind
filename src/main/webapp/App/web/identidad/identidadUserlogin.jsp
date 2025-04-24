@@ -4,8 +4,8 @@
     <jsp:param name="titleweb" value="Login" />
 </jsp:include>
 
-    <link rel="stylesheet" href="App/css/identidad/login.css?v=20241021_184300">
-    <link href="App/css/formulario.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="App/css/identidad/login.css?v=<%=AppSettings.APP_VERSION_CSS%>">
+    <link href="App/css/formulario.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>
 
     <div class="contenedor__general--login">
         <div class="login">
@@ -44,7 +44,7 @@
         </div>
     </div>
 
-    <script src="App/js/comunes.mjs?v=20241021_184300" type="module"></script>
-    <script src="App/js/identidad/identidadUserlogin.js?v=20241021_184300" type="module"></script>
+    <script src="App/js/comunes.mjs?v=<%=AppSettings.APP_VERSION_JS%>" type="module"></script>
+    <script src="App/js/identidad/identidadUserlogin.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module"></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>

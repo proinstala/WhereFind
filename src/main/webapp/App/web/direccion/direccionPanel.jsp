@@ -33,9 +33,9 @@
 </jsp:include>
 
 
-<link href="App/css/general.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
-<link href="App/css/formulario.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
-<link href="App/css/cards.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
+<link href="App/css/general.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>
+<link href="App/css/formulario.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>
+<link href="App/css/cards.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>
 
 
 <div class="contenedor__general">
@@ -68,7 +68,7 @@
     </div>
 </div>
             
-<script src="App/js/direccion/direccionPanel.js?v=<%=AppSettings.getVersionJS()%>" type="module" defer></script>
+<script src="App/js/direccion/direccionPanel.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
 
 
 <%@ include file="/App/web/shared/foot.jsp" %>

@@ -27,11 +27,11 @@
 </jsp:include>
 
 
-<link href="App/css/general.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
-<link href="App/css/formulario.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
-<link href="App/css/tabla.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
-<link href="App/css/checkbox.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
-<link href="App/css/admin/adminUsers.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
+<link href="App/css/general.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>
+<link href="App/css/formulario.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>
+<link href="App/css/tabla.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>
+<link href="App/css/checkbox.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>
+<link href="App/css/admin/adminUsers.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>
 
 <div class="contenedor__general">
     <div class="contenedor">
@@ -99,11 +99,11 @@
     </div>
 </div>
 
-<script src="App/js/comunes.mjs?v=20241021_184300" type="module"></script>
-<script src="App/js/admin/adminUsers.js?v=20241021_184300" type="module" defer></script>
+<script src="App/js/comunes.mjs?v=<%=AppSettings.APP_VERSION_JS%>" type="module"></script>
+<script src="App/js/admin/adminUsers.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
 
 <script  type="module">
-    import { adminLoadListUsers } from './App/js/admin/adminUsers.js?v=20241021_184300';
+    import { adminLoadListUsers } from './App/js/admin/adminUsers.js?v=<%=AppSettings.APP_VERSION_JS%>';
     adminLoadListUsers("admin-list-users", <%= UserSession.getUserLogin(request).getId() %>);
 </script>
 

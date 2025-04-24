@@ -1,4 +1,5 @@
 
+<%@page import="io.proinstala.wherefind.shared.config.AppSettings"%>
 <%@page import="io.proinstala.wherefind.shared.consts.urls.enums.UrlAdmin"%>
 <%@page import="io.proinstala.wherefind.shared.controllers.actions.ActionServer"%>
 <%@page import="io.proinstala.wherefind.api.identidad.UserSession"%>
@@ -17,7 +18,7 @@
 %>
 
 
-<link href="App/css/cabecera.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
+<link href="App/css/cabecera.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>
 
 <div class="cabecera">
     <div class="contenedor__inicio" title="Configuración">
@@ -51,7 +52,7 @@
     </div>
 </div>
 
-<script src="App/js/cabecera.js?v=20241021_184300" type="text/javascript" defer></script>
+<script src="App/js/cabecera.js?v=<%=AppSettings.APP_VERSION_JS%>" type="text/javascript" defer></script>
 
 
 

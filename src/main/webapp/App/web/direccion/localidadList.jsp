@@ -4,6 +4,7 @@
     Author     : judas
 --%>
 
+<%@page import="io.proinstala.wherefind.shared.config.AppSettings"%>
 <%@page import="io.proinstala.wherefind.shared.dtos.UserDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="io.proinstala.wherefind.shared.controllers.actions.ActionServer"%>
@@ -104,6 +105,6 @@
     </div>
 </div>
 
-<script src="App/js/direccion/localidadList.js?v=20241021_184300" type="module" defer></script>
+<script src="App/js/direccion/localidadList.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>

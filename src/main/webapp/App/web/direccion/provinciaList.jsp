@@ -23,8 +23,8 @@
     <jsp:param name="titleweb" value="Provincia"/>
 </jsp:include>
 
-<link href="App/css/formulario.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
-<link href="App/css/tabla.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
+<link href="App/css/formulario.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>
+<link href="App/css/tabla.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>
 
 <div class="contenedor__general">
     <div class="contenedor">
@@ -98,6 +98,6 @@
     </div>
 </div>
 
-<script src="App/js/direccion/provinciaList.js?v=20241021_184300" type="module" defer></script>
+<script src="App/js/direccion/provinciaList.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>

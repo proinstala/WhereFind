@@ -1,10 +1,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="io.proinstala.wherefind.shared.config.AppSettings"%>
 
 <jsp:include page="/App/web/shared/head.jsp" >
     <jsp:param name="titleweb" value="Registrar" />
 </jsp:include>
 
-<link rel="stylesheet" href="App/css/formulario.css?v=20241021_184300">
+<link rel="stylesheet" href="App/css/formulario.css?v=<%=AppSettings.APP_VERSION_CSS%>">
 
 <div class="contenedor__general--registrar">
     <div class="contenedor__formulario max-width-80">
@@ -78,8 +79,8 @@
 </div>
 
 
-<script src="App/js/comunes.mjs?v=20241021_184300" type="module"></script>
-<script src="App/js/identidad/identidadUserlogin.js?v=20241021_184300" type="module"></script>
+<script src="App/js/comunes.mjs?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
+<script src="App/js/identidad/identidadUserlogin.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>
 

@@ -216,11 +216,17 @@ CREATE TABLE IF NOT EXISTS PROVEEDOR (
         ON UPDATE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS PUESTO_TRABAJO (
+    id INT auto_increment NOT NULL,
+    nombre varchar(100) NOT NULL,
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE IF NOT EXISTS CONTACTO (
     id INT auto_increment NOT NULL,
     nombre varchar(100) NOT NULL,
     apellido varchar(100),
-    puesto varchar(100),
+    puesto_id INT,
     telefono varchar(20),
     email varchar(20),
     activo BOOL DEFAULT TRUE NOT NULL,
@@ -229,6 +235,10 @@ CREATE TABLE IF NOT EXISTS CONTACTO (
     CONSTRAINT UC_NOMBRE UNIQUE (nombre),
     CONSTRAINT FK_CONTACTO_PROVEEDOR FOREIGN KEY (proveedor_id)
         REFERENCES PROVEEDOR(id)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE,
+    CONSTRAINT FK_CONTACTO_PUESTO FOREIGN KEY (puesto_id)
+        REFERENCES PUESTO_TRABAJO(id)
         ON DELETE SET NULL
         ON UPDATE CASCADE
 );

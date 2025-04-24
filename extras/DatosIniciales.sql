@@ -133,3 +133,40 @@ INSERT INTO TIPO_EMPLAZAMIENTO (nombre, descripcion) VALUES ('Librero', 'Mueble 
 INSERT INTO TIPO_EMPLAZAMIENTO (nombre, descripcion) VALUES ('Cajón de herramientas', 'Compartimento para almacenar herramientas.');
 INSERT INTO TIPO_EMPLAZAMIENTO (nombre, descripcion) VALUES ('Arcon', 'Caja grande y resistente para almacenar.');
 
+
+/*Sentencias sql para rellenar de datos la tabla PUESTO_TRABAJO */
+-- Alta dirección
+INSERT INTO PUESTO_TRABAJO (id, nombre) VALUES (1, 'CEO');
+INSERT INTO PUESTO_TRABAJO (id, nombre) VALUES (2, 'Director');
+INSERT INTO PUESTO_TRABAJO (id, nombre) VALUES (3, 'Gerente');
+
+-- Mandos medios
+INSERT INTO PUESTO_TRABAJO (id, nombre) VALUES (4, 'Jefe de Producción');
+INSERT INTO PUESTO_TRABAJO (id, nombre) VALUES (5, 'Jefe de Zona');
+INSERT INTO PUESTO_TRABAJO (id, nombre) VALUES (6, 'Supervisor');
+INSERT INTO PUESTO_TRABAJO (id, nombre) VALUES (7, 'Coordinador');
+INSERT INTO PUESTO_TRABAJO (id, nombre) VALUES (8, 'Encargado de Compras');
+INSERT INTO PUESTO_TRABAJO (id, nombre) VALUES (9, 'Encargado de Ventas');
+INSERT INTO PUESTO_TRABAJO (id, nombre) VALUES (10, 'Encargado');
+
+-- Soporte técnico y analítico
+INSERT INTO PUESTO_TRABAJO (id, nombre) VALUES (11, 'Analista');
+INSERT INTO PUESTO_TRABAJO (id, nombre) VALUES (12, 'Consultor');
+INSERT INTO PUESTO_TRABAJO (id, nombre) VALUES (13, 'Auditor');
+INSERT INTO PUESTO_TRABAJO (id, nombre) VALUES (14, 'Capacitador');
+INSERT INTO PUESTO_TRABAJO (id, nombre) VALUES (15, 'Técnico');
+
+-- Administración y apoyo operativo
+INSERT INTO PUESTO_TRABAJO (id, nombre) VALUES (16, 'Asistente Administrativo');
+INSERT INTO PUESTO_TRABAJO (id, nombre) VALUES (17, 'Recepcionista');
+INSERT INTO PUESTO_TRABAJO (id, nombre) VALUES (18, 'Auxiliar');
+INSERT INTO PUESTO_TRABAJO (id, nombre) VALUES (19, 'Almacenero');
+
+-- Área comercial y logística
+INSERT INTO PUESTO_TRABAJO (id, nombre) VALUES (20, 'Vendedor');
+INSERT INTO PUESTO_TRABAJO (id, nombre) VALUES (21, 'Logística');
+INSERT INTO PUESTO_TRABAJO (id, nombre) VALUES (22, 'Operario');
+
+-- Otro
+INSERT INTO PUESTO_TRABAJO (id, nombre) VALUES (23, 'Otro');
+

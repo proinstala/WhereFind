@@ -54,8 +54,8 @@
         </div>
     </div>
 
-    <script src="App/js/comunes.mjs?v=20241021_184300" type="module"></script>
-    <script src="App/js/identidad/identidadRecoveryPassword.js?v=20241021_184300" type="module"></script>
+    <script src="App/js/comunes.mjs?v=<%=AppSettings.APP_VERSION_JS%>" type="module"></script>
+    <script src="App/js/identidad/identidadRecoveryPassword.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module"></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>
 

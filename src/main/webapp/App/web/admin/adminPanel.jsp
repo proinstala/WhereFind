@@ -43,9 +43,9 @@
 </jsp:include>
 
 
-<link href="App/css/general.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
-<link href="App/css/formulario.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
-<link href="App/css/cards.css?v=20241021_184300" rel="stylesheet" type="text/css"/>
+<link href="App/css/general.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>
+<link href="App/css/formulario.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>
+<link href="App/css/cards.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>
 
 
 <div class="contenedor__general">
@@ -78,11 +78,4 @@
 </div>
 
 
-
-
-
-
-
 <%@ include file="/App/web/shared/foot.jsp" %>
-
-<%@ include file="../shared/foot.jsp" %>
