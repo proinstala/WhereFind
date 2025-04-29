@@ -10,15 +10,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ContactoDTO {
+public class PuestoTrabajoDTO {
     
     private int id;
     private String nombre;
-    private String apellido;
-    private PuestoTrabajoDTO puestoTrabajo; 
-    private String telefono;
-    private String email;
-    private boolean activo;
-    
-    private ProveedorDTO proveedor;
 }

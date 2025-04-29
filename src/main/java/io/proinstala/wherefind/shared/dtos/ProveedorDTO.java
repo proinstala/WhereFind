@@ -21,7 +21,6 @@ public class ProveedorDTO {
     private String urlImagen;
     private boolean activo;
     private DireccionDTO direccion;
-    private ContactoDTO contacto;
     
     @Builder.Default
     private List<ContactoDTO> listaContactos = new ArrayList<>();

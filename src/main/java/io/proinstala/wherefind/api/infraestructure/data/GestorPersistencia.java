@@ -1,9 +1,11 @@
 package io.proinstala.wherefind.api.infraestructure.data;
 
+import io.proinstala.wherefind.api.infraestructure.data.interfaces.IContactoService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IDireccionService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.ILocalidadService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IProvinciaService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IUserService;
+import io.proinstala.wherefind.api.infraestructure.data.services.ContactoServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.DireccionServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.LocalidadServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.ProvinciaServiceImplement;
@@ -64,6 +66,20 @@ public class GestorPersistencia {
      */
     public static IDireccionService getDireccionService() {
         return new DireccionServiceImplement();
+    }
+    
+    
+    /**
+     * Obtiene una instancia del servicio de contactos.
+     *
+     * <p>Este método devuelve una implementación de {@link IContactoService}, en este caso, 
+     * una instancia de {@link ContactoServiceImplement}, que maneja la lógica relacionada con 
+     * los contactos de proveedor.</p>
+     *
+     * @return una instancia de {@link IContactoService}.
+     */
+    public static IContactoService getContactoService() {
+        return new ContactoServiceImplement();
     }
     
 }

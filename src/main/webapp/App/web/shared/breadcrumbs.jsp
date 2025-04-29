@@ -124,6 +124,9 @@
         
         urlMappingName.put("localidades".toLowerCase(), "Localidades");
         urlMappingName.put("localidades/edit".toLowerCase(), "Editar Localidades");
+        
+        // Proveedor
+        urlMappingName.put("contactos".toLowerCase(), "Contactos");
 
         // Añadir las partes que deben ser consideradas como partes finales de las breadcrumbs
         urlLastBreadCrumbName.add("edit".toLowerCase());

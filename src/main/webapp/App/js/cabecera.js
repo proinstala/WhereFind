@@ -5,6 +5,7 @@ $(document).ready(function () {
     const btnLogout = document.querySelector('#btnLogout');
 
     const btnDireccion = document.querySelector('#btnDireccion');
+    const btnProveedor = document.querySelector('#btnProveedor');
     const btnConfig = document.querySelector('#btnConfig-user');
     const btnConfigAdmin = document.querySelector('#btnConfig-admin');
 
@@ -20,6 +21,10 @@ $(document).ready(function () {
 
     btnDireccion.addEventListener('click', () => {
         window.location.href = ('direccion');
+    });
+    
+    btnProveedor.addEventListener('click', () => {
+        window.location.href = ('proveedor');
     });
 
     btnConfig?.addEventListener('click', () => {

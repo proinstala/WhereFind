@@ -34,7 +34,7 @@
         <i class="las la-warehouse" title="Almacen"></i>
         <i class="las la-box" title="Articulo"></i>
         <i class="las la-map-marked-alt" title="Direccion" id="btnDireccion"></i>
-        <i class="las la-store-alt" title="Proveedor"></i>
+        <i class="las la-store-alt" title="Proveedor" id="btnProveedor"></i>
     </div>
 
     <div class="contenedor__usuario">

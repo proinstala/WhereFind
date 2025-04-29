@@ -216,5 +216,26 @@
         <servlet-name>localidadEditar</servlet-name>
         <url-pattern>/direccion/localidades/edit/*</url-pattern>
     </servlet-mapping>
+    
+    <!-- Mapeo de las url referentes a Proveedor -->
+    <servlet>
+        <servlet-name>proveedorPanel</servlet-name>
+        <jsp-file>/App/web/proveedor/proveedorPanel.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>proveedorPanel</servlet-name>
+        <url-pattern>/proveedor</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>contactoList</servlet-name>
+        <jsp-file>/App/web/proveedor/contactoList.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>contactoList</servlet-name>
+        <url-pattern>/proveedor/contactos</url-pattern>
+    </servlet-mapping>
 
 </web-app>

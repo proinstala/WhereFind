@@ -65,4 +65,8 @@ public class FormParametros {
     
     public static final String PARAM_LOCALIDAD_PROVINCIA = "provincia";
     
+    
+    //Contacto -----------------------------------------------------------------
+    public static final String PARAM_CONTACTO_NOMBRE = "nombre";
+    public static final String PARAM_CONTACTO_PROVEEDOR = "proveedor";
 }
