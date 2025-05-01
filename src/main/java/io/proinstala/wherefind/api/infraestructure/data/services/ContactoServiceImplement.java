@@ -2,6 +2,7 @@ package io.proinstala.wherefind.api.infraestructure.data.services;
 
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IContactoService;
 import io.proinstala.wherefind.shared.dtos.ContactoDTO;
+import io.proinstala.wherefind.shared.dtos.DireccionDTO;
 import io.proinstala.wherefind.shared.dtos.ProveedorDTO;
 import io.proinstala.wherefind.shared.dtos.PuestoTrabajoDTO;
 import java.sql.Connection;
@@ -24,27 +25,42 @@ public class ContactoServiceImplement extends BaseMySql implements IContactoServ
     
     
     private static final String SQL_SELECT_BY_ID = 
-        "SELECT c.*, p.id AS puesto_id, p.nombre AS puesto_nombre, " +
-        "pr.id AS proveedor_id, pr.nombre AS proveedor_nombre " +
+        "SELECT " +
+        "c.id AS contacto_id, c.nombre AS contacto_nombre, c.apellido AS contacto_apellido, " +
+        "c.telefono AS contacto_telefono, c.email AS contacto_email, c.activo AS contacto_activo, " +
+        "p_t.id AS puesto_id, p_t.nombre AS puesto_nombre, " +
+        "p.id AS proveedor_id, p.nombre AS proveedor_nombre, p.descripcion AS proveedor_descripcion, " +
+        "p.pagina_web AS proveedor_pagina_web, p.url_imagen AS proveedor_url_imagen, " +
+        "p.activo AS proveedor_activo, p.direccion_id AS proveedor_direccion_id " +
         "FROM CONTACTO c " +
-        "JOIN PUESTO_TRABAJO p ON c.puesto_id = p.id " +
-        "JOIN PROVEEDOR pr ON c.proveedor_id = pr.id " +
-        "WHERE c.id = ?";
+        "JOIN PUESTO_TRABAJO p_t ON c.puesto_id = p_t.id " +
+        "JOIN PROVEEDOR p ON c.proveedor_id = p.id " +
+        "WHERE c.activo = TRUE AND c.id = ?";
 
     private static final String SQL_SELECT_BY_PROVEEDOR = 
-        "SELECT c.*, p.id AS puesto_id, p.nombre AS puesto_nombre, " +
-        "pr.id AS proveedor_id, pr.nombre AS proveedor_nombre " +
+        "SELECT " +
+        "c.id AS contacto_id, c.nombre AS contacto_nombre, c.apellido AS contacto_apellido, " +
+        "c.telefono AS contacto_telefono, c.email AS contacto_email, c.activo AS contacto_activo, " +
+        "p_t.id AS puesto_id, p_t.nombre AS puesto_nombre, " +
+        "p.id AS proveedor_id, p.nombre AS proveedor_nombre, p.descripcion AS proveedor_descripcion, " +
+        "p.pagina_web AS proveedor_pagina_web, p.url_imagen AS proveedor_url_imagen, " +
+        "p.activo AS proveedor_activo, p.direccion_id AS proveedor_direccion_id " +
         "FROM CONTACTO c " +
-        "JOIN PUESTO_TRABAJO p ON c.puesto_id = p.id " +
-        "JOIN PROVEEDOR pr ON c.proveedor_id = pr.id " +
-        "WHERE c.proveedor_id = ?";
+        "JOIN PUESTO_TRABAJO p_t ON c.puesto_id = p_t.id " +
+        "JOIN PROVEEDOR p ON c.proveedor_id = p.id " +
+        "WHERE c.activo = TRUE AND c.proveedor_id = ?";
 
     private static final String SQL_SELECT_CONTACTOS =
-        "SELECT c.*, p.id AS puesto_id, p.nombre AS puesto_nombre, " +
-        "pr.id AS proveedor_id, pr.nombre AS proveedor_nombre " +
+        "SELECT " +
+        "c.id AS contacto_id, c.nombre AS contacto_nombre, c.apellido AS contacto_apellido, " +
+        "c.telefono AS contacto_telefono, c.email AS contacto_email, c.activo AS contacto_activo, " +
+        "p_t.id AS puesto_id, p_t.nombre AS puesto_nombre, " +
+        "p.id AS proveedor_id, p.nombre AS proveedor_nombre, p.descripcion AS proveedor_descripcion, " +
+        "p.pagina_web AS proveedor_pagina_web, p.imagen AS proveedor_imagen, " +
+        "p.activo AS proveedor_activo, p.direccion_id AS proveedor_direccion_id " +
         "FROM CONTACTO c " +
-        "JOIN PUESTO_TRABAJO p ON c.puesto_id = p.id " +
-        "JOIN PROVEEDOR pr ON c.proveedor_id = pr.id " +
+        "JOIN PUESTO_TRABAJO p_t ON c.puesto_id = p_t.id " +
+        "JOIN PROVEEDOR p ON c.proveedor_id = p.id " +
         "WHERE c.activo = TRUE";
 
     private static final String SQL_INSERT_CONTACTO = 
@@ -58,28 +74,55 @@ public class ContactoServiceImplement extends BaseMySql implements IContactoServ
     private static final String SQL_DELETE_CONTACTO = 
         "UPDATE CONTACTO SET activo = FALSE WHERE id = ?";
 
-    
+    /**
+     * Extrae los datos de un {@link ResultSet} y los convierte en un objeto
+     * {@link ContactoDTO}.
+     *
+     * <p>
+     * Este método toma un conjunto de resultados de una consulta SQL que
+     * contiene información sobre un contacto, su puesto de trabajo, su
+     * proveedor y la dirección asociada al proveedor. Luego, construye y
+     * devuelve una instancia de {@link ContactoDTO} con los datos extraídos del
+     * {@link ResultSet}.</p>
+     *
+     * @param rs el {@link ResultSet} que contiene los datos de la consulta SQL.
+     * No puede ser {@code null}.
+     * @return un objeto {@link ContactoDTO} con los datos extraídos del
+     * {@link ResultSet}.
+     * @throws SQLException si ocurre un error al acceder a los datos del
+     * {@link ResultSet}.
+     */
     private ContactoDTO getContactoFromResultSet(ResultSet rs) throws SQLException {
         PuestoTrabajoDTO puesto = PuestoTrabajoDTO.builder()
-            .id(rs.getInt("puesto_id"))
-            .nombre(rs.getString("puesto_nombre"))
-            .build();
+                .id(rs.getInt("puesto_id"))
+                .nombre(rs.getString("puesto_nombre"))
+                .build();
+
+        DireccionDTO direccion = DireccionDTO.builder()
+                .id(rs.getInt("proveedor_direccion_id"))
+                .build();
 
         ProveedorDTO proveedor = ProveedorDTO.builder()
-            .id(rs.getInt("proveedor_id"))
-            .nombre(rs.getString("proveedor_nombre"))
-            .build();
+                .id(rs.getInt("proveedor_id"))
+                .nombre(rs.getString("proveedor_nombre"))
+                .descripcion(rs.getString("proveedor_descripcion"))
+                .paginaWeb(rs.getString("proveedor_pagina_web"))
+                .urlImagen(rs.getString("proveedor_imagen"))
+                .activo(rs.getBoolean("proveedor_activo"))
+                .direccion(direccion)
+                .listaContactos(new ArrayList<>())
+                .build();
 
         return ContactoDTO.builder()
-            .id(rs.getInt("id"))
-            .nombre(rs.getString("nombre"))
-            .apellido(rs.getString("apellido"))
-            .puestoTrabajo(puesto)
-            .telefono(rs.getString("telefono"))
-            .email(rs.getString("email"))
-            .activo(rs.getBoolean("activo"))
-            .proveedor(proveedor)
-            .build();
+                .id(rs.getInt("contacto_id"))
+                .nombre(rs.getString("contacto_nombre"))
+                .apellido(rs.getString("contacto_apellido"))
+                .puestoTrabajo(puesto)
+                .telefono(rs.getString("contacto_telefono"))
+                .email(rs.getString("contacto_email"))
+                .activo(rs.getBoolean("contacto_activo"))
+                .proveedor(proveedor)
+                .build();
     }
 
     

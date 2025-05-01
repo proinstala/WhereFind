@@ -55,6 +55,14 @@
   content: "\f303";
 }
 
+.breadcrumb li[data-id="proveedor"] a span.icon i::before {
+    content: "\f54e";
+}
+
+.breadcrumb li[data-id="contactos"] a span.icon i::before {
+    content: "\f2c2";
+}
+
 
 
 

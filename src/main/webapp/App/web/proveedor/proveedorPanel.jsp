@@ -19,7 +19,7 @@
     List<CardDTO> tarjetas = new ArrayList<>();
 
     // Se agregan las tarjetas a la lista
-    tarjetas.add(new CardDTO("las la-map-marked-alt", "Contactos", "Gestione todos los contactos.", "proveedor/contactos"));
+    tarjetas.add(new CardDTO("las la-id-card", "Contactos", "Gestione todos los contactos.", "proveedor/contactos"));
 
     // Se agrega la lista a los atributos de la petición
     request.setAttribute("cards", tarjetas);

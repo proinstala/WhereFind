@@ -41,19 +41,39 @@ public class ProveedorServiceImplement extends BaseMySql implements IProveedorSe
         "INNER JOIN LOCALIDAD l ON d.localidad_id = l.id " +
         "INNER JOIN PROVINCIA pr ON l.provincia_id = pr.id " +
         "WHERE p.activo = TRUE AND p.nombre LIKE ?;";
+    
+    private static final String SQL_SELECT_ALL_PROVEEDORES = 
+        "SELECT p.*, d.*, l.*, pr.* FROM PROVEEDOR p " +
+        "INNER JOIN DIRECCION d ON p.direccion_id = d.id " +
+        "INNER JOIN LOCALIDAD l ON d.localidad_id = l.id " +
+        "INNER JOIN PROVINCIA pr ON l.provincia_id = pr.id " +
+        "WHERE p.activo = TRUE;";
 
     private static final String SQL_UPDATE_PROVEEDOR = 
         "UPDATE PROVEEDOR SET nombre = ?, descripcion = ?, pagina_web = ?, " +
-        "url_imagen = ?, direccion_id = ? WHERE id = ?;";
+        "imagen = ?, direccion_id = ? WHERE id = ?;";
 
     private static final String SQL_CREATE_PROVEEDOR = 
-        "INSERT INTO PROVEEDOR (nombre, descripcion, pagina_web, url_imagen, direccion_id) " +
+        "INSERT INTO PROVEEDOR (nombre, descripcion, pagina_web, imagen, direccion_id) " +
         "VALUES (?, ?, ?, ?, ?);";
 
     private static final String SQL_DELETE_PROVEEDOR = 
         "UPDATE PROVEEDOR SET activo = FALSE WHERE id = ?;";
 
     private static ProveedorDTO getProveedorFromResultSet(ResultSet rs) throws SQLException {
+        
+         ProveedorDTO proveedorDTO = new ProveedorDTO(
+            rs.getInt("p.id"),
+            rs.getString("p.nombre"),
+            rs.getString("p.descripcion"),
+            rs.getString("p.pagina_web"),
+            rs.getString("p.imagen"),
+            rs.getBoolean("p.activo"),
+            new DireccionDTO(),
+            new ArrayList<>()
+        );
+        
+        
         DireccionDTO direccionDTO = new DireccionDTO(
             rs.getInt("d.id"),
             rs.getString("d.calle"),
@@ -70,16 +90,9 @@ public class ProveedorServiceImplement extends BaseMySql implements IProveedorSe
             rs.getBoolean("d.activo")
         );
 
-        return new ProveedorDTO(
-            rs.getInt("p.id"),
-            rs.getString("p.nombre"),
-            rs.getString("p.descripcion"),
-            rs.getString("p.pagina_web"),
-            rs.getString("p.url_imagen"),
-            rs.getBoolean("p.activo"),
-            direccionDTO,
-            new ArrayList<>()
-        );
+        proveedorDTO.setDireccion(direccionDTO);
+         
+         return proveedorDTO;
     }
 
     private List<ContactoDTO> getContactosByProveedor(int proveedorId) {
@@ -157,6 +170,26 @@ public class ProveedorServiceImplement extends BaseMySql implements IProveedorSe
         }
 
         return proveedorDTO;
+    }
+    
+    @Override
+    public List<ProveedorDTO> getProveedores() {
+        List<ProveedorDTO> listaProveedores = new ArrayList<>();
+        
+        try (Connection conexion = getConnection(); 
+             PreparedStatement ps = conexion.prepareStatement(SQL_SELECT_ALL_PROVEEDORES)) {
+
+            try (ResultSet resultSet = ps.executeQuery()) {
+                while (resultSet.next()) {
+                    ProveedorDTO proveedorDTO = getProveedorFromResultSet(resultSet);
+                    proveedorDTO.setListaContactos(getContactosByProveedor(proveedorDTO.getId()));
+                    listaProveedores.add(proveedorDTO);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listaProveedores;
     }
 
     @Override

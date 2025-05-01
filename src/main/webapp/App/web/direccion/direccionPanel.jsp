@@ -29,7 +29,7 @@
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >
-    <jsp:param name="titleweb" value="Configuración" />
+    <jsp:param name="titleweb" value="Direccion panel" />
 </jsp:include>
 
 

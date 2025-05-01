@@ -19,6 +19,13 @@ public interface IProveedorService {
     public ProveedorDTO getProveedorById(int idProveedor);
     
     /**
+     * Obtiene una lista de todos los proveedores.
+     *
+     * @return una lista de todos los proveedores existentes
+     */
+    public List<ProveedorDTO> getProveedores();
+    
+    /**
      * Busca una lista de proveedores que coincidan con el nombre especificado.
      *
      * @param nombre el nombre (o parte del nombre) del proveedor a buscar

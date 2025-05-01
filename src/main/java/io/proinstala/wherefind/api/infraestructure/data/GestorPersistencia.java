@@ -3,11 +3,13 @@ package io.proinstala.wherefind.api.infraestructure.data;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IContactoService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IDireccionService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.ILocalidadService;
+import io.proinstala.wherefind.api.infraestructure.data.interfaces.IProveedorService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IProvinciaService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IUserService;
 import io.proinstala.wherefind.api.infraestructure.data.services.ContactoServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.DireccionServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.LocalidadServiceImplement;
+import io.proinstala.wherefind.api.infraestructure.data.services.ProveedorServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.ProvinciaServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.UserServiceImplement;
 
@@ -80,6 +82,20 @@ public class GestorPersistencia {
      */
     public static IContactoService getContactoService() {
         return new ContactoServiceImplement();
+    }
+    
+    
+    /**
+     * Obtiene una instancia del servicio de proveedores.
+     *
+     * <p>Este método devuelve una implementación de {@link IProveedorService}, en este caso, 
+     * una instancia de {@link ProveedorServiceImplement}, que maneja la lógica relacionada con 
+     * los proveedores.</p>
+     *
+     * @return una instancia de {@link IProveedorService}.
+     */
+    public static IProveedorService getProveedorService() {
+        return new ProveedorServiceImplement();
     }
     
 }

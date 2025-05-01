@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
         btnCrear.disabled = false;
     }
     
-    //cargarInputSelect(selectProveedor, "api/proveedor/proveedores", 'Todos', false, "");
+    cargarInputSelect(selectProveedor, "api/proveedor/proveedores", 'Todos', false, "");
     
     validarFormulario(idFormBusquedaContacto);
     
@@ -127,7 +127,7 @@ function rellenarTablaContactos(contactos) {
                 <td>${contacto.id}</td>
                 <td>${contacto.nombre}</td>
                 <td>${contacto.apellido}</td>
-                <td>${contacto.puesto}</td>
+                <td>${contacto.puestoTrabajo.nombre}</td>
                 <td>${contacto.telefono}</td>
                 <td>${contacto.email}</td>
                 <td>${contacto.proveedor ? contacto.proveedor.nombre : ''}</td>
@@ -143,7 +143,7 @@ function rellenarTablaContactos(contactos) {
 }
 
 
-function borrarLocalidad(contactoId) {
+function borrarContacto(contactoId) {
     mostrarMensajeOpcion("Borrar Contacto", `¿Quieres realmente borrar los datos del contacto con id ${contactoId}?`)
                     .then((result) => {
                         if (result.isConfirmed) {

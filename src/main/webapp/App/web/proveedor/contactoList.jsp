@@ -47,6 +47,13 @@
                             <input type="text" name="nombre" id="nombre">
                             <label for="nombre">Nombre</label>
                         </div>
+                        
+                        <div class="form__input">
+                            <select name="proveedor" id="proveedor">
+                                <option value="-1">Todos</option>
+                            </select>
+                            <label for="proveedor">Proveedor</label>
+                        </div>
 
                     </form>
                 </div>

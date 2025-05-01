@@ -69,4 +69,7 @@ public class FormParametros {
     //Contacto -----------------------------------------------------------------
     public static final String PARAM_CONTACTO_NOMBRE = "nombre";
     public static final String PARAM_CONTACTO_PROVEEDOR = "proveedor";
+    
+    //Proveedor ----------------------------------------------------------------
+    public static final String PARAM_PROVEEDOR_NOMBRE = "nombre";
 }
