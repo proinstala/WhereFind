@@ -5,7 +5,7 @@
    version="6.0">
     <session-config>
         <session-timeout>
-            30
+            60
         </session-timeout>
     </session-config>
 
@@ -236,6 +236,36 @@
     <servlet-mapping>
         <servlet-name>contactoList</servlet-name>
         <url-pattern>/proveedor/contactos</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>contactoEditar</servlet-name>
+        <jsp-file>/App/web/proveedor/contactoEditar.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>contactoEditar</servlet-name>
+        <url-pattern>/proveedor/contactos/edit/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>contactoCrear</servlet-name>
+        <jsp-file>/App/web/proveedor/contactoCrear.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>contactoCrear</servlet-name>
+        <url-pattern>/proveedor/contactos/crear</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>proveedorList</servlet-name>
+        <jsp-file>/App/web/proveedor/proveedorList.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>proveedorList</servlet-name>
+        <url-pattern>/proveedor/proveedores</url-pattern>
     </servlet-mapping>
 
 </web-app>

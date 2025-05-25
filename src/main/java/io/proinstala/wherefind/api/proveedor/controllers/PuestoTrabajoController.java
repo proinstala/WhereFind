@@ -2,7 +2,8 @@
 package io.proinstala.wherefind.api.proveedor.controllers;
 
 import io.proinstala.wherefind.api.identidad.UserSession;
-import io.proinstala.wherefind.api.proveedor.services.ProveedorControllerService;
+import io.proinstala.wherefind.api.proveedor.services.PuestoTrabajoControllerService;
+
 import io.proinstala.wherefind.shared.controllers.BaseHttpServlet;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
 import jakarta.servlet.annotation.WebServlet;
@@ -10,25 +11,26 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * Controlador de solicitudes HTTP para manejar operaciones relacionadas con proveedores.
+ * Controlador de solicitudes HTTP para manejar operaciones relacionadas con puesto trabajo.
  *
  * <p>Esta clase extiende {@link BaseHttpServlet} y se encarga de recibir y procesar las solicitudes HTTP 
- * relacionadas con proveedores a través de la API definida. Utiliza el servicio {@link ProveedorControllerService} 
+ * relacionadas con puesto trabajo a través de la API definida. Utiliza el servicio {@link PuestoTrabajoControllerService} 
  * para realizar las operaciones de negocio y construir las respuestas adecuadas.</p>
  *
  * <p>La clase define una enumeración interna {@link ActionType} para representar los diferentes tipos de acción 
- * que puede manejar. La base de la URL para las API de proveedores se define como {@code /api/proveedor}.</p>
+ * que puede manejar. La base de la URL para las API de puesto trabajo se define como {@code /api/puesto}.</p>
  */
-@WebServlet(urlPatterns = ProveedorController.BASE_API + "/*")
-public class ProveedorController extends BaseHttpServlet {
+@WebServlet(urlPatterns = PuestoTrabajoController.BASE_API + "/*")
+public class PuestoTrabajoController extends BaseHttpServlet {
+    
     
     /**
-     * Base de la URL para las API de proveedor.
+     * Base de la URL para las API de localidad.
      */
-    protected static final String BASE_API = "/api/proveedor";
+    protected static final String BASE_API = "/api/puesto";
     
-    private final ProveedorControllerService proveedorServicio = new ProveedorControllerService();
-    
+    private final PuestoTrabajoControllerService puestoTrabajoServicio = new PuestoTrabajoControllerService();
+
     @Override
     protected String getBaseApi() {
         return BASE_API;
@@ -39,14 +41,14 @@ public class ProveedorController extends BaseHttpServlet {
      */
     enum ActionType {
         ERROR,
-        PROVEEDOR,
-        PROVEEDORES,
-        FIND_PROVEEDORES,
+        PUESTO,
+        PUESTOS,
+        FIND_PUESTO,
         UPDATE,
         CREATE,
         DELETE
     }
-    
+
     /**
      * Determina el tipo de acción basado en el nombre de la acción.
      *
@@ -61,7 +63,7 @@ public class ProveedorController extends BaseHttpServlet {
             action = action.toUpperCase();
 
             // Recorre todos los ActionType
-            for (ProveedorController.ActionType accion : ProveedorController.ActionType.values()) {
+            for (ActionType accion : ActionType.values()) {
 
                 // Conprueba que action esté entre los ActionType
                 if (action.equals(accion.name())) {
@@ -72,43 +74,64 @@ public class ProveedorController extends BaseHttpServlet {
         }
 
         // Devuelve el ActionType de error por no encontrar un ActionType coincidente
-        return ProveedorController.ActionType.ERROR;
+        return ActionType.ERROR;
     }
     
     /**
-     * Maneja la solicitud para obtener todas los proveedores.
-     *
-     * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio de proveedores 
-     * para obtener la lista de proveedores y devolver la respuesta en formato JSON.</p>
-     *
-     * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
-     */
-    protected void apiGetProveedores(ActionController actionController) {
-        // Se comprueba que el usuario está logueado
-        if (!UserSession.isUserLogIn(actionController.server(), false)) {
-            responseError403(actionController.server().response(), "");
-            return;
-        }
-        
-        proveedorServicio.getProveedores(actionController);
-    }
-    
-    /**
-     * Maneja la solicitud para buscar proveedores.
+     * Maneja la solicitud para obtener un puesto específico.
      *
      * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio 
-     * de proveedor para buscar los proveedores y devolver la respuesta en formato JSON.</p>
+     * de puestos de trabajo para obtener el puesto por ID y devolver la respuesta en formato JSON.</p>
      *
      * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
      */
-    protected void apiFindProveedores(ActionController actionController) {
+    protected void apiGetPuesto(ActionController actionController) {
         // Se comprueba que el usuario está logueado
         if (!UserSession.isUserLogIn(actionController.server(), false)) {
             responseError403(actionController.server().response(), "");
             return;
         }
         
-        proveedorServicio.findProveedores(actionController);
+        puestoTrabajoServicio.getPuestoById(actionController);
+    }
+    
+    /**
+     * Maneja la solicitud para obtener todas los puestos.
+     *
+     * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio de puestos de trabajo 
+     * para obtener la lista de puestos y devolver la respuesta en formato JSON.</p>
+     *
+     * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
+     */
+    protected void apiGetPuestos(ActionController actionController) {
+        // Se comprueba que el usuario está logueado
+        if (!UserSession.isUserLogIn(actionController.server(), false)) {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+        
+        puestoTrabajoServicio.getPuestostrabajo(actionController);
+    }
+    
+    /**
+     * Maneja la solicitud para buscar puestos según ciertos criterios.
+     *
+     * <p>Este método primero verifica si el usuario está autenticado. Si el usuario
+     * no está logueado, se devuelve un error 403 (Prohibido) y la ejecución se detiene.
+     * Si el usuario está autenticado, la solicitud se delega al servicio {@link PuestoTrabajoControllerService}
+     * para obtener los puestos filtrados según los parámetros proporcionados.</p>
+     *
+     * @param actionController el controlador de acción que contiene la información de la solicitud
+     *                         y maneja la respuesta.
+     */
+    protected void apiFindPuesto(ActionController actionController) {
+        // Se comprueba que el usuario está logueado
+        if (!UserSession.isUserLogIn(actionController.server(), false)) {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+        
+        puestoTrabajoServicio.findPuestoTrabajo(actionController);
     }
     
     /**
@@ -130,12 +153,11 @@ public class ProveedorController extends BaseHttpServlet {
         System.out.println("EndPoint GET : " + actionController.parametros()[0]);
         
         switch((ActionType) actionController.actionType()) {
-            //case PROVEEDOR -> ;
-            case PROVEEDORES -> apiGetProveedores(actionController);
-            case FIND_PROVEEDORES -> apiFindProveedores(actionController);
+            case PUESTO -> apiGetPuesto(actionController);
+            case PUESTOS -> apiGetPuestos(actionController);
+            case FIND_PUESTO -> apiFindPuesto(actionController);
               
             default -> responseError403(actionController.server().response(), "");
         }
     }
-    
 }

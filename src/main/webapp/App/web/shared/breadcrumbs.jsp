@@ -108,26 +108,29 @@
         urlMappingName.put("account".toLowerCase(), "Cuenta");
         urlMappingName.put("modificar".toLowerCase(), "Editar");
 
-
         // Admin
         urlMappingName.put("admin".toLowerCase(), "Administrar");
         urlMappingName.put("users".toLowerCase(), "Usuarios");
         urlMappingName.put("users/edit".toLowerCase(), "Modificar Usuario");
 
         // Dirección
-        urlMappingName.put("direccion".toLowerCase(), "Dirección");
+        urlMappingName.put("direccion".toLowerCase(), "Panel Dirección");
         urlMappingName.put("direcciones".toLowerCase(), "Direcciones");
-        urlMappingName.put("direcciones/edit".toLowerCase(), "Editar Dirección");
+        urlMappingName.put("direcciones/edit".toLowerCase(), "Editar");
         
         urlMappingName.put("provincias".toLowerCase(), "Provincias");
-        urlMappingName.put("provincias/edit".toLowerCase(), "Editar Provincia");
+        urlMappingName.put("provincias/edit".toLowerCase(), "Editar");
         
         urlMappingName.put("localidades".toLowerCase(), "Localidades");
-        urlMappingName.put("localidades/edit".toLowerCase(), "Editar Localidades");
+        urlMappingName.put("localidades/edit".toLowerCase(), "Editar");
         
         // Proveedor
-        urlMappingName.put("proveedor".toLowerCase(), "Proveedor");
+        urlMappingName.put("proveedor".toLowerCase(), "Panel Proveedor");
+        urlMappingName.put("proveedores".toLowerCase(), "Proveedores");
+        urlMappingName.put("proveedores/edit".toLowerCase(), "Editar Proveedor");
+        
         urlMappingName.put("contactos".toLowerCase(), "Contactos");
+        urlMappingName.put("contactos/edit".toLowerCase(), "Editar");
 
         // Añadir las partes que deben ser consideradas como partes finales de las breadcrumbs
         urlLastBreadCrumbName.add("edit".toLowerCase());

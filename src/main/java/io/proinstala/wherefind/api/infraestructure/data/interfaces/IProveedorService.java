@@ -31,7 +31,7 @@ public interface IProveedorService {
      * @param nombre el nombre (o parte del nombre) del proveedor a buscar
      * @return una lista de proveedores que coinciden con el criterio de búsqueda
      */
-    public List<ProveedorDTO> findProveedores(String nombre);
+    public List<ProveedorDTO> findProveedores(String nombre, String direccion);
     
     /**
      * Actualiza la información de un proveedor existente.

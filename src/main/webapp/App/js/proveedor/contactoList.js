@@ -14,8 +14,6 @@ const idBtnEliminar = "#btnEliminar";
 const idBtnCancelar = "#btnCancelar";
 const idInputUserRol = "#userRol";
 
-const ADMIN = 'Admin';
-
 const User = {
     rol: ""
 };
@@ -29,10 +27,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnModificar = document.querySelector(idBtnModificar);
     const btnEliminar = document.querySelector(idBtnEliminar);
     const btnCancelar = document.querySelector(idBtnCancelar);
-    
+ 
     User.rol = document.querySelector(idInputUserRol).value;
 
-    if(User.rol === ROLES.ADMIN) {
+    if(User.rol === ROLES.ADMIN || User.rol === ROLES.USER) {
         btnCrear.disabled = false;
     }
     
@@ -84,7 +82,6 @@ function validarFormulario(idForm) {
         },//Fin de msg  ------------------
 
         submitHandler: function () {
-            debugger;
             const formData = getDatosForm(idForm);
             const url = `api/contacto/find_contactos?${formData}`;
 
@@ -152,7 +149,7 @@ function borrarContacto(contactoId) {
                                         if (response.isError === 1) {
                                             mostrarMensajeError("No se puede borrar los datos", response.result);
                                         } else {
-                                            mostrarMensaje("Localidad Borrada.", `Se han borrado correctamente los datos del contacto.`, "success");
+                                            mostrarMensaje("Contacto Borrado.", `Se han borrado correctamente los datos del contacto.`, "success");
 
                                             //Elimina la fila seleccionada de la tabla.
                                             deleteRowSelectedTable(idTablaContactos);

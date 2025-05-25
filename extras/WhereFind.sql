@@ -228,11 +228,10 @@ CREATE TABLE IF NOT EXISTS CONTACTO (
     apellido varchar(100),
     puesto_id INT,
     telefono varchar(20),
-    email varchar(20),
+    email varchar(100),
     activo BOOL DEFAULT TRUE NOT NULL,
     proveedor_id INT,
     PRIMARY KEY (id),
-    CONSTRAINT UC_NOMBRE UNIQUE (nombre),
     CONSTRAINT FK_CONTACTO_PROVEEDOR FOREIGN KEY (proveedor_id)
         REFERENCES PROVEEDOR(id)
         ON DELETE SET NULL

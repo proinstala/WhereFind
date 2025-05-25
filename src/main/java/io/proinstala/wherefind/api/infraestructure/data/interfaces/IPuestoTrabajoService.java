@@ -23,6 +23,17 @@ public interface IPuestoTrabajoService {
     PuestoTrabajoDTO getPuestoById(int id);
     
     /**
+     * Busca puesto de trabajo cuyo nombre coincida total o parcialmente con el parámetro dado.
+     *
+     * Este método devuelve una lista de objetos {@link PuestoTrabajoDTO} que contienen el nombre 
+     * especificado o que coinciden parcialmente con él.
+     *
+     * @param nombre el nombre o parte del nombre del puesto a buscar.
+     * @return una lista de {@link PuestoTrabajoDTO} que coinciden con el criterio de búsqueda, o una lista vacía si no hay coincidencias.
+     */
+    List<PuestoTrabajoDTO> findPuestos(String nombre);
+    
+    /**
      * Obtiene una lista con todos los puestos de trabajo disponibles.
      *
      * @return una lista de objetos PuestoTrabajoDTO

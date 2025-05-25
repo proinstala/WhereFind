@@ -24,52 +24,31 @@ import java.util.List;
 public class ContactoServiceImplement extends BaseMySql implements IContactoService {
     
     
-    private static final String SQL_SELECT_BY_ID = 
-        "SELECT " +
-        "c.id AS contacto_id, c.nombre AS contacto_nombre, c.apellido AS contacto_apellido, " +
-        "c.telefono AS contacto_telefono, c.email AS contacto_email, c.activo AS contacto_activo, " +
-        "p_t.id AS puesto_id, p_t.nombre AS puesto_nombre, " +
-        "p.id AS proveedor_id, p.nombre AS proveedor_nombre, p.descripcion AS proveedor_descripcion, " +
-        "p.pagina_web AS proveedor_pagina_web, p.url_imagen AS proveedor_url_imagen, " +
-        "p.activo AS proveedor_activo, p.direccion_id AS proveedor_direccion_id " +
-        "FROM CONTACTO c " +
-        "JOIN PUESTO_TRABAJO p_t ON c.puesto_id = p_t.id " +
-        "JOIN PROVEEDOR p ON c.proveedor_id = p.id " +
-        "WHERE c.activo = TRUE AND c.id = ?";
-
-    private static final String SQL_SELECT_BY_PROVEEDOR = 
-        "SELECT " +
-        "c.id AS contacto_id, c.nombre AS contacto_nombre, c.apellido AS contacto_apellido, " +
-        "c.telefono AS contacto_telefono, c.email AS contacto_email, c.activo AS contacto_activo, " +
-        "p_t.id AS puesto_id, p_t.nombre AS puesto_nombre, " +
-        "p.id AS proveedor_id, p.nombre AS proveedor_nombre, p.descripcion AS proveedor_descripcion, " +
-        "p.pagina_web AS proveedor_pagina_web, p.url_imagen AS proveedor_url_imagen, " +
-        "p.activo AS proveedor_activo, p.direccion_id AS proveedor_direccion_id " +
-        "FROM CONTACTO c " +
-        "JOIN PUESTO_TRABAJO p_t ON c.puesto_id = p_t.id " +
-        "JOIN PROVEEDOR p ON c.proveedor_id = p.id " +
-        "WHERE c.activo = TRUE AND c.proveedor_id = ?";
-
-    private static final String SQL_SELECT_CONTACTOS =
-        "SELECT " +
-        "c.id AS contacto_id, c.nombre AS contacto_nombre, c.apellido AS contacto_apellido, " +
-        "c.telefono AS contacto_telefono, c.email AS contacto_email, c.activo AS contacto_activo, " +
-        "p_t.id AS puesto_id, p_t.nombre AS puesto_nombre, " +
-        "p.id AS proveedor_id, p.nombre AS proveedor_nombre, p.descripcion AS proveedor_descripcion, " +
-        "p.pagina_web AS proveedor_pagina_web, p.imagen AS proveedor_imagen, " +
-        "p.activo AS proveedor_activo, p.direccion_id AS proveedor_direccion_id " +
-        "FROM CONTACTO c " +
-        "JOIN PUESTO_TRABAJO p_t ON c.puesto_id = p_t.id " +
-        "JOIN PROVEEDOR p ON c.proveedor_id = p.id " +
-        "WHERE c.activo = TRUE";
+    private static final String SQL_SELECT_COMUN = 
+            """
+            SELECT c.*,
+            p_t.nombre AS puesto_nombre,
+            p.nombre AS proveedor_nombre, p.descripcion AS proveedor_descripcion,
+            p.pagina_web AS proveedor_pagina_web, p.imagen AS proveedor_imagen, 
+            p.activo AS proveedor_activo, p.direccion_id AS proveedor_direccion_id
+            FROM CONTACTO c
+            JOIN PUESTO_TRABAJO p_t ON c.puesto_id = p_t.id
+            JOIN PROVEEDOR p ON c.proveedor_id = p.id
+            """;
+        
 
     private static final String SQL_INSERT_CONTACTO = 
-        "INSERT INTO CONTACTO (nombre, apellido, puesto_id, telefono, email, activo, proveedor_id) " +
-        "VALUES (?, ?, ?, ?, ?, ?, ?)";
+            """
+            INSERT INTO CONTACTO (nombre, apellido, puesto_id, telefono, email, activo, proveedor_id) 
+            VALUES (?, ?, ?, ?, ?, ?, ?);
+            """;
+           
 
     private static final String SQL_UPDATE_CONTACTO = 
-        "UPDATE CONTACTO SET nombre = ?, apellido = ?, puesto_id = ?, telefono = ?, email = ?, activo = ? " +
-        "WHERE id = ?";
+            """
+            UPDATE CONTACTO SET nombre = ?, apellido = ?, puesto_id = ?, telefono = ?, email = ?, activo = ?, proveedor_id = ? 
+            WHERE id = ?
+            """;
 
     private static final String SQL_DELETE_CONTACTO = 
         "UPDATE CONTACTO SET activo = FALSE WHERE id = ?";
@@ -114,13 +93,13 @@ public class ContactoServiceImplement extends BaseMySql implements IContactoServ
                 .build();
 
         return ContactoDTO.builder()
-                .id(rs.getInt("contacto_id"))
-                .nombre(rs.getString("contacto_nombre"))
-                .apellido(rs.getString("contacto_apellido"))
+                .id(rs.getInt("id"))
+                .nombre(rs.getString("nombre"))
+                .apellido(rs.getString("apellido"))
                 .puestoTrabajo(puesto)
-                .telefono(rs.getString("contacto_telefono"))
-                .email(rs.getString("contacto_email"))
-                .activo(rs.getBoolean("contacto_activo"))
+                .telefono(rs.getString("telefono"))
+                .email(rs.getString("email"))
+                .activo(rs.getBoolean("activo"))
                 .proveedor(proveedor)
                 .build();
     }
@@ -135,8 +114,11 @@ public class ContactoServiceImplement extends BaseMySql implements IContactoServ
     @Override
     public ContactoDTO getContactoById(int idContacto) {
         ContactoDTO contacto = null;
+        
+        String sql = SQL_SELECT_COMUN + " WHERE c.activo = TRUE AND c.id = ?";
+        
         try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(SQL_SELECT_BY_ID)) {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, idContacto);
 
@@ -162,8 +144,10 @@ public class ContactoServiceImplement extends BaseMySql implements IContactoServ
     public List<ContactoDTO> getContactosByProveedorId(int idProveedor) {
         List<ContactoDTO> lista = new ArrayList<>();
 
+        String sql = SQL_SELECT_COMUN + " WHERE c.activo = TRUE AND c.proveedor_id = ?";
+        
         try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(SQL_SELECT_BY_PROVEEDOR)) {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, idProveedor);
 
@@ -185,8 +169,10 @@ public class ContactoServiceImplement extends BaseMySql implements IContactoServ
     public List<ContactoDTO> findContactos(String nombre, int proveedorId) {
         List<ContactoDTO> listaContactos = new ArrayList<>();
 
-        StringBuilder sql = new StringBuilder(SQL_SELECT_CONTACTOS);
+        StringBuilder sql = new StringBuilder(SQL_SELECT_COMUN);
 
+        sql.append(" WHERE c.activo = TRUE");
+        
         // Condición por nombre
         if (nombre != null && !nombre.trim().isEmpty()) {
             sql.append(" AND c.nombre LIKE ?");
@@ -278,11 +264,12 @@ public class ContactoServiceImplement extends BaseMySql implements IContactoServ
 
             ps.setString(1, contactoDTO.getNombre());
             ps.setString(2, contactoDTO.getApellido());
-            ps.setInt(3, contactoDTO.getPuestoTrabajo().getId()); // actualizado
+            ps.setInt(3, contactoDTO.getPuestoTrabajo().getId()); 
             ps.setString(4, contactoDTO.getTelefono());
             ps.setString(5, contactoDTO.getEmail());
             ps.setBoolean(6, contactoDTO.isActivo());
-            ps.setInt(7, contactoDTO.getId());
+            ps.setInt(7, contactoDTO.getProveedor().getId());
+            ps.setInt(8, contactoDTO.getId());
 
             return ps.executeUpdate() > 0;
 

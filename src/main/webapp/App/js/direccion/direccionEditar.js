@@ -75,7 +75,7 @@ function fillFielsDireccion(direccion) {
     if(direccion.codigoPostal) {
         inputCodigoPostal.value = direccion.codigoPostal;
     }
-
+    /*
     cargarInputSelect(selectProvincia, "api/provincia/provincias", '', direccion.localidad.provincia.id, () => {
         //Crea un objeto con la información de la provincia seleccionada (id y nombre).
         const jsonProvincia = {
@@ -108,7 +108,38 @@ function fillFielsDireccion(direccion) {
             detectarCambiosFormulario(idFormDireccion, onDetectarCambiosModificarDireccion);
 
         });
-    });
+    }); 
+    */
+   
+    cargarInputSelect(selectProvincia, "api/provincia/provincias", '', direccion.localidad.provincia.id)
+        .then(() => {
+            const jsonProvincia = {
+                id: selectProvincia.value,
+                nombre: selectProvincia.selectedOptions[0].textContent
+            };
+            const encodedJsonProvincia = encodeURIComponent(JSON.stringify(jsonProvincia));
+
+            return cargarInputSelect(selectLocalidad, `api/localidad/localidades?jsonProvincia=${encodedJsonProvincia}`, '', direccion.localidad.id);
+        })
+        .then(() => {
+            selectProvincia.addEventListener('change', (e) => {
+                const optionSelected = e.target.selectedOptions[0];
+                const nuevaProvincia = {
+                    id: optionSelected.value,
+                    nombre: optionSelected.textContent
+                };
+                const nuevaProvinciaEncoded = encodeURIComponent(JSON.stringify(nuevaProvincia));
+
+                cargarInputSelect(selectLocalidad, `api/localidad/localidades?jsonProvincia=${nuevaProvinciaEncoded}`, 'Seleccione');
+            });
+
+            onDetectarCambiosModificarDireccion(false);
+            detectarCambiosFormulario(idFormDireccion, onDetectarCambiosModificarDireccion);
+        })
+        .catch((error) => {
+            console.error("Error al cargar dirección:", error);
+            mostrarMensajeError("Error", "No se pudo cargar la información de dirección correctamente.");
+        });
 }
 
 function validarFormulario(idForm) {

@@ -63,13 +63,22 @@ public class FormParametros {
     /** Nombre de la localidad. */
     public static final String PARAM_LOCALIDAD_NOMBRE = "nombre";
     
+    /** Provincia de la localidad. */
     public static final String PARAM_LOCALIDAD_PROVINCIA = "provincia";
     
     
     //Contacto -----------------------------------------------------------------
     public static final String PARAM_CONTACTO_NOMBRE = "nombre";
+    public static final String PARAM_CONTACTO_APELLIDO = "apellido";
+    public static final String PARAM_CONTACTO_PUESTO = "puesto";
+    public static final String PARAM_CONTACTO_TELEFONO = "telefono";
+    public static final String PARAM_CONTACTO_EMAIL = "email";
     public static final String PARAM_CONTACTO_PROVEEDOR = "proveedor";
+    
+    //Puesto Trabajo -----------------------------------------------------------
+    public static final String PARAM_PUESTO_TRABAJO_NOMBRE = "nombre";
     
     //Proveedor ----------------------------------------------------------------
     public static final String PARAM_PROVEEDOR_NOMBRE = "nombre";
+    public static final String PARAM_PROVEEDOR_DESCRIPCION = "descripcion";
 }

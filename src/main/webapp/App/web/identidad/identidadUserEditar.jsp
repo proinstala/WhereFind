@@ -258,6 +258,6 @@
     </div>
 </div>
 
-<script src="App/js/identidad/modificarUsuario.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
+<script src="App/js/identidad/identidadUserEditar.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>

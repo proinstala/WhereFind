@@ -1,8 +1,8 @@
 
 
 export const ROLES = {
-  ADMIN: "admin",
-  USER: "user"
+  ADMIN: "Admin",
+  USER: "User"
 };
 
 export const version = "20250414_2200";

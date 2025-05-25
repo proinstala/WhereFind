@@ -3,11 +3,9 @@ import { solicitudGet, solicitudPut, getDatosForm, addRowSelected, fillInputSele
 import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from '../alertasSweetAlert2.mjs';
 import {ROLES} from '../constantes.mjs';
 
-
-const idSelectProvincia = "#provincia";
 const idInputNombre = "#nombre";
-const idFormBusquedaLocalidad = "#frmBuscarLocalidad";
-const idTablaLocalidades = "#tablaLocalidades"; 
+const idFormBusquedaProveedor = "#frmBuscarProveedor";
+const idTablaProveedores = "#tablaProveedores"; 
 const idBtnBuscar = "#btnBuscar";
 const idBtnModificar = "#btnModificar";
 const idBtnCrear = "#btnCrear";
@@ -19,13 +17,9 @@ const User = {
     rol: ""
 };
 
-// Configuración de las urls
-//const URL_MODIFICAR_PROVINCIA = "direccion/edit";
-
 document.addEventListener("DOMContentLoaded", function () {
-    const formBusquedaLocalidades = document.querySelector(idFormBusquedaLocalidad);
-    const selectProvincia = document.querySelector(idSelectProvincia);
-    const tablaLocalidades = document.querySelector(idTablaLocalidades);
+    const formBusquedaProveedores = document.querySelector(idFormBusquedaProveedor);
+    const tablaProveedores = document.querySelector(idTablaProveedores);
     const btnBuscar = document.querySelector(idBtnBuscar);
     const btnCrear = document.querySelector(idBtnCrear);
     const btnModificar = document.querySelector(idBtnModificar);
@@ -34,32 +28,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
     User.rol = document.querySelector(idInputUserRol).value;
 
-    if(User.rol === ROLES.ADMIN) {
+    if(User.rol === ROLES.ADMIN || User.rol === ROLES.USER) {
         btnCrear.disabled = false;
     }
     
-    cargarInputSelect(selectProvincia, "api/provincia/provincias", 'Todas', false, "");
+    validarFormulario(idFormBusquedaProveedor);
     
-    validarFormulario(idFormBusquedaLocalidad);
-    
-    observeRowSelectedChange(tablaLocalidades, onDetectarFilaSeleccionada);
+    observeRowSelectedChange(tablaProveedores, onDetectarFilaSeleccionada);
 
     btnModificar.addEventListener('click', () => {
-        const idLocalidad = tablaLocalidades.getAttribute('data-rowselected'); //data-rowSelected
-        window.location.href = (`direccion/localidades/edit/${idLocalidad}`);
+        const idProveedor = tablaProveedores.getAttribute('data-rowselected'); //data-rowSelected
+        window.location.href = (`proveedor/proveedores/edit/${idProveedor}`);
     });
 
     btnCrear.addEventListener('click', () => {
-        window.location.href = (`direccion/localidades/crear`);
+        window.location.href = (`proveedor/proveedores/crear`);
     });
 
     btnEliminar.addEventListener('click', () => {
-        const idLocalidad = tablaLocalidades.getAttribute('data-rowselected'); //data-rowSelected
-        borrarLocalidad(idLocalidad);
+        const idProveedor = tablaProveedores.getAttribute('data-rowselected'); //data-rowSelected
+        borrarProveedor(idProveedor);
     });
     
     btnCancelar.addEventListener('click', () => {
-        window.location.href = "direccion";
+        window.location.href = "proveedor";
     });
     
     //Dispara el evento de clic en el botón para que haga una busqueda inicial.
@@ -67,10 +59,8 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function onDetectarFilaSeleccionada(hayFilaSeleccionada) {
-    if(User.rol === ROLES.ADMIN) {
-        $("#btnEliminar").prop('disabled', !hayFilaSeleccionada);
-        $("#btnModificar").prop('disabled', !hayFilaSeleccionada);
-    }
+    $("#btnEliminar").prop('disabled', !hayFilaSeleccionada);
+    $("#btnModificar").prop('disabled', !hayFilaSeleccionada);
 }
 
 function validarFormulario(idForm) {
@@ -89,14 +79,15 @@ function validarFormulario(idForm) {
 
         submitHandler: function () {
             const formData = getDatosForm(idForm);
-            const url = `api/localidad/find_localidades?${formData}`;
+            const url = `api/proveedor/find_proveedores?${formData}`;
 
             solicitudGet(url, "", false)
                 .then(response => {
                     if (response.isError === 1) {
                         mostrarMensajeError("Se ha producido un error", response.result);
                     } else {
-                        rellenarTablaLocalidades(response.data);
+                        debugger;
+                        rellenarTablaProveedores(response.data);
                     }
                 })
                 .catch(error => {
@@ -114,46 +105,50 @@ function validarFormulario(idForm) {
 
 
 /**
- * Función que rellena una tabla HTML con las localidades proporcionadas.
- * @param {Array} localidades - Un array de objetos de localidades que contiene los datos para cada fila de la tabla.
+ * Función que rellena una tabla HTML con los proveedores proporcionadas.
+ * @param {Array} proveedores - Un array de objetos de proveedores que contiene los datos para cada fila de la tabla.
  */
-function rellenarTablaLocalidades(localidades) {
-    const tablaLocalidades = document.querySelector(idTablaLocalidades);
-    const cuerpoTablaLocalidades = tablaLocalidades.querySelector('tbody');
+function rellenarTablaProveedores(proveedores) {
+    const tablaProveedores = document.querySelector(idTablaProveedores);
+    const cuerpoTablaProveedores = tablaProveedores.querySelector('tbody');
     const inputUserRol = document.querySelector(idInputUserRol);  //Admin o User
 
-    tablaLocalidades.setAttribute('data-rowselected', -1); //Establece a -1 el rowselected para indicar que no se ha seleccionado ninguna fila.
+    tablaProveedores.setAttribute('data-rowselected', -1); //Establece a -1 el rowselected para indicar que no se ha seleccionado ninguna fila.
 
     //Crear el contenido HTML de todas las filas a partir de los datos de provincias
-    let filasHTML = localidades.map(localidad => {
-        return `<tr id="${localidad.id}">
-                <td>${localidad.id}</td>
-                <td>${localidad.nombre}</td>
-                <td>${localidad.provincia.nombre}</td>
+    let filasHTML = proveedores.map(proveedor => {
+        return `<tr id="${proveedor.id}">
+                <td>${proveedor.id}</td>
+                <td>${proveedor.nombre}</td>
+                <td>${proveedor.descripcion}</td>
+                <td>${proveedor.paginaWeb}</td>
+                <td>${proveedor.direccion.localidad.nombre}</td>
+                <td>${proveedor.direccion.localidad.provincia.nombre}</td>
                 </tr>`;
     }).join('');
 
 
     //Asignar el contenido HTML generado al cuerpo de la tabla, reemplazando cualquier contenido existente
-    cuerpoTablaLocalidades.innerHTML = filasHTML;
+    cuerpoTablaProveedores.innerHTML = filasHTML;
 
     //Añadir eventos de selección de filas a la tabla recién generada
-    addRowSelected(cuerpoTablaLocalidades);
+    addRowSelected(cuerpoTablaProveedores);
 }
 
-function borrarLocalidad(localidadId) {
-    mostrarMensajeOpcion("Borrar Localidad", `¿Quieres realmente borrar los datos de la provincia con id ${localidadId}?`)
+
+function borrarContacto(proveedorId) {
+    mostrarMensajeOpcion("Borrar Proveedor", `¿Quieres realmente borrar los datos del proveedor con id ${proveedorId}?`)
                     .then((result) => {
                         if (result.isConfirmed) {
-                            solicitudPut(`api/localidad/delete/${localidadId}`, "", true)
+                            solicitudPut(`api/proveedor/delete/${proveedorId}`, "", true)
                                     .then(response => {
                                         if (response.isError === 1) {
                                             mostrarMensajeError("No se puede borrar los datos", response.result);
                                         } else {
-                                            mostrarMensaje("Localidad Borrada.", `Se han borrado correctamente los datos de la localidad.`, "success");
+                                            mostrarMensaje("Proveedor Borrada.", `Se han borrado correctamente los datos del proveedor.`, "success");
 
                                             //Elimina la fila seleccionada de la tabla.
-                                            deleteRowSelectedTable(idTablaLocalidades);
+                                            deleteRowSelectedTable(idTablaProveedores);
                                         }
                                     })
                                     .catch(error => {
@@ -168,5 +163,4 @@ function borrarLocalidad(localidadId) {
                         }
                     });
 }
-
 

@@ -266,11 +266,11 @@ function resetCamposForm(idForm) {
  */
 const detectarCambiosFormulario = (idForm, callBack) => {
     let form_original_data = $(idForm).serialize();
-    console.log("antes: " + form_original_data);
+    //console.log("antes: " + form_original_data);
     $(idForm).on('keyup change paste', 'input, select, textarea', function(){
         if (callBack !== null) {
-            console.log("funcion - old:" + form_original_data);
-            console.log("funcion - new:" + $(idForm).serialize());
+            //console.log("funcion - old:" + form_original_data);
+            //console.log("funcion - new:" + $(idForm).serialize());
             callBack($(idForm).serialize() !== form_original_data);
         }
     });
@@ -278,6 +278,9 @@ const detectarCambiosFormulario = (idForm, callBack) => {
 
 /**
  * Realiza una solicitud GET para obtener datos y cargar un select HTML con las opciones recibidas.
+ * 
+ * Devuelve una promesa que se resuelve cuando el select ha sido cargado correctamente. Si ocurre un error,
+ * la promesa se rechaza con el mensaje de error correspondiente.
  *
  * @param {HTMLElement} nodoInputSelect - El elemento select donde se cargarán las opciones. Debe ser un elemento HTML válido.
  * @param {string} url - La URL a la que se realizará la solicitud GET para obtener los datos.
@@ -286,47 +289,51 @@ const detectarCambiosFormulario = (idForm, callBack) => {
  * @param {Function} [callback] - (Opcional) Función callback que se ejecuta después de llenar el select. Debe ser una función válida.
  */
 function cargarInputSelect(nodoInputSelect, url, firstOption = '', selectOption, callback) {
-    //Validar que el elemento select es válido
-    if (!(nodoInputSelect instanceof HTMLElement)) {
-        console.error("nodoInputSelect no es un elemento HTML válido.");
-        return;
-    }
-
-    //Validar que la URL es una cadena no vacía
-    if (typeof url !== 'string' || url.trim() === '') {
-        console.error("La URL proporcionada no es válida.");
-        mostrarMensajeError("Error", "URL no válida.");
-        return;
-    }
-
-    //Realiza una solicitud GET a la URL especificada.
-    solicitudGet(url, "", false)
-        .then(response => {
-        if (response.isError === 1) {
-            mostrarMensajeError("Se ha producido un error", response.result);
-            return; // Salir de la función si hay un error
-        }
-        //Llena el elemento select con los datos recibidos y la primera opción opcional.
-        fillInputSelect(nodoInputSelect, response.data, firstOption);
-
-        if (selectOption) {
-            seleccionarValorSelect(nodoInputSelect, selectOption);
+    return new Promise((resolve, reject) => {
+        //Validar que el elemento select es válido
+        if (!(nodoInputSelect instanceof HTMLElement)) {
+            console.error("nodoInputSelect no es un elemento HTML válido.");
+            return;
         }
 
-        //Ejecutar el callback si se proporciona y es una función válida
-        if (callback && typeof callback === 'function') {
-            try {
-                callback();
-            } catch (callbackError) {
-                console.error("Error al ejecutar el callback:", callbackError);
-                mostrarMensajeError("Error", "Error al ejecutar la acción posterior.");
+        //Validar que la URL es una cadena no vacía
+        if (typeof url !== 'string' || url.trim() === '') {
+            console.error("La URL proporcionada no es válida.");
+            mostrarMensajeError("Error", "URL no válida.");
+            return;
+        }
+
+        //Realiza una solicitud GET a la URL especificada.
+        solicitudGet(url, "", false)
+            .then(response => {
+            if (response.isError === 1) {
+                mostrarMensajeError("Se ha producido un error", response.result);
+                return; // Salir de la función si hay un error
             }
-        }
-    })
-    .catch(error => {
-        //Manejar errores de la solicitud
-        console.error("Error:", error);
-        mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
+            //Llena el elemento select con los datos recibidos y la primera opción opcional.
+            fillInputSelect(nodoInputSelect, response.data, firstOption);
+
+            if (selectOption) {
+                seleccionarValorSelect(nodoInputSelect, selectOption);
+            }
+
+            //Ejecutar el callback si se proporciona y es una función válida
+            if (callback && typeof callback === 'function') {
+                try {
+                    callback();
+                } catch (callbackError) {
+                    console.error("Error al ejecutar el callback:", callbackError);
+                    mostrarMensajeError("Error", "Error al ejecutar la acción posterior.");
+                }
+            }
+            resolve(); // <- Aquí resolvemos la promesa
+        })
+        .catch(error => {
+            //Manejar errores de la solicitud
+            console.error("Error:", error);
+            mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
+            reject(error);
+        });
     });
 }
 

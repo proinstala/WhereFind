@@ -21,33 +21,20 @@ import java.util.List;
  */
 @RequestScoped
 public class ProveedorServiceImplement extends BaseMySql implements IProveedorService {
-
-    private static final String SQL_SELECT_PROVEEDOR_BY_ID = 
-        "SELECT p.*, d.*, l.*, pr.* FROM PROVEEDOR p " +
-        "INNER JOIN DIRECCION d ON p.direccion_id = d.id " +
-        "INNER JOIN LOCALIDAD l ON d.localidad_id = l.id " +
-        "INNER JOIN PROVINCIA pr ON l.provincia_id = pr.id " +
-        "WHERE p.id = ?;";
+    
+   private static final String SQL_SELECT_COMUN = 
+           """                            
+           SELECT p.*, d.*, l.*, pr.* FROM PROVEEDOR p
+           INNER JOIN DIRECCION d ON p.direccion_id = d.id
+           INNER JOIN LOCALIDAD l ON d.localidad_id = l.id
+           INNER JOIN PROVINCIA pr ON l.provincia_id = pr.id
+           """;
 
     private static final String SQL_SELECT_CONTACTOS_BY_PROVEEDOR = 
         "SELECT c.*, pt.id AS pt_id, pt.nombre AS pt_nombre " +
         "FROM CONTACTO c " +
         "INNER JOIN PUESTO_TRABAJO pt ON c.puesto_id = pt.id " +
         "WHERE c.proveedor_id = ?;";
-
-    private static final String SQL_SELECT_PROVEEDORES = 
-        "SELECT p.*, d.*, l.*, pr.* FROM PROVEEDOR p " +
-        "INNER JOIN DIRECCION d ON p.direccion_id = d.id " +
-        "INNER JOIN LOCALIDAD l ON d.localidad_id = l.id " +
-        "INNER JOIN PROVINCIA pr ON l.provincia_id = pr.id " +
-        "WHERE p.activo = TRUE AND p.nombre LIKE ?;";
-    
-    private static final String SQL_SELECT_ALL_PROVEEDORES = 
-        "SELECT p.*, d.*, l.*, pr.* FROM PROVEEDOR p " +
-        "INNER JOIN DIRECCION d ON p.direccion_id = d.id " +
-        "INNER JOIN LOCALIDAD l ON d.localidad_id = l.id " +
-        "INNER JOIN PROVINCIA pr ON l.provincia_id = pr.id " +
-        "WHERE p.activo = TRUE;";
 
     private static final String SQL_UPDATE_PROVEEDOR = 
         "UPDATE PROVEEDOR SET nombre = ?, descripcion = ?, pagina_web = ?, " +
@@ -92,7 +79,7 @@ public class ProveedorServiceImplement extends BaseMySql implements IProveedorSe
 
         proveedorDTO.setDireccion(direccionDTO);
          
-         return proveedorDTO;
+        return proveedorDTO;
     }
 
     private List<ContactoDTO> getContactosByProveedor(int proveedorId) {
@@ -132,8 +119,13 @@ public class ProveedorServiceImplement extends BaseMySql implements IProveedorSe
     @Override
     public ProveedorDTO getProveedorById(int idProveedor) {
         ProveedorDTO proveedorDTO = null;
+        StringBuilder sql = new StringBuilder(SQL_SELECT_COMUN);
+        
+        sql.append(" WHERE p.activo = TRUE");
+        sql.append(" AND p.proveedor_id = ?");
+        
         try (Connection conexion = getConnection(); 
-             PreparedStatement ps = conexion.prepareStatement(SQL_SELECT_PROVEEDOR_BY_ID)) {
+             PreparedStatement ps = conexion.prepareStatement(sql.toString())) {
 
             ps.setInt(1, idProveedor);
 
@@ -154,9 +146,13 @@ public class ProveedorServiceImplement extends BaseMySql implements IProveedorSe
 
     public ProveedorDTO getProveedorBasicById(int idProveedor) {
         ProveedorDTO proveedorDTO = null;
+        StringBuilder sql = new StringBuilder(SQL_SELECT_COMUN);
+        
+        sql.append(" WHERE p.activo = TRUE");
+        sql.append(" AND p.proveedor_id = ?");
 
         try (Connection conexion = getConnection(); 
-             PreparedStatement ps = conexion.prepareStatement(SQL_SELECT_PROVEEDOR_BY_ID)) {
+             PreparedStatement ps = conexion.prepareStatement(sql.toString())) {
 
             ps.setInt(1, idProveedor);
 
@@ -176,13 +172,16 @@ public class ProveedorServiceImplement extends BaseMySql implements IProveedorSe
     public List<ProveedorDTO> getProveedores() {
         List<ProveedorDTO> listaProveedores = new ArrayList<>();
         
+        StringBuilder sql = new StringBuilder(SQL_SELECT_COMUN);
+        sql.append(" WHERE p.activo = TRUE");
+        
         try (Connection conexion = getConnection(); 
-             PreparedStatement ps = conexion.prepareStatement(SQL_SELECT_ALL_PROVEEDORES)) {
+             PreparedStatement ps = conexion.prepareStatement(sql.toString())) {
 
             try (ResultSet resultSet = ps.executeQuery()) {
                 while (resultSet.next()) {
                     ProveedorDTO proveedorDTO = getProveedorFromResultSet(resultSet);
-                    proveedorDTO.setListaContactos(getContactosByProveedor(proveedorDTO.getId()));
+                    //proveedorDTO.setListaContactos(getContactosByProveedor(proveedorDTO.getId()));
                     listaProveedores.add(proveedorDTO);
                 }
             }
@@ -193,18 +192,40 @@ public class ProveedorServiceImplement extends BaseMySql implements IProveedorSe
     }
 
     @Override
-    public List<ProveedorDTO> findProveedores(String nombre) {
+    public List<ProveedorDTO> findProveedores(String nombre, String descripcion) {
         List<ProveedorDTO> listaProveedores = new ArrayList<>();
         
+        StringBuilder sql = new StringBuilder(SQL_SELECT_COMUN);
+        
+        sql.append(" WHERE p.activo = TRUE");
+        
+        // Condición por nombre
+        if (nombre != null && !nombre.trim().isEmpty()) {
+            sql.append(" AND p.nombre LIKE ?");
+        }
+        
+        // Condición por descripcion
+        if (descripcion != null && !descripcion.trim().isEmpty()) {
+            sql.append(" AND p.descripcion LIKE ?");
+        }
+        
         try (Connection conexion = getConnection(); 
-             PreparedStatement ps = conexion.prepareStatement(SQL_SELECT_PROVEEDORES)) {
+             PreparedStatement ps = conexion.prepareStatement(sql.toString())) {
 
-            ps.setString(1, '%' + nombre + '%');
+            int index = 1;
+            
+            if (nombre != null && !nombre.trim().isEmpty()) {
+                ps.setString(index++, "%" + nombre + "%");
+            }
+
+            if (descripcion != null && !descripcion.trim().isEmpty()) {
+                ps.setString(index++, "%" + descripcion + "%");
+            }
 
             try (ResultSet resultSet = ps.executeQuery()) {
                 while (resultSet.next()) {
                     ProveedorDTO proveedorDTO = getProveedorFromResultSet(resultSet);
-                    proveedorDTO.setListaContactos(getContactosByProveedor(proveedorDTO.getId()));
+                    //proveedorDTO.setListaContactos(getContactosByProveedor(proveedorDTO.getId()));
                     listaProveedores.add(proveedorDTO);
                 }
             }

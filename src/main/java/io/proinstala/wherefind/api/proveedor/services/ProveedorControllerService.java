@@ -30,8 +30,9 @@ public class ProveedorControllerService extends BaseService {
         List<ProveedorDTO> listaProveedorDTO = null;
         
         String nombre = actionController.server().getRequestParameter(FormParametros.PARAM_PROVEEDOR_NOMBRE, "");
+        String descripcion = actionController.server().getRequestParameter(FormParametros.PARAM_PROVEEDOR_DESCRIPCION, "");
         
-        listaProveedorDTO = proveedorServiceImp.findProveedores(nombre);
+        listaProveedorDTO = proveedorServiceImp.findProveedores(nombre, descripcion);
         
         if(listaProveedorDTO != null) {
             responseDTO = getResponseOk("OK", listaProveedorDTO, 0);

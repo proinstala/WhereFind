@@ -1,3 +1,9 @@
+
+/*
+ICONOS DE APLICACION.
+https://icons8.com/line-awesome
+*/
+
 :root {
   --breadcrumb-color-fondo: var(--primario);
   --breadcrumb-color:   var(--blanco);
@@ -11,8 +17,6 @@
   --breadcrumb-font-color : var(--primario);
   --breadcrumb-font-color-hover : var(--blanco);
 }
-
-
 
 .breadcrumb-container {
     height: 1.7em;
@@ -42,40 +46,52 @@
     content: "\f303";
 }
 
+.breadcrumb li[data-id="crear"] a span.icon i::before {
+    content: "\f055";
+}
+
 
 .breadcrumb li[data-id="direccion"] a span.icon i::before {
-    content: "\f041";
+    content: "\f5a0";
 }
 
 .breadcrumb li[data-id="direcciones"] a span.icon i::before {
-    content: "\f2b9";
+    content: "\f041";
 }
 
 .breadcrumb li[data-id="edit"]:has(+ li[data-id="direcciones"]) a span.icon i::before {
   content: "\f303";
 }
 
-.breadcrumb li[data-id="proveedor"] a span.icon i::before {
-    content: "\f54e";
+.breadcrumb li[data-id="localidades"] a span.icon i::before {
+    content: "\f64f";
+}
+.breadcrumb li[data-id="provincias"] a span.icon i::before {
+    content: "\f57d";
 }
 
+
+
+/*Proveedor*/
+.breadcrumb li[data-id="proveedor"] a span.icon i::before {
+    content: "\f54f";
+}
+.breadcrumb li[data-id="proveedores"] a span.icon i::before {
+    content: "\f54e";
+}
 .breadcrumb li[data-id="contactos"] a span.icon i::before {
     content: "\f2c2";
 }
 
 
 
-
-
-
-
-  /* Breadcrumb styles */
-  ul.breadcrumb {
+/* Breadcrumb styles */
+ul.breadcrumb {
     display: inline-block;
     list-style: none;
-  }
+}
 
-  ul.breadcrumb li {
+ul.breadcrumb li {
     float: right;
     padding: calc(var(--breadcrumb-size) / 10);
     background-color: var(--breadcrumb-color-fondo);
@@ -84,9 +100,9 @@
     margin-left: calc(-1 * var(--breadcrumb-size));
     transition: all 0.2s;
     margin-top: 3px;
-  }
+}
 
-  ul.breadcrumb li a {
+ul.breadcrumb li a {
     overflow: hidden;
     border-radius: var(--breadcrumb-size);
     transition: all 0.3s;
@@ -100,78 +116,78 @@
     line-height: var(--breadcrumb-size);
     padding-left: calc(var(--breadcrumb-size) + 2px);
     padding-right: calc(var(--breadcrumb-size) / 2 + var(--breadcrumb-size) / 6);
-  }
+}
 
-  /* Icon styles */
-  ul.breadcrumb li a .icon {
+/* Icon styles */
+ul.breadcrumb li a .icon {
     display: inline-block;
     font-size: var(--breadcrumb-font-size);
     font-weight: 600;
-  }
+}
 
-  ul.breadcrumb li a .icon i::before {
+ul.breadcrumb li a .icon i::before {
     margin: auto;
     height: 16px;
     width: 16px;
-  }
+}
 
-  /* Text styles */
-  ul.breadcrumb li a .text {
+/* Text styles */
+ul.breadcrumb li a .text {
     display: none;
     opacity: 0;
-  }
+}
 
-  /* Hover effect on breadcrumb items */
-  ul.breadcrumb li a:hover {
+/* Hover effect on breadcrumb items */
+ul.breadcrumb li a:hover {
     background-color: var(--breadcrumb-color-hover);
 
     .icon {
-      color: var(--breadcrumb-font-color-hover);
+        color: var(--breadcrumb-font-color-hover);
     }
 
-  }
+}
 
-  ul.breadcrumb li a:hover .text {
+ul.breadcrumb li a:hover .text {
     display: inline-block;
     opacity: 1;
     color: var(--breadcrumb-font-color-hover);
-  }
+}
 
 
-  /* Styles for the last breadcrumb item */
-  ul.breadcrumb li:last-child a {
+/* Styles for the last breadcrumb item */
+ul.breadcrumb li:last-child a {
     padding: 0;
-  }
+}
 
 
-  ul.breadcrumb li:last-child a .icon {
+ul.breadcrumb li:last-child a .icon {
     margin-top: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--breadcrumb-font-color);
     font-style: normal;
-  }
+}
 
-  ul.breadcrumb li:last-child:hover a {
+ul.breadcrumb li:last-child:hover a {
     background-color: var(--breadcrumb-color-hover-home);
     .icon {
-      color: var(--breadcrumb-font-color-hover);
+        color: var(--breadcrumb-font-color-hover);
     }
-  }
+}
 
-  ul.breadcrumb li:first-child a {
+ul.breadcrumb li:first-child a {
     background-color: var(--breadcrumb-color-hover);
 
     .icon {
-      color: var(--breadcrumb-font-color-hover);
+        color: var(--breadcrumb-font-color-hover);
     }
 
     .text {
-      display: inline-block;
-      opacity: 1;
-      color: var(--breadcrumb-font-color-hover);
+        display: inline-block;
+        opacity: 1;
+        color: var(--breadcrumb-font-color-hover);
     }
-  }
+}
 
 

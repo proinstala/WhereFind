@@ -5,12 +5,14 @@ import io.proinstala.wherefind.api.infraestructure.data.interfaces.IDireccionSer
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.ILocalidadService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IProveedorService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IProvinciaService;
+import io.proinstala.wherefind.api.infraestructure.data.interfaces.IPuestoTrabajoService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IUserService;
 import io.proinstala.wherefind.api.infraestructure.data.services.ContactoServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.DireccionServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.LocalidadServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.ProveedorServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.ProvinciaServiceImplement;
+import io.proinstala.wherefind.api.infraestructure.data.services.PuestoTrabajoServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.UserServiceImplement;
 
 /**
@@ -82,6 +84,20 @@ public class GestorPersistencia {
      */
     public static IContactoService getContactoService() {
         return new ContactoServiceImplement();
+    }
+    
+    
+    /**
+     * Obtiene una instancia del servicio de puestos de trabajo.
+     *
+     * <p>Este método devuelve una implementación de {@link IPuestoTrabajoService}, en este caso, 
+     * una instancia de {@link PuestoTrabajoServiceImplement}, que maneja la lógica relacionada con 
+     * los puestos de trabajo de los contactos.</p>
+     *
+     * @return una instancia de {@link IPuestoTrabajoService}.
+     */
+    public static IPuestoTrabajoService getPuestoTrabajoService() {
+        return new PuestoTrabajoServiceImplement();
     }
     
     
