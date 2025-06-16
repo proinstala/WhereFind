@@ -109,6 +109,30 @@ public class DireccionControllerService extends BaseService{
     }
     
     /**
+     * Obtiene todas las direcciones.
+     * 
+     * @param actionController El controlador de acción que contiene los parámetros de la solicitud.
+     */
+    public void getDirecciones(ActionController actionController) {
+        //Respuesta de la acción actual
+        ResponseDTO responseDTO;
+        
+        IDireccionService direccionServiceImp = GestorPersistencia.getDireccionService();
+        
+        List<DireccionDTO> listaDireccionesDTO = direccionServiceImp.getDirecciones();
+        
+        if(listaDireccionesDTO != null) {
+            responseDTO = getResponseOk("OK", listaDireccionesDTO, 0);
+        } else {
+            //Crea la respuesta con un error
+            responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR, new ArrayList<>());
+        }
+        
+        //Devuelve la respuesta al navegador del usuario en formato json
+        responseJson(actionController.server().response(), responseDTO);
+    }
+    
+    /**
      * Actualiza la información de una dirección existente.
      * 
      * <p>Este método verifica los parámetros proporcionados para actualizar una dirección en la base de

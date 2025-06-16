@@ -24,6 +24,13 @@ import java.util.List;
  */
 public class DireccionServiceImplement extends BaseMySql implements IDireccionService {
 
+    private static final String SQL_SELECT_COMUN = 
+            """                                       
+            SELECT d.*, l.*, p.* 
+            FROM DIRECCION d INNER JOIN LOCALIDAD l ON(d.localidad_id = l.id) 
+            INNER JOIN PROVINCIA p ON(l.provincia_id = p.id) 
+            """;
+    
     /**
      * Sentencia SQL para obtener una dirección por su identificador.
      */
@@ -192,6 +199,44 @@ public class DireccionServiceImplement extends BaseMySql implements IDireccionSe
                 if (IdProvincia != -1) {
                     ps.setInt(index++, IdProvincia);
                 }
+                
+                //Ejecutar la consulta y obtener el ResultSet dentro de otro bloque try-with-resources
+                try (ResultSet resultSet = ps.executeQuery()) {
+                    while (resultSet.next()) {
+                        DireccionDTO direccionDTO = getDireccionFromResultSet(resultSet); //Crear un objeto DireccionDTO a partir del ResultSet
+                        
+                        // Si la direccion es válida, agregarla a la lista
+                        if (direccionDTO != null) {
+                            listaDireccionesDTO.add(direccionDTO);
+                        }
+                    }
+                }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null; //Devolver null para indicar un error
+        }
+
+        return listaDireccionesDTO;
+    }
+    
+    /**
+     * Devuelve una lista con todas las direcciones.
+     *
+     * @return una lista de {@link DireccionDTO} con todas las direcciones.
+     */
+    @Override
+    public List<DireccionDTO> getDirecciones() {
+        List<DireccionDTO> listaDireccionesDTO = new ArrayList<>();
+        
+        StringBuilder sentenciaSQL = new StringBuilder(SQL_SELECT_COMUN);
+        
+        // Añadir el punto y coma final
+        sentenciaSQL.append(";");
+        
+        // Uso de try-with-resources para garantizar el cierre de recursos
+        try (Connection conexion = getConnection(); 
+                PreparedStatement ps = conexion.prepareStatement(sentenciaSQL.toString())) {
                 
                 //Ejecutar la consulta y obtener el ResultSet dentro de otro bloque try-with-resources
                 try (ResultSet resultSet = ps.executeQuery()) {

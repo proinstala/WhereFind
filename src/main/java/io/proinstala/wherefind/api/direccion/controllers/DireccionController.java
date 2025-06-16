@@ -41,6 +41,7 @@ public class DireccionController extends BaseHttpServlet {
     enum ActionType {
         ERROR,
         DIRECCION,
+        DIRECCIONES,
         FINDDIRECCIONES,
         UPDATE,
         CREATE,
@@ -101,6 +102,24 @@ public class DireccionController extends BaseHttpServlet {
         }
         
         direccionServicio.findDirecciones(actionController);
+    }
+    
+    /**
+     * Maneja la solicitud para obtener una lista de direcciónes.
+     *
+     * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio 
+     * de direcciones para obtener la lista de direcciones y devolver la respuesta en formato JSON.</p>
+     *
+     * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
+     */
+    protected void apiGetDirecciones(ActionController actionController) {
+        // Se comprueba que el usuario está logueado
+        if (!UserSession.isUserLogIn(actionController.server(), false)) {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+        
+        direccionServicio.getDirecciones(actionController);
     }
     
     /**
@@ -207,6 +226,7 @@ public class DireccionController extends BaseHttpServlet {
         
         switch((ActionType) actionController.actionType()) {
             case DIRECCION -> apiGetDireccion(actionController);
+            case DIRECCIONES -> apiGetDirecciones(actionController);
             case FINDDIRECCIONES -> apiFindDirecciones(actionController);
               
             default -> responseError403(actionController.server().response(), "");

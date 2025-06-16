@@ -267,5 +267,15 @@
         <servlet-name>proveedorList</servlet-name>
         <url-pattern>/proveedor/proveedores</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>proveedorCrear</servlet-name>
+        <jsp-file>/App/web/proveedor/proveedorCrear.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>proveedorCrear</servlet-name>
+        <url-pattern>/proveedor/proveedores/crear</url-pattern>
+    </servlet-mapping>
 
 </web-app>

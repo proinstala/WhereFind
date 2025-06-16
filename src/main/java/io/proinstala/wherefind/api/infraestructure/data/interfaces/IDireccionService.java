@@ -40,6 +40,15 @@ public interface IDireccionService {
     public List<DireccionDTO> findDirecciones(String calle, int localidad, int provincia);
     
     /**
+     * Obtiene todas las direcciones.
+     *
+     * Este método devuelve una lista de objetos {@link DireccionDTO} 
+
+     * @return una lista de {@link DireccionDTO} con todas las direcciones.
+     */
+    public List<DireccionDTO> getDirecciones();
+    
+    /**
      * Actualiza la información de una dirección en la base de datos.
      *
      * Este método actualiza los datos de una dirección existente utilizando los valores 

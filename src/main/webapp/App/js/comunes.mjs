@@ -310,6 +310,7 @@ function cargarInputSelect(nodoInputSelect, url, firstOption = '', selectOption,
                 mostrarMensajeError("Se ha producido un error", response.result);
                 return; // Salir de la función si hay un error
             }
+            
             //Llena el elemento select con los datos recibidos y la primera opción opcional.
             fillInputSelect(nodoInputSelect, response.data, firstOption);
 
@@ -339,13 +340,16 @@ function cargarInputSelect(nodoInputSelect, url, firstOption = '', selectOption,
 
 /**
  * Rellena un elemento select HTML con opciones basadas en los datos proporcionados.
+ * 
+ * El contenido de las opciones varía dependiendo del ID del elemento select:
+ * - Si el ID es 'direccion', se muestra una descripción detallada de la dirección.
+ * - Para otros IDs, se muestra únicamente el nombre del elemento.
  *
  * @param {HTMLElement} nodeInputSelect - El elemento select que se va a llenar con las opciones.
  * @param {Array} datos - Un array de objetos con las propiedades 'id' y 'nombre' para crear las opciones.
  * @param {string} optionGenerico - (Opcional) Texto para una opción genérica que se añade al principio del select.
  */
 function fillInputSelect(nodeInputSelect, datos, optionGenerico) {
-
     //Si se proporciona la opción genérica, se agrega como la primera opción del select.
     if(optionGenerico) {
         nodeInputSelect.innerHTML = `<option value="${-1}">${optionGenerico}</option>`;
@@ -354,16 +358,33 @@ function fillInputSelect(nodeInputSelect, datos, optionGenerico) {
     }
 
     const fragment = document.createDocumentFragment(); // Crear un fragmento de documento.
+    
     datos.forEach((dato) => {
         const elementOption = document.createElement('OPTION');
         elementOption.setAttribute('value', dato.id);
-        elementOption.textContent = dato.nombre;
+
+        switch (nodeInputSelect.id) {
+            case 'direccion':
+                    // Solo si es 'direccion', mostrar los datos detallados
+                    const cp = dato.codigoPostal ?? '';
+                    const cpText = cp ? `, C.P. ${cp}` : '';
+                    elementOption.textContent = `ID ${dato.id} - ${dato.calle} nº ${dato.numero}${cpText}, ${dato.localidad.nombre}, ${dato.localidad.provincia.nombre}`;
+                    break;
+
+            default:
+                // Para cualquier otro select, solo mostrar el nombre
+                elementOption.textContent = dato.nombre;
+                break;
+        }
+        
         fragment.appendChild(elementOption);
     });
+    
 
     //Agregar el fragmento completo al select, actualizando su contenido en una sola operación.
     nodeInputSelect.appendChild(fragment);
 }
+
 
 /**
  * Selecciona un valor en un nodo <select> y devuelve una promesa.
