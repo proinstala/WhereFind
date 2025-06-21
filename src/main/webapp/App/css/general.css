@@ -251,7 +251,7 @@ label {
 }
 
 .main {
-    padding: 2rem;
+    padding: 0 2rem 1rem 2rem;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;

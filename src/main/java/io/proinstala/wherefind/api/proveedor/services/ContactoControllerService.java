@@ -163,7 +163,7 @@ public class ContactoControllerService extends BaseService {
             return;
         } 
             
-        // Obtiene el id de la dirección desde el parámetro 1 de la lista de parámetros
+        // Obtiene el id del contacto desde el parámetro 1 de la lista de parámetros
         int id = actionController.getIntFromParametros(1);
 
         // Si el id es mayor que -1 significa que hay en principio un id válido que se puede procesar

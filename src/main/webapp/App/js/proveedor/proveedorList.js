@@ -46,6 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     btnEliminar.addEventListener('click', () => {
+        debugger;
         const idProveedor = tablaProveedores.getAttribute('data-rowselected'); //data-rowSelected
         borrarProveedor(idProveedor);
     });
@@ -86,7 +87,6 @@ function validarFormulario(idForm) {
                     if (response.isError === 1) {
                         mostrarMensajeError("Se ha producido un error", response.result);
                     } else {
-                        debugger;
                         rellenarTablaProveedores(response.data);
                     }
                 })
@@ -136,7 +136,8 @@ function rellenarTablaProveedores(proveedores) {
 }
 
 
-function borrarContacto(proveedorId) {
+function borrarProveedor(proveedorId) {
+    debugger;
     mostrarMensajeOpcion("Borrar Proveedor", `¿Quieres realmente borrar los datos del proveedor con id ${proveedorId}?`)
                     .then((result) => {
                         if (result.isConfirmed) {

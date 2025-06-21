@@ -231,6 +231,8 @@ public class DireccionServiceImplement extends BaseMySql implements IDireccionSe
         
         StringBuilder sentenciaSQL = new StringBuilder(SQL_SELECT_COMUN);
         
+        sentenciaSQL.append(" WHERE d.activo = true");
+        
         // Añadir el punto y coma final
         sentenciaSQL.append(";");
         

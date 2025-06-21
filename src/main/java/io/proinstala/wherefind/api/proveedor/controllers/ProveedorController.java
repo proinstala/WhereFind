@@ -77,6 +77,16 @@ public class ProveedorController extends BaseHttpServlet {
         return ProveedorController.ActionType.ERROR;
     }
     
+    protected void apiGetProveedor(ActionController actionController) {
+        // Se comprueba que el usuario está logueado
+        if (!UserSession.isUserLogIn(actionController.server(), false)) {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+        
+        proveedorServicio.getProveedorById(actionController);
+    }
+    
     /**
      * Maneja la solicitud para obtener todas los proveedores.
      *
@@ -137,6 +147,38 @@ public class ProveedorController extends BaseHttpServlet {
     }
     
     /**
+     * Maneja la solicitud para elimnar la información de un proveedor específico.
+     *
+     * <p>Verifica si el usuario está autenticado y tiene los permisos necesarios. Si es así, 
+     * delega la operación al servicio de proveedor para actualizar el proveedor y devolver la respuesta.</p>
+     * 
+     * EndPoint - PUT : /api/proveedor/delete/{id}
+     *
+     * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
+     */
+    protected void apiDeleteProveedor(ActionController actionController) {
+        // Se comprueba que el usuario está logueado y sea administrador
+        if (!UserSession.isUserLogIn(actionController.server(), true))
+        {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+        
+        proveedorServicio.deleteProveedor(actionController);
+    }
+    
+    protected void apiUpdateProveedor(ActionController actionController) {
+        // Se comprueba que el usuario está logueado y sea administrador
+        if (!UserSession.isUserLogIn(actionController.server(), true))
+        {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+        
+        proveedorServicio.updateProveedor(actionController);
+    }
+    
+    /**
      * Maneja las solicitudes HTTP GET para las acciones definidas.
      *
      * <p>Obtiene la acción solicitada y determina el tipo de acción. Según el tipo, realiza 
@@ -155,7 +197,7 @@ public class ProveedorController extends BaseHttpServlet {
         System.out.println("EndPoint GET : " + actionController.parametros()[0]);
         
         switch((ActionType) actionController.actionType()) {
-            //case PROVEEDOR -> ;
+            case PROVEEDOR -> apiGetProveedor(actionController);
             case PROVEEDORES -> apiGetProveedores(actionController);
             case FIND_PROVEEDORES -> apiFindProveedores(actionController);
               
@@ -192,6 +234,36 @@ public class ProveedorController extends BaseHttpServlet {
         switch((ActionType) actionController.actionType()){
             case CREATE -> apiCreateProveedor(actionController);
 
+            default -> responseError404(actionController.server().response(), "");
+        }
+    }
+    
+    /**
+     * Maneja las solicitudes HTTP PUT para las acciones definidas.
+     *
+     * <p>Obtiene la acción solicitada y determina el tipo de acción. Según el tipo, realiza 
+     * la operación correspondiente llamando a los métodos adecuados o devuelve un error si 
+     * la acción no es válida.</p>
+     *
+     * @param request  la solicitud HTTP recibida.
+     * @param response la respuesta HTTP que se enviará.
+     * @throws ServletException si ocurre un error en el servlet.
+     * @throws IOException      si ocurre un error de entrada/salida.
+     */
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Obtiene la información de la petición a la API
+        ActionController actionController = getActionController(request, response);
+
+        // Imprime en la salida del servidor el EndPoint
+        System.out.println("EndPoint PUT : " + actionController.parametros()[0]);
+
+        switch((ActionType) actionController.actionType()) {
+            case UPDATE -> apiUpdateProveedor(actionController);
+            case DELETE -> apiDeleteProveedor(actionController);
+            
             default -> responseError404(actionController.server().response(), "");
         }
     }

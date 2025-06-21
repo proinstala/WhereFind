@@ -41,13 +41,27 @@
                 <!-- Formulario -->
                 <div class="contenedor__formulario--main">
                     <form class="formulario" name="frmCrearProveedor" id="frmCrearProveedor">
+                        
+                        <div class="form__input grid-row-span-2">
+                            <div>
+                                <div class="contenedor__formulario--imagen">
+                                    <img src="App/img/store.svg" id="imgProveedor" alt="imagen proveedor">
+                                </div>
+
+                                <label for="inputImgProveedor" class="input_foto">
+                                    <input type="file" name="btnImgProveedor" id="inputImgProveedor" accept="image/*">
+                                    <i class="las la-camera"></i>
+                                    <span id="textoImagenProveedor"></span>
+                                </label>
+                            </div>
+                        </div>
 
                         <div class="form__input">
                             <input type="text" name="nombre" id="nombre" placeholder="Introduce el nombre del proveedor" value="">
                             <label for="nombre">Nombre</label>
                         </div>
                         
-                        <div class="form__input">
+                        <div class="form__input col-span-2">
                             <input type="text" name="descripcion" id="descripcion" placeholder="Introduce una descripción del proveedor" value="">
                             <label for="descripcion">Descripción</label>
                         </div>
@@ -57,12 +71,13 @@
                             <label for="paginaWeb">Página Web</label>
                         </div>
 
-                        <div class="form__input">
+                        <div class="form__input col-span-2">
                             <select name="direccion" id="direccion">
                             </select>
                             <label for="direccion">Dirección</label>
                         </div>
 
+                        <input type="hidden" name="imagenProveedorB64" id="imagenProveedorB64">
                     </form>
                 </div>
 

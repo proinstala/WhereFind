@@ -103,6 +103,10 @@
     max-width: 60rem;
     margin: 1rem 0;
     font-family: var(--fuente_principal);
+    
+    &.col-span-2 {
+        grid-column: span 2;
+    }
 
     input, select {
         border: none; /* Elimina todos los bordes */
@@ -159,6 +163,17 @@
                 color: var(--primario);
             }
         }
+    }
+}
+@media (max-width: 1000px) {
+    .form__input.col-span-2 {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .form__input.col-span-2 {
+        grid-column: span 1;
     }
 }
 
@@ -280,13 +295,6 @@
     }
 }
 
-/*Formulario sweetalert2 esto es prara borrar*/
-.formulario_sw2 {
-    background-color: var(--blanco);
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    width: 100%;
-    justify-items: center;
-}
+
+
 

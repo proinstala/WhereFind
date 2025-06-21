@@ -122,7 +122,7 @@ public class ProveedorServiceImplement extends BaseMySql implements IProveedorSe
         StringBuilder sql = new StringBuilder(SQL_SELECT_COMUN);
         
         sql.append(" WHERE p.activo = TRUE");
-        sql.append(" AND p.proveedor_id = ?");
+        sql.append(" AND p.id = ?");
         
         try (Connection conexion = getConnection(); 
              PreparedStatement ps = conexion.prepareStatement(sql.toString())) {
