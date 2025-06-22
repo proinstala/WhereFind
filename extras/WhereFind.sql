@@ -205,7 +205,7 @@ CREATE TABLE IF NOT EXISTS PROVEEDOR (
     nombre varchar(100) NOT NULL,
     descripcion varchar(200) NOT NULL,
     pagina_web varchar(100),
-    imagen varchar(200),
+    imagen MEDIUMTEXT,
     activo BOOL DEFAULT TRUE NOT NULL,
     direccion_id INT,
     PRIMARY KEY (id),

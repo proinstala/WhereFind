@@ -86,7 +86,7 @@ public class ContactoServiceImplement extends BaseMySql implements IContactoServ
                 .nombre(rs.getString("proveedor_nombre"))
                 .descripcion(rs.getString("proveedor_descripcion"))
                 .paginaWeb(rs.getString("proveedor_pagina_web"))
-                .urlImagen(rs.getString("proveedor_imagen"))
+                .imagen(rs.getString("proveedor_imagen"))
                 .activo(rs.getBoolean("proveedor_activo"))
                 .direccion(direccion)
                 .listaContactos(new ArrayList<>())

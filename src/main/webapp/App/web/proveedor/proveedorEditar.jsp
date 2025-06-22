@@ -52,6 +52,21 @@
                 <div class="contenedor__formulario--main">
                     <form class="formulario" name="frmModificarProveedor" id="frmModificarProveedor">
                         <input type="hidden" name="proveedor_id" id="proveedor_id" value="<%=proveedor_id%>">
+                        
+                        <div class="form__input grid-row-span-2">
+                            <div id="contenedorImgProveedor">
+                                <input type="hidden" name="imagenProveedorB64" id="imagenProveedorB64">
+                                <div class="contenedor__formulario--imagen">
+                                    <img src="App/img/defaultProveedor.svg" id="imgProveedor" alt="imagen proveedor">
+                                </div>
+
+                                <label for="inputImgProveedor" class="input_foto">
+                                    <input type="file" name="inputImgProveedor" id="inputImgProveedor" accept="image/*">
+                                    <i class="las la-camera"></i>
+                                    <span id="textoImagenProveedor"></span>
+                                </label>
+                            </div>
+                        </div>
 
                         <div class="form__input">
                             <input type="text" name="nombre" id="nombre" placeholder="Introduce el nombre del proveedor" value="">

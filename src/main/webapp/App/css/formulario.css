@@ -76,7 +76,8 @@
     align-content: center;
 
     img {
-        width: 15rem;
+        /*width: 15rem;*/
+        height: 11rem;
     }
 }
 

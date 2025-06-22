@@ -18,7 +18,7 @@ public class ProveedorDTO {
     private String nombre;
     private String descripcion;
     private String paginaWeb;
-    private String urlImagen;
+    private String imagen;
     private boolean activo;
     private DireccionDTO direccion;
     

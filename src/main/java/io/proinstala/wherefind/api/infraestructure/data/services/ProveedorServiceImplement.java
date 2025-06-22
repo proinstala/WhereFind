@@ -24,7 +24,12 @@ public class ProveedorServiceImplement extends BaseMySql implements IProveedorSe
     
    private static final String SQL_SELECT_COMUN = 
            """                            
-           SELECT p.*, d.*, l.*, pr.* FROM PROVEEDOR p
+           SELECT
+            p.*,
+            d.id AS d_id, d.calle AS d_calle, d.numero AS d_numero, d.codigo_postal AS d_codigo_postal, d.localidad_id AS d_localidad_id, d.activo AS d_activo,
+            l.id AS l_id, l.nombre AS l_nombre, l.provincia_id AS l_provincia_id,
+            pr.id AS pr_id, pr.nombre AS pr_nombre
+           FROM PROVEEDOR p
            INNER JOIN DIRECCION d ON p.direccion_id = d.id
            INNER JOIN LOCALIDAD l ON d.localidad_id = l.id
            INNER JOIN PROVINCIA pr ON l.provincia_id = pr.id
@@ -47,6 +52,7 @@ public class ProveedorServiceImplement extends BaseMySql implements IProveedorSe
     private static final String SQL_DELETE_PROVEEDOR = 
         "UPDATE PROVEEDOR SET activo = FALSE WHERE id = ?;";
 
+    
     private static ProveedorDTO getProveedorFromResultSet(ResultSet rs) throws SQLException {
         
          ProveedorDTO proveedorDTO = new ProveedorDTO(
@@ -60,22 +66,25 @@ public class ProveedorServiceImplement extends BaseMySql implements IProveedorSe
             new ArrayList<>()
         );
         
-        
-        DireccionDTO direccionDTO = new DireccionDTO(
-            rs.getInt("d.id"),
-            rs.getString("d.calle"),
-            rs.getString("d.numero"),
-            rs.getInt("d.codigo_postal"),
-            new LocalidadDTO(
-                rs.getInt("l.id"),
-                rs.getString("l.nombre"),
-                new ProvinciaDTO(
-                    rs.getInt("pr.id"),
-                    rs.getString("pr.nombre")
-                )
-            ),
-            rs.getBoolean("d.activo")
-        );
+        ProvinciaDTO provinciaDTO = ProvinciaDTO.builder()
+            .id(rs.getInt("pr_id"))
+            .nombre(rs.getString("pr_nombre"))
+            .build();
+
+        LocalidadDTO localidadDTO = LocalidadDTO.builder()
+            .id(rs.getInt("l_id"))
+            .nombre(rs.getString("l_nombre"))
+            .provincia(provinciaDTO)
+            .build();
+
+        DireccionDTO direccionDTO = DireccionDTO.builder()
+            .id(rs.getInt("d_id"))
+            .calle(rs.getString("d_calle"))
+            .numero(rs.getString("d_numero"))
+            .codigoPostal(rs.getInt("d_codigo_postal"))
+            .localidad(localidadDTO)
+            .activo(rs.getBoolean("d_activo"))
+            .build();
 
         proveedorDTO.setDireccion(direccionDTO);
          
@@ -244,7 +253,7 @@ public class ProveedorServiceImplement extends BaseMySql implements IProveedorSe
             ps.setString(1, proveedorDTO.getNombre());
             ps.setString(2, proveedorDTO.getDescripcion());
             ps.setString(3, proveedorDTO.getPaginaWeb());
-            ps.setString(4, proveedorDTO.getUrlImagen());
+            ps.setString(4, proveedorDTO.getImagen());
             ps.setInt(5, proveedorDTO.getDireccion().getId());
             ps.setInt(6, proveedorDTO.getId());
 
@@ -277,7 +286,7 @@ public class ProveedorServiceImplement extends BaseMySql implements IProveedorSe
             ps.setString(1, proveedorDTO.getNombre());
             ps.setString(2, proveedorDTO.getDescripcion());
             ps.setString(3, proveedorDTO.getPaginaWeb());
-            ps.setString(4, proveedorDTO.getUrlImagen());
+            ps.setString(4, proveedorDTO.getImagen());
             ps.setInt(5, proveedorDTO.getDireccion().getId());
 
             int affectedRows = ps.executeUpdate();

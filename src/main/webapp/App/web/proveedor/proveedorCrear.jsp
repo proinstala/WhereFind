@@ -43,13 +43,14 @@
                     <form class="formulario" name="frmCrearProveedor" id="frmCrearProveedor">
                         
                         <div class="form__input grid-row-span-2">
-                            <div>
+                            <div id="contenedorImgProveedor">
+                                <input type="hidden" name="imagenProveedorB64" id="imagenProveedorB64">
                                 <div class="contenedor__formulario--imagen">
-                                    <img src="App/img/store.svg" id="imgProveedor" alt="imagen proveedor">
+                                    <img src="App/img/defaultProveedor.svg" id="imgProveedor" alt="imagen proveedor">
                                 </div>
 
                                 <label for="inputImgProveedor" class="input_foto">
-                                    <input type="file" name="btnImgProveedor" id="inputImgProveedor" accept="image/*">
+                                    <input type="file" name="inputImgProveedor" id="inputImgProveedor" accept="image/*">
                                     <i class="las la-camera"></i>
                                     <span id="textoImagenProveedor"></span>
                                 </label>
@@ -77,7 +78,6 @@
                             <label for="direccion">Dirección</label>
                         </div>
 
-                        <input type="hidden" name="imagenProveedorB64" id="imagenProveedorB64">
                     </form>
                 </div>
 

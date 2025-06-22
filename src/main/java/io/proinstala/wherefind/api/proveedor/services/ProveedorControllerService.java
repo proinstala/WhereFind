@@ -202,6 +202,7 @@ public class ProveedorControllerService extends BaseService {
             String nombre = actionController.server().getRequestParameter(FormParametros.PARAM_PROVEEDOR_NOMBRE, "");
             String descripcion = actionController.server().getRequestParameter(FormParametros.PARAM_PROVEEDOR_DESCRIPCION, "");
             String paginaWeb = actionController.server().getRequestParameter(FormParametros.PARAM_PROVEEDOR_PAGINA_WEB, "");
+            String imagen = actionController.server().getRequestParameter(FormParametros.PARAM_PROVEEDOR_IMAGEN, "");
             String strDirecion = actionController.server().getRequestParameter(FormParametros.PARAM_PROVEEDOR_DIRECCION, "");
 
             try {
@@ -209,6 +210,7 @@ public class ProveedorControllerService extends BaseService {
                 proveedorDTO.setNombre(nombre);
                 proveedorDTO.setDescripcion(descripcion);
                 proveedorDTO.setPaginaWeb(paginaWeb);
+                proveedorDTO.setImagen(imagen);
                 
                 proveedorDTO.setDireccion(DireccionDTO.builder().id(direccionId).build());
                 

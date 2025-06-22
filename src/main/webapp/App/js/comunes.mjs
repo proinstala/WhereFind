@@ -249,6 +249,34 @@ function validateImage(fileImage, maxSizeInMB = 1) {
 }
 
 /**
+ * Restablece los campos de imagen a su valor por defecto.
+ * 
+ * Esta función reinicia los valores del contenedor de imagen,
+ * incluyendo la imagen visible, el valor del input oculto (base64) y el texto
+ * con el nombre de la imagen. Si se proporciona `srcImg`, se establece como
+ * la nueva fuente de la imagen. Si no, se deja en blanco.
+ *
+ * @param {HTMLElement} contenedor - El contenedor que incluye el input oculto,
+ *                                   la etiqueta <img> y el nombre de la imagen.
+ * @param {string} srcImg - La URL o ruta de la imagen por defecto a mostrar.
+ */
+function resetImg(contenedor, srcImg) {
+    if(contenedor) {
+        const inputHide = contenedor.querySelector('input[type="hidden"]');
+        const imagen = contenedor.querySelector('img');
+        const nombre = contenedor.querySelector('span');
+        
+        nombre.textContent = "";
+        inputHide.value = "";
+        if(srcImg) {
+            imagen.src = srcImg;
+        } else {
+            imagen.src = "";
+        }
+    }
+}
+
+/**
  * Restablece todos los campos de un formulario.
  *
  * @param {string} idForm - El selector CSS del formulario a restablecer.
@@ -549,6 +577,7 @@ export { solicitudPost,
         solicitudGet,
         solicitudPut,
         setImageSelected,
+        resetImg,
         resetCamposForm,
         detectarCambiosFormulario,
         getDatosForm,

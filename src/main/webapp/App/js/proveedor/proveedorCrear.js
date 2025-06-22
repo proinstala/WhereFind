@@ -1,6 +1,7 @@
 
-import {solicitudPost, setImageSelected, fillInputSelect, cargarInputSelect, vaciarSelect, detectarCambiosFormulario, resetCamposForm } from '../comunes.mjs';
+import {solicitudPost, setImageSelected, resetImg, fillInputSelect, cargarInputSelect, vaciarSelect, detectarCambiosFormulario, resetCamposForm } from '../comunes.mjs';
 import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from '../alertasSweetAlert2.mjs';
+import {DEFAULT_IMG} from '../constantes.mjs';
 
 const idSelectDireccion = "#direccion";
 const idInputNombre = "#nombre";
@@ -11,15 +12,25 @@ const idBtnGuardar = "#btnGuardar";
 const idBtnCancelar = "#btnCancelar";
 const idBtnDeshacerCambiosProveedor = "#btnDeshacerCambiosProveedor";
 
+const idContenedorImgProveedor = "#contenedorImgProveedor";
+const idInputHideImgProveedor = "#imagenProveedorB64"; //Input oculto.
+const idInputImgProveedor = "#inputImgProveedor";
+const idImgProveedor = "#imgProveedor";
+const idLabelImgProveedor = "#textoImagenProveedor";
 
-
+let defaultImgProveedor =  "App/img/defaultProveedor.svg";
 
 $(document).ready(function () {
     const selectDireccion = document.querySelector(idSelectDireccion);
     const btnDeshacerCambiosProveedor = document.querySelector(idBtnDeshacerCambiosProveedor);
     const btnCancelar = document.querySelector(idBtnCancelar);
     
-    
+    //Imagen proveedor
+    const contenedorImgProveedor = document.querySelector(idContenedorImgProveedor);
+    const inputImgProveedor = document.querySelector(idInputImgProveedor);
+    const imgProveedor = document.querySelector(idImgProveedor);
+    const inputHideImgProveedor = document.querySelector(idInputHideImgProveedor);
+    const labelImgProveedor = document.querySelector(idLabelImgProveedor);
 
     //Carga el select direccion.
     const promesaCargaSelectDireccion = cargarInputSelect(selectDireccion, "api/direccion/direcciones", 'Seleccione una dirección', false, () => {});
@@ -42,33 +53,24 @@ $(document).ready(function () {
 
     btnDeshacerCambiosProveedor.addEventListener('click', () => {
         resetCamposForm(idFormProveedor);
+        resetImg(contenedorImgProveedor, DEFAULT_IMG.PROVEEDOR);
         
-        onDetectarCambiosCrearContacto(false);
-        detectarCambiosFormulario(idFormProveedor, onDetectarCambiosCrearContacto);
+        onDetectarCambiosCrearProveedor(false);
+        detectarCambiosFormulario(idFormProveedor, onDetectarCambiosCrearProveedor);
     });
     
-    const idInputHideImgProveedor = "#imagenProveedorB64"; //Input oculto.
-    const idInputImgProveedor = "#inputImgProveedor";
-    const idImgeProveedor = "#imgProveedor";
-    const idLabelImgProveedor = "#textoImagenProveedor";
-    
-    const inputImgProveedor = document.querySelector(idInputImgProveedor);
-    const ImgProveedor = document.querySelector(idImgeProveedor);
-    const inputHideImgProveedor = document.querySelector(idInputHideImgProveedor);
-    const labelImgProveedor = document.querySelector(idLabelImgProveedor);
-    //debugger;
     inputImgProveedor.addEventListener('change', (e) => {
-        const defaultImg = ImgProveedor.src;
+        const defaultImg = imgProveedor.src;
         const fileImg = e.target.files[0];
 
         //Establece la imagen seleccionada.
-        setImageSelected(fileImg, ImgProveedor, inputHideImgProveedor, defaultImg, 4)
+        setImageSelected(fileImg, imgProveedor, inputHideImgProveedor, defaultImg, 4)
             .then((result) => {
                 if (result) {
-                    console.log("Imagen establecida correctamente.");
+                    //console.log("Imagen establecida correctamente.");
 
                     // Detecta el cambio de la imagen
-                    onDetectarCambios(labelImgProveedor.textContent !== result);
+                    onDetectarCambiosCrearProveedor(labelImgProveedor.textContent !== result);
 
                     labelImgProveedor.textContent = result;
                 } else {
@@ -159,6 +161,7 @@ function getProveedorJson() {
     const inputNombre = document.querySelector(idInputNombre);
     const inputDescripcion = document.querySelector(idInputDescripcion);
     const inputPaginaWeb = document.querySelector(idInputPaginaWeb);
+    const inputHideImgProveedor = document.querySelector(idInputHideImgProveedor);
 
     // Construcción del objeto JSON con validación del código postal
     const proveedorJSON = {
@@ -166,6 +169,7 @@ function getProveedorJson() {
         nombre: inputNombre.value.trim(),
         descripcion: inputNombre.value.trim(),
         paginaWeb: inputPaginaWeb.value.trim(),
+        imagen: inputHideImgProveedor.value,
         activo: true,
         direccion: {
             id: selectDireccion.value,

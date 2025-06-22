@@ -1,5 +1,6 @@
-import { solicitudGet, solicitudPut, getDatosForm, fillInputSelect, cargarInputSelect, seleccionarValorSelect, detectarCambiosFormulario } from '../comunes.mjs';
+import { solicitudGet, setImageSelected, solicitudPut, getDatosForm, fillInputSelect, cargarInputSelect, seleccionarValorSelect, detectarCambiosFormulario } from '../comunes.mjs';
 import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from '../alertasSweetAlert2.mjs';
+import {DEFAULT_IMG} from '../constantes.mjs';
 
 const idSelectDireccion = "#direccion";
 const idInputIdProveedor = "#proveedor_id";
@@ -12,6 +13,12 @@ const idBtnGuardar = "#btnGuardar";
 const idBtnCancelar = "#btnCancelar";
 const idBtnDeshacerCambiosProveedor = "#btnDeshacerCambiosProveedor";
 
+const idContenedorImgProveedor = "#contenedorImgProveedor";
+const idInputHideImgProveedor = "#imagenProveedorB64"; //Input oculto.
+const idInputImgProveedor = "#inputImgProveedor";
+const idImgProveedor = "#imgProveedor";
+const idLabelImgProveedor = "#textoImagenProveedor";
+
 let oldProveedor;
 
 $(document).ready(function () {
@@ -20,6 +27,13 @@ $(document).ready(function () {
     const inputNombre = document.querySelector(idInputNombre);
     const inputDescripcion = document.querySelector(idInputDescripcion);
     const inputPaginaWeb = document.querySelector(idInputPaginaWeb);
+    
+    //Imagen proveedor
+    const contenedorImgProveedor = document.querySelector(idContenedorImgProveedor);
+    const inputImgProveedor = document.querySelector(idInputImgProveedor);
+    const imgProveedor = document.querySelector(idImgProveedor);
+    const inputHideImgProveedor = document.querySelector(idInputHideImgProveedor);
+    const labelImgProveedor = document.querySelector(idLabelImgProveedor);
     
     const btnDeshacerCambiosProveedor = document.querySelector(idBtnDeshacerCambiosProveedor);
     const btnCancelar = document.querySelector(idBtnCancelar);
@@ -34,6 +48,31 @@ $(document).ready(function () {
 
     btnCancelar.addEventListener('click', () => {
         window.location.href = "proveedor/proveedores";
+    });
+    
+    inputImgProveedor.addEventListener('change', (e) => {
+        const defaultImg = imgProveedor.src;
+        const fileImg = e.target.files[0];
+
+        //Establece la imagen seleccionada.
+        setImageSelected(fileImg, imgProveedor, inputHideImgProveedor, defaultImg, 4)
+            .then((result) => {
+                if (result) {
+                    //console.log("Imagen establecida correctamente.");
+
+                    // Detecta el cambio de la imagen
+                    onDetectarCambiosModificarProveedor(labelImgProveedor.textContent !== result);
+
+                    labelImgProveedor.textContent = result;
+                } else {
+                    console.log("No se ha establecido la imagen.");
+                }
+            })
+            .catch((error) => {
+                // Maneja cualquier error que ocurra durante la validación o el proceso de establecer la imagen
+                console.error('Error:', error);
+                inputImgProveedor.value = '';
+            });
     });
 
 });
@@ -69,11 +108,20 @@ function fillFielsProveedor(proveedor) {
     const inputNombre = form.querySelector(idInputNombre);
     const inputDescripcion = form.querySelector(idInputDescripcion);
     const inputPaginaWeb = form.querySelector(idInputPaginaWeb);
-
+    const inputHideImgProveedor = form.querySelector(idInputHideImgProveedor);
+    const imgProveedor = form.querySelector(idImgProveedor);
+    const labelImgProveedor = document.querySelector(idLabelImgProveedor);
+    debugger;
     inputNombre.value = proveedor.nombre;
     inputDescripcion.value = proveedor.descripcion ?? "";
     inputPaginaWeb.value = proveedor.paginaWeb ?? "";
     
+    // Imagen: usa la imagen del proveedor si existe, de lo contrario la imagen por defecto
+    const imagenValida = proveedor.imagen && proveedor.imagen.trim() !== "";
+    inputHideImgProveedor.value = imagenValida ? proveedor.imagen : "";
+    imgProveedor.src = imagenValida ? proveedor.imagen : DEFAULT_IMG.PROVEEDOR;
+    
+    labelImgProveedor.textContent = "";
     
     const promesaDireccion = cargarInputSelect(selectDireccion, "api/direccion/direcciones", '', proveedor.direccion.id, () => {});
     
