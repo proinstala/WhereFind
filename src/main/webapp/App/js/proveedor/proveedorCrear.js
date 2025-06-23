@@ -108,8 +108,8 @@ function validarFormulario(idForm) {
                 maxlength: 100
             },
             direccion: {
-                maxlength: 100,
-                min: 1,
+                number: true,
+                min: -1,
                 max: 999999
             }
         },//Fin de reglas ----------------
@@ -126,6 +126,7 @@ function validarFormulario(idForm) {
                 maxlength: "Longitud máx 100 caracteres."
             },
             direccion: {
+                number: "Valor seleccionado no válido.",
                 min: "Valor seleccionado no válido.",
                 max: "Valor seleccionado no válido."
             }
@@ -162,17 +163,19 @@ function getProveedorJson() {
     const inputDescripcion = document.querySelector(idInputDescripcion);
     const inputPaginaWeb = document.querySelector(idInputPaginaWeb);
     const inputHideImgProveedor = document.querySelector(idInputHideImgProveedor);
+    
+    // Obtener el valor seleccionado
+    const direccionId = parseInt(selectDireccion.value, 10);
 
-    // Construcción del objeto JSON con validación del código postal
     const proveedorJSON = {
         id: "0",
         nombre: inputNombre.value.trim(),
-        descripcion: inputNombre.value.trim(),
+        descripcion: inputDescripcion.value.trim(),
         paginaWeb: inputPaginaWeb.value.trim(),
         imagen: inputHideImgProveedor.value,
         activo: true,
-        direccion: {
-            id: selectDireccion.value,
+        direccion: direccionId === -1 ? null : {
+            id: direccionId,
             calle: "",
             numero: "",
             codigoPostal: "0", 

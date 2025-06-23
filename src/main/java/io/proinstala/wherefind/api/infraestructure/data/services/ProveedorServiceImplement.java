@@ -30,7 +30,7 @@ public class ProveedorServiceImplement extends BaseMySql implements IProveedorSe
             l.id AS l_id, l.nombre AS l_nombre, l.provincia_id AS l_provincia_id,
             pr.id AS pr_id, pr.nombre AS pr_nombre
            FROM PROVEEDOR p
-           INNER JOIN DIRECCION d ON p.direccion_id = d.id
+           LEFT JOIN DIRECCION d ON p.direccion_id = d.id
            INNER JOIN LOCALIDAD l ON d.localidad_id = l.id
            INNER JOIN PROVINCIA pr ON l.provincia_id = pr.id
            """;
@@ -287,7 +287,13 @@ public class ProveedorServiceImplement extends BaseMySql implements IProveedorSe
             ps.setString(2, proveedorDTO.getDescripcion());
             ps.setString(3, proveedorDTO.getPaginaWeb());
             ps.setString(4, proveedorDTO.getImagen());
-            ps.setInt(5, proveedorDTO.getDireccion().getId());
+            
+            // Validación para permitir direccion null
+            if (proveedorDTO.getDireccion() == null) {
+                ps.setNull(5, java.sql.Types.INTEGER);
+            } else {
+                ps.setInt(5, proveedorDTO.getDireccion().getId());
+            }
 
             int affectedRows = ps.executeUpdate();
 
