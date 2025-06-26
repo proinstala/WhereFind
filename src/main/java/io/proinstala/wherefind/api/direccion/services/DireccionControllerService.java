@@ -109,6 +109,62 @@ public class DireccionControllerService extends BaseService{
     }
     
     /**
+     * Busca direcciones que no están asignadas, incluyendo opcionalmente una
+     * dirección específica.
+     *
+     * <p>
+     * Este método devuelve una lista de direcciones que actualmente no están
+     * asignadas (es decir, están disponibles para su uso). Si se proporciona un
+     * identificador de dirección como parámetro, esa dirección se incluirá en
+     * la lista incluso si ya está asignada.</p>
+     *
+     * <p>
+     * Este comportamiento permite mostrar al usuario una lista de direcciones
+     * disponibles, sin excluir la dirección actual si se está editando o
+     * reutilizando.</p>
+     *
+     * @param actionController El controlador de acción que contiene los
+     * parámetros de la solicitud.
+     */
+    public void findDireccionesLibres(ActionController actionController) {
+        //Respuesta de la acción actual
+        ResponseDTO responseDTO;
+        
+        IDireccionService direccionServiceImp = GestorPersistencia.getDireccionService();
+        
+        List<DireccionDTO> listaDireccionesDTO = null;
+        
+        String strIdDireccion = actionController.server().getRequestParameter(FormParametros.PARAM_DIRECCION_ID, "");
+   
+        
+        int idDireccion = -1;
+        try {
+            if(!strIdDireccion.isBlank()) {
+                idDireccion = Integer.parseInt(strIdDireccion);
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        
+        if(idDireccion != -1) {
+            listaDireccionesDTO = direccionServiceImp.findDireccionesLibres(idDireccion);
+        } else {
+            listaDireccionesDTO = direccionServiceImp.findDireccionesLibres();
+        }
+        
+        if(listaDireccionesDTO != null) {
+            responseDTO = getResponseOk("OK", listaDireccionesDTO, 0);
+        } else {
+            //Crea la respuesta con un error
+            responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR, new ArrayList<>());
+        }
+        
+        //Devuelve la respuesta al navegador del usuario en formato json
+        responseJson(actionController.server().response(), responseDTO);
+    }
+    
+    
+    /**
      * Obtiene todas las direcciones.
      * 
      * @param actionController El controlador de acción que contiene los parámetros de la solicitud.

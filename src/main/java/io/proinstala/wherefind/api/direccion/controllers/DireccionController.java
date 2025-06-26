@@ -43,6 +43,7 @@ public class DireccionController extends BaseHttpServlet {
         DIRECCION,
         DIRECCIONES,
         FINDDIRECCIONES,
+        FIND_DIRECCIONES_LIBRES,
         UPDATE,
         CREATE,
         DELETE
@@ -102,6 +103,16 @@ public class DireccionController extends BaseHttpServlet {
         }
         
         direccionServicio.findDirecciones(actionController);
+    }
+    
+    protected void apiFindDireccionesLibres(ActionController actionController) {
+        // Se comprueba que el usuario está logueado
+        if (!UserSession.isUserLogIn(actionController.server(), false)) {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+        
+        direccionServicio.findDireccionesLibres(actionController);
     }
     
     /**
@@ -228,6 +239,7 @@ public class DireccionController extends BaseHttpServlet {
             case DIRECCION -> apiGetDireccion(actionController);
             case DIRECCIONES -> apiGetDirecciones(actionController);
             case FINDDIRECCIONES -> apiFindDirecciones(actionController);
+            case FIND_DIRECCIONES_LIBRES -> apiFindDireccionesLibres(actionController);
               
             default -> responseError403(actionController.server().response(), "");
         }

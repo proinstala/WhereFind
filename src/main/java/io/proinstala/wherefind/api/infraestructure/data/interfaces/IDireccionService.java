@@ -23,6 +23,7 @@ public interface IDireccionService {
      */
     public DireccionDTO getDireccionById(int idDireccion);
     
+    
     /**
      * Busca direcciones que coincidan con los criterios de búsqueda especificados.
      *
@@ -39,6 +40,33 @@ public interface IDireccionService {
      */
     public List<DireccionDTO> findDirecciones(String calle, int localidad, int provincia);
     
+    
+    /**
+     * Obtiene una lista de direcciones que actualmente no están asignadas o están libres.
+     *
+     * Este método devuelve una lista de objetos {@link DireccionDTO} que representan las direcciones 
+     * disponibles o no utilizadas actualmente en el sistema. Es útil para operaciones donde se 
+     * necesite asignar nuevas direcciones sin conflictos de uso.
+     *
+     * @return una lista de {@link DireccionDTO} que representan direcciones libres, o una lista vacía si no hay ninguna disponible.
+     */
+    public List<DireccionDTO> findDireccionesLibres();
+    
+    
+    /**
+     * Obtiene una lista de direcciones libres excluyendo una dirección específica.
+     *
+     * Este método devuelve una lista de objetos {@link DireccionDTO} que representan las direcciones 
+     * libres, excluyendo aquella cuyo ID se proporciona como parámetro. Este comportamiento es útil en 
+     * escenarios de edición donde se desea mantener la dirección actual como válida, pero listar las demás 
+     * direcciones disponibles.
+     *
+     * @param direccion_id el identificador de la dirección que se debe excluir de la lista de direcciones libres.
+     * @return una lista de {@link DireccionDTO} que representan direcciones libres, excluyendo la dirección especificada, o una lista vacía si no hay coincidencias.
+     */
+    public List<DireccionDTO> findDireccionesLibres(int direccion_id);
+    
+    
     /**
      * Obtiene todas las direcciones.
      *
@@ -47,6 +75,7 @@ public interface IDireccionService {
      * @return una lista de {@link DireccionDTO} con todas las direcciones.
      */
     public List<DireccionDTO> getDirecciones();
+    
     
     /**
      * Actualiza la información de una dirección en la base de datos.
@@ -60,6 +89,7 @@ public interface IDireccionService {
      * @return {@code true} si la actualización se realizó con éxito, o {@code false} si ocurrió un error o no se actualizó ninguna fila.
      */
     public boolean updateDireccion(DireccionDTO direccionDTO);
+    
     
     /**
      * Crea una nueva dirección en la base de datos.
@@ -81,6 +111,7 @@ public interface IDireccionService {
      *         o {@code null} si ocurrió un error durante la inserción.
      */
     public DireccionDTO createDireccion(DireccionDTO direccionDTO);
+    
     
     /**
      * Elimina una dirección de la base de datos.

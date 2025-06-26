@@ -212,8 +212,11 @@ public class ProveedorControllerService extends BaseService {
                 proveedorDTO.setPaginaWeb(paginaWeb);
                 proveedorDTO.setImagen(imagen);
                 
-                proveedorDTO.setDireccion(DireccionDTO.builder().id(direccionId).build());
-                
+                if(direccionId > 0) {
+                    proveedorDTO.setDireccion(DireccionDTO.builder().id(direccionId).build());
+                } else {
+                     proveedorDTO.setDireccion(null);
+                }
 
                 if (proveedorServiceImp.updateProveedor(proveedorDTO)) {
                      //Como la acción se ha ejecutado correctamente se crea la respuesta acorde a la misma

@@ -57,4 +57,6 @@ public interface IProveedorService {
      */
     public boolean deleteProveedor(int proveedorId);
     
+    
+    
 }

@@ -31,10 +31,6 @@ public class DireccionServiceImplement extends BaseMySql implements IDireccionSe
             INNER JOIN PROVINCIA p ON(l.provincia_id = p.id) 
             """;
     
-    /**
-     * Sentencia SQL para obtener una dirección por su identificador.
-     */
-    private static final String SQL_SELECT_DIRECCION_BY_ID = "SELECT d.*, l.*, p.* FROM DIRECCION d INNER JOIN LOCALIDAD l ON(d.localidad_id = l.id) INNER JOIN PROVINCIA p ON(l.provincia_id = p.id) WHERE d.id = ?;";
     
     /**
      * Sentencia SQL para obtener todas las direcciones.
@@ -109,8 +105,12 @@ public class DireccionServiceImplement extends BaseMySql implements IDireccionSe
     public DireccionDTO getDireccionById(int idDireccion) {
         DireccionDTO direccionDTO = null;
         
+        StringBuilder sql = new StringBuilder(SQL_SELECT_COMUN);
+        sql.append("WHERE d.id = ?;");
+     
+        
         try (Connection conexion = getConnection(); 
-                PreparedStatement ps = conexion.prepareStatement(SQL_SELECT_DIRECCION_BY_ID)) {
+                PreparedStatement ps = conexion.prepareStatement(sql.toString())) {
             
             ps.setInt(1, idDireccion);
             
@@ -162,12 +162,9 @@ public class DireccionServiceImplement extends BaseMySql implements IDireccionSe
     public List<DireccionDTO> findDirecciones(String calle, int IdLocalidad, int IdProvincia) {
         List<DireccionDTO> listaDireccionesDTO = new ArrayList<>();
         
-        StringBuilder sentenciaSQL = new StringBuilder(SQL_SELECT_DIRECCIONES);
+        StringBuilder sentenciaSQL = new StringBuilder(SQL_SELECT_COMUN);
         
-        //Eliminar el punto y coma al final de SQL_SELECT_DIRECCIONES
-        if (sentenciaSQL.charAt(sentenciaSQL.length() - 1) == ';') {
-            sentenciaSQL.deleteCharAt(sentenciaSQL.length() - 1);
-        }
+        sentenciaSQL.append(" WHERE d.activo = TRUE");
 
         //Agregar la cláusula WHERE y la condicion de busqueda por nombre de calle
         sentenciaSQL.append(" AND d.calle LIKE ?");
@@ -181,9 +178,6 @@ public class DireccionServiceImplement extends BaseMySql implements IDireccionSe
         if (IdProvincia != -1) {
             sentenciaSQL.append(" AND p.id = ?");
         }
-
-        // Añadir el punto y coma final
-        sentenciaSQL.append(";");
         
         // Uso de try-with-resources para garantizar el cierre de recursos
         try (Connection conexion = getConnection(); 
@@ -232,9 +226,6 @@ public class DireccionServiceImplement extends BaseMySql implements IDireccionSe
         StringBuilder sentenciaSQL = new StringBuilder(SQL_SELECT_COMUN);
         
         sentenciaSQL.append(" WHERE d.activo = true");
-        
-        // Añadir el punto y coma final
-        sentenciaSQL.append(";");
         
         // Uso de try-with-resources para garantizar el cierre de recursos
         try (Connection conexion = getConnection(); 
@@ -400,6 +391,131 @@ public class DireccionServiceImplement extends BaseMySql implements IDireccionSe
         }
 
         return direccionDTO; // Devuelve el objeto con el ID asignado
+    }
+    
+    /**
+     * Obtiene una lista de direcciones activas que no están asociadas a ningún
+     * almacén ni proveedor.
+     *
+     * <p>
+     * Este método busca en la base de datos todas las direcciones que estén
+     * marcadas como activas y que no estén siendo utilizadas actualmente en las
+     * tablas {@code ALMACEN} o {@code PROVEEDOR}. Esto es útil, por ejemplo,
+     * para ofrecer una lista de direcciones disponibles que pueden asignarse a
+     * nuevas entidades.</p>
+     *
+     * <p>
+     * La consulta se realiza mediante una subconsulta con {@code NOT IN} que
+     * verifica que la dirección no esté presente en ninguna de las dos tablas
+     * referenciadas.</p>
+     *
+     * @return una lista de {@link DireccionDTO} que representan direcciones
+     * libres, o {@code null} si ocurre un error al ejecutar la consulta.
+     */
+    @Override
+    public List<DireccionDTO> findDireccionesLibres() {
+        List<DireccionDTO> listaDireccionesDTO = new ArrayList<>();
+        
+        StringBuilder sentenciaSQL = new StringBuilder(SQL_SELECT_COMUN);
+        
+        sentenciaSQL.append(" WHERE d.activo = true");
+        
+        sentenciaSQL.append("""
+            AND d.id NOT IN (
+                SELECT direccion_id FROM ALMACEN WHERE direccion_id IS NOT NULL
+                UNION
+                SELECT direccion_id FROM PROVEEDOR WHERE direccion_id IS NOT NULL
+                )
+        """);
+        
+        // Uso de try-with-resources para garantizar el cierre de recursos
+        try (Connection conexion = getConnection(); 
+                PreparedStatement ps = conexion.prepareStatement(sentenciaSQL.toString())) {
+                
+                //Ejecutar la consulta y obtener el ResultSet dentro de otro bloque try-with-resources
+                try (ResultSet resultSet = ps.executeQuery()) {
+                    while (resultSet.next()) {
+                        DireccionDTO direccionDTO = getDireccionFromResultSet(resultSet); //Crear un objeto DireccionDTO a partir del ResultSet
+                        
+                        // Si la direccion es válida, agregarla a la lista
+                        if (direccionDTO != null) {
+                            listaDireccionesDTO.add(direccionDTO);
+                        }
+                    }
+                }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null; //Devolver null para indicar un error
+        }
+
+        return listaDireccionesDTO;
+    }
+
+    /**
+     * Obtiene una lista de direcciones activas no utilizadas o que coincidan
+     * con el ID especificado.
+     *
+     * <p>
+     * Este método es similar a {@link #findDireccionesLibres()}, pero permite
+     * incluir explícitamente una dirección específica (por su identificador),
+     * incluso si ya está asociada a un almacén o proveedor. Esto resulta útil
+     * cuando se desea verificar o permitir la reutilización de una dirección
+     * que ya está en uso.</p>
+     *
+     * <p>
+     * La consulta devuelve todas las direcciones activas que no están siendo
+     * usadas, más la dirección con ID igual al parámetro proporcionado,
+     * independientemente de su uso.</p>
+     *
+     * @param direccion_id el identificador de la dirección que debe incluirse
+     * en los resultados, aunque ya esté asociada.
+     * @return una lista de {@link DireccionDTO} que representa las direcciones
+     * disponibles o seleccionadas, o {@code null} si ocurre un error durante la
+     * consulta.
+     */
+    @Override
+    public List<DireccionDTO> findDireccionesLibres(int direccion_id) {
+        List<DireccionDTO> listaDireccionesDTO = new ArrayList<>();
+    
+        StringBuilder sentenciaSQL = new StringBuilder(SQL_SELECT_COMUN);
+
+        // Agregar condición principal: activo = true
+        sentenciaSQL.append(" WHERE d.activo = true");
+
+        // Agregar condición para obtener direcciones no utilizadas, o que sean la que estamos permitiendo (por ID)
+        sentenciaSQL.append("""
+            AND (
+                d.id NOT IN (
+                    SELECT direccion_id FROM ALMACEN WHERE direccion_id IS NOT NULL
+                    UNION
+                    SELECT direccion_id FROM PROVEEDOR WHERE direccion_id IS NOT NULL
+                )
+                OR d.id = ?
+            )
+        """);
+
+        try (Connection conexion = getConnection();
+             PreparedStatement ps = conexion.prepareStatement(sentenciaSQL.toString())) {
+
+            // Establecer el valor del parámetro ? (el id que queremos incluir)
+            ps.setInt(1, direccion_id);
+
+            try (ResultSet resultSet = ps.executeQuery()) {
+                while (resultSet.next()) {
+                    DireccionDTO direccionDTO = getDireccionFromResultSet(resultSet);
+                    if (direccionDTO != null) {
+                        listaDireccionesDTO.add(direccionDTO);
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return listaDireccionesDTO;
     }
     
 }

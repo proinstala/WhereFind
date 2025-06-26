@@ -33,7 +33,7 @@ $(document).ready(function () {
     const labelImgProveedor = document.querySelector(idLabelImgProveedor);
 
     //Carga el select direccion.
-    const promesaCargaSelectDireccion = cargarInputSelect(selectDireccion, "api/direccion/direcciones", 'Seleccione una dirección', false, () => {});
+    const promesaCargaSelectDireccion = cargarInputSelect(selectDireccion, "api/direccion/find_direcciones_libres", 'Seleccione una dirección', false, () => {});
     
     Promise.all([promesaCargaSelectDireccion])
         .then(() => {

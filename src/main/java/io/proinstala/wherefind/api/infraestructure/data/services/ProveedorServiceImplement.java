@@ -31,8 +31,8 @@ public class ProveedorServiceImplement extends BaseMySql implements IProveedorSe
             pr.id AS pr_id, pr.nombre AS pr_nombre
            FROM PROVEEDOR p
            LEFT JOIN DIRECCION d ON p.direccion_id = d.id
-           INNER JOIN LOCALIDAD l ON d.localidad_id = l.id
-           INNER JOIN PROVINCIA pr ON l.provincia_id = pr.id
+           LEFT JOIN LOCALIDAD l ON d.localidad_id = l.id
+           LEFT JOIN PROVINCIA pr ON l.provincia_id = pr.id
            """;
 
     private static final String SQL_SELECT_CONTACTOS_BY_PROVEEDOR = 
@@ -65,7 +65,7 @@ public class ProveedorServiceImplement extends BaseMySql implements IProveedorSe
             new DireccionDTO(),
             new ArrayList<>()
         );
-        
+         
         ProvinciaDTO provinciaDTO = ProvinciaDTO.builder()
             .id(rs.getInt("pr_id"))
             .nombre(rs.getString("pr_nombre"))
@@ -254,7 +254,7 @@ public class ProveedorServiceImplement extends BaseMySql implements IProveedorSe
             ps.setString(2, proveedorDTO.getDescripcion());
             ps.setString(3, proveedorDTO.getPaginaWeb());
             ps.setString(4, proveedorDTO.getImagen());
-            ps.setInt(5, proveedorDTO.getDireccion().getId());
+            ps.setObject(5, proveedorDTO.getDireccion() != null ? proveedorDTO.getDireccion().getId() : null);
             ps.setInt(6, proveedorDTO.getId());
 
             rowsAffected = ps.executeUpdate();

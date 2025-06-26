@@ -122,8 +122,8 @@ function rellenarTablaProveedores(proveedores) {
                 <td>${proveedor.nombre}</td>
                 <td>${proveedor.descripcion}</td>
                 <td>${proveedor.paginaWeb}</td>
-                <td>${proveedor.direccion.localidad.nombre}</td>
-                <td>${proveedor.direccion.localidad.provincia.nombre}</td>
+                <td>${proveedor.direccion.localidad.nombre ?? ''}</td>
+                <td>${proveedor.direccion.localidad.provincia.nombre ?? ''}</td>
                 </tr>`;
     }).join('');
 

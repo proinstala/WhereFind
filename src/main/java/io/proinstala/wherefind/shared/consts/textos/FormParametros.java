@@ -36,6 +36,8 @@ public class FormParametros {
     
     //Direccion ----------------------------------------------------------------
     
+    public static final String PARAM_DIRECCION_ID = "direccion";
+    
     /** Nombre de la calle de la dirección. */
     public static final String PARAM_DIRECCION_CALLE = "calle";
     

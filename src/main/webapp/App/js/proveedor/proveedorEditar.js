@@ -111,7 +111,7 @@ function fillFielsProveedor(proveedor) {
     const inputHideImgProveedor = form.querySelector(idInputHideImgProveedor);
     const imgProveedor = form.querySelector(idImgProveedor);
     const labelImgProveedor = document.querySelector(idLabelImgProveedor);
-    debugger;
+   
     inputNombre.value = proveedor.nombre;
     inputDescripcion.value = proveedor.descripcion ?? "";
     inputPaginaWeb.value = proveedor.paginaWeb ?? "";
@@ -123,7 +123,9 @@ function fillFielsProveedor(proveedor) {
     
     labelImgProveedor.textContent = "";
     
-    const promesaDireccion = cargarInputSelect(selectDireccion, "api/direccion/direcciones", '', proveedor.direccion.id, () => {});
+    const direccionId = proveedor.direccion.id;
+    
+    const promesaDireccion = cargarInputSelect(selectDireccion, `api/direccion/find_direcciones_libres?direccion=${direccionId}`, 'Sin Dirección', direccionId, () => {});
     
     Promise.all([promesaDireccion])
         .then(() => {
@@ -152,7 +154,7 @@ function validarFormulario(idForm) {
             },
             direccion: {
                 maxlength: 100,
-                min: 1,
+                min: -1,
                 max: 999999
             }
         },//Fin de reglas ----------------
