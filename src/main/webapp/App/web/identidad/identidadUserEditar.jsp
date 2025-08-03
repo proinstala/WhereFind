@@ -231,7 +231,7 @@
 
                 <div class="contenedor__formulario--footer">
                     <div class="form__btn_circle margin-right-auto">
-                        <button id="btnUsuario" title="Modificar Usuario"><i class="las la-user-edit"></i></i></button>
+                        <button id="btnUsuario" title="Modificar Usuario"><i class="las la-user-edit"></i></button>
                     </div>
 
                     <div class="form__btn_circle">

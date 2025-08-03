@@ -1,11 +1,14 @@
 package io.proinstala.wherefind.api.infraestructure.data.services;
 
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IUserService;
+import io.proinstala.wherefind.shared.consts.textos.LocaleApp;
 import io.proinstala.wherefind.shared.dtos.UserDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Clase UserServiceMySql que gestiona las operaciones relacionadas con usuarios en una base de datos MySQL.
@@ -380,21 +383,47 @@ public class UserServiceImplement extends BaseMySql implements IUserService {
         return userDTO;
     }
 
+    
     /**
-     * Verifica si el estado obtenido de la excepción es igual a un estado específico.
+     * Analiza una excepción SQL para identificar restricciones violadas (por
+     * ejemplo, claves únicas) y devuelve un mensaje de error personalizado y
+     * más amigable para el usuario.
      *
-     * Este método verifica si el estado obtenido de la excepción proporcionada
-     * es igual a un estado específico. Devuelve {@code true} si los estados son iguales,
-     * y {@code false} en caso contrario.
+     * <p>
+     * Este método busca en el mensaje de la excepción una coincidencia con el
+     * patrón de claves únicas definidas en la base de datos, como
+     * {@code user.UC_EMAIL} o {@code user.UC_NOMBRE}, y devuelve un mensaje
+     * descriptivo dependiendo de la clave violada.</p>
      *
-     * @param ex la excepción de la cual se obtiene el estado.
-     * @return {@code true} si el estado obtenido de la excepción es igual al estado específico,
-     *         {@code false} en caso contrario.
+     * @param e la excepción {@link SQLException} que ha sido lanzada al
+     *      interactuar con la base de datos.
+     * @return un mensaje amigable para el usuario que describe el problema
+     *      ocurrido, o un mensaje genérico si no se puede determinar la causa
+     *      exacta.
      */
     @Override
-    public boolean isGetStateEqualFromException(Exception ex)
-    {
-        return ((SQLException)ex).getSQLState().equals("23000");
+    public String getMensajeFromSQLException(SQLException e) {
+        
+        String mensaje = LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR;
+        String mensajeException = e.getMessage();
+
+        // Expresión regular para extraer la clave única violada
+        Pattern pattern = Pattern.compile("for key '([^']+)'");
+        Matcher matcher = pattern.matcher(mensajeException);
+
+        if (matcher.find()) {
+            String constraintName = matcher.group(1);
+
+            // Mapeo de nombre de clave a mensaje de usuario
+            mensaje = switch (constraintName) {
+                case "user.UC_EMAIL"   -> "Este email ya está asociado a una cuenta existente";
+                case "user.UC_NOMBRE"  -> "Este nombre de usuario ya está registrado";
+
+                default                -> mensaje; // Retorna mensaje por defecto si no coincide
+            };
+        }
+
+        return mensaje;
     }
 
     /**

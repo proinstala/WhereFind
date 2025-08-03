@@ -44,11 +44,19 @@ public class Email {
         props.put("mail.smtp.port", emailSettingsDTO.getSmtpPort());
 
         // Se crea una nueva sesión con los datos de conexión y datos de la cuenta
+        /*
         Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator()
         {
             @Override
             protected PasswordAuthentication getPasswordAuthentication()
             {
+                return new PasswordAuthentication(emailSettingsDTO.getEmail(), emailSettingsDTO.getPassword());
+            }
+        });
+        */
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+        @Override
+        protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(emailSettingsDTO.getEmail(), emailSettingsDTO.getPassword());
             }
         });

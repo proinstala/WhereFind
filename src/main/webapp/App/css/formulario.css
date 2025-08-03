@@ -280,6 +280,13 @@
                 background-color: var(--enfasis-brillo);
             }
         }
+        
+        /*Si también tiene la clase 'marcado', cambia el borde a azul*/
+        &.marcado {
+            color: var(--secundario-brillo);
+            border-color: var(--secundario-brillo);
+            /*cursor: default;*/
+        }
     }
 }
 

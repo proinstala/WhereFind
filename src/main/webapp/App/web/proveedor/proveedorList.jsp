@@ -75,6 +75,9 @@
                     <div class="form__btn_circle">
                         <button id="btnModificar" title="Modificar" disabled><i class="las la-pen"></i></button>
                     </div>
+                    <div class="form__btn_circle">
+                        <button id="btnDetalle" title="Detalle" disabled><i class="las la-info"></i></button>
+                    </div>
                 </div>
 
                 <div class="contenedor__tabla">

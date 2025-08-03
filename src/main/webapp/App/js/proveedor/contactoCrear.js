@@ -39,7 +39,13 @@ $(document).ready(function () {
 
 
     btnCancelar.addEventListener('click', () => {
-        window.location.href = "proveedor/contactos";
+        //window.location.href = "proveedor/contactos";
+        if (document.referrer) {
+            window.location.href = document.referrer;
+        } else {
+            // Fallback: vuelve a una página por defecto
+            window.location.href = "proveedor/contactos";
+        }
     });
 
     btnDeshacerCambiosContacto.addEventListener('click', () => {
@@ -122,7 +128,16 @@ function validarFormulario(idForm) {
                         if (response.isError === 1) {
                             mostrarMensajeError("No se puede crear los datos", response.result);
                         } else {
-                            const redireccionar = () => window.location.href = "proveedor/contactos";
+                            const redireccionar = () => {
+                                //window.location.href = "proveedor/contactos";
+                                if (document.referrer) {
+                                    window.location.href = document.referrer;
+                                } else {
+                                    // Fallback: vuelve a una página por defecto
+                                    window.location.href = "proveedor/contactos";
+                                }
+                            };
+                            
                             mostrarMensaje("Contacto Creado.", `Se ha creado el contacto con id "${response.data.id}" correctamente`, "success", redireccionar);
                         }
                     })

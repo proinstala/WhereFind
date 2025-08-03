@@ -11,6 +11,7 @@ const idBtnModificar = "#btnModificar";
 const idBtnCrear = "#btnCrear";
 const idBtnEliminar = "#btnEliminar";
 const idBtnCancelar = "#btnCancelar";
+const idBtnDetalle = "#btnDetalle";
 const idInputUserRol = "#userRol";
 
 const User = {
@@ -24,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnCrear = document.querySelector(idBtnCrear);
     const btnModificar = document.querySelector(idBtnModificar);
     const btnEliminar = document.querySelector(idBtnEliminar);
+    const btnDetalle = document.querySelector(idBtnDetalle);
     const btnCancelar = document.querySelector(idBtnCancelar);
 
     User.rol = document.querySelector(idInputUserRol).value;
@@ -40,13 +42,17 @@ document.addEventListener("DOMContentLoaded", function () {
         const idProveedor = tablaProveedores.getAttribute('data-rowselected'); //data-rowSelected
         window.location.href = (`proveedor/proveedores/edit/${idProveedor}`);
     });
+    
+    btnDetalle.addEventListener('click', () => {
+        const idProveedor = tablaProveedores.getAttribute('data-rowselected'); //data-rowSelected
+        window.location.href = (`proveedor/proveedores/detalle/${idProveedor}`);
+    });
 
     btnCrear.addEventListener('click', () => {
         window.location.href = (`proveedor/proveedores/crear`);
     });
 
     btnEliminar.addEventListener('click', () => {
-        debugger;
         const idProveedor = tablaProveedores.getAttribute('data-rowselected'); //data-rowSelected
         borrarProveedor(idProveedor);
     });
@@ -60,8 +66,9 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function onDetectarFilaSeleccionada(hayFilaSeleccionada) {
-    $("#btnEliminar").prop('disabled', !hayFilaSeleccionada);
-    $("#btnModificar").prop('disabled', !hayFilaSeleccionada);
+    $(idBtnEliminar).prop('disabled', !hayFilaSeleccionada);
+    $(idBtnModificar).prop('disabled', !hayFilaSeleccionada);
+    $(idBtnDetalle).prop('disabled', !hayFilaSeleccionada);
 }
 
 function validarFormulario(idForm) {

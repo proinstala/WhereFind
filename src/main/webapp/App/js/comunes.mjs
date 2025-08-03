@@ -1,5 +1,6 @@
 
 import { mostrarMensaje, mostrarLoading, ocultarLoading, mostrarMensajeAdvertencia } from './alertasSweetAlert2.mjs?v=20241021_184300';
+import {DISPLAY_TYPES} from './constantes.mjs';
 
 /**
  * Obtiene los datos del formulario.
@@ -180,7 +181,10 @@ function formDisable(idForm, disabled, mostrarLoad) {
         mostrarLoading();
     }
 
-    $("button:not([force-disabed]), input:not([force-disabed]), select:not([force-disabed]), option:not([force-disabed]), textarea:not([force-disabed])", idForm).prop('disabled', disabled);
+    //$("button:not([force-disabed]), input:not([force-disabed]), select:not([force-disabed]), option:not([force-disabed]), textarea:not([force-disabed])", idForm).prop('disabled', disabled);
+
+    $("button:not([force-disabed]), input:not([force-disabed]), select:not([force-disabed]), option:not([force-disabed]), textarea:not([force-disabed])",
+       $(idForm)).prop('disabled', disabled);
 }
 
 /**
@@ -572,6 +576,41 @@ function deleteRowSelectedTable(idTabla) {
     }
 }
 
+/**
+ * Muestra un contenedor específico y oculta el contenedor padre del botón clicado.
+ *
+ * @param {Event} event - El evento del botón que fue clicado.
+ * @param {string} nameContenedor - El valor del atributo `name` del contenedor padre a ocultar (ej: "contenedorDatos").
+ * @param {string} idContenedorMostrar - El selector del ID del contenedor que se desea mostrar (ej: "#contenedorProveedor").
+ * @param {string} display - El valor CSS que se usará para mostrar el contenedor (ej: "grid", "block", etc.). por defecto, grid.
+ */
+function mostrarContenedor(event, nameContenedor, idContenedorMostrar, display = DISPLAY_TYPES.GRID) {
+    // Obtener el botón que disparó el evento
+    const boton = event.currentTarget;
+
+    // Buscar el contenedor padre más cercano con el atributo name especificado
+    const contenedorOcultar = boton.closest(`[name="${nameContenedor}"]`);
+
+    // Ocultar el contenedor padre si se encontró
+    if (contenedorOcultar) {
+        contenedorOcultar.style.display = DISPLAY_TYPES.NONE;
+    } else {
+        console.warn("No se encontró el contenedor con name='contenedorDatos'");
+        return;
+    }
+
+    // Buscar el contenedor a mostrar por su ID
+    const contenedorMostrar = document.querySelector(idContenedorMostrar);
+
+    // Mostrar el contenedor objetivo si se encontró
+    if (contenedorMostrar) {
+        contenedorMostrar.style.display = display;
+    } else {
+        contenedorOcultar.style.display = display;
+        console.warn(`No se encontró el contenedor con ID: ${idContenedorMostrar}`);
+    }
+}
+
 
 export { solicitudPost,
         solicitudGet,
@@ -587,5 +626,6 @@ export { solicitudPost,
         observeRowSelectedChange,
         seleccionarValorSelect,
         vaciarSelect,
-        deleteRowSelectedTable
+        deleteRowSelectedTable,
+        mostrarContenedor
         };

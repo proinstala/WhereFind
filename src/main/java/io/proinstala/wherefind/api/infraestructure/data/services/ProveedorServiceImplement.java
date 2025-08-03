@@ -39,7 +39,7 @@ public class ProveedorServiceImplement extends BaseMySql implements IProveedorSe
         "SELECT c.*, pt.id AS pt_id, pt.nombre AS pt_nombre " +
         "FROM CONTACTO c " +
         "INNER JOIN PUESTO_TRABAJO pt ON c.puesto_id = pt.id " +
-        "WHERE c.proveedor_id = ?;";
+        "WHERE c.proveedor_id = ? AND c.activo = 1;";
 
     private static final String SQL_UPDATE_PROVEEDOR = 
         "UPDATE PROVEEDOR SET nombre = ?, descripcion = ?, pagina_web = ?, " +

@@ -287,5 +287,15 @@
         <servlet-name>proveedorEditar</servlet-name>
         <url-pattern>/proveedor/proveedores/edit/*</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>proveedorDetalle</servlet-name>
+        <jsp-file>/App/web/proveedor/proveedorDetalle.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>proveedorDetalle</servlet-name>
+        <url-pattern>/proveedor/proveedores/detalle/*</url-pattern>
+    </servlet-mapping>
 
 </web-app>

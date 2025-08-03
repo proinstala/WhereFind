@@ -99,7 +99,7 @@ ul.breadcrumb li {
     position: relative;
     margin-left: calc(-1 * var(--breadcrumb-size));
     transition: all 0.2s;
-    margin-top: 3px;
+    margin-top: 6px;
 }
 
 ul.breadcrumb li a {

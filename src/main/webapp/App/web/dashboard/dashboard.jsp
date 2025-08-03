@@ -1,5 +1,5 @@
 
-<link href="App/css/dashboard/inicio.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>
+<link href="App/css/dashboard/dashboard.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>
 
 
 <div class="contenedor__general">

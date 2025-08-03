@@ -3,6 +3,7 @@ package io.proinstala.wherefind.api.infraestructure.data.interfaces;
 import java.util.List;
 
 import io.proinstala.wherefind.shared.dtos.UserDTO;
+import java.sql.SQLException;
 
 /**
  * Interfaz para el servicio de usuarios.
@@ -67,18 +68,18 @@ public interface IUserService {
      */
     public List<UserDTO> getAllUsers();
 
+    
     /**
-     * Verifica si el estado obtenido de la excepción es igual a un estado específico.
+     * Genera un mensaje de error legible para el usuario basado en una excepción SQL.
      *
-     * Este método verifica si el estado obtenido de la excepción proporcionada
-     * es igual a un estado específico. Devuelve {@code true} si los estados son iguales,
-     * y {@code false} en caso contrario.
+     * <p>Este método permite interpretar excepciones relacionadas con la violación de restricciones,
+     * como claves únicas, devolviendo un mensaje más comprensible y amigable para mostrar al usuario.</p>
      *
-     * @param ex la excepción de la cual se obtiene el estado.
-     * @return {@code true} si el estado obtenido de la excepción es igual al estado específico,
-     *         {@code false} en caso contrario.
+     * @param ex la excepción {@link SQLException} capturada al interactuar con la base de datos.
+     * @return un mensaje de error personalizado en función de la causa de la excepción,
+     *         o un mensaje genérico si no se puede identificar el problema específico.
      */
-    public boolean isGetStateEqualFromException(Exception ex);
+    public String getMensajeFromSQLException(SQLException ex);
 
 
     /**

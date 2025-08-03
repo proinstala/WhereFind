@@ -79,8 +79,7 @@
 </div>
 
 
-<script src="App/js/comunes.mjs?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
-<script src="App/js/identidad/identidadUserlogin.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
+<script src="App/js/identidad/identidadUserCrear.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>
 

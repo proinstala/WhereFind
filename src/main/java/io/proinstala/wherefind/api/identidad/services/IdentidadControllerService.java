@@ -20,6 +20,7 @@ import io.proinstala.wherefind.shared.controllers.actions.ActionServer;
 import io.proinstala.wherefind.shared.dtos.ResponseDTO;
 import io.proinstala.wherefind.shared.dtos.UserDTO;
 import io.proinstala.wherefind.shared.services.BaseService;
+import java.sql.SQLException;
 
 
 /**
@@ -447,21 +448,27 @@ public class IdentidadControllerService extends BaseService {
             && isValidParametro(emailUsuario, 1, 200))
         {
             // Conecta con el Gestor de Permanencia
-            IUserService userService = GestorPersistencia.getUserService();
+            IUserService userServiceImp = GestorPersistencia.getUserService();
 
             // Crea y guarda los datos del usuario
             UserDTO userDTO = null;
             try {
-                userDTO = userService.add(new UserDTO(-1, nombreUsuario, passwordUsuario, "User", nombreRealUsuario, apellidoRealUsuario, emailUsuario, imagenUsuario, true));
+                userDTO = userServiceImp.add(new UserDTO(-1, nombreUsuario, passwordUsuario, "User", nombreRealUsuario, apellidoRealUsuario, emailUsuario, imagenUsuario, true));
 
-            } catch (Exception ex) {
+            } catch (SQLException e) {
+                e.printStackTrace();
+                
+                String mensajeRespuesta = userServiceImp.getMensajeFromSQLException(e);
+                
+                responseDTO = getResponseError(mensajeRespuesta);
+                responseJson(actionController.server().response(), responseDTO);
+                return;
+              
+            } catch(Exception ex) {
                 ex.printStackTrace();
-
-                if (userService.isGetStateEqualFromException(ex)) {
-                    responseDTO = getResponseError("El nombre de usuario no es válido.");
-                    responseJson(actionController.server().response(), responseDTO);
-                    return;
-                }
+                responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
+                responseJson(actionController.server().response(), responseDTO);
+                return;
             }
 
             // Si el usuario no es nulo
