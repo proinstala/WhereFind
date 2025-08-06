@@ -86,4 +86,8 @@ public class FormParametros {
     public static final String PARAM_PROVEEDOR_PAGINA_WEB = "paginaWeb";
     public static final String PARAM_PROVEEDOR_IMAGEN = "imagenProveedorB64";
     public static final String PARAM_PROVEEDOR_DIRECCION = "direccion";
+    
+    //Tipo Emplazamiento -------------------------------------------------------
+    public static final String PARAM_TIPO_EMPLAZAMIENTO_NOMBRE = "nombre";
+    public static final String PARAM_TIPO_EMPLAZAMIENTO_DESCRIPCION = "descripcion";
 }

@@ -6,6 +6,7 @@ import io.proinstala.wherefind.api.infraestructure.data.interfaces.ILocalidadSer
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IProveedorService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IProvinciaService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IPuestoTrabajoService;
+import io.proinstala.wherefind.api.infraestructure.data.interfaces.ITipoEmplazamientoService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IUserService;
 import io.proinstala.wherefind.api.infraestructure.data.services.ContactoServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.DireccionServiceImplement;
@@ -13,6 +14,7 @@ import io.proinstala.wherefind.api.infraestructure.data.services.LocalidadServic
 import io.proinstala.wherefind.api.infraestructure.data.services.ProveedorServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.ProvinciaServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.PuestoTrabajoServiceImplement;
+import io.proinstala.wherefind.api.infraestructure.data.services.TipoEmplazamientoServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.UserServiceImplement;
 
 /**
@@ -112,6 +114,20 @@ public class GestorPersistencia {
      */
     public static IProveedorService getProveedorService() {
         return new ProveedorServiceImplement();
+    }
+    
+    
+    /**
+     * Obtiene una instancia del servicio de tipos de emplazamiento.
+     *
+     * <p>Este método devuelve una implementación de {@link ITipoEmplazamientoService}, en este caso, 
+     * una instancia de {@link TipoEmplazamientoServiceImplement}, que maneja la lógica relacionada con 
+     * los tipos de emplazamientos.</p>
+     *
+     * @return una instancia de {@link ITipoEmplazamientoService}.
+     */
+    public static ITipoEmplazamientoService getTipoEmplazamientoService() {
+        return new TipoEmplazamientoServiceImplement();
     }
     
 }

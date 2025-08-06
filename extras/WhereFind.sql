@@ -78,11 +78,6 @@ CREATE TABLE IF NOT EXISTS USER (
 );
 
 
--- Crea un usuarios de prueba
-INSERT INTO USER (user_name, password, rol, activo, nombre, apellidos, email) VALUES('david', ENCRYPT_DATA_BASE64('123'), 'Admin', 1, 'David', 'Jiménez Alonso', 'david@email.es');
-INSERT INTO USER (user_name, password, rol, activo, nombre, apellidos, email) VALUES('juanma', ENCRYPT_DATA_BASE64('123'), 'Admin', 1, 'Juan Manuel', 'Soltero Sánchez', 'juanma@email.es');
-
-
 -- Elimina las tablas
 DROP TABLE IF EXISTS WHERE_FIND_DATA.`RECOVERY`;
 
@@ -164,7 +159,6 @@ CREATE TABLE IF NOT EXISTS TIPO_EMPLAZAMIENTO (
     id INT auto_increment NOT NULL,
     nombre varchar(100) NOT NULL,
     descripcion varchar(200) NOT NULL,
-    activo BOOL DEFAULT TRUE NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT UC_NOMBRE UNIQUE (nombre)
 );
@@ -188,7 +182,6 @@ CREATE TABLE IF NOT EXISTS ALMACEN (
     id INT auto_increment NOT NULL,
     nombre varchar(100) NOT NULL,
     descripcion varchar(200) NOT NULL,
-    imagen varchar(200),
     direccion_id INT,
     activo BOOL DEFAULT TRUE NOT NULL,
     PRIMARY KEY (id),
