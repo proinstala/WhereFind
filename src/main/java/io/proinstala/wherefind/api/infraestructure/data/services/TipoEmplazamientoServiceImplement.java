@@ -138,7 +138,7 @@ public class TipoEmplazamientoServiceImplement extends BaseMySql implements ITip
     public List<TipoEmplazamientoDTO> getAllTiposEmplazamiento() {
         List<TipoEmplazamientoDTO> tipos = new ArrayList<>();
         try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(SQL_SELECT_ALL);
+             PreparedStatement ps = conn.prepareStatement(SQL_SELECT_COMUN);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {

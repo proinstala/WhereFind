@@ -1,6 +1,8 @@
 
 package io.proinstala.wherefind.shared.dtos;
 
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,4 +18,8 @@ public class EmplazamientoDTO {
     private String nombre;
     private String descripcion;
     private TipoEmplazamientoDTO tipoEmplazamiento;
+    private AlmacenDTO almacen;
+    
+    @Builder.Default
+    List<ExistenciaDTO> listaExistencias = new ArrayList<>();
 }

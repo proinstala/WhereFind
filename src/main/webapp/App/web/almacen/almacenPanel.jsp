@@ -1,4 +1,10 @@
+<%-- 
+    Document   : alamcenPanel
+    Created on : 15 ago 2025, 11:36:53
+    Author     : David
+--%>
 
+<%@page import="java.util.List"%>
 <%@page import="io.proinstala.wherefind.shared.config.AppSettings"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="io.proinstala.wherefind.shared.controllers.BaseHttpServlet"%>
@@ -19,15 +25,15 @@
     List<CardDTO> tarjetas = new ArrayList<>();
 
     // Se agregan las tarjetas a la lista
-    tarjetas.add(new CardDTO("las la-store", "Proveedores", "Gestione todos los proveedores.", "proveedor/proveedores"));
-    tarjetas.add(new CardDTO("las la-id-card", "Contactos", "Gestione todos los contactos.", "proveedor/contactos"));
+    tarjetas.add(new CardDTO("las la-store", "Almacenes", "Gestione todos los alamcenes.", "alamcen/almacenes"));
+    tarjetas.add(new CardDTO("las la-id-card", "Emplazamientos", "Gestione todos los emplazamientos.", "almacen/emplazamientos"));
 
     // Se agrega la lista a los atributos de la petición
     request.setAttribute("cards", tarjetas);
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >
-    <jsp:param name="titleweb" value="Panel Proveedor" />
+    <jsp:param name="titleweb" value="Panel Almacen" />
 </jsp:include>
 
 
@@ -46,7 +52,7 @@
 
                 <div class="contenedor__formulario--cabecera conBotones margin-bottom-5">
                     <div>
-                        <h1>Panel de Proveedores</h1>
+                        <h1>Panel de Almacenes</h1>
                     </div>
                     <div class="form__btn_circle">
                         <button id="btnCancelar" title="Cancelar"><i class="las la-times"></i></button>
@@ -66,7 +72,7 @@
     </div>
 </div>
             
-<script src="App/js/proveedor/proveedorPanel.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
+<script src="App/js/almancen/almacenPanel.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
 
 
 <%@ include file="/App/web/shared/foot.jsp" %>

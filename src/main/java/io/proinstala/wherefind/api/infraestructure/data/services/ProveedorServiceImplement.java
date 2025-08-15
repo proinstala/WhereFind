@@ -91,12 +91,12 @@ public class ProveedorServiceImplement extends BaseMySql implements IProveedorSe
         return proveedorDTO;
     }
 
-    private List<ContactoDTO> getContactosByProveedor(int proveedorId) {
+    private List<ContactoDTO> getContactosByProveedor(ProveedorDTO proveedorDTO) {
         List<ContactoDTO> listaContactos = new ArrayList<>();
         try (Connection conexion = getConnection(); 
              PreparedStatement ps = conexion.prepareStatement(SQL_SELECT_CONTACTOS_BY_PROVEEDOR)) {
 
-            ps.setInt(1, proveedorId);
+            ps.setInt(1, proveedorDTO.getId());
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -145,7 +145,7 @@ public class ProveedorServiceImplement extends BaseMySql implements IProveedorSe
             }
 
             if (proveedorDTO != null) {
-                proveedorDTO.setListaContactos(getContactosByProveedor(idProveedor));
+                proveedorDTO.setListaContactos(getContactosByProveedor(proveedorDTO));
             }
         } catch (SQLException e) {
             e.printStackTrace();

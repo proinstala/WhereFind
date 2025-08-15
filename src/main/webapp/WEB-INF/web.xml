@@ -297,5 +297,26 @@
         <servlet-name>proveedorDetalle</servlet-name>
         <url-pattern>/proveedor/proveedores/detalle/*</url-pattern>
     </servlet-mapping>
+    
+    <!-- Mapeo de las url referentes a Almacen -->
+    <servlet>
+        <servlet-name>almacenPanel</servlet-name>
+        <jsp-file>/App/web/almacen/almacenPanel.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>almacenPanel</servlet-name>
+        <url-pattern>/almacen</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>almacenList</servlet-name>
+        <jsp-file>/App/web/almacen/almacenList.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>almacenList</servlet-name>
+        <url-pattern>/almacen/almacenes</url-pattern>
+    </servlet-mapping>
 
 </web-app>

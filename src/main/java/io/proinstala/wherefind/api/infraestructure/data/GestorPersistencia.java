@@ -1,15 +1,19 @@
 package io.proinstala.wherefind.api.infraestructure.data;
 
+import io.proinstala.wherefind.api.infraestructure.data.interfaces.IAlmacenService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IContactoService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IDireccionService;
+import io.proinstala.wherefind.api.infraestructure.data.interfaces.IEmplazamientoService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.ILocalidadService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IProveedorService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IProvinciaService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IPuestoTrabajoService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.ITipoEmplazamientoService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IUserService;
+import io.proinstala.wherefind.api.infraestructure.data.services.AlmacenServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.ContactoServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.DireccionServiceImplement;
+import io.proinstala.wherefind.api.infraestructure.data.services.EmplazamientoServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.LocalidadServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.ProveedorServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.ProvinciaServiceImplement;
@@ -128,6 +132,32 @@ public class GestorPersistencia {
      */
     public static ITipoEmplazamientoService getTipoEmplazamientoService() {
         return new TipoEmplazamientoServiceImplement();
+    }
+    
+    /**
+     * Obtiene una instancia del servicio de emplazamientos.
+     *
+     * <p>Este método devuelve una implementación de {@link IEmplazamientoService}, en este caso, 
+     * una instancia de {@link EmplazamientoServiceImplement}, que maneja la lógica relacionada con 
+     * los emplazamientos.</p>
+     *
+     * @return una instancia de {@link IEmplazamientoService}.
+     */
+    public static IEmplazamientoService getEmplazamientoService() {
+        return new EmplazamientoServiceImplement();
+    }
+    
+    /**
+     * Obtiene una instancia del servicio de almacenes.
+     *
+     * <p>Este método devuelve una implementación de {@link IAlmacenService}, en este caso, 
+     * una instancia de {@link AlmacenServiceImplement}, que maneja la lógica relacionada con 
+     * los almacenes.</p>
+     *
+     * @return una instancia de {@link IAlmacenService}.
+     */
+    public static IAlmacenService getAlmacenService() {
+        return new AlmacenServiceImplement();
     }
     
 }
