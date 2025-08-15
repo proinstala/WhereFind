@@ -29,7 +29,7 @@ public class TipoEmplazamientoControllerService extends BaseService {
      *
      * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
      */
-    public void findTipoEmplazamiento(ActionController actionController) {
+    public void findTiposEmplazamientos(ActionController actionController) {
         ResponseDTO responseDTO;
         
         ITipoEmplazamientoService tipoEmplazamientoService = GestorPersistencia.getTipoEmplazamientoService();

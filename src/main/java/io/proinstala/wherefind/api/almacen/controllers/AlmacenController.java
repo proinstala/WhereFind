@@ -1,9 +1,12 @@
 
-package io.proinstala.wherefind.api.proveedor.controllers;
+package io.proinstala.wherefind.api.almacen.controllers;
 
+import io.proinstala.wherefind.api.almacen.services.AlmacenControllerService;
 import io.proinstala.wherefind.api.identidad.UserSession;
-import io.proinstala.wherefind.api.proveedor.services.ProveedorControllerService;
+import io.proinstala.wherefind.api.proveedor.controllers.ProveedorController;
 import io.proinstala.wherefind.shared.controllers.BaseHttpServlet;
+import static io.proinstala.wherefind.shared.controllers.BaseHttpServlet.responseError403;
+import static io.proinstala.wherefind.shared.controllers.BaseHttpServlet.responseError404;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,25 +15,25 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Controlador de solicitudes HTTP para manejar operaciones relacionadas con proveedores.
+ * Controlador de solicitudes HTTP para manejar operaciones relacionadas con almacen.
  *
  * <p>Esta clase extiende {@link BaseHttpServlet} y se encarga de recibir y procesar las solicitudes HTTP 
- * relacionadas con proveedores a través de la API definida. Utiliza el servicio {@link ProveedorControllerService} 
+ * relacionadas con almacena través de la API definida. Utiliza el servicio {@link AlmacenControllerService} 
  * para realizar las operaciones de negocio y construir las respuestas adecuadas.</p>
  *
  * <p>La clase define una enumeración interna {@link ActionType} para representar los diferentes tipos de acción 
- * que puede manejar. La base de la URL para las API de proveedores se define como {@code /api/proveedor}.</p>
+ * que puede manejar. La base de la URL para las API de almacense define como {@code /api/almacen}.</p>
  */
-@WebServlet(urlPatterns = ProveedorController.BASE_API + "/*")
-public class ProveedorController extends BaseHttpServlet {
+@WebServlet(urlPatterns = AlmacenController.BASE_API + "/*")
+public class AlmacenController extends BaseHttpServlet {
     
     /**
-     * Base de la URL para las API de proveedor.
+     * Base de la URL para las API de localidad.
      */
-    protected static final String BASE_API = "/api/proveedor";
+    protected static final String BASE_API = "/api/almacen";
     
-    private final ProveedorControllerService proveedorServicio = new ProveedorControllerService();
-    
+    private final AlmacenControllerService almacenService = new AlmacenControllerService();
+
     @Override
     protected String getBaseApi() {
         return BASE_API;
@@ -41,14 +44,14 @@ public class ProveedorController extends BaseHttpServlet {
      */
     enum ActionType {
         ERROR,
-        PROVEEDOR,
-        PROVEEDORES,
-        FIND_PROVEEDORES,
+        ALMACEN,
+        ALMACENES,
+        FIND_ALMACENES,
         UPDATE,
         CREATE,
         DELETE
     }
-    
+
     /**
      * Determina el tipo de acción basado en el nombre de la acción.
      *
@@ -63,7 +66,7 @@ public class ProveedorController extends BaseHttpServlet {
             action = action.toUpperCase();
 
             // Recorre todos los ActionType
-            for (ProveedorController.ActionType accion : ProveedorController.ActionType.values()) {
+            for (AlmacenController.ActionType accion : ActionType.values()) {
 
                 // Conprueba que action esté entre los ActionType
                 if (action.equals(accion.name())) {
@@ -74,68 +77,75 @@ public class ProveedorController extends BaseHttpServlet {
         }
 
         // Devuelve el ActionType de error por no encontrar un ActionType coincidente
-        return ProveedorController.ActionType.ERROR;
-    }
-    
-    protected void apiGetProveedor(ActionController actionController) {
-        // Se comprueba que el usuario está logueado
-        if (!UserSession.isUserLogIn(actionController.server(), false)) {
-            responseError403(actionController.server().response(), "");
-            return;
-        }
-        
-        proveedorServicio.getProveedorById(actionController);
+        return ActionType.ERROR;
     }
     
     /**
-     * Maneja la solicitud para obtener todas los proveedores.
-     *
-     * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio de proveedores 
-     * para obtener la lista de proveedores y devolver la respuesta en formato JSON.</p>
-     *
-     * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
-     */
-    protected void apiGetProveedores(ActionController actionController) {
-        // Se comprueba que el usuario está logueado
-        if (!UserSession.isUserLogIn(actionController.server(), false)) {
-            responseError403(actionController.server().response(), "");
-            return;
-        }
-        
-        proveedorServicio.getProveedores(actionController);
-    }
-    
-    /**
-     * Maneja la solicitud para buscar proveedores.
+     * Maneja la solicitud para obtener un almacen específico.
      *
      * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio 
-     * de proveedor para buscar los proveedores y devolver la respuesta en formato JSON.</p>
+     * de almacen para obtener un almacen por ID y devolver la respuesta en formato JSON.</p>
      *
      * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
      */
-    protected void apiFindProveedores(ActionController actionController) {
+    protected void apiGetAlmacen(ActionController actionController) {
         // Se comprueba que el usuario está logueado
         if (!UserSession.isUserLogIn(actionController.server(), false)) {
             responseError403(actionController.server().response(), "");
             return;
         }
         
-        proveedorServicio.findProveedores(actionController);
+        //almacenServicio.getAlmacenById(actionController);
     }
     
+    /**
+     * Maneja la solicitud para obtener todos los alamacenes.
+     *
+     * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio de almacen 
+     * para obtener la lista de almacenes y devolver la respuesta en formato JSON.</p>
+     *
+     * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
+     */
+    protected void apiGetAlmacenes(ActionController actionController) {
+        // Se comprueba que el usuario está logueado
+        if (!UserSession.isUserLogIn(actionController.server(), false)) {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+        
+        //almacenServicio.getAlmacenes(actionController);
+    }
     
     /**
-     * Maneja la creación de un nuevo proveedor utilizando los datos proporcionados en la solicitud.
+     * Maneja la solicitud para buscar almacenes.
+     *
+     * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio 
+     * de almacen para buscar los almacenes y devolver la respuesta en formato JSON.</p>
+     *
+     * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
+     */
+    protected void apiFindAlmacenes(ActionController actionController) {
+        // Se comprueba que el usuario está logueado
+        if (!UserSession.isUserLogIn(actionController.server(), false)) {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+        
+        //almacenServicio.findAlmacenes(actionController);
+    }
+    
+    /**
+     * Maneja la creación de un nuevo almacen utilizando los datos proporcionados en la solicitud.
      *
      * <p>Este método primero verifica si el usuario está autenticado y tiene los permisos necesarios. 
      * Si el usuario no está logueado, se envía una respuesta de error 
      * 403 (prohibido) y se interrumpe el procesamiento. Si el usuario está autenticado y autorizado, 
-     * se llama al servicio de proveedro para realizar la creación del proveedor.</p>
+     * se llama al servicio de almacen para realizar la creación del almacen.</p>
      *
      * @param actionController el controlador de acción que contiene la información de la solicitud, 
-     *                         incluyendo los datos necesarios para crear un nuevo proveedor.
+     *                         incluyendo los datos necesarios para crear un nuevo almacen.
      */
-    protected void apiCreateProveedor(ActionController actionController) {
+    protected void apiCreateAlmacen(ActionController actionController) {
         // Se comprueba que el usuario está logueado
         if (!UserSession.isUserLogIn(actionController.server(), true))
         {
@@ -143,20 +153,20 @@ public class ProveedorController extends BaseHttpServlet {
             return;
         }
 
-        proveedorServicio.createProveedor(actionController);
+        //almacenServicio.createAlmacen(actionController);
     }
     
     /**
-     * Maneja la solicitud para elimnar la información de un proveedor específico.
+     * Maneja la solicitud para elimnar la información de un almacen específico.
      *
      * <p>Verifica si el usuario está autenticado y tiene los permisos necesarios. Si es así, 
-     * delega la operación al servicio de proveedor para actualizar el proveedor y devolver la respuesta.</p>
+     * delega la operación al servicio de almacen para borrar(activo = false) el almacen y devolver la respuesta.</p>
      * 
-     * EndPoint - PUT : /api/proveedor/delete/{id}
+     * EndPoint - PUT : /api/almacen/delete/{id}
      *
      * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
      */
-    protected void apiDeleteProveedor(ActionController actionController) {
+    protected void apiDeleteAlmacen(ActionController actionController) {
         // Se comprueba que el usuario está logueado y sea administrador
         if (!UserSession.isUserLogIn(actionController.server(), true))
         {
@@ -164,24 +174,24 @@ public class ProveedorController extends BaseHttpServlet {
             return;
         }
         
-        proveedorServicio.deleteProveedor(actionController);
+        //almacenServicio.deleteAlmacen(actionController);
     }
     
     /**
-     * Maneja la actualización de la información de un proveedor existente.
+     * Maneja la actualización de la información de un almacen existente.
      *
      * <p>Este método primero verifica si el usuario está autenticado y cuenta con los permisos
      * necesarios. Si el usuario no cumple con estos
      * requisitos, se envía una respuesta de error 403 (Prohibido) y se interrumpe el procesamiento.
-     * En caso contrario, delega la operación al servicio de proveedores para realizar la actualización
+     * En caso contrario, delega la operación al servicio de almacen para realizar la actualización
      * correspondiente y devolver la respuesta apropiada al cliente.</p>
      *
-     * <p>EndPoint - PUT : /api/proveedor/update/</p>
+     * <p>EndPoint - PUT : /api/almacen/update/</p>
      *
      * @param actionController el controlador de la acción que maneja la solicitud y la respuesta,
      *                         conteniendo la información y datos necesarios para realizar la actualización.
      */
-    protected void apiUpdateProveedor(ActionController actionController) {
+    protected void apiUpdateAlmacen(ActionController actionController) {
         // Se comprueba que el usuario está logueado y sea administrador
         if (!UserSession.isUserLogIn(actionController.server(), true))
         {
@@ -189,7 +199,7 @@ public class ProveedorController extends BaseHttpServlet {
             return;
         }
         
-        proveedorServicio.updateProveedor(actionController);
+        //almacenServicio.updateAlmacen(actionController);
     }
     
     /**
@@ -210,10 +220,10 @@ public class ProveedorController extends BaseHttpServlet {
         // Imprime en la salida del servidor el EndPoint
         System.out.println("EndPoint GET : " + actionController.parametros()[0]);
         
-        switch((ActionType) actionController.actionType()) {
-            case PROVEEDOR -> apiGetProveedor(actionController);
-            case PROVEEDORES -> apiGetProveedores(actionController);
-            case FIND_PROVEEDORES -> apiFindProveedores(actionController);
+        switch((AlmacenController.ActionType) actionController.actionType()) {
+            case ALMACEN -> apiGetAlmacen(actionController);
+            case ALMACENES -> apiGetAlmacenes(actionController);
+            case FIND_ALMACENES -> apiFindAlmacenes(actionController);
               
             default -> responseError403(actionController.server().response(), "");
         }
@@ -245,8 +255,8 @@ public class ProveedorController extends BaseHttpServlet {
         System.out.println("EndPoint POST : " + actionController.parametros()[0]);
 
         // Dependiendo del ActionType, realizará una acción
-        switch((ActionType) actionController.actionType()){
-            case CREATE -> apiCreateProveedor(actionController);
+        switch((AlmacenController.ActionType) actionController.actionType()){
+            case CREATE -> apiCreateAlmacen(actionController);
 
             default -> responseError404(actionController.server().response(), "");
         }
@@ -274,9 +284,9 @@ public class ProveedorController extends BaseHttpServlet {
         // Imprime en la salida del servidor el EndPoint
         System.out.println("EndPoint PUT : " + actionController.parametros()[0]);
 
-        switch((ActionType) actionController.actionType()) {
-            case UPDATE -> apiUpdateProveedor(actionController);
-            case DELETE -> apiDeleteProveedor(actionController);
+        switch((AlmacenController.ActionType) actionController.actionType()) {
+            case UPDATE -> apiUpdateAlmacen(actionController);
+            case DELETE -> apiDeleteAlmacen(actionController);
             
             default -> responseError404(actionController.server().response(), "");
         }
