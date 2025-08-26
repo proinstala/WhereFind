@@ -14,7 +14,7 @@ public class AppSettings {
 
     private static final String APP_NAME = "WhereFind";
     
-    public static String APP_VERSION_JS = "20250415_2100";
+    public static String APP_VERSION_JS = "20250824_1045";
     public static String APP_VERSION_CSS = "20250415_2100";
     
 

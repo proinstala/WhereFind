@@ -19,7 +19,6 @@ const User = {
 };
 
 document.addEventListener("DOMContentLoaded", function () {
-    const formBusquedaProveedores = document.querySelector(idFormBusquedaProveedor);
     const tablaProveedores = document.querySelector(idTablaProveedores);
     const btnBuscar = document.querySelector(idBtnBuscar);
     const btnCrear = document.querySelector(idBtnCrear);

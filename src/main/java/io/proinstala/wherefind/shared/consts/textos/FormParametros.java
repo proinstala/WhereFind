@@ -90,4 +90,9 @@ public class FormParametros {
     //Tipo Emplazamiento -------------------------------------------------------
     public static final String PARAM_TIPO_EMPLAZAMIENTO_NOMBRE = "nombre";
     public static final String PARAM_TIPO_EMPLAZAMIENTO_DESCRIPCION = "descripcion";
+
+    //Almacen ----------------------------------------------------------------
+    public static final String PARAM_ALMACEN_NOMBRE = "nombre";
+    public static final String PARAM_ALMACEN_DESCRIPCION = "descripcion";
+    public static final String PARAM_ALMACEN_DIRECCION = "direccion";
 }

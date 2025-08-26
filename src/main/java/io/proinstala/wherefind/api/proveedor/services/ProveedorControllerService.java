@@ -51,7 +51,7 @@ public class ProveedorControllerService extends BaseService {
      * Obtiene un proveedor por su identificador.
      * 
      * <p>Este método extrae el identificador del proveedor del controlador de acción, utiliza el
-     * servicio de proveedor para recuperar los datos del proeedor correspondiente, y devuelve 
+     * servicio de proveedor para recuperar los datos del proveedor correspondiente, y devuelve 
      * la respuesta en formato JSON.</p>
      * 
      * @param actionController El controlador de acción que contiene los parámetros de la solicitud.
@@ -85,17 +85,12 @@ public class ProveedorControllerService extends BaseService {
     }
     
     /**
-     * Maneja la solicitud para obtener una lista de proveedores.
+     * Obtiene la lista de todos los proveedores.
+     * 
+     * <p>Utiliza el servicio de proveedor para recuperar la lista completa de proveedores y devuelve
+     * la respuesta en formato JSON.</p>
      *
-     * <p>Este método procesa la solicitud del cliente para obtener localidades. Dependiendo de los 
-     * parámetros recibidos, puede devolver todas las localidades o solo las localidades de una 
-     * provincia específica. Si se proporciona un JSON con los datos de la provincia, se filtrarán 
-     * las localidades correspondientes a esa provincia. En caso contrario, se devolverán todas 
-     * las localidades disponibles.</p>
-     *
-     * <p>La respuesta se construye y se envía al cliente en formato JSON utilizando {@link ActionController}.</p>
-     *
-     * @param actionController el controlador de la acción actual que maneja la solicitud y la respuesta.
+     * @param actionController El controlador de acción que contiene los parámetros de la solicitud.
      */
     public void getProveedores(ActionController actionController) {
         //Respuesta de la acción actual
@@ -119,7 +114,6 @@ public class ProveedorControllerService extends BaseService {
         //Devuelve la respuesta al navegador del usuario en formato json
         responseJson(actionController.server().response(), responseDTO);
     }
-    
     
     /**
      * Crea una nuevo proveedor en la base de datos.
@@ -256,7 +250,7 @@ public class ProveedorControllerService extends BaseService {
             return;
         } 
             
-        // Obtiene el id de la localidad desde el parámetro 1 de la lista de parámetros
+        // Obtiene el id del proveedor desde el parámetro 1 de la lista de parámetros
         int id = actionController.getIntFromParametros(1);
 
         // Si el id es mayor que -1 significa que hay en principio un id válido que se puede procesar
