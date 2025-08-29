@@ -14,8 +14,11 @@ const idBtnCancelar = "#btnCancelar";
 const idBtnDetalle = "#btnDetalle";
 const idInputUserRol = "#userRol";
 
+const User = {
+    rol: ROLES.USER
+};
+
 document.addEventListener("DOMContentLoaded", function () {
-        alert("Hola");
         const tablaAlmacen = document.querySelector(idTablaAlmacen);
         const btnBuscar = document.querySelector(idBtnBuscar);
         const btnCrear = document.querySelector(idBtnCrear);
@@ -23,9 +26,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const btnEliminar = document.querySelector(idBtnEliminar);
         const btnDetalle = document.querySelector(idBtnDetalle);
         const btnCancelar = document.querySelector(idBtnCancelar);
-    
+         debugger;
         User.rol = document.querySelector(idInputUserRol).value;
-    
+   
         if(User.rol === ROLES.ADMIN || User.rol === ROLES.USER) {
             btnCrear.disabled = false;
         }
@@ -90,7 +93,7 @@ function validarFormulario(idForm) {
 
         submitHandler: function () {
             const formData = getDatosForm(idForm);
-            const url = `api/almacen/find_alamacenes?${formData}`;
+            const url = `api/almacen/find_almacenes?${formData}`;
 
             solicitudGet(url, "", false)
                 .then(response => {
@@ -118,6 +121,7 @@ function validarFormulario(idForm) {
  * @param {Array} almacenes - Un array de objetos de proveedores que contiene los datos para cada fila de la tabla.
  */
 function rellenarTablaAlmacen(almacenes) {
+    debugger;
     const tablaAlmacenes = document.querySelector(idTablaAlmacen);
     const cuerpoTablaAlmacenes = tablaAlmacenes.querySelector('tbody');
     const inputUserRol = document.querySelector(idInputUserRol);  //Admin o User

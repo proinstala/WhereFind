@@ -68,7 +68,4 @@
             
 <script src="App/js/proveedor/proveedorPanel.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
 
-
 <%@ include file="/App/web/shared/foot.jsp" %>
-
-<%@ include file="../shared/foot.jsp" %>

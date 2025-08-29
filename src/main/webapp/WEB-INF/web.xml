@@ -318,5 +318,15 @@
         <servlet-name>almacenList</servlet-name>
         <url-pattern>/almacen/almacenes</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>almacenCrear</servlet-name>
+        <jsp-file>/App/web/almacen/almacenCrear.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>almacenCrear</servlet-name>
+        <url-pattern>/almacen/almacenes/crear</url-pattern>
+    </servlet-mapping>
 
 </web-app>

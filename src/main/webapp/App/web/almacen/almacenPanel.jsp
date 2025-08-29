@@ -72,9 +72,6 @@
     </div>
 </div>
             
-<script src="App/js/almancen/almacenPanel.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
-
+<script src="App/js/almacen/almacenPanel.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>
-
-<%@ include file="../shared/foot.jsp" %>

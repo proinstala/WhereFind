@@ -32,7 +32,7 @@ public class AlmacenController extends BaseHttpServlet {
      */
     protected static final String BASE_API = "/api/almacen";
     
-    private final AlmacenControllerService almacenService = new AlmacenControllerService();
+    private final AlmacenControllerService almacenServicio = new AlmacenControllerService();
 
     @Override
     protected String getBaseApi() {
@@ -131,7 +131,7 @@ public class AlmacenController extends BaseHttpServlet {
             return;
         }
         
-        //almacenServicio.findAlmacenes(actionController);
+        almacenServicio.findAlmacenes(actionController);
     }
     
     /**
@@ -153,7 +153,7 @@ public class AlmacenController extends BaseHttpServlet {
             return;
         }
 
-        //almacenServicio.createAlmacen(actionController);
+        almacenServicio.createAlmacen(actionController);
     }
     
     /**

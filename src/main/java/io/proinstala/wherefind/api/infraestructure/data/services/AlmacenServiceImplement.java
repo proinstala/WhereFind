@@ -29,7 +29,7 @@ public class AlmacenServiceImplement extends BaseMySql implements IAlmacenServic
              d.id AS d_id, d.calle AS d_calle, d.numero AS d_numero, d.codigo_postal AS d_codigo_postal, d.localidad_id AS d_localidad_id, d.activo AS d_activo,
              l.id AS l_id, l.nombre AS l_nombre, l.provincia_id AS l_provincia_id,
              pr.id AS pr_id, pr.nombre AS pr_nombre
-            FROM PROVEEDOR p
+            FROM ALMACEN a
             LEFT JOIN DIRECCION d ON a.direccion_id = d.id
             LEFT JOIN LOCALIDAD l ON d.localidad_id = l.id
             LEFT JOIN PROVINCIA pr ON l.provincia_id = pr.id
@@ -179,16 +179,16 @@ public class AlmacenServiceImplement extends BaseMySql implements IAlmacenServic
         
         StringBuilder sql = new StringBuilder(SQL_SELECT_COMUN);
         
-        sql.append(" WHERE p.activo = TRUE");
+        sql.append(" WHERE a.activo = TRUE");
         
         // Condición por nombre
         if (nombre != null && !nombre.trim().isEmpty()) {
-            sql.append(" AND p.nombre LIKE ?");
+            sql.append(" AND a.nombre LIKE ?");
         }
         
         // Condición por descripcion
         if (descripcion != null && !descripcion.trim().isEmpty()) {
-            sql.append(" AND p.descripcion LIKE ?");
+            sql.append(" AND a.descripcion LIKE ?");
         }
         
         try (Connection conexion = getConnection(); 
