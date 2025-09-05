@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const btnEliminar = document.querySelector(idBtnEliminar);
         const btnDetalle = document.querySelector(idBtnDetalle);
         const btnCancelar = document.querySelector(idBtnCancelar);
-         debugger;
+
         User.rol = document.querySelector(idInputUserRol).value;
    
         if(User.rol === ROLES.ADMIN || User.rol === ROLES.USER) {
@@ -117,11 +117,10 @@ function validarFormulario(idForm) {
 }
 
 /**
- * Función que rellena una tabla HTML con los proveedores proporcionadas.
- * @param {Array} almacenes - Un array de objetos de proveedores que contiene los datos para cada fila de la tabla.
+ * Función que rellena una tabla HTML con los almacenes proporcionados.
+ * @param {Array} almacenes - Un array de objetos de almacenes que contiene los datos para cada fila de la tabla.
  */
 function rellenarTablaAlmacen(almacenes) {
-    debugger;
     const tablaAlmacenes = document.querySelector(idTablaAlmacen);
     const cuerpoTablaAlmacenes = tablaAlmacenes.querySelector('tbody');
     const inputUserRol = document.querySelector(idInputUserRol);  //Admin o User
@@ -150,7 +149,7 @@ function borrarAlmacen(almacenId) {
     mostrarMensajeOpcion("Borrar Al,acen", `¿Quieres realmente borrar los datos del alamacen con id ${almacenId}?`)
                     .then((result) => {
                         if (result.isConfirmed) {
-                            solicitudPut(`api/alamacen/delete/${almacenId}`, "", true)
+                            solicitudPut(`api/almacen/delete/${almacenId}`, "", true)
                                     .then(response => {
                                         if (response.isError === 1) {
                                             mostrarMensajeError("No se puede borrar los datos", response.result);

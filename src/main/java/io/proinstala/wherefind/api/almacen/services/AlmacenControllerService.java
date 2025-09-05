@@ -1,6 +1,8 @@
 
 package io.proinstala.wherefind.api.almacen.services;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,8 @@ import io.proinstala.wherefind.shared.dtos.AlmacenDTO;
 import io.proinstala.wherefind.shared.dtos.DireccionDTO;
 import io.proinstala.wherefind.shared.dtos.ResponseDTO;
 import io.proinstala.wherefind.shared.services.BaseService;
+import io.proinstala.wherefind.shared.tools.LocalDateAdapter;
+import java.time.LocalDate;
 
 /**
  *
@@ -121,6 +125,43 @@ public class AlmacenControllerService extends BaseService {
         //Devuelve la respuesta al navegador del usuario en formato json
         responseJson(actionController.server().response(), responseDTO);
     }
+    
+    /**
+     * Crea un nuevo almacen en la base de datos.
+     * 
+     * <p>Este método toma los datos del nuevo almacen en formato JSON desde el controlador de acción,
+     * los deserializa y los envía al servicio de almacen para su creación. Devuelve la respuesta en
+     * formato JSON.</p>
+     * 
+     * @param actionController El controlador de acción que contiene los parámetros de la solicitud.
+     */
+    public void createAlmacen(ActionController actionController) {
+        //Respuesta de la acción actual
+        ResponseDTO responseDTO;
+        
+        // Conecta con el Gestor de Persistencia
+        IAlmacenService almacenServiceImp = GestorPersistencia.getAlmacenService();
+        
+        String jsonAlmacen = actionController.server().getRequestParameter("almacenJSON", "");
+        
+        AlmacenDTO almacenDTO = null;
+        if(jsonAlmacen != null && !jsonAlmacen.isBlank()) {
+            Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
+            almacenDTO = gson.fromJson(jsonAlmacen, AlmacenDTO.class);
+            
+            almacenDTO = almacenServiceImp.createAlmacen(almacenDTO);
+        }
+        
+        if(almacenDTO != null) {
+            responseDTO = getResponseOk(LocaleApp.INFO_CREATE_OK, almacenDTO, 0);
+        } else {
+            //Crea la respuesta con un error
+            responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
+        }
+        
+        //Devuelve la respuesta al navegador del usuario en formato json
+        responseJson(actionController.server().response(), responseDTO);
+    }
 
     /**
      * Actualiza la información de un alamacen existente.
@@ -204,7 +245,7 @@ public class AlmacenControllerService extends BaseService {
      * 
      * @param actionController El controlador de acción que contiene los parámetros de la solicitud.
      */
-    public void deleteProveedor(ActionController actionController) {
+    public void deleteAlmacen(ActionController actionController) {
         //Respuesta de la acción actual
         ResponseDTO responseDTO;
         

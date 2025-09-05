@@ -23,10 +23,15 @@
 
     // Se obtiene la lista de tarjetas
     List<CardDTO> tarjetas = new ArrayList<>();
+    
+    //las la-boxes - f468 - cajas
+    //las la-archive - archivador caja
+    //las la-stream
+    //la-database - f1c0
 
     // Se agregan las tarjetas a la lista
-    tarjetas.add(new CardDTO("las la-store", "Almacenes", "Gestione todos los alamcenes.", "almacen/almacenes"));
-    tarjetas.add(new CardDTO("las la-id-card", "Emplazamientos", "Gestione todos los emplazamientos.", "almacen/emplazamientos"));
+    tarjetas.add(new CardDTO("las la-box", "Almacenes", "Gestione todos los alamcenes.", "almacen/almacenes"));
+    tarjetas.add(new CardDTO("las la-database", "Emplazamientos", "Gestione todos los emplazamientos.", "almacen/emplazamientos")); //
 
     // Se agrega la lista a los atributos de la petición
     request.setAttribute("cards", tarjetas);

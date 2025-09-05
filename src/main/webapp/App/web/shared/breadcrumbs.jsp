@@ -127,10 +127,15 @@
         // Proveedor
         urlMappingName.put("proveedor".toLowerCase(), "Panel Proveedor");
         urlMappingName.put("proveedores".toLowerCase(), "Proveedores");
-        urlMappingName.put("proveedores/edit".toLowerCase(), "Editar Proveedor");
+        urlMappingName.put("proveedores/edit".toLowerCase(), "Editar");
         
         urlMappingName.put("contactos".toLowerCase(), "Contactos");
         urlMappingName.put("contactos/edit".toLowerCase(), "Editar");
+        
+        // Almacen
+        urlMappingName.put("almacen".toLowerCase(), "Panel Almacen");
+        urlMappingName.put("almacenes".toLowerCase(), "Almacenes");
+        urlMappingName.put("almacenes/edit".toLowerCase(), "Editar");
 
         // Añadir las partes que deben ser consideradas como partes finales de las breadcrumbs
         urlLastBreadCrumbName.add("edit".toLowerCase());

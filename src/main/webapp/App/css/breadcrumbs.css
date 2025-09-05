@@ -83,6 +83,17 @@ https://icons8.com/line-awesome
     content: "\f2c2";
 }
 
+/*Almacen*/
+.breadcrumb li[data-id="almacen"] a span.icon i::before {
+    content: "\f494";
+}
+.breadcrumb li[data-id="almacenes"] a span.icon i::before {
+    content: "\f466";
+}
+.breadcrumb li[data-id="ubicaciones"] a span.icon i::before {
+    content: "\f1c0";
+}
+
 
 
 /* Breadcrumb styles */

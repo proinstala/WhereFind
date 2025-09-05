@@ -128,8 +128,8 @@ public class AlmacenServiceImplement extends BaseMySql implements IAlmacenServic
         AlmacenDTO almacenDTO = null;
         StringBuilder sql = new StringBuilder(SQL_SELECT_COMUN);
         
-        sql.append(" WHERE p.activo = TRUE");
-        sql.append(" AND p.id = ?");
+        sql.append(" WHERE a.activo = TRUE");
+        sql.append(" AND a.id = ?");
         
         try (Connection conexion = getConnection(); 
              PreparedStatement ps = conexion.prepareStatement(sql.toString())) {

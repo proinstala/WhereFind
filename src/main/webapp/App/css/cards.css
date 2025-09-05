@@ -84,6 +84,7 @@
     grid-row: 2/4;
     font-weight: 400;
     color: #00000080;
+    align-items: center;
 }
 
 .card__descripcion {
@@ -106,5 +107,11 @@
 
     .card__link::after {
         width: 100%;
+    }
+}
+
+#Emplazamientos {
+    & > h2 {
+        font-size: 3.3rem;
     }
 }

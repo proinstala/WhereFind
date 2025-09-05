@@ -1,11 +1,14 @@
 package io.proinstala.wherefind.shared.services;
 
+import com.google.gson.Gson;
 import java.io.IOException;
 import com.google.gson.GsonBuilder;
 
 import io.proinstala.wherefind.shared.dtos.ResponseDTO;
 import io.proinstala.wherefind.shared.dtos.UserDTO;
+import io.proinstala.wherefind.shared.tools.LocalDateAdapter;
 import jakarta.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
 
 /**
  * Clase BaseService que proporciona métodos para gestionar respuestas JSON en servicios HTTP.
@@ -44,7 +47,10 @@ public abstract class BaseService {
      */
     protected boolean responseJson(HttpServletResponse response, Object data)
     {
-        return responseJson(response, new GsonBuilder().create().toJson(data));
+        //return responseJson(response, new GsonBuilder().create().toJson(data));
+        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
+        return responseJson(response, gson.toJson(data));
+     
     }
 
     /**

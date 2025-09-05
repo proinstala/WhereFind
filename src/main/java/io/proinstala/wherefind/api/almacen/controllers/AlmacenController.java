@@ -3,7 +3,6 @@ package io.proinstala.wherefind.api.almacen.controllers;
 
 import io.proinstala.wherefind.api.almacen.services.AlmacenControllerService;
 import io.proinstala.wherefind.api.identidad.UserSession;
-import io.proinstala.wherefind.api.proveedor.controllers.ProveedorController;
 import io.proinstala.wherefind.shared.controllers.BaseHttpServlet;
 import static io.proinstala.wherefind.shared.controllers.BaseHttpServlet.responseError403;
 import static io.proinstala.wherefind.shared.controllers.BaseHttpServlet.responseError404;
@@ -95,7 +94,7 @@ public class AlmacenController extends BaseHttpServlet {
             return;
         }
         
-        //almacenServicio.getAlmacenById(actionController);
+        almacenServicio.getAlmacenById(actionController);
     }
     
     /**
@@ -152,7 +151,7 @@ public class AlmacenController extends BaseHttpServlet {
             responseError403(actionController.server().response(), "");
             return;
         }
-
+        
         almacenServicio.createAlmacen(actionController);
     }
     
@@ -174,7 +173,7 @@ public class AlmacenController extends BaseHttpServlet {
             return;
         }
         
-        //almacenServicio.deleteAlmacen(actionController);
+        almacenServicio.deleteAlmacen(actionController);
     }
     
     /**
@@ -199,7 +198,7 @@ public class AlmacenController extends BaseHttpServlet {
             return;
         }
         
-        //almacenServicio.updateAlmacen(actionController);
+        almacenServicio.updateAlmacen(actionController);
     }
     
     /**
