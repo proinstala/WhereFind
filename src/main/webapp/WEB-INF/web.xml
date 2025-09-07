@@ -339,4 +339,14 @@
         <url-pattern>/almacen/almacenes/edit/*</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>emplazamientoList</servlet-name>
+        <jsp-file>/App/web/almacen/emplazamientoList.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>emplazamientoList</servlet-name>
+        <url-pattern>/almacen/emplazamientos</url-pattern>
+    </servlet-mapping>
+
 </web-app>

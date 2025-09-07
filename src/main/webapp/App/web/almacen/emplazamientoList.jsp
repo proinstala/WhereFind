@@ -1,7 +1,7 @@
 <%-- 
-    Document   : almacenList
-    Created on : 15 ago 2025, 11:20:44
-    Author     : David
+    Document   : emplazamientoList
+    Created on : 6 sept 2025, 9:51:50
+    Author     : judas
 --%>
 
 <%@page import="io.proinstala.wherefind.shared.config.AppSettings"%>
@@ -20,7 +20,7 @@
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >
-    <jsp:param name="titleweb" value="WhereFind - Almacen"/>
+    <jsp:param name="titleweb" value="WhereFind - Emplazamiento"/>
 </jsp:include>
 
 <link href="App/css/formulario.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>
@@ -39,7 +39,7 @@
 
                 <div class="contenedor__formulario--cabecera conBotones">
                     <div>
-                        <h1>Almacenes</h1>
+                        <h1>Emplazamientos</h1>
                     </div>
                     <div class="form__btn_circle">
                         <button id="btnCancelar" title="Cancelar"><i class="las la-times"></i></button>
@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="contenedor__formulario--main">
-                    <form class="formulario" name="frmBuscarAlmacen" id="frmBuscarAlmacen">
+                    <form class="formulario" name="frmBuscarEmplazamiento" id="frmBuscarEmplazamiento">
 
                         <div class="form__input">
                             <input type="text" name="nombre" id="nombre">
@@ -58,6 +58,12 @@
                             <input type="text" name="descripcion" id="descripcion">
                             <label for="descripcion">Descripción</label>
                         </div>
+                        
+                        <div class="form__input">
+                            <select name="tipo" id="tipo">
+                            </select>
+                            <label for="tipo">Tipo</label>
+                        </div>
 
                     </form>
                 </div>
@@ -65,7 +71,7 @@
                 <div class="contenedor__tabla--botones">
 
                     <div class="form__btn_circle">
-                        <button form="frmBuscarAlmacen" id="btnBuscar" title="Buscar" type="submit"><i class="las la-search"></i></button>
+                        <button form="frmBuscarEmplazamiento" id="btnBuscar" title="Buscar" type="submit"><i class="las la-search"></i></button>
                     </div>
                     <div class="form__btn_circle">
                         <button id="btnCrear" title="Crear" disabled><i class="las la-plus"></i></button>
@@ -82,14 +88,14 @@
                 </div>
 
                 <div class="contenedor__tabla">
-                    <table class="tabla" id="tablaAlmacen" data-rowselected = "-1">
+                    <table class="tabla" id="tablaEmplazamiento" data-rowselected = "-1">
                         <thead>
                             <tr>
                                 <th>Id</th>
                                 <th>Nombre</th>
                                 <th>Descripcion</th>
-                                <th>Localidad</th>
-                                <th>Provincia</th>
+                                <th>Tipo</th>
+                                <th>Almacen</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -109,6 +115,6 @@
     </div>
 </div>
 
-<script src="App/js/almacen/almacenList.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
+<script src="App/js/almacen/emplazamientoList.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>

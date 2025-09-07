@@ -38,7 +38,7 @@
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >
-    <jsp:param name="titleweb" value="Panel Almacen" />
+    <jsp:param name="titleweb" value="WhereFind - Panel Almacen" />
 </jsp:include>
 
 

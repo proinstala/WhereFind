@@ -1,7 +1,7 @@
 <%@page import="io.proinstala.wherefind.shared.consts.urls.enums.UrlIdentidad"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="/App/web/shared/head.jsp" >
-    <jsp:param name="titleweb" value="Login" />
+    <jsp:param name="titleweb" value="WhereFind - Login" />
 </jsp:include>
 
     <link rel="stylesheet" href="App/css/identidad/login.css?v=<%=AppSettings.APP_VERSION_CSS%>">

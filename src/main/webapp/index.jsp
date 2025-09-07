@@ -11,7 +11,7 @@
 %>
 
 <jsp:include page="App/web/shared/head.jsp" >
-    <jsp:param name="titleweb" value="Index" />
+    <jsp:param name="titleweb" value="WhereFind - Index" />
 </jsp:include>
 
 

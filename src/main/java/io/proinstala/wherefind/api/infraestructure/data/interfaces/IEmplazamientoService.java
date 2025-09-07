@@ -42,13 +42,15 @@ public interface IEmplazamientoService {
      * al almacén y tipo de emplazamiento especificados y cuyo nombre coincida total o 
      * parcialmente con el parámetro dado.
      *
-     * @param almacenId el identificador único del almacén.
-     * @param tipoEmplazamientoId el identificador único del tipo de emplazamiento.
      * @param nombre el nombre o parte del nombre del emplazamiento a buscar.
+     * @param descripcion la descripcion o parte de la descripcion del emplazamiento a buscar.
+     * @param tipoEmplazamientoId el identificador único del tipo de emplazamiento.
+     * @param almacenId el identificador único del almacén.
+     * 
      * @return una lista de {@link EmplazamientoDTO} que cumplen con los criterios de búsqueda,
      *         o una lista vacía si no hay coincidencias.
      */
-    public List<EmplazamientoDTO> findEmplazamientos(int almacenId, int tipoEmplazamientoId, String nombre);
+    public List<EmplazamientoDTO> findEmplazamientos(String nombre, String descripcion, int tipoEmplazamientoId, int almacenId);
     
     /**
      * Crea un nuevo emplazamiento en la base de datos.
