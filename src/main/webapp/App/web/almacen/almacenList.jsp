@@ -20,7 +20,7 @@
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >
-    <jsp:param name="titleweb" value="WhereFind - Almacen"/>
+    <jsp:param name="titleweb" value="WhereFind - Almacén"/>
 </jsp:include>
 
 <link href="App/css/formulario.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>

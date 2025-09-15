@@ -1,7 +1,11 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package io.proinstala.wherefind.api.articulo.controllers;
 
-package io.proinstala.wherefind.api.almacen.controllers;
-
-import io.proinstala.wherefind.api.almacen.services.AlmacenControllerService;
+import io.proinstala.wherefind.api.almacen.controllers.AlmacenController;
+import io.proinstala.wherefind.api.articulo.services.MarcaControllerService;
 import io.proinstala.wherefind.api.identidad.UserSession;
 import io.proinstala.wherefind.shared.controllers.BaseHttpServlet;
 import static io.proinstala.wherefind.shared.controllers.BaseHttpServlet.responseError403;
@@ -14,25 +18,25 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Controlador de solicitudes HTTP para manejar operaciones relacionadas con almacén.
+ * Controlador de solicitudes HTTP para manejar operaciones relacionadas con marca.
  *
  * <p>Esta clase extiende {@link BaseHttpServlet} y se encarga de recibir y procesar las solicitudes HTTP 
- * relacionadas con almacén a través de la API definida. Utiliza el servicio {@link AlmacenControllerService} 
+ * relacionadas con marca a través de la API definida. Utiliza el servicio {@link MarcaControllerService} 
  * para realizar las operaciones de negocio y construir las respuestas adecuadas.</p>
  *
  * <p>La clase define una enumeración interna {@link ActionType} para representar los diferentes tipos de acción 
- * que puede manejar. La base de la URL para las API de almacen se define como {@code /api/almacen}.</p>
+ * que puede manejar. La base de la URL para las API de marca se define como {@code /api/marca}.</p>
  */
-@WebServlet(urlPatterns = AlmacenController.BASE_API + "/*")
-public class AlmacenController extends BaseHttpServlet {
+@WebServlet(urlPatterns = MarcaController.BASE_API + "/*")
+public class MarcaController extends BaseHttpServlet {
     
     /**
      * Base de la URL para las API de localidad.
      */
-    protected static final String BASE_API = "/api/almacen";
+    protected static final String BASE_API = "/api/marca";
     
-    private final AlmacenControllerService almacenServicio = new AlmacenControllerService();
-
+    private final MarcaControllerService marcaServicio = new MarcaControllerService();
+    
     @Override
     protected String getBaseApi() {
         return BASE_API;
@@ -43,14 +47,14 @@ public class AlmacenController extends BaseHttpServlet {
      */
     enum ActionType {
         ERROR,
-        ALMACEN,
-        ALMACENES,
-        FIND_ALMACENES,
+        MARCA,
+        MARCAS,
+        FIND_MARCAS,
         UPDATE,
         CREATE,
         DELETE
     }
-
+    
     /**
      * Determina el tipo de acción basado en el nombre de la acción.
      *
@@ -65,7 +69,7 @@ public class AlmacenController extends BaseHttpServlet {
             action = action.toUpperCase();
 
             // Recorre todos los ActionType
-            for (AlmacenController.ActionType accion : ActionType.values()) {
+            for (MarcaController.ActionType accion : MarcaController.ActionType.values()) {
 
                 // Conprueba que action esté entre los ActionType
                 if (action.equals(accion.name())) {
@@ -76,75 +80,75 @@ public class AlmacenController extends BaseHttpServlet {
         }
 
         // Devuelve el ActionType de error por no encontrar un ActionType coincidente
-        return ActionType.ERROR;
+        return MarcaController.ActionType.ERROR;
     }
     
     /**
-     * Maneja la solicitud para obtener un almacén específico.
+     * Maneja la solicitud para obtener una marca específica.
      *
      * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio 
-     * de almacén para obtener un almacén por ID y devolver la respuesta en formato JSON.</p>
+     * de marca para obtener una marca por ID y devolver la respuesta en formato JSON.</p>
      *
      * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
      */
-    protected void apiGetAlmacen(ActionController actionController) {
+    protected void apiGetMarca(ActionController actionController) {
         // Se comprueba que el usuario está logueado
         if (!UserSession.isUserLogIn(actionController.server(), false)) {
             responseError403(actionController.server().response(), "");
             return;
         }
         
-        almacenServicio.getAlmacenById(actionController);
+        marcaServicio.getMarcaById(actionController);
     }
     
     /**
-     * Maneja la solicitud para obtener todos los alamacenes.
+     * Maneja la solicitud para obtener todos las marcas.
      *
-     * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio de almacén 
-     * para obtener la lista de almacenes y devolver la respuesta en formato JSON.</p>
+     * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio de marca 
+     * para obtener la lista de marcas y devolver la respuesta en formato JSON.</p>
      *
      * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
      */
-    protected void apiGetAlmacenes(ActionController actionController) {
+    protected void apiGetMarcas(ActionController actionController) {
         // Se comprueba que el usuario está logueado
         if (!UserSession.isUserLogIn(actionController.server(), false)) {
             responseError403(actionController.server().response(), "");
             return;
         }
         
-        almacenServicio.getAlmacenes(actionController);
+        marcaServicio.getMarcas(actionController);
     }
     
     /**
-     * Maneja la solicitud para buscar almacenes.
+     * Maneja la solicitud para buscar marcas.
      *
      * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio 
-     * de almacén para buscar los almacenes y devolver la respuesta en formato JSON.</p>
+     * de marca para buscar las marcas y devolver la respuesta en formato JSON.</p>
      *
      * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
      */
-    protected void apiFindAlmacenes(ActionController actionController) {
+    protected void apiFindMarcas(ActionController actionController) {
         // Se comprueba que el usuario está logueado
         if (!UserSession.isUserLogIn(actionController.server(), false)) {
             responseError403(actionController.server().response(), "");
             return;
         }
         
-        almacenServicio.findAlmacenes(actionController);
+        marcaServicio.findMarcas(actionController);
     }
     
     /**
-     * Maneja la creación de un nuevo almacén utilizando los datos proporcionados en la solicitud.
+     * Maneja la creación de una nueva marca utilizando los datos proporcionados en la solicitud.
      *
      * <p>Este método primero verifica si el usuario está autenticado y tiene los permisos necesarios. 
      * Si el usuario no está logueado, se envía una respuesta de error 
      * 403 (prohibido) y se interrumpe el procesamiento. Si el usuario está autenticado y autorizado, 
-     * se llama al servicio de almacén para realizar la creación del almacén.</p>
+     * se llama al servicio de marca para realizar la creación de la marca.</p>
      *
      * @param actionController el controlador de acción que contiene la información de la solicitud, 
      *                         incluyendo los datos necesarios para crear un nuevo almacen.
      */
-    protected void apiCreateAlmacen(ActionController actionController) {
+    protected void apiCreateMarca(ActionController actionController) {
         // Se comprueba que el usuario está logueado
         if (!UserSession.isUserLogIn(actionController.server(), true))
         {
@@ -152,20 +156,20 @@ public class AlmacenController extends BaseHttpServlet {
             return;
         }
         
-        almacenServicio.createAlmacen(actionController);
+        marcaServicio.createMarca(actionController);
     }
     
     /**
-     * Maneja la solicitud para elimnar la información de un almacén específico.
+     * Maneja la solicitud para elimnar la información de una marca específica.
      *
      * <p>Verifica si el usuario está autenticado y tiene los permisos necesarios. Si es así, 
-     * delega la operación al servicio de almacen para borrar(activo = false) el almacén y devolver la respuesta.</p>
+     * delega la operación al servicio de marca para borrar(activo = false) la marca y devolver la respuesta.</p>
      * 
-     * EndPoint - PUT : /api/almacen/delete/{id}
+     * EndPoint - PUT : /api/marca/delete/{id}
      *
      * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
      */
-    protected void apiDeleteAlmacen(ActionController actionController) {
+    protected void apiDeleteMarca(ActionController actionController) {
         // Se comprueba que el usuario está logueado y sea administrador
         if (!UserSession.isUserLogIn(actionController.server(), true))
         {
@@ -173,24 +177,24 @@ public class AlmacenController extends BaseHttpServlet {
             return;
         }
         
-        almacenServicio.deleteAlmacen(actionController);
+        marcaServicio.deleteMarca(actionController);
     }
     
     /**
-     * Maneja la actualización de la información de un almacén existente.
+     * Maneja la actualización de la información de una marca existente.
      *
      * <p>Este método primero verifica si el usuario está autenticado y cuenta con los permisos
      * necesarios. Si el usuario no cumple con estos
      * requisitos, se envía una respuesta de error 403 (Prohibido) y se interrumpe el procesamiento.
-     * En caso contrario, delega la operación al servicio de almacén para realizar la actualización
+     * En caso contrario, delega la operación al servicio de marca para realizar la actualización
      * correspondiente y devolver la respuesta apropiada al cliente.</p>
      *
-     * <p>EndPoint - PUT : /api/almacen/update/</p>
+     * <p>EndPoint - PUT : /api/marca/update/</p>
      *
      * @param actionController el controlador de la acción que maneja la solicitud y la respuesta,
      *                         conteniendo la información y datos necesarios para realizar la actualización.
      */
-    protected void apiUpdateAlmacen(ActionController actionController) {
+    protected void apiUpdateMarca(ActionController actionController) {
         // Se comprueba que el usuario está logueado y sea administrador
         if (!UserSession.isUserLogIn(actionController.server(), true))
         {
@@ -198,7 +202,7 @@ public class AlmacenController extends BaseHttpServlet {
             return;
         }
         
-        almacenServicio.updateAlmacen(actionController);
+        marcaServicio.updateMarca(actionController);
     }
     
     /**
@@ -219,10 +223,10 @@ public class AlmacenController extends BaseHttpServlet {
         // Imprime en la salida del servidor el EndPoint
         System.out.println("EndPoint GET : " + actionController.parametros()[0]);
         
-        switch((AlmacenController.ActionType) actionController.actionType()) {
-            case ALMACEN -> apiGetAlmacen(actionController);
-            case ALMACENES -> apiGetAlmacenes(actionController);
-            case FIND_ALMACENES -> apiFindAlmacenes(actionController);
+        switch((MarcaController.ActionType) actionController.actionType()) {
+            case MARCA -> apiGetMarca(actionController);
+            case MARCAS -> apiGetMarcas(actionController);
+            case FIND_MARCAS -> apiFindMarcas(actionController);
               
             default -> responseError403(actionController.server().response(), "");
         }
@@ -254,8 +258,8 @@ public class AlmacenController extends BaseHttpServlet {
         System.out.println("EndPoint POST : " + actionController.parametros()[0]);
 
         // Dependiendo del ActionType, realizará una acción
-        switch((AlmacenController.ActionType) actionController.actionType()){
-            case CREATE -> apiCreateAlmacen(actionController);
+        switch((MarcaController.ActionType) actionController.actionType()){
+            case CREATE -> apiCreateMarca(actionController);
 
             default -> responseError404(actionController.server().response(), "");
         }
@@ -283,9 +287,9 @@ public class AlmacenController extends BaseHttpServlet {
         // Imprime en la salida del servidor el EndPoint
         System.out.println("EndPoint PUT : " + actionController.parametros()[0]);
 
-        switch((AlmacenController.ActionType) actionController.actionType()) {
-            case UPDATE -> apiUpdateAlmacen(actionController);
-            case DELETE -> apiDeleteAlmacen(actionController);
+        switch((MarcaController.ActionType) actionController.actionType()) {
+            case UPDATE -> apiUpdateMarca(actionController);
+            case DELETE -> apiDeleteMarca(actionController);
             
             default -> responseError404(actionController.server().response(), "");
         }

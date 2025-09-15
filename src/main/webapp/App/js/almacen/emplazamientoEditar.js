@@ -1,57 +1,59 @@
+
 import { solicitudGet, setImageSelected, solicitudPut, getDatosForm, fillInputSelect, cargarInputSelect, seleccionarValorSelect, detectarCambiosFormulario } from '../comunes.mjs';
 import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from '../alertasSweetAlert2.mjs';
 import {DEFAULT_IMG} from '../constantes.mjs';
 
-const idSelectDireccion = "#direccion";
-const idInputIdAlmacen = "#almacen_id";
+const idSelectTipo = "#tipo";
+const idSelectAlmacen = "#almacen";
+const idInputIdEmplazamiento = "#emplazamiento_id";
 const idInputNombre = "#nombre";
 const idInputDescripcion = "#descripcion";
-const idInputPaginaWeb = "#paginaWeb";
 
-const idFormAlmacen = "#frmModificarAlmacen";
+const idFormEmplazamiento = "#frmModificarEmplazamiento";
 const idBtnGuardar = "#btnGuardar";
 const idBtnCancelar = "#btnCancelar";
-const idBtnDeshacerCambiosAlmacen = "#btnDeshacerCambiosAlmacen";
+const idBtnDeshacerCambiosEmplazamiento = "#btnDeshacerCambiosEmplazamiento";
 
-let oldAlmacen;
+let oldEmplazamiento;
 
 $(document).ready(function () {
-    const selectDireccion = document.querySelector(idSelectDireccion);
-    const inputIdAlmacen = document.querySelector(idInputIdAlmacen);
+    const selectTipo = document.querySelector(idSelectTipo);
+    const selectAlmacen = document.querySelector(idSelectAlmacen);
+    const inputIdEmplazamiento = document.querySelector(idInputIdEmplazamiento);
     const inputNombre = document.querySelector(idInputNombre);
     const inputDescripcion = document.querySelector(idInputDescripcion);
     
-    const btnDeshacerCambiosAlmacen = document.querySelector(idBtnDeshacerCambiosAlmacen);
+    const btnDeshacerCambiosEmplazamiento = document.querySelector(idBtnDeshacerCambiosEmplazamiento);
     const btnCancelar = document.querySelector(idBtnCancelar);
 
-    validarFormulario(idFormAlmacen);
+    validarFormulario(idFormEmplazamiento);
 
-    getAlmacen(inputIdAlmacen.value);
+    getEmplazamiento(inputIdEmplazamiento.value);
 
-    btnDeshacerCambiosAlmacen.addEventListener('click', () => {
-        fillFielsAlmacen(oldAlmacen);
+    btnDeshacerCambiosEmplazamiento.addEventListener('click', () => {
+        fillFielsEmplazamiento(oldEmplazamiento);
     });
 
     btnCancelar.addEventListener('click', () => {
-        window.location.href = "almacen/almacenes";
+        window.location.href = "almacen/emplazamientos";
     });
 
 });
 
-function onDetectarCambiosModificarAlmacen(hayCambios) {
+function onDetectarCambiosModificarEmplazamiento(hayCambios) {
     $(idBtnGuardar).prop('disabled', !hayCambios);
-    $(idBtnDeshacerCambiosAlmacen).prop('disabled', !hayCambios);
+    $(idBtnDeshacerCambiosEmplazamiento).prop('disabled', !hayCambios);
 }
 
 
-function getAlmacen(idAlmacen) {
-    solicitudGet(`api/almacen/almacen?idAlmacen=${idAlmacen}`, "", true)
+function getEmplazamiento(idEmplazamiento) {
+    solicitudGet(`api/emplazamiento/emplazamiento?idEmplazamiento=${idEmplazamiento}`, "", true)
             .then(response => {
                 if (response.isError === 1) {
                     mostrarMensajeError("Se ha producido un error", response.result);
                 } else {
-                    oldAlmacen = response.data;
-                    fillFielsAlmacen(oldAlmacen);
+                    oldEmplazamiento = response.data;
+                    fillFielsEmplazamiento(oldEmplazamiento);
                 }
             })
             .catch(error => {
@@ -62,25 +64,27 @@ function getAlmacen(idAlmacen) {
 }
 
 
-function fillFielsAlmacen(almacen) {
-    debugger;
-    const form = document.querySelector(idFormAlmacen);
+function fillFielsEmplazamiento(emplazamiento) {
+    const form = document.querySelector(idFormEmplazamiento);
 
-    const selectDireccion = form.querySelector(idSelectDireccion);
+    const selectTipo = form.querySelector(idSelectTipo);
+    const selectAlmacen = form.querySelector(idSelectAlmacen);
     const inputNombre = form.querySelector(idInputNombre);
     const inputDescripcion = form.querySelector(idInputDescripcion);
    
-    inputNombre.value = almacen.nombre;
-    inputDescripcion.value = almacen.descripcion ?? "";
+    inputNombre.value = emplazamiento.nombre;
+    inputDescripcion.value = emplazamiento.descripcion ?? "";
     
-    const direccionId = almacen.direccion.id;
+    const tipoId = emplazamiento.tipoEmplazamiento.id;
+    const almacenId = emplazamiento.almacen.id;
     
-    const promesaDireccion = cargarInputSelect(selectDireccion, `api/direccion/find_direcciones_libres?direccion=${direccionId}`, 'Sin Dirección', direccionId, () => {});
+    const promesaTipo = cargarInputSelect(selectTipo, `api/tipo_emplazamiento/tipos_emplazamientos`, '', tipoId, () => {});
+    const promesaAlmacen = cargarInputSelect(selectAlmacen, `api/almacen/almacenes`, '', almacenId, () => {});
     
-    Promise.all([promesaDireccion])
+    Promise.all([promesaTipo, promesaAlmacen])
         .then(() => {
-            onDetectarCambiosModificarAlmacen(false);
-            detectarCambiosFormulario(idFormAlmacen, onDetectarCambiosModificarAlmacen);
+            onDetectarCambiosModificarEmplazamiento(false);
+            detectarCambiosFormulario(idFormEmplazamiento, onDetectarCambiosModificarEmplazamiento);
         })
         .catch(error => {
             console.error("Error al cargar selects:", error);
@@ -97,44 +101,35 @@ function validarFormulario(idForm) {
             descripcion: {
                 required: true,
                 maxlength: 200
-            },
-            direccion: {
-                maxlength: 100,
-                min: -1,
-                max: 999999
             }
         },//Fin de reglas ----------------
         messages: {
             nombre: {
-                required: "Debe introducir el nombre del almacén.",
+                required: "Debe introducir el nombre del emplazamiento.",
                 maxlength: "Longitud máx 100 caracteres."
             },
             descripcion: {
-                required: "Debe introducir la descripcion del almacén.",
+                required: "Debe introducir la descripcion del emplazamiento.",
                 maxlength: "Longitud máx 200 caracteres."
-            },
-            direccion: {
-                min: "Valor seleccionado no válido.",
-                max: "Valor seleccionado no válido."
             }
         },//Fin de msg  ------------------
 
         submitHandler: function () {
-            mostrarMensajeOpcion("Modificar Almacén", '¿Quieres realmente modificar los datos?')
+            mostrarMensajeOpcion("Modificar Emplazamiento", '¿Quieres realmente modificar los datos?')
                     .then((result) => {
                         if (result.isConfirmed) {
-                            const almacenIdInput = document.querySelector('#almacen_id');
-                            const almacenId = almacenIdInput ? almacenIdInput.value : -1;
+                            const emplazamientoIdInput = document.querySelector('#emplazamiento_id');
+                            const emplazamientoId = emplazamientoIdInput ? emplazamientoIdInput.value : -1;
 
-                            solicitudPut(`api/almacen/update/${almacenId}`, idForm, true)
+                            solicitudPut(`api/emplazamiento/update/${emplazamientoId}`, idForm, true)
                                     .then(response => {
                                         if (response.isError === 1) {
                                             mostrarMensajeError("No se puede actualizar los datos", response.result);
                                         } else {
-                                            mostrarMensaje("Modificado almacén.", `Se han modificado correctamente los datos del almacén ${response.data.id}`, "success");
-                                            oldAlmacen = response.data;
-                                            onDetectarCambiosModificarAlmacen(false);
-                                            detectarCambiosFormulario(idFormAlmacen, onDetectarCambiosModificarAlmacen);
+                                            mostrarMensaje("Modificado emplazamiento.", `Se han modificado correctamente los datos del emplazamiento ${response.data.id}`, "success");
+                                            oldEmplazamiento = response.data;
+                                            onDetectarCambiosModificarEmplazamiento(false);
+                                            detectarCambiosFormulario(idFormEmplazamiento, onDetectarCambiosModificarEmplazamiento);
                                         }
                                     })
                                     .catch(error => {
@@ -155,5 +150,6 @@ function validarFormulario(idForm) {
         }
     });//Fin Validate
 }
+
 
 

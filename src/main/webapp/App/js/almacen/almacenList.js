@@ -146,7 +146,7 @@ function rellenarTablaAlmacen(almacenes) {
 }
 
 function borrarAlmacen(almacenId) {
-    mostrarMensajeOpcion("Borrar Al,acen", `¿Quieres realmente borrar los datos del alamacen con id ${almacenId}?`)
+    mostrarMensajeOpcion("Borrar Al,acen", `¿Quieres realmente borrar los datos del almacén con id ${almacenId}?`)
                     .then((result) => {
                         if (result.isConfirmed) {
                             solicitudPut(`api/almacen/delete/${almacenId}`, "", true)
@@ -154,7 +154,7 @@ function borrarAlmacen(almacenId) {
                                         if (response.isError === 1) {
                                             mostrarMensajeError("No se puede borrar los datos", response.result);
                                         } else {
-                                            mostrarMensaje("Alamacen Borrada.", `Se han borrado correctamente los datos del alamacen.`, "success");
+                                            mostrarMensaje("Almacén Borrada.", `Se han borrado correctamente los datos del almacén.`, "success");
 
                                             //Elimina la fila seleccionada de la tabla.
                                             deleteRowSelectedTable(idTablaAlmacen);

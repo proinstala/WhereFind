@@ -91,7 +91,7 @@ public class AlmacenServiceImplement extends BaseMySql implements IAlmacenServic
         return almacenDTO;
     }
     
-    private List<EmplazamientoDTO> getEmplazamientosByProveedor(AlmacenDTO almacenDTO) {
+    private List<EmplazamientoDTO> getEmplazamientosByAlmacen(AlmacenDTO almacenDTO) {
         List<EmplazamientoDTO> listaEmplazamientos = new ArrayList<>();
         try (Connection conexion = getConnection(); 
              PreparedStatement ps = conexion.prepareStatement(SQL_SELECT_EMPLAZAMIENTOS_BY_ALMACEN)) {
@@ -143,7 +143,7 @@ public class AlmacenServiceImplement extends BaseMySql implements IAlmacenServic
             }
 
             if (almacenDTO != null) {
-                almacenDTO.setListaEmplazamientos(getEmplazamientosByProveedor(almacenDTO));
+                almacenDTO.setListaEmplazamientos(getEmplazamientosByAlmacen(almacenDTO));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -156,7 +156,7 @@ public class AlmacenServiceImplement extends BaseMySql implements IAlmacenServic
         List<AlmacenDTO> listaAlmacenes = new ArrayList<>();
         
         StringBuilder sql = new StringBuilder(SQL_SELECT_COMUN);
-        sql.append(" WHERE p.activo = TRUE");
+        sql.append(" WHERE a.activo = TRUE");
         
         try (Connection conexion = getConnection(); 
              PreparedStatement ps = conexion.prepareStatement(sql.toString())) {

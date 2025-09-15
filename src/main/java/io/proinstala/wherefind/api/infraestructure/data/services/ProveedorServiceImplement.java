@@ -7,7 +7,6 @@ import io.proinstala.wherefind.shared.dtos.DireccionDTO;
 import io.proinstala.wherefind.shared.dtos.LocalidadDTO;
 import io.proinstala.wherefind.shared.dtos.ProvinciaDTO;
 import io.proinstala.wherefind.shared.dtos.PuestoTrabajoDTO;
-import jakarta.enterprise.context.RequestScoped;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +18,6 @@ import java.util.List;
 /**
  * Implementación del servicio para la gestión de proveedores en la base de datos.
  */
-@RequestScoped
 public class ProveedorServiceImplement extends BaseMySql implements IProveedorService {
     
    private static final String SQL_SELECT_COMUN = 
@@ -54,40 +52,38 @@ public class ProveedorServiceImplement extends BaseMySql implements IProveedorSe
 
     
     private static ProveedorDTO getProveedorFromResultSet(ResultSet rs) throws SQLException {
-        
-         ProveedorDTO proveedorDTO = new ProveedorDTO(
-            rs.getInt("p.id"),
-            rs.getString("p.nombre"),
-            rs.getString("p.descripcion"),
-            rs.getString("p.pagina_web"),
-            rs.getString("p.imagen"),
-            rs.getBoolean("p.activo"),
-            new DireccionDTO(),
-            new ArrayList<>()
-        );
-         
+
+        ProveedorDTO proveedorDTO = ProveedorDTO.builder()
+                .id(rs.getInt("p.id"))
+                .nombre(rs.getString("p.nombre"))
+                .descripcion(rs.getString("p.descripcion"))
+                .paginaWeb(rs.getString("p.pagina_web"))
+                .imagen(rs.getString("p.imagen"))
+                .activo(rs.getBoolean("p.activo"))
+                .build();
+
         ProvinciaDTO provinciaDTO = ProvinciaDTO.builder()
-            .id(rs.getInt("pr_id"))
-            .nombre(rs.getString("pr_nombre"))
-            .build();
+                .id(rs.getInt("pr_id"))
+                .nombre(rs.getString("pr_nombre"))
+                .build();
 
         LocalidadDTO localidadDTO = LocalidadDTO.builder()
-            .id(rs.getInt("l_id"))
-            .nombre(rs.getString("l_nombre"))
-            .provincia(provinciaDTO)
-            .build();
+                .id(rs.getInt("l_id"))
+                .nombre(rs.getString("l_nombre"))
+                .provincia(provinciaDTO)
+                .build();
 
         DireccionDTO direccionDTO = DireccionDTO.builder()
-            .id(rs.getInt("d_id"))
-            .calle(rs.getString("d_calle"))
-            .numero(rs.getString("d_numero"))
-            .codigoPostal(rs.getInt("d_codigo_postal"))
-            .localidad(localidadDTO)
-            .activo(rs.getBoolean("d_activo"))
-            .build();
+                .id(rs.getInt("d_id"))
+                .calle(rs.getString("d_calle"))
+                .numero(rs.getString("d_numero"))
+                .codigoPostal(rs.getInt("d_codigo_postal"))
+                .localidad(localidadDTO)
+                .activo(rs.getBoolean("d_activo"))
+                .build();
 
         proveedorDTO.setDireccion(direccionDTO);
-         
+
         return proveedorDTO;
     }
 

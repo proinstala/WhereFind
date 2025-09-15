@@ -1,6 +1,6 @@
 <%-- 
-    Document   : almacenCrear
-    Created on : 27 ago 2025, 19:37:57
+    Document   : emplazamientoCrear
+    Created on : 8 sept 2025, 19:00:53
     Author     : David
 --%>
 
@@ -20,7 +20,7 @@
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >
-    <jsp:param name="titleweb" value="WhereFind - Almacén"/>
+    <jsp:param name="titleweb" value="WhereFind - Emplazamiento"/>
 </jsp:include>
 
 <link href="App/css/formulario.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>
@@ -35,28 +35,34 @@
 
                 <div class="contenedor__formulario--cabecera">
                     <div>
-                        <h1>Crear Almacén</h1>
+                        <h1>Crear Emplazamiento</h1>
                     </div>
                 </div>
 
                 <!-- Formulario -->
                 <div class="contenedor__formulario--main">
-                    <form class="formulario" name="frmCrearAlmacen" id="frmCrearAlmacen">
+                    <form class="formulario" name="frmCrearEmplazamiento" id="frmCrearEmplazamiento">
                         
                         <div class="form__input">
-                            <input type="text" name="nombre" id="nombre" placeholder="Introduce el nombre del almacén" value="">
+                            <input type="text" name="nombre" id="nombre" placeholder="Introduce el nombre del emplazamiento" value="">
                             <label for="nombre">Nombre</label>
                         </div>
                         
                         <div class="form__input col-span-2">
-                            <input type="text" name="descripcion" id="descripcion" placeholder="Introduce una descripción del almacén" value="">
+                            <input type="text" name="descripcion" id="descripcion" placeholder="Introduce una descripción del emplazamiento" value="">
                             <label for="descripcion">Descripción</label>
                         </div>
-
-                        <div class="form__input col-span-2">
-                            <select name="direccion" id="direccion">
+                        
+                        <div class="form__input">
+                            <select name="tipo" id="tipo">
                             </select>
-                            <label for="direccion">Dirección</label>
+                            <label for="tipo">Tipo</label>
+                        </div>
+
+                        <div class="form__input">
+                            <select name="almacen" id="almacen">
+                            </select>
+                            <label for="almacen">Almacén</label>
                         </div>
 
                     </form>
@@ -64,11 +70,11 @@
 
                 <div class="contenedor__formulario--footer">
                     <div class="form__btn_circle">
-                        <button form="frmCrearAlmacen" id="btnGuardar" title="Guardar" type="submit" disabled><i class="las la-save"></i></button>
+                        <button form="frmCrearEmplazamiento" id="btnGuardar" title="Guardar" type="submit" disabled><i class="las la-save"></i></button>
                     </div>
 
                     <div class="form__btn_circle">
-                        <button id="btnDeshacerCambiosAlmacen" title="Deshacer cambios" disabled><i class="las la-redo-alt" ></i></button>
+                        <button id="btnDeshacerCambiosEmplazamiento" title="Deshacer cambios" disabled><i class="las la-redo-alt" ></i></button>
                     </div>
 
                     <div class="form__btn_circle">
@@ -88,6 +94,6 @@
 </div>
 
 
-<script src="App/js/almacen/almacenCrear.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
+<script src="App/js/almacen/emplazamientoCrear.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>

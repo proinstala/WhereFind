@@ -116,7 +116,7 @@
     </servlet-mapping>
 
 
-    <!-- Mapeo de las url referentes a Direccion -->
+    <!-- Mapeo de las url referentes a Dirección -->
     <servlet>
         <servlet-name>direccionPanel</servlet-name>
         <jsp-file>/App/web/direccion/direccionPanel.jsp</jsp-file>
@@ -298,7 +298,7 @@
         <url-pattern>/proveedor/proveedores/detalle/*</url-pattern>
     </servlet-mapping>
     
-    <!-- Mapeo de las url referentes a Almacen -->
+    <!-- Mapeo de las url referentes a Almacén -->
     <servlet>
         <servlet-name>almacenPanel</servlet-name>
         <jsp-file>/App/web/almacen/almacenPanel.jsp</jsp-file>
@@ -347,6 +347,47 @@
     <servlet-mapping>
         <servlet-name>emplazamientoList</servlet-name>
         <url-pattern>/almacen/emplazamientos</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>emplazamientoCrear</servlet-name>
+        <jsp-file>/App/web/almacen/emplazamientoCrear.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>emplazamientoCrear</servlet-name>
+        <url-pattern>/almacen/emplazamientos/crear</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>emplazamientoEditar</servlet-name>
+        <jsp-file>/App/web/almacen/emplazamientoEditar.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>emplazamientoEditar</servlet-name>
+        <url-pattern>/almacen/emplazamientos/edit/*</url-pattern>
+    </servlet-mapping>
+    
+    <!-- Mapeo de las url referentes a Artículo -->
+    <servlet>
+        <servlet-name>articuloPanel</servlet-name>
+        <jsp-file>/App/web/articulo/articuloPanel.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>articuloPanel</servlet-name>
+        <url-pattern>/articulo</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>marcaList</servlet-name>
+        <jsp-file>/App/web/articulo/marcaList.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>marcaList</servlet-name>
+        <url-pattern>/articulo/marcas</url-pattern>
     </servlet-mapping>
 
 </web-app>

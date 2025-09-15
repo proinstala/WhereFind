@@ -101,4 +101,8 @@ public class FormParametros {
     public static final String PARAM_EMPLAZAMIENTO_DESCRIPCION = "descripcion";
     public static final String PARAM_EMPLAZAMIENTO_ALMACEN = "almacen";
     public static final String PARAM_EMPLAZAMIENTO_TIPO = "tipo";
+    
+    //Marca
+    public static final String PARAM_MARCA_NOMBRE = "nombre";
+    public static final String PARAM_MARCA_DESCRIPCION = "descripcion";
 }

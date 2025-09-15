@@ -132,10 +132,24 @@
         urlMappingName.put("contactos".toLowerCase(), "Contactos");
         urlMappingName.put("contactos/edit".toLowerCase(), "Editar");
         
-        // Almacen
-        urlMappingName.put("almacen".toLowerCase(), "Panel Almacen");
+        // Almacén
+        urlMappingName.put("almacen".toLowerCase(), "Panel Almacén");
         urlMappingName.put("almacenes".toLowerCase(), "Almacenes");
         urlMappingName.put("almacenes/edit".toLowerCase(), "Editar");
+        
+        urlMappingName.put("emplazamientos".toLowerCase(), "Emplazamientos");
+        urlMappingName.put("emplazamientos/edit".toLowerCase(), "Editar");
+        
+        // Artículo
+        urlMappingName.put("articulo".toLowerCase(), "Panel Artículo");
+        urlMappingName.put("articulos".toLowerCase(), "Artículos");
+        urlMappingName.put("articulos/edit".toLowerCase(), "Editar");
+        
+        urlMappingName.put("marcas".toLowerCase(), "Marcas");
+        urlMappingName.put("marcas/edit".toLowerCase(), "Editar");
+        
+        urlMappingName.put("existencias".toLowerCase(), "Existencias");
+        urlMappingName.put("existencias/edit".toLowerCase(), "Editar");
 
         // Añadir las partes que deben ser consideradas como partes finales de las breadcrumbs
         urlLastBreadCrumbName.add("edit".toLowerCase());

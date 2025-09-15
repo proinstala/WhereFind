@@ -49,19 +49,23 @@ public class EmplazamientoControllerService extends BaseService {
         
         int idTipo = -1;
         try {
-            idTipo = Integer.parseInt(strIdTipo);
+            if(!strIdTipo.isBlank()) {
+                idTipo = Integer.parseInt(strIdTipo);
+            }
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
         
         int idAlmacen = -1;
         try {
-            idAlmacen = Integer.parseInt(strIdAlmacen);
+            if(!strIdAlmacen.isBlank()) {
+                idAlmacen = Integer.parseInt(strIdAlmacen);
+            }
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
 
-        listaEmplazamientoDTO = emplazamientoServiceImp.findEmplazamientos(nombre, descripcion, idAlmacen, idTipo);
+        listaEmplazamientoDTO = emplazamientoServiceImp.findEmplazamientos(nombre.trim(), descripcion.trim(), idTipo,  idAlmacen);
 
         if(listaEmplazamientoDTO != null) {
             responseDTO = getResponseOk("OK", listaEmplazamientoDTO, 0);

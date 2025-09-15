@@ -24,4 +24,7 @@ public class ProveedorDTO {
     
     @Builder.Default
     private List<ContactoDTO> listaContactos = new ArrayList<>();
+    
+    @Builder.Default
+    private List<ArticuloProveedorDTO> listaArticulos = new ArrayList<>();
 }

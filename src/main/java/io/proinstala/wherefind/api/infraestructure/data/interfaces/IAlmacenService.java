@@ -38,8 +38,8 @@ public interface IAlmacenService {
     /**
      * Busca almacenes cuyo nombre coincida total o parcialmente con el parámetro dado.
      *
-     * Este método devuelve una lista de objetos {@link AlmacenDTO} que contienen el nombre 
-     * especificado o que coinciden parcialmente con él.
+     * Este método devuelve una lista de objetos {@link AlmacenDTO} que contienen el nombre o la
+     * descripción especificado o que coinciden parcialmente con ellos.
      *
      * @param nombre el nombre o parte del nombre del almacén a buscar.
      * @param descripcion la descripcion o parte de la descripcion del almacén a buscar.

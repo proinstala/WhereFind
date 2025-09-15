@@ -64,13 +64,13 @@ DELIMITER ;
 -- Crea la tabla USER
 CREATE TABLE IF NOT EXISTS USER (
     id INT auto_increment NOT NULL,
-    user_name varchar(100) NOT NULL,
+    user_name VARCHAR(100) NOT NULL,
     password TEXT NOT NULL,
-    rol varchar(100) NOT NULL,
+    rol VARCHAR(100) NOT NULL,
     activo BOOL DEFAULT TRUE NOT NULL,
-    nombre varchar(100) NOT NULL,
-    apellidos varchar(100) NOT NULL,
-    email varchar(200) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    apellidos VARCHAR(100) NOT NULL,
+    email VARCHAR(200) NOT NULL,
     imagen MEDIUMTEXT,
     PRIMARY KEY (id),
     CONSTRAINT UC_NOMBRE UNIQUE (user_name),
@@ -114,7 +114,7 @@ DELIMITER ;
 -- Crea la tabla RECOVERY
 CREATE TABLE IF NOT EXISTS RECOVERY (
     id INT auto_increment NOT NULL,
-    hash varchar(100) NOT NULL,
+    hash VARCHAR(100) NOT NULL,
     intentos INT DEFAULT 1 NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT UC_HASH UNIQUE (hash)
@@ -123,14 +123,14 @@ CREATE TABLE IF NOT EXISTS RECOVERY (
 
 CREATE TABLE IF NOT EXISTS PROVINCIA (
     id INT auto_increment NOT NULL,
-    nombre varchar(100) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
     PRIMARY KEY (id)
 );
 
 
 CREATE TABLE IF NOT EXISTS LOCALIDAD (
     id INT auto_increment NOT NULL,
-    nombre varchar(100) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
     provincia_id INT NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_LOCALIDAD_PROVINCIA FOREIGN KEY (provincia_id)
@@ -141,8 +141,8 @@ CREATE TABLE IF NOT EXISTS LOCALIDAD (
 
 CREATE TABLE IF NOT EXISTS DIRECCION (
     id INT auto_increment NOT NULL,
-    calle varchar(100) NOT NULL,
-    numero varchar(6),
+    calle VARCHAR(100) NOT NULL,
+    numero VARCHAR(6),
     codigo_postal INT,
     localidad_id INT NOT NULL, 
     activo BOOL DEFAULT TRUE NOT NULL,
@@ -155,21 +155,21 @@ CREATE TABLE IF NOT EXISTS DIRECCION (
 
 CREATE TABLE IF NOT EXISTS TIPO_EMPLAZAMIENTO (
     id INT auto_increment NOT NULL,
-    nombre varchar(100) NOT NULL,
-    descripcion varchar(200) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion VARCHAR(200) NOT NULL,
     PRIMARY KEY (id),
-    CONSTRAINT UC_NOMBRE UNIQUE (nombre)
+    CONSTRAINT UC_TIPOEMP_NOMBRE UNIQUE (nombre)
 );
 
 
 CREATE TABLE IF NOT EXISTS ALMACEN (
     id INT auto_increment NOT NULL,
-    nombre varchar(100) NOT NULL,
-    descripcion varchar(200) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion VARCHAR(200) NOT NULL,
     direccion_id INT,
     activo BOOL DEFAULT TRUE NOT NULL,
     PRIMARY KEY (id),
-    CONSTRAINT UC_NOMBRE UNIQUE (nombre),
+    CONSTRAINT UC_ALM_NOMBRE UNIQUE (nombre),
     CONSTRAINT FK_ALMACEN_DIRECCION FOREIGN KEY (direccion_id)
         REFERENCES DIRECCION(id)
         ON DELETE SET NULL
@@ -179,7 +179,7 @@ CREATE TABLE IF NOT EXISTS ALMACEN (
 
 CREATE TABLE IF NOT EXISTS EMPLAZAMIENTO (
     id INT auto_increment NOT NULL,
-    nombre varchar(100) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
     descripcion varchar(200) NOT NULL,
     tipo_id INT NOT NULL,
     almacen_id INT NOT NULL,
@@ -198,14 +198,14 @@ CREATE TABLE IF NOT EXISTS EMPLAZAMIENTO (
 
 CREATE TABLE IF NOT EXISTS PROVEEDOR (
     id INT auto_increment NOT NULL,
-    nombre varchar(100) NOT NULL,
-    descripcion varchar(200) NOT NULL,
-    pagina_web varchar(100),
+    nombre VARCHAR(100) NOT NULL,
+    descripcion VARCHAR(200) NOT NULL,
+    pagina_web VARCHAR(100),
     imagen MEDIUMTEXT,
     activo BOOL DEFAULT TRUE NOT NULL,
     direccion_id INT,
     PRIMARY KEY (id),
-    CONSTRAINT UC_NOMBRE UNIQUE (nombre),
+    CONSTRAINT UC_PROV_NOMBRE UNIQUE (nombre),
     CONSTRAINT FK_PROVEEDOR_DIRECCION FOREIGN KEY (direccion_id)
         REFERENCES DIRECCION(id)
         ON DELETE SET NULL
@@ -215,18 +215,18 @@ CREATE TABLE IF NOT EXISTS PROVEEDOR (
 
 CREATE TABLE IF NOT EXISTS PUESTO_TRABAJO (
     id INT auto_increment NOT NULL,
-    nombre varchar(100) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
     PRIMARY KEY (id)
 );
 
 
 CREATE TABLE IF NOT EXISTS CONTACTO (
     id INT auto_increment NOT NULL,
-    nombre varchar(100) NOT NULL,
-    apellido varchar(100),
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100),
     puesto_id INT,
-    telefono varchar(20),
-    email varchar(100),
+    telefono VARCHAR(20),
+    email VARCHAR(200),
     activo BOOL DEFAULT TRUE NOT NULL,
     proveedor_id INT,
     PRIMARY KEY (id),
@@ -239,3 +239,79 @@ CREATE TABLE IF NOT EXISTS CONTACTO (
         ON DELETE SET NULL
         ON UPDATE CASCADE
 );
+
+
+CREATE TABLE IF NOT EXISTS MARCA (
+    id INT auto_increment NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion VARCHAR(200) NOT NULL,
+    imagen MEDIUMTEXT,
+    activo BOOL DEFAULT TRUE NOT NULL,
+    PRIMARY KEY (id)
+);
+
+
+CREATE TABLE IF NOT EXISTS ARTICULO (
+    id INT auto_increment NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion VARCHAR(200) NOT NULL,
+    referencia VARCHAR(100) NOT NULL,
+    marca_id INT,
+    modelo VARCHAR(100),
+    stock_minimo INT,
+    imagen MEDIUMTEXT,
+    activo BOOL DEFAULT TRUE NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_ART_MARCA FOREIGN KEY (marca_id)
+        REFERENCES MARCA(id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS ARTICULO_PROVEEDOR (
+    id INT auto_increment NOT NULL,
+    articulo_id INT NOT NULL,
+    proveedor_id INT NOT NULL,
+    precio DOUBLE NOT NULL,
+    fecha_precio DATE NOT NULL,
+    disponible BOOL NOT NULL,
+    fecha_no_disponible DATE,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_ART_PRO_ARTICULO FOREIGN KEY (articulo_id)
+        REFERENCES ARTICULO(id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE,
+    CONSTRAINT FK_ART_PROV_PROVEEDOR FOREIGN KEY (proveedor_id)
+        REFERENCES PROVEEDOR(id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE,
+    CONSTRAINT UQ_ART_PROV_ARTPROV UNIQUE (articulo_id, proveedor_id)
+);
+
+
+CREATE TABLE IF NOT EXISTS EXISTENCIA (
+    id INT auto_increment NOT NULL,
+    articulo_id INT NOT NULL,
+    proveedor_id INT NOT NULL,
+    emplazamiento_id INT NOT NULL,
+    precio DOUBLE NOT NULL,
+    fecha_compra DATE,
+    comprador VARCHAR(100),
+    disponible BOOL NOT NULL,
+    fecha_no_disponible DATE,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_EXIST_ARTICULO FOREIGN KEY (articulo_id)
+        REFERENCES ARTICULO(id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE,
+    CONSTRAINT FK_EXIST_PROVEEDOR FOREIGN KEY (proveedor_id)
+        REFERENCES PROVEEDOR(id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE,
+    CONSTRAINT FK_EXIST_EMPLAZAMIENTO FOREIGN KEY (emplazamiento_id)
+        REFERENCES EMPLAZAMIENTO(id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+);
+
+

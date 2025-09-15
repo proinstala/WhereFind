@@ -1,6 +1,6 @@
 <%-- 
-    Document   : alamcenPanel
-    Created on : 15 ago 2025, 11:36:53
+    Document   : articuloPanel
+    Created on : 14 sept 2025, 13:02:25
     Author     : David
 --%>
 
@@ -24,21 +24,22 @@
     // Se obtiene la lista de tarjetas
     List<CardDTO> tarjetas = new ArrayList<>();
     
-    //las la-boxes - f468 - cajas
-    //las la-archive - archivador caja
-    //las la-stream
-    //la-database - f1c0
+    //copiright -> las la-copyright -> &#xf1f9
+    //icons     -> las la-icons     -> &#xf86d
+    //shapes    -> las la-shapes    -> &#xf61f
+    //puzle     -> las la-puzzle-piece -> &#xf12e
 
     // Se agregan las tarjetas a la lista
-    tarjetas.add(new CardDTO("las la-box", "Almacenes", "Gestione todos los alamcenes.", "almacen/almacenes"));
-    tarjetas.add(new CardDTO("las la-database", "Emplazamientos", "Gestione todos los emplazamientos.", "almacen/emplazamientos")); //
+    tarjetas.add(new CardDTO("las la-shapes", "Artículos", "Gestione todos los artículos.", "articulo/articulos"));
+    tarjetas.add(new CardDTO("las la-copyright", "Marcas", "Gestione todas las marcas.", "articulo/marcas"));  
+    tarjetas.add(new CardDTO("las la-puzzle-piece", "Existencias", "Gestione todas las existencias.", "articulo/existencias"));  
 
     // Se agrega la lista a los atributos de la petición
     request.setAttribute("cards", tarjetas);
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >
-    <jsp:param name="titleweb" value="WhereFind - Panel Almacén" />
+    <jsp:param name="titleweb" value="WhereFind - Panel Artículo" />
 </jsp:include>
 
 
@@ -57,7 +58,7 @@
 
                 <div class="contenedor__formulario--cabecera conBotones margin-bottom-5">
                     <div>
-                        <h1>Panel de Almacenes</h1>
+                        <h1>Panel de Artículos</h1>
                     </div>
                     <div class="form__btn_circle">
                         <button id="btnCancelar" title="Cancelar"><i class="las la-times"></i></button>
@@ -77,6 +78,6 @@
     </div>
 </div>
             
-<script src="App/js/almacen/almacenPanel.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
+<script src="App/js/articulo/articuloPanel.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>

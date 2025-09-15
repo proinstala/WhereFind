@@ -5,6 +5,7 @@ import io.proinstala.wherefind.api.infraestructure.data.interfaces.IContactoServ
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IDireccionService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IEmplazamientoService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.ILocalidadService;
+import io.proinstala.wherefind.api.infraestructure.data.interfaces.IMarcaService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IProveedorService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IProvinciaService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IPuestoTrabajoService;
@@ -15,6 +16,7 @@ import io.proinstala.wherefind.api.infraestructure.data.services.ContactoService
 import io.proinstala.wherefind.api.infraestructure.data.services.DireccionServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.EmplazamientoServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.LocalidadServiceImplement;
+import io.proinstala.wherefind.api.infraestructure.data.services.MarcaServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.ProveedorServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.ProvinciaServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.PuestoTrabajoServiceImplement;
@@ -158,6 +160,19 @@ public class GestorPersistencia {
      */
     public static IAlmacenService getAlmacenService() {
         return new AlmacenServiceImplement();
+    }
+    
+    /**
+     * Obtiene una instancia del servicio de marcas.
+     *
+     * <p>Este método devuelve una implementación de {@link IMarcaService}, en este caso, 
+     * una instancia de {@link MarcaServiceImplement}, que maneja la lógica relacionada con 
+     * las marcas.</p>
+     *
+     * @return una instancia de {@link IMarcaService}.
+     */
+    public static IMarcaService getMarcaService() {
+        return new MarcaServiceImplement();
     }
     
 }

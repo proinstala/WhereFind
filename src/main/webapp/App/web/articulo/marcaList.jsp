@@ -1,7 +1,7 @@
 <%-- 
-    Document   : emplazamientoList
-    Created on : 6 sept 2025, 9:51:50
-    Author     : judas
+    Document   : marcaList
+    Created on : 14 sept 2025, 18:20:23
+    Author     : David
 --%>
 
 <%@page import="io.proinstala.wherefind.shared.config.AppSettings"%>
@@ -20,7 +20,7 @@
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >
-    <jsp:param name="titleweb" value="WhereFind - Emplazamiento"/>
+    <jsp:param name="titleweb" value="WhereFind - Marca"/>
 </jsp:include>
 
 <link href="App/css/formulario.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>
@@ -39,7 +39,7 @@
 
                 <div class="contenedor__formulario--cabecera conBotones">
                     <div>
-                        <h1>Emplazamientos</h1>
+                        <h1>Marcas</h1>
                     </div>
                     <div class="form__btn_circle">
                         <button id="btnCancelar" title="Cancelar"><i class="las la-times"></i></button>
@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="contenedor__formulario--main">
-                    <form class="formulario" name="frmBuscarEmplazamiento" id="frmBuscarEmplazamiento">
+                    <form class="formulario" name="frmBuscarMarca" id="frmBuscarMarca">
 
                         <div class="form__input">
                             <input type="text" name="nombre" id="nombre">
@@ -58,18 +58,6 @@
                             <input type="text" name="descripcion" id="descripcion">
                             <label for="descripcion">Descripción</label>
                         </div>
-                        
-                        <div class="form__input">
-                            <select name="tipo" id="tipo">
-                            </select>
-                            <label for="tipo">Tipo</label>
-                        </div>
-                        
-                        <div class="form__input">
-                            <select name="almacen" id="almacen">
-                            </select>
-                            <label for="almacen">Almacen</label>
-                        </div>
 
                     </form>
                 </div>
@@ -77,7 +65,7 @@
                 <div class="contenedor__tabla--botones">
 
                     <div class="form__btn_circle">
-                        <button form="frmBuscarEmplazamiento" id="btnBuscar" title="Buscar" type="submit"><i class="las la-search"></i></button>
+                        <button form="frmBuscarMarca" id="btnBuscar" title="Buscar" type="submit"><i class="las la-search"></i></button>
                     </div>
                     <div class="form__btn_circle">
                         <button id="btnCrear" title="Crear" disabled><i class="las la-plus"></i></button>
@@ -88,20 +76,16 @@
                     <div class="form__btn_circle">
                         <button id="btnModificar" title="Modificar" disabled><i class="las la-pen"></i></button>
                     </div>
-                    <div class="form__btn_circle">
-                        <button id="btnDetalle" title="Detalle" disabled><i class="las la-info"></i></button>
-                    </div>
+                    
                 </div>
 
                 <div class="contenedor__tabla">
-                    <table class="tabla" id="tablaEmplazamiento" data-rowselected = "-1">
+                    <table class="tabla" id="tablaMarca" data-rowselected = "-1">
                         <thead>
                             <tr>
                                 <th>Id</th>
                                 <th>Nombre</th>
                                 <th>Descripcion</th>
-                                <th>Tipo</th>
-                                <th>Almacen</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -121,6 +105,6 @@
     </div>
 </div>
 
-<script src="App/js/almacen/emplazamientoList.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
+<script src="App/js/articulo/marcaList.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>

@@ -5,6 +5,7 @@ $(document).ready(function () {
     const btnLogout = document.querySelector('#btnLogout');
 
     const btnAlmacen = document.querySelector('#btnAlmacen');
+    const btnArticulo = document.querySelector('#btnArticulo');
     const btnDireccion = document.querySelector('#btnDireccion');
     const btnProveedor = document.querySelector('#btnProveedor');
     const btnConfig = document.querySelector('#btnConfig-user');
@@ -22,6 +23,10 @@ $(document).ready(function () {
     
     btnAlmacen.addEventListener('click', () => {
         window.location.href = ('almacen');
+    });
+    
+    btnArticulo.addEventListener('click', () => {
+        window.location.href = ('articulo');
     });
 
     btnDireccion.addEventListener('click', () => {

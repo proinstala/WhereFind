@@ -1,29 +1,27 @@
 
-package io.proinstala.wherefind.api.almacen.services;
+package io.proinstala.wherefind.api.articulo.services;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.util.ArrayList;
-import java.util.List;
-
 import io.proinstala.wherefind.api.infraestructure.data.GestorPersistencia;
-import io.proinstala.wherefind.api.infraestructure.data.interfaces.IAlmacenService;
+import io.proinstala.wherefind.api.infraestructure.data.interfaces.IMarcaService;
 import io.proinstala.wherefind.shared.consts.textos.FormParametros;
 import io.proinstala.wherefind.shared.consts.textos.LocaleApp;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
-import io.proinstala.wherefind.shared.dtos.AlmacenDTO;
-import io.proinstala.wherefind.shared.dtos.DireccionDTO;
+import io.proinstala.wherefind.shared.dtos.MarcaDTO;
 import io.proinstala.wherefind.shared.dtos.ResponseDTO;
 import io.proinstala.wherefind.shared.services.BaseService;
 import io.proinstala.wherefind.shared.tools.LocalDateAdapter;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author David
  */
-public class AlmacenControllerService extends BaseService {
-
+public class MarcaControllerService extends BaseService {
+    
     /**
      * Busca almacenes según los parámetros de nombre y descripción proporcionados en la solicitud.
      * 
@@ -33,21 +31,21 @@ public class AlmacenControllerService extends BaseService {
      *
      * @param actionController El controlador de acción que contiene los parámetros de la solicitud.
      */
-    public void findAlmacenes(ActionController actionController) {
+    public void findMarcas(ActionController actionController) {
         //Respuesta de la acción actual
         ResponseDTO responseDTO;
 
-        IAlmacenService almacenServiceImp = GestorPersistencia.getAlmacenService();
+        IMarcaService marcaServiceImp = GestorPersistencia.getMarcaService();
 
-        List<AlmacenDTO> listaAlmacenDTO = null;
+        List<MarcaDTO> listaMarcaDTO = null;
         
-        String nombre = actionController.server().getRequestParameter(FormParametros.PARAM_ALMACEN_NOMBRE, "");
-        String descripcion = actionController.server().getRequestParameter(FormParametros.PARAM_ALMACEN_DESCRIPCION, "");
+        String nombre = actionController.server().getRequestParameter(FormParametros.PARAM_MARCA_NOMBRE, "");
+        String descripcion = actionController.server().getRequestParameter(FormParametros.PARAM_MARCA_DESCRIPCION, "");
 
-        listaAlmacenDTO = almacenServiceImp.findAlmacenes(nombre, descripcion);
+        listaMarcaDTO = marcaServiceImp.findMarcas(nombre, descripcion);
 
-        if(listaAlmacenDTO != null) {
-            responseDTO = getResponseOk("OK", listaAlmacenDTO, 0);
+        if(listaMarcaDTO != null) {
+            responseDTO = getResponseOk("OK", listaMarcaDTO, 0);
         } else {
             //Crea la respuesta con un error
             responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR, new ArrayList<>());
@@ -56,36 +54,36 @@ public class AlmacenControllerService extends BaseService {
         //Devuelve la respuesta al navegador del usuario en formato json
         responseJson(actionController.server().response(), responseDTO);
     }
-
+    
     /**
-     * Obtiene un almacen por su identificador.
+     * Obtiene una marca por su identificador.
      * 
-     * <p>Este método extrae el identificador del almacen del controlador de acción, utiliza el
-     * servicio de almacen para recuperar los datos del almacen correspondiente, y devuelve 
+     * <p>Este método extrae el identificador de la marca del controlador de acción, utiliza el
+     * servicio de marca para recuperar los datos de la marca correspondiente, y devuelve 
      * la respuesta en formato JSON.</p>
      * 
      * @param actionController El controlador de acción que contiene los parámetros de la solicitud.
      */
-    public void getAlmacenById(ActionController actionController) {
+    public void getMarcaById(ActionController actionController) {
         //Respuesta de la acción actual
         ResponseDTO responseDTO;
         
-        IAlmacenService almacenServiceImp = GestorPersistencia.getAlmacenService();
+        IMarcaService marcaServiceImp = GestorPersistencia.getMarcaService();
         
-        AlmacenDTO almacenDTO = null;
+        MarcaDTO marcaDTO = null;
 
-        int idAlmacen = -1;
+        int idMarca = -1;
         try {
-            String id = actionController.server().getRequestParameter("idAlmacen", "-1");
-            idAlmacen = Integer.parseInt(id);
+            String id = actionController.server().getRequestParameter("idMarca", "-1");
+            idMarca = Integer.parseInt(id);
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
         
-        almacenDTO = almacenServiceImp.getAlmacenById(idAlmacen);
+        marcaDTO = marcaServiceImp.getMarcaById(idMarca);
         
-        if(almacenDTO != null) {
-            responseDTO = getResponseOk("OK", almacenDTO, 0);
+        if(marcaDTO != null) {
+            responseDTO = getResponseOk("OK", marcaDTO, 0);
         } else {
             //Crea la respuesta con un error
             responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR, new ArrayList<>());
@@ -94,29 +92,28 @@ public class AlmacenControllerService extends BaseService {
         //Devuelve la respuesta al navegador del usuario en formato json
         responseJson(actionController.server().response(), responseDTO);
     }
-
+    
     /**
-     * Obtiene la lista de todos los almacenes.
+     * Obtiene la lista de todos las marcas.
      * 
-     * <p>Utiliza el servicio de almacén para recuperar la lista completa de almacenes y devuelve
+     * <p>Utiliza el servicio de marca para recuperar la lista completa de marcas y devuelve
      * la respuesta en formato JSON.</p>
      *
      * @param actionController El controlador de acción que contiene los parámetros de la solicitud.
      */
-    public void getAlmacenes(ActionController actionController) {
+    public void getMarcas(ActionController actionController) {
         //Respuesta de la acción actual
         ResponseDTO responseDTO;
 
         // Conecta con el Gestor de Persistencia
-        IAlmacenService almacenServiceImp = GestorPersistencia.getAlmacenService();
+        IMarcaService marcaServiceImp = GestorPersistencia.getMarcaService();
 
-        List<AlmacenDTO> listaAlmacenDTO = null;
+        List<MarcaDTO> listaMarcaDTO = null;
         
-        listaAlmacenDTO = almacenServiceImp.getAllAlmacenes();
+        listaMarcaDTO = marcaServiceImp.getAllMarcas();
         
-        
-        if (listaAlmacenDTO != null) {
-            responseDTO = getResponseOk("OK", listaAlmacenDTO, 0);
+        if (listaMarcaDTO != null) {
+            responseDTO = getResponseOk("OK", listaMarcaDTO, 0);
         } else {
             //Crea la respuesta con un error
             responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR, new ArrayList<>());
@@ -127,33 +124,33 @@ public class AlmacenControllerService extends BaseService {
     }
     
     /**
-     * Crea un nuevo almacen en la base de datos.
+     * Crea una nueva marca en la base de datos.
      * 
-     * <p>Este método toma los datos del nuevo almacen en formato JSON desde el controlador de acción,
-     * los deserializa y los envía al servicio de almacen para su creación. Devuelve la respuesta en
+     * <p>Este método toma los datos de la nueva marca en formato JSON desde el controlador de acción,
+     * los deserializa y los envía al servicio de marca para su creación. Devuelve la respuesta en
      * formato JSON.</p>
      * 
      * @param actionController El controlador de acción que contiene los parámetros de la solicitud.
      */
-    public void createAlmacen(ActionController actionController) {
+    public void createMarca(ActionController actionController) {
         //Respuesta de la acción actual
         ResponseDTO responseDTO;
         
         // Conecta con el Gestor de Persistencia
-        IAlmacenService almacenServiceImp = GestorPersistencia.getAlmacenService();
+        IMarcaService marcaServiceImp = GestorPersistencia.getMarcaService();
         
-        String jsonAlmacen = actionController.server().getRequestParameter("almacenJSON", "");
+        String jsonMarca = actionController.server().getRequestParameter("marcaJSON", "");
         
-        AlmacenDTO almacenDTO = null;
-        if(jsonAlmacen != null && !jsonAlmacen.isBlank()) {
+        MarcaDTO marcaDTO = null;
+        if(jsonMarca != null && !jsonMarca.isBlank()) {
             Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
-            almacenDTO = gson.fromJson(jsonAlmacen, AlmacenDTO.class);
+            marcaDTO = gson.fromJson(jsonMarca, MarcaDTO.class);
             
-            almacenDTO = almacenServiceImp.createAlmacen(almacenDTO);
+            marcaDTO = marcaServiceImp.createMarca(marcaDTO);
         }
         
-        if(almacenDTO != null) {
-            responseDTO = getResponseOk(LocaleApp.INFO_CREATE_OK, almacenDTO, 0);
+        if(marcaDTO != null) {
+            responseDTO = getResponseOk(LocaleApp.INFO_CREATE_OK, marcaDTO, 0);
         } else {
             //Crea la respuesta con un error
             responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
@@ -164,15 +161,15 @@ public class AlmacenControllerService extends BaseService {
     }
 
     /**
-     * Actualiza la información de un alamacen existente.
+     * Actualiza la información de una marca existente.
      * 
-     * <p>Este método verifica los parámetros proporcionados para actualizar un almacen en la base de
-     * datos. Utiliza el servicio de almacen para realizar la actualización y devuelve la respuesta en
+     * <p>Este método verifica los parámetros proporcionados para actualizar una marca en la base de
+     * datos. Utiliza el servicio de marca para realizar la actualización y devuelve la respuesta en
      * formato JSON.</p>
      * 
      * @param actionController El controlador de acción que contiene los parámetros de la solicitud.
      */
-    public void updateAlmacen(ActionController actionController) {
+    public void updateMarca(ActionController actionController) {
         //Respuesta de la acción actual
         ResponseDTO responseDTO;
         
@@ -199,29 +196,21 @@ public class AlmacenControllerService extends BaseService {
         responseDTO = getResponseError(LocaleApp.ERROR_PARAMETRO_NO_CORRECTO);
 
         // Conecta con el Gestor de Persistencia
-        IAlmacenService almacenServiceImp = GestorPersistencia.getAlmacenService();
+        IMarcaService marcaServiceImp = GestorPersistencia.getMarcaService();
 
-        AlmacenDTO almacenDTO = almacenServiceImp.getAlmacenById(id);
+        MarcaDTO marcaDTO = marcaServiceImp.getMarcaById(id);
 
-        if(almacenDTO != null) {
-            String nombre = actionController.server().getRequestParameter(FormParametros.PARAM_ALMACEN_NOMBRE, "");
-            String descripcion = actionController.server().getRequestParameter(FormParametros.PARAM_ALMACEN_DESCRIPCION, "");
-            String strDirecion = actionController.server().getRequestParameter(FormParametros.PARAM_ALMACEN_DIRECCION, "");
+        if(marcaDTO != null) {
+            String nombre = actionController.server().getRequestParameter(FormParametros.PARAM_MARCA_NOMBRE, "");
+            String descripcion = actionController.server().getRequestParameter(FormParametros.PARAM_MARCA_DESCRIPCION, "");
 
             try {
-                int direccionId = Integer.parseInt(strDirecion);
-                almacenDTO.setNombre(nombre);
-                almacenDTO.setDescripcion(descripcion);
+                marcaDTO.setNombre(nombre);
+                marcaDTO.setDescripcion(descripcion);
 
-                if(direccionId > 0) {
-                    almacenDTO.setDireccion(DireccionDTO.builder().id(direccionId).build());
-                } else {
-                     almacenDTO.setDireccion(null);
-                }
-
-                if (almacenServiceImp.updateAlmacen(almacenDTO)) {
+                if (marcaServiceImp.updateMarca(marcaDTO)) {
                      //Como la acción se ha ejecutado correctamente se crea la respuesta acorde a la misma
-                    responseDTO = getResponseOk(LocaleApp.INFO_UPDATE_OK, almacenDTO, 0);
+                    responseDTO = getResponseOk(LocaleApp.INFO_UPDATE_OK, marcaDTO, 0);
                 } else {
                     responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
                 }
@@ -237,15 +226,15 @@ public class AlmacenControllerService extends BaseService {
     } 
 
     /**
-     * Elimina un almacén por su identificador.
+     * Elimina una marca por su identificador.
      * 
-     * <p>Este método extrae el identificador del almacén del controlador de acción, utiliza el
-     * servicio de almacén para eliminar el almacén correspondiente, y devuelve la respuesta en
+     * <p>Este método extrae el identificador de la marca del controlador de acción, utiliza el
+     * servicio de marca para eliminar la marca correspondiente, y devuelve la respuesta en
      * formato JSON.</p>
      * 
      * @param actionController El controlador de acción que contiene los parámetros de la solicitud.
      */
-    public void deleteAlmacen(ActionController actionController) {
+    public void deleteMarca(ActionController actionController) {
         //Respuesta de la acción actual
         ResponseDTO responseDTO;
         
@@ -270,9 +259,9 @@ public class AlmacenControllerService extends BaseService {
         }
         
         // Conecta con el Gestor de Persistencia
-        IAlmacenService almacenServiceImp = GestorPersistencia.getAlmacenService();
+        IMarcaService marcaServiceImp = GestorPersistencia.getMarcaService();
         
-        if(almacenServiceImp.deleteAlmacen(id)) {
+        if(marcaServiceImp.deleteMarca(id)) {
             responseDTO = getResponseOk(LocaleApp.INFO_UPDATE_OK, id, 0);
         } else {
             responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
@@ -280,4 +269,5 @@ public class AlmacenControllerService extends BaseService {
 
         responseJson(actionController.server().response(), responseDTO);
     }  
+    
 }

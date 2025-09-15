@@ -83,15 +83,29 @@ https://icons8.com/line-awesome
     content: "\f2c2";
 }
 
-/*Almacen*/
+/*Almacén*/
 .breadcrumb li[data-id="almacen"] a span.icon i::before {
     content: "\f494";
 }
 .breadcrumb li[data-id="almacenes"] a span.icon i::before {
     content: "\f466";
 }
-.breadcrumb li[data-id="ubicaciones"] a span.icon i::before {
+.breadcrumb li[data-id="emplazamientos"] a span.icon i::before {
     content: "\f1c0";
+}
+
+/*Artículo*/
+.breadcrumb li[data-id="articulo"] a span.icon i::before {
+    content: "\f86d";
+}
+.breadcrumb li[data-id="articulos"] a span.icon i::before {
+    content: "\f61f";
+}
+.breadcrumb li[data-id="marcas"] a span.icon i::before {
+    content: "\f1f9";
+}
+.breadcrumb li[data-id="existencias"] a span.icon i::before {
+    content: "\f12e";
 }
 
 
