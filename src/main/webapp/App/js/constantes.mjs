@@ -6,7 +6,8 @@ export const ROLES = {
 
 
 export const DEFAULT_IMG = {
-    PROVEEDOR : "App/img/defaultProveedor.svg"
+    PROVEEDOR : "App/img/defaultProveedor.svg",
+    MARCA : "App/img/defaultMarca.svg"
 };
 
 

@@ -105,4 +105,14 @@ public class FormParametros {
     //Marca
     public static final String PARAM_MARCA_NOMBRE = "nombre";
     public static final String PARAM_MARCA_DESCRIPCION = "descripcion";
+    public static final String PARAM_MARCA_IMAGEN = "imagenMarcaB64";
+    
+    //Marca
+    public static final String PARAM_ARTICULO_NOMBRE = "nombre";
+    public static final String PARAM_ARTICULO_DESCRIPCION = "descripcion";
+    public static final String PARAM_ARTICULO_REFERENCIA = "referencia";
+    public static final String PARAM_ARTICULO_MARCA = "marca";
+    public static final String PARAM_ARTICULO_MODELO = "modelo";
+    public static final String PARAM_ARTICULO_STOCK_MINIMO = "stockMinimo";
+    public static final String PARAM_ARTICULO_IMAGEN = "imagenArticuloB64";
 }

@@ -1,11 +1,10 @@
 
 package io.proinstala.wherefind.api.articulo.controllers;
 
-import io.proinstala.wherefind.api.articulo.services.MarcaControllerService;
+import io.proinstala.wherefind.api.articulo.services.ArticuloControllerService;
 import io.proinstala.wherefind.api.identidad.UserSession;
 import io.proinstala.wherefind.shared.controllers.BaseHttpServlet;
 import static io.proinstala.wherefind.shared.controllers.BaseHttpServlet.responseError403;
-import static io.proinstala.wherefind.shared.controllers.BaseHttpServlet.responseError404;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -14,24 +13,24 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Controlador de solicitudes HTTP para manejar operaciones relacionadas con marca.
+ * Controlador de solicitudes HTTP para manejar operaciones relacionadas con artículo.
  *
  * <p>Esta clase extiende {@link BaseHttpServlet} y se encarga de recibir y procesar las solicitudes HTTP 
- * relacionadas con marca a través de la API definida. Utiliza el servicio {@link MarcaControllerService} 
+ * relacionadas con artículo a través de la API definida. Utiliza el servicio {@link ArticuloControllerService} 
  * para realizar las operaciones de negocio y construir las respuestas adecuadas.</p>
  *
  * <p>La clase define una enumeración interna {@link ActionType} para representar los diferentes tipos de acción 
- * que puede manejar. La base de la URL para las API de marca se define como {@code /api/marca}.</p>
+ * que puede manejar. La base de la URL para las API de artículo se define como {@code /api/articulo}.</p>
  */
-@WebServlet(urlPatterns = MarcaController.BASE_API + "/*")
-public class MarcaController extends BaseHttpServlet {
+@WebServlet(urlPatterns = ArticuloController.BASE_API + "/*")
+public class ArticuloController extends BaseHttpServlet {
     
     /**
      * Base de la URL para las API de localidad.
      */
-    protected static final String BASE_API = "/api/marca";
+    protected static final String BASE_API = "/api/articulo";
     
-    private final MarcaControllerService marcaServicio = new MarcaControllerService();
+    private final ArticuloControllerService articuloServicio = new ArticuloControllerService();
     
     @Override
     protected String getBaseApi() {
@@ -43,9 +42,9 @@ public class MarcaController extends BaseHttpServlet {
      */
     enum ActionType {
         ERROR,
-        MARCA,
-        MARCAS,
-        FIND_MARCAS,
+        ARTICULO,
+        ARTICULOS,
+        FIND_ARTICULOS,
         UPDATE,
         CREATE,
         DELETE
@@ -65,7 +64,7 @@ public class MarcaController extends BaseHttpServlet {
             action = action.toUpperCase();
 
             // Recorre todos los ActionType
-            for (MarcaController.ActionType accion : MarcaController.ActionType.values()) {
+            for (ArticuloController.ActionType accion : ArticuloController.ActionType.values()) {
 
                 // Conprueba que action esté entre los ActionType
                 if (action.equals(accion.name())) {
@@ -76,75 +75,75 @@ public class MarcaController extends BaseHttpServlet {
         }
 
         // Devuelve el ActionType de error por no encontrar un ActionType coincidente
-        return MarcaController.ActionType.ERROR;
+        return ArticuloController.ActionType.ERROR;
     }
     
     /**
-     * Maneja la solicitud para obtener una marca específica.
+     * Maneja la solicitud para obtener una artículo específica.
      *
      * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio 
-     * de marca para obtener una marca por ID y devolver la respuesta en formato JSON.</p>
+     * de artículo para obtener una artículo por ID y devolver la respuesta en formato JSON.</p>
      *
      * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
      */
-    protected void apiGetMarca(ActionController actionController) {
+    protected void apiGetArticulo(ActionController actionController) {
         // Se comprueba que el usuario está logueado
         if (!UserSession.isUserLogIn(actionController.server(), false)) {
             responseError403(actionController.server().response(), "");
             return;
         }
         
-        marcaServicio.getMarcaById(actionController);
+        articuloServicio.getArticuloById(actionController);
     }
     
     /**
-     * Maneja la solicitud para obtener todos las marcas.
+     * Maneja la solicitud para obtener todos las artículos.
      *
-     * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio de marca 
-     * para obtener la lista de marcas y devolver la respuesta en formato JSON.</p>
+     * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio de artículo 
+     * para obtener la lista de artículos y devolver la respuesta en formato JSON.</p>
      *
      * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
      */
-    protected void apiGetMarcas(ActionController actionController) {
+    protected void apiGetArticulos(ActionController actionController) {
         // Se comprueba que el usuario está logueado
         if (!UserSession.isUserLogIn(actionController.server(), false)) {
             responseError403(actionController.server().response(), "");
             return;
         }
         
-        marcaServicio.getMarcas(actionController);
+        articuloServicio.getArticulos(actionController);
     }
     
     /**
-     * Maneja la solicitud para buscar marcas.
+     * Maneja la solicitud para buscar artículos.
      *
      * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio 
-     * de marca para buscar las marcas y devolver la respuesta en formato JSON.</p>
+     * de artículo para buscar las artículos y devolver la respuesta en formato JSON.</p>
      *
      * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
      */
-    protected void apiFindMarcas(ActionController actionController) {
+    protected void apiFindArticulos(ActionController actionController) {
         // Se comprueba que el usuario está logueado
         if (!UserSession.isUserLogIn(actionController.server(), false)) {
             responseError403(actionController.server().response(), "");
             return;
         }
         
-        marcaServicio.findMarcas(actionController);
+        articuloServicio.findArticulos(actionController);
     }
     
     /**
-     * Maneja la creación de una nueva marca utilizando los datos proporcionados en la solicitud.
+     * Maneja la creación de una nueva artículo utilizando los datos proporcionados en la solicitud.
      *
      * <p>Este método primero verifica si el usuario está autenticado y tiene los permisos necesarios. 
      * Si el usuario no está logueado, se envía una respuesta de error 
      * 403 (prohibido) y se interrumpe el procesamiento. Si el usuario está autenticado y autorizado, 
-     * se llama al servicio de marca para realizar la creación de la marca.</p>
+     * se llama al servicio de artículo para realizar la creación de la artículo.</p>
      *
      * @param actionController el controlador de acción que contiene la información de la solicitud, 
      *                         incluyendo los datos necesarios para crear un nuevo almacen.
      */
-    protected void apiCreateMarca(ActionController actionController) {
+    protected void apiCreateArticulo(ActionController actionController) {
         // Se comprueba que el usuario está logueado
         if (!UserSession.isUserLogIn(actionController.server(), true))
         {
@@ -152,20 +151,20 @@ public class MarcaController extends BaseHttpServlet {
             return;
         }
         
-        marcaServicio.createMarca(actionController);
+        articuloServicio.createArticulo(actionController);
     }
     
     /**
-     * Maneja la solicitud para elimnar la información de una marca específica.
+     * Maneja la solicitud para elimnar la información de una artículo específica.
      *
      * <p>Verifica si el usuario está autenticado y tiene los permisos necesarios. Si es así, 
-     * delega la operación al servicio de marca para borrar(activo = false) la marca y devolver la respuesta.</p>
+     * delega la operación al servicio de artículo para borrar(activo = false) la artículo y devolver la respuesta.</p>
      * 
-     * EndPoint - PUT : /api/marca/delete/{id}
+     * EndPoint - PUT : /api/articulo/delete/{id}
      *
      * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
      */
-    protected void apiDeleteMarca(ActionController actionController) {
+    protected void apiDeleteArticulo(ActionController actionController) {
         // Se comprueba que el usuario está logueado y sea administrador
         if (!UserSession.isUserLogIn(actionController.server(), true))
         {
@@ -173,24 +172,24 @@ public class MarcaController extends BaseHttpServlet {
             return;
         }
         
-        marcaServicio.deleteMarca(actionController);
+        articuloServicio.deleteArticulo(actionController);
     }
     
     /**
-     * Maneja la actualización de la información de una marca existente.
+     * Maneja la actualización de la información de una artículo existente.
      *
      * <p>Este método primero verifica si el usuario está autenticado y cuenta con los permisos
      * necesarios. Si el usuario no cumple con estos
      * requisitos, se envía una respuesta de error 403 (Prohibido) y se interrumpe el procesamiento.
-     * En caso contrario, delega la operación al servicio de marca para realizar la actualización
+     * En caso contrario, delega la operación al servicio de artículo para realizar la actualización
      * correspondiente y devolver la respuesta apropiada al cliente.</p>
      *
-     * <p>EndPoint - PUT : /api/marca/update/</p>
+     * <p>EndPoint - PUT : /api/articulo/update/</p>
      *
      * @param actionController el controlador de la acción que maneja la solicitud y la respuesta,
      *                         conteniendo la información y datos necesarios para realizar la actualización.
      */
-    protected void apiUpdateMarca(ActionController actionController) {
+    protected void apiUpdateArticulo(ActionController actionController) {
         // Se comprueba que el usuario está logueado y sea administrador
         if (!UserSession.isUserLogIn(actionController.server(), true))
         {
@@ -198,8 +197,9 @@ public class MarcaController extends BaseHttpServlet {
             return;
         }
         
-        marcaServicio.updateMarca(actionController);
+        articuloServicio.updateArticulo(actionController);
     }
+    
     
     /**
      * Maneja las solicitudes HTTP GET para las acciones definidas.
@@ -219,10 +219,10 @@ public class MarcaController extends BaseHttpServlet {
         // Imprime en la salida del servidor el EndPoint
         System.out.println("EndPoint GET : " + actionController.parametros()[0]);
         
-        switch((MarcaController.ActionType) actionController.actionType()) {
-            case MARCA -> apiGetMarca(actionController);
-            case MARCAS -> apiGetMarcas(actionController);
-            case FIND_MARCAS -> apiFindMarcas(actionController);
+        switch((ArticuloController.ActionType) actionController.actionType()) {
+            case ARTICULO -> apiGetArticulo(actionController);
+            case ARTICULOS -> apiGetArticulos(actionController);
+            case FIND_ARTICULOS -> apiFindArticulos(actionController);
               
             default -> responseError403(actionController.server().response(), "");
         }
@@ -254,8 +254,8 @@ public class MarcaController extends BaseHttpServlet {
         System.out.println("EndPoint POST : " + actionController.parametros()[0]);
 
         // Dependiendo del ActionType, realizará una acción
-        switch((MarcaController.ActionType) actionController.actionType()){
-            case CREATE -> apiCreateMarca(actionController);
+        switch((ArticuloController.ActionType) actionController.actionType()){
+            case CREATE -> apiCreateArticulo(actionController);
 
             default -> responseError404(actionController.server().response(), "");
         }
@@ -283,12 +283,13 @@ public class MarcaController extends BaseHttpServlet {
         // Imprime en la salida del servidor el EndPoint
         System.out.println("EndPoint PUT : " + actionController.parametros()[0]);
 
-        switch((MarcaController.ActionType) actionController.actionType()) {
-            case UPDATE -> apiUpdateMarca(actionController);
-            case DELETE -> apiDeleteMarca(actionController);
+        switch((ArticuloController.ActionType) actionController.actionType()) {
+            case UPDATE -> apiUpdateArticulo(actionController);
+            case DELETE -> apiDeleteArticulo(actionController);
             
             default -> responseError404(actionController.server().response(), "");
         }
     }
+
     
 }

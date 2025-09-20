@@ -13,10 +13,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ArticuloProveedorDTO {
     
+    private int id;
     private ArticuloDTO articulo;
     private ProveedorDTO proveedor;
     private double precio;
     private LocalDate fechaPrecio;
     private boolean disponible;
-    private LocalDate fecha_no_disponible;
+    private LocalDate fechaNoDisponible;
 }

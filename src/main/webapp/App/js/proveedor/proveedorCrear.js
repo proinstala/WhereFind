@@ -18,7 +18,7 @@ const idInputImgProveedor = "#inputImgProveedor";
 const idImgProveedor = "#imgProveedor";
 const idLabelImgProveedor = "#textoImagenProveedor";
 
-let defaultImgProveedor =  "App/img/defaultProveedor.svg";
+let defaultImgProveedor =  DEFAULT_IMG.PROVEEDOR;
 
 $(document).ready(function () {
     const selectDireccion = document.querySelector(idSelectDireccion);

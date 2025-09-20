@@ -1,10 +1,10 @@
 
 use `WHERE_FIND_DATA`;
 
-
--- Crea un usuarios de prueba
-INSERT INTO USER (user_name, password, rol, activo, nombre, apellidos, email) VALUES('david', ENCRYPT_DATA_BASE64('123'), 'Admin', 1, 'David', 'Jiménez Alonso', 'david@email.es');
-INSERT INTO USER (user_name, password, rol, activo, nombre, apellidos, email) VALUES('juanma', ENCRYPT_DATA_BASE64('123'), 'Admin', 1, 'Juan Manuel', 'Soltero Sánchez', 'juanma@email.es');
+/*Sentencias sql para rellenar de datos la tabla USUARIOS*/
+-- Crea un usuarios
+INSERT INTO USER (user_name, password, rol, activo, nombre, apellidos, email) VALUES('administrador', ENCRYPT_DATA_BASE64('1234'), 'Admin', 1, 'Administrador', 'Nada', 'wherefind@gmail.es');
+INSERT INTO USER (user_name, password, rol, activo, nombre, apellidos, email) VALUES('invitado', ENCRYPT_DATA_BASE64('1234'), 'User', 1, 'Invitado', 'Nada', 'invitado@email.es');
 
 
 /* Sentencias sql para rellenar de datos la tabla PROVINCIA */ 
@@ -170,3 +170,5 @@ INSERT INTO PUESTO_TRABAJO (id, nombre) VALUES (22, 'Operario');
 -- Otro
 INSERT INTO PUESTO_TRABAJO (id, nombre) VALUES (23, 'Otro');
 
+/*Sentencias sql para rellenar de datos la tabla MARCA */
+INSERT INTO MARCA (nombre, descripcion) VALUES ('Genérica', 'Marca para artículos con marca desconocida');

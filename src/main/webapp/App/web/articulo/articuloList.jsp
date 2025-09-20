@@ -1,6 +1,6 @@
 <%-- 
-    Document   : proveedorList
-    Created on : 20 may 2025, 18:39:55
+    Document   : articuloList
+    Created on : 18 sept 2025, 19:49:33
     Author     : David
 --%>
 
@@ -19,7 +19,7 @@
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >
-    <jsp:param name="titleweb" value="WhereFind - Proveedor"/>
+    <jsp:param name="titleweb" value="WhereFind - Artículo"/>
 </jsp:include>
 
 <link href="App/css/formulario.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>
@@ -38,7 +38,7 @@
 
                 <div class="contenedor__formulario--cabecera conBotones">
                     <div>
-                        <h1>Proveedor</h1>
+                        <h1>Artículo</h1>
                     </div>
                     <div class="form__btn_circle">
                         <button id="btnCancelar" title="Cancelar"><i class="las la-times"></i></button>
@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="contenedor__formulario--main">
-                    <form class="formulario" name="frmBuscarProveedor" id="frmBuscarProveedor">
+                    <form class="formulario" name="frmBuscarArticulo" id="frmBuscarArticulo">
 
                         <div class="form__input">
                             <input type="text" name="nombre" id="nombre">
@@ -64,7 +64,7 @@
                 <div class="contenedor__tabla--botones">
 
                     <div class="form__btn_circle">
-                        <button form="frmBuscarProveedor" id="btnBuscar" title="Buscar" type="submit"><i class="las la-search"></i></button>
+                        <button form="frmBuscarArticulo" id="btnBuscar" title="Buscar" type="submit"><i class="las la-search"></i></button>
                     </div>
                     <div class="form__btn_circle">
                         <button id="btnCrear" title="Crear" disabled><i class="las la-plus"></i></button>
@@ -81,15 +81,17 @@
                 </div>
 
                 <div class="contenedor__tabla">
-                    <table class="tabla" id="tablaProveedores" data-rowselected = "-1">
+                    <table class="tabla" id="tablaArticulos" data-rowselected = "-1">
                         <thead>
                             <tr>
                                 <th>Id</th>
                                 <th>Nombre</th>
                                 <th>Descripcion</th>
-                                <th>Pagina Web</th>
-                                <th>Localidad</th>
-                                <th>Provincia</th>
+                                <th>Referencia</th>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th>Stock minimo</th>
+                                <th>Stock actual</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -109,6 +111,6 @@
     </div>
 </div>
 
-<script src="App/js/proveedor/proveedorList.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
+<script src="App/js/articulo/articuloList.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>

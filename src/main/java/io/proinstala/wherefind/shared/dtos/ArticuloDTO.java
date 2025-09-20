@@ -25,6 +25,8 @@ public class ArticuloDTO {
     private String imagen;
     private boolean activo;
     
+    private int stockActual;
+    
     @Builder.Default
     private List<ArticuloProveedorDTO> listaProveedores = new ArrayList<>();
    

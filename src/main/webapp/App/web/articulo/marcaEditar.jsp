@@ -1,9 +1,10 @@
 <%-- 
-    Document   : proveedorEditar
-    Created on : 19 jun 2025, 19:43:41
+    Document   : marcaEditar
+    Created on : 15 sept 2025, 22:42:25
     Author     : David
 --%>
 
+<%@page import="io.proinstala.wherefind.shared.controllers.actions.ActionServer"%>
 <%@page import="io.proinstala.wherefind.shared.controllers.BaseHttpServlet"%>
 <%@page import="io.proinstala.wherefind.shared.controllers.actions.ActionController"%>
 <%
@@ -13,13 +14,13 @@
         return;
     }
 
-    ActionController actionController = BaseHttpServlet.getActionControllerFromJSP(request, response, "proveedor/proveedores/edit");
-    int proveedor_id = actionController.getIntFromParametros(1);
+    ActionController actionController = BaseHttpServlet.getActionControllerFromJSP(request, response, "articulo/marcas/edit");
+    int marca_id = actionController.getIntFromParametros(1);
     
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >
-    <jsp:param name="titleweb" value="Modificar Proveedor" />
+    <jsp:param name="titleweb" value="WhereFind - Marca" />
 </jsp:include>
 
 <link href="App/css/formulario.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>
@@ -35,49 +36,38 @@
 
                 <div class="contenedor__formulario--cabecera">
                     <div>
-                        <h1>Editar Proveedor</h1>
+                        <h1>Editar Marca</h1>
                     </div>
                 </div>
 
                 <!-- Formulario para modificar los datos de contacto -->
                 <div class="contenedor__formulario--main">
-                    <form class="formulario" name="frmModificarProveedor" id="frmModificarProveedor">
-                        <input type="hidden" name="proveedor_id" id="proveedor_id" value="<%=proveedor_id%>">
+                    <form class="formulario" name="frmModificarMarca" id="frmModificarMarca">
+                        <input type="hidden" name="marca_id" id="marca_id" value="<%=marca_id%>">
                         
                         <div class="form__input grid-row-span-2">
-                            <div id="contenedorImgProveedor">
-                                <input type="hidden" name="imagenProveedorB64" id="imagenProveedorB64">
+                            <div id="contenedorImgMarca">
+                                <input type="hidden" name="imagenMarcaB64" id="imagenMarcaB64">
                                 <div class="contenedor__formulario--imagen">
-                                    <img src="App/img/defaultProveedor.svg" id="imgProveedor" alt="imagen proveedor">
+                                    <img src="App/img/defaultMarca.svg" id="imgMarca" alt="imagen marca">
                                 </div>
 
-                                <label for="inputImgProveedor" class="input_foto">
-                                    <input type="file" name="inputImgProveedor" id="inputImgProveedor" accept="image/*">
+                                <label for="inputImgMarca" class="input_foto">
+                                    <input type="file" name="inputImgMarca" id="inputImgMarca" accept="image/*">
                                     <i class="las la-camera"></i>
-                                    <span id="textoImagenProveedor"></span>
+                                    <span id="textoImagenMarca"></span>
                                 </label>
                             </div>
                         </div>
 
                         <div class="form__input">
-                            <input type="text" name="nombre" id="nombre" placeholder="Introduce el nombre del proveedor" value="">
+                            <input type="text" name="nombre" id="nombre" placeholder="Introduce el nombre de la marca" value="">
                             <label for="nombre">Nombre</label>
                         </div>
                         
                         <div class="form__input col-span-2">
-                            <input type="text" name="descripcion" id="descripcion" placeholder="Introduce una descripción del proveedor" value="">
+                            <input type="text" name="descripcion" id="descripcion" placeholder="Introduce la descripción de la marca" value="">
                             <label for="descripcion">Descripción</label>
-                        </div>
-
-                        <div class="form__input">
-                            <input type="text" name="paginaWeb" id="paginaWeb" placeholder="Introduce la página web del proveedor"value="">
-                            <label for="paginaWeb">Página Web</label>
-                        </div>
-                        
-                        <div class="form__input col-span-2">
-                            <select name="direccion" id="direccion">
-                            </select>
-                            <label for="direccion">Dirección</label>
                         </div>
 
                     </form>
@@ -85,11 +75,11 @@
 
                 <div class="contenedor__formulario--footer">
                     <div class="form__btn_circle">
-                        <button form="frmModificarProveedor" id="btnGuardar" title="Guardar" type="submit" disabled><i class="las la-save"></i></button>
+                        <button form="frmModificarMarca" id="btnGuardar" title="Guardar" type="submit" disabled><i class="las la-save"></i></button>
                     </div>
 
                     <div class="form__btn_circle">
-                        <button id="btnDeshacerCambiosProveedor" title="Deshacer cambios" disabled><i class="las la-redo-alt" ></i></button>
+                        <button id="btnDeshacerCambiosMarca" title="Deshacer cambios" disabled><i class="las la-redo-alt" ></i></button>
                     </div>
 
                     <div class="form__btn_circle">
@@ -109,6 +99,7 @@
 </div>
 
 
-<script src="App/js/proveedor/proveedorEditar.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
+<script src="App/js/articulo/marcaEditar.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>
+

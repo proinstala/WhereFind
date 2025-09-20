@@ -1,6 +1,7 @@
 package io.proinstala.wherefind.api.infraestructure.data;
 
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IAlmacenService;
+import io.proinstala.wherefind.api.infraestructure.data.interfaces.IArticuloService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IContactoService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IDireccionService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IEmplazamientoService;
@@ -12,6 +13,7 @@ import io.proinstala.wherefind.api.infraestructure.data.interfaces.IPuestoTrabaj
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.ITipoEmplazamientoService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IUserService;
 import io.proinstala.wherefind.api.infraestructure.data.services.AlmacenServiceImplement;
+import io.proinstala.wherefind.api.infraestructure.data.services.ArticuloServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.ContactoServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.DireccionServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.EmplazamientoServiceImplement;
@@ -173,6 +175,19 @@ public class GestorPersistencia {
      */
     public static IMarcaService getMarcaService() {
         return new MarcaServiceImplement();
+    }
+    
+    /**
+     * Obtiene una instancia del servicio de artículos.
+     *
+     * <p>Este método devuelve una implementación de {@link IArticuloService}, en este caso, 
+     * una instancia de {@link ArticuloServiceImplement}, que maneja la lógica relacionada con 
+     * los artículos.</p>
+     *
+     * @return una instancia de {@link IArticuloService}.
+     */
+    public static IArticuloService getArticuloService() {
+        return new ArticuloServiceImplement();
     }
     
 }

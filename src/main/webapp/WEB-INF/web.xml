@@ -389,5 +389,25 @@
         <servlet-name>marcaList</servlet-name>
         <url-pattern>/articulo/marcas</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>marcaCrear</servlet-name>
+        <jsp-file>/App/web/articulo/marcaCrear.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>marcaCrear</servlet-name>
+        <url-pattern>/articulo/marcas/crear</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>marcaEditar</servlet-name>
+        <jsp-file>/App/web/articulo/marcaEditar.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>marcaEditar</servlet-name>
+        <url-pattern>/articulo/marcas/edit/*</url-pattern>
+    </servlet-mapping>
 
 </web-app>

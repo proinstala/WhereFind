@@ -4,8 +4,8 @@ import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from '../al
 import {ROLES} from '../constantes.mjs';
 
 const idInputNombre = "#nombre";
-const idFormBusquedaProveedor = "#frmBuscarProveedor";
-const idTablaProveedores = "#tablaProveedores"; 
+const idFormBusquedaArticulo = "#frmBuscarArticulo";
+const idTablaArticulos = "#tablaArticulos"; 
 const idBtnBuscar = "#btnBuscar";
 const idBtnModificar = "#btnModificar";
 const idBtnCrear = "#btnCrear";
@@ -19,7 +19,7 @@ const User = {
 };
 
 document.addEventListener("DOMContentLoaded", function () {
-    const tablaProveedores = document.querySelector(idTablaProveedores);
+    const tablaArticulos = document.querySelector(idTablaArticulos);
     const btnBuscar = document.querySelector(idBtnBuscar);
     const btnCrear = document.querySelector(idBtnCrear);
     const btnModificar = document.querySelector(idBtnModificar);
@@ -33,31 +33,31 @@ document.addEventListener("DOMContentLoaded", function () {
         btnCrear.disabled = false;
     }
     
-    validarFormulario(idFormBusquedaProveedor);
+    validarFormulario(idFormBusquedaArticulo);
     
-    observeRowSelectedChange(tablaProveedores, onDetectarFilaSeleccionada);
+    observeRowSelectedChange(tablaArticulos, onDetectarFilaSeleccionada);
 
     btnModificar.addEventListener('click', () => {
-        const idProveedor = tablaProveedores.getAttribute('data-rowselected'); //data-rowSelected
-        window.location.href = (`proveedor/proveedores/edit/${idProveedor}`);
+        const idArticulo = tablaArticulos.getAttribute('data-rowselected'); //data-rowSelected
+        window.location.href = (`articulo/articulos/edit/${idArticulo}`);
     });
     
     btnDetalle.addEventListener('click', () => {
-        const idProveedor = tablaProveedores.getAttribute('data-rowselected'); //data-rowSelected
-        window.location.href = (`proveedor/proveedores/detalle/${idProveedor}`);
+        const idArticulo = tablaArticulos.getAttribute('data-rowselected'); //data-rowSelected
+        window.location.href = (`articulo/articulos/detalle/${idArticulo}`);
     });
 
     btnCrear.addEventListener('click', () => {
-        window.location.href = (`proveedor/proveedores/crear`);
+        window.location.href = (`articulo/articulos/crear`);
     });
 
     btnEliminar.addEventListener('click', () => {
-        const idProveedor = tablaProveedores.getAttribute('data-rowselected'); //data-rowSelected
-        borrarProveedor(idProveedor);
+        const idArticulo = tablaArticulos.getAttribute('data-rowselected'); //data-rowSelected
+        borrarArticulo(idArticulo);
     });
     
     btnCancelar.addEventListener('click', () => {
-        window.location.href = "proveedor";
+        window.location.href = "articulo";
     });
     
     //Dispara el evento de clic en el botón para que haga una busqueda inicial.
@@ -86,14 +86,14 @@ function validarFormulario(idForm) {
 
         submitHandler: function () {
             const formData = getDatosForm(idForm);
-            const url = `api/proveedor/find_proveedores?${formData}`;
+            const url = `api/articulo/find_articulos?${formData}`;
 
             solicitudGet(url, "", false)
                 .then(response => {
                     if (response.isError === 1) {
                         mostrarMensajeError("Se ha producido un error", response.result);
                     } else {
-                        rellenarTablaProveedores(response.data);
+                        rellenarTablaArticulos(response.data);
                     }
                 })
                 .catch(error => {
@@ -111,50 +111,51 @@ function validarFormulario(idForm) {
 
 
 /**
- * Función que rellena una tabla HTML con los proveedores proporcionadas.
- * @param {Array} proveedores - Un array de objetos de proveedores que contiene los datos para cada fila de la tabla.
+ * Función que rellena una tabla HTML con los articulos proporcionados.
+ * @param {Array} articulos - Un array de objetos de articulos que contiene los datos para cada fila de la tabla.
  */
-function rellenarTablaProveedores(proveedores) {
-    const tablaProveedores = document.querySelector(idTablaProveedores);
-    const cuerpoTablaProveedores = tablaProveedores.querySelector('tbody');
+function rellenarTablaArticulos(articulos) {
+    const tablaArticulos = document.querySelector(idTablaArticulos);
+    const cuerpoTablaArticulos = tablaArticulos.querySelector('tbody');
     const inputUserRol = document.querySelector(idInputUserRol);  //Admin o User
 
-    tablaProveedores.setAttribute('data-rowselected', -1); //Establece a -1 el rowselected para indicar que no se ha seleccionado ninguna fila.
+    tablaArticulos.setAttribute('data-rowselected', -1); //Establece a -1 el rowselected para indicar que no se ha seleccionado ninguna fila.
 
     //Crear el contenido HTML de todas las filas a partir de los datos de provincias
-    let filasHTML = proveedores.map(proveedor => {
-        return `<tr id="${proveedor.id}">
-                <td>${proveedor.id}</td>
-                <td>${proveedor.nombre}</td>
-                <td>${proveedor.descripcion}</td>
-                <td>${proveedor.paginaWeb}</td>
-                <td>${proveedor.direccion.localidad.nombre ?? ''}</td>
-                <td>${proveedor.direccion.localidad.provincia.nombre ?? ''}</td>
+    let filasHTML = articulos.map(articulo => {
+        return `<tr id="${articulo.id}">
+                <td>${articulo.id}</td>
+                <td>${articulo.nombre}</td>
+                <td>${articulo.descripcion}</td>
+                <td>${articulo.paginaWeb}</td>
+                <td>${articulo.direccion.localidad.nombre ?? ''}</td>
+                <td>${articulo.direccion.localidad.provincia.nombre ?? ''}</td>
                 </tr>`;
     }).join('');
 
 
     //Asignar el contenido HTML generado al cuerpo de la tabla, reemplazando cualquier contenido existente
-    cuerpoTablaProveedores.innerHTML = filasHTML;
+    cuerpoTablaArticulos.innerHTML = filasHTML;
 
     //Añadir eventos de selección de filas a la tabla recién generada
-    addRowSelected(cuerpoTablaProveedores);
+    addRowSelected(cuerpoTablaArticulos);
 }
 
 
-function borrarProveedor(proveedorId) {
-    mostrarMensajeOpcion("Borrar Proveedor", `¿Quieres realmente borrar los datos del proveedor con id ${proveedorId}?`)
+function borrarArticulo(articuloId) {
+    debugger;
+    mostrarMensajeOpcion("Borrar Articulo", `¿Quieres realmente borrar los datos del articulo con id ${articuloId}?`)
                     .then((result) => {
                         if (result.isConfirmed) {
-                            solicitudPut(`api/proveedor/delete/${proveedorId}`, "", true)
+                            solicitudPut(`api/articulo/delete/${articuloId}`, "", true)
                                     .then(response => {
                                         if (response.isError === 1) {
                                             mostrarMensajeError("No se puede borrar los datos", response.result);
                                         } else {
-                                            mostrarMensaje("Proveedor Borrada.", `Se han borrado correctamente los datos del proveedor.`, "success");
+                                            mostrarMensaje("Articulo Borrada.", `Se han borrado correctamente los datos del articulo.`, "success");
 
                                             //Elimina la fila seleccionada de la tabla.
-                                            deleteRowSelectedTable(idTablaProveedores);
+                                            deleteRowSelectedTable(idTablaArticulos);
                                         }
                                     })
                                     .catch(error => {
@@ -169,4 +170,7 @@ function borrarProveedor(proveedorId) {
                         }
                     });
 }
+
+
+
 

@@ -25,11 +25,11 @@ public class MarcaServiceImplement extends BaseMySql implements IMarcaService {
             """;
     
     private static final String SQL_UPDATE_MARCA = 
-        "UPDATE MARCA SET nombre = ?, descripcion = ? " +
+        "UPDATE MARCA SET nombre = ?, descripcion = ?, imagen = ? " +
         "WHERE id = ?;";
 
     private static final String SQL_CREATE_MARCA = 
-        "INSERT INTO MARCA (nombre, descripcion) " +
+        "INSERT INTO MARCA (nombre, descripcion, imagen) " +
         "VALUES (?, ?, ?);";
     
     private static final String SQL_DELETE_MARCA = 
@@ -41,6 +41,7 @@ public class MarcaServiceImplement extends BaseMySql implements IMarcaService {
             .id(rs.getInt("m.id"))
             .nombre(rs.getString("m.nombre"))
             .descripcion(rs.getString("m.descripcion"))
+            .imagen(rs.getString("m.imagen"))
             .activo(rs.getBoolean("m.activo"))
             .build();
 
@@ -144,6 +145,7 @@ public class MarcaServiceImplement extends BaseMySql implements IMarcaService {
 
             ps.setString(1, marcaDTO.getNombre());
             ps.setString(2, marcaDTO.getDescripcion());
+            ps.setString(3, marcaDTO.getImagen());
 
             int affectedRows = ps.executeUpdate();
 
@@ -169,7 +171,8 @@ public class MarcaServiceImplement extends BaseMySql implements IMarcaService {
 
             ps.setString(1, marcaDTO.getNombre());
             ps.setString(2, marcaDTO.getDescripcion());
-            ps.setInt(3, marcaDTO.getId());
+            ps.setString(3, marcaDTO.getImagen());
+            ps.setInt(4, marcaDTO.getId());
 
             rowsAffected = ps.executeUpdate();
         } catch (SQLException e) {

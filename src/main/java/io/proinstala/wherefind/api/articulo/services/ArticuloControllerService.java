@@ -4,10 +4,11 @@ package io.proinstala.wherefind.api.articulo.services;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.proinstala.wherefind.api.infraestructure.data.GestorPersistencia;
-import io.proinstala.wherefind.api.infraestructure.data.interfaces.IMarcaService;
+import io.proinstala.wherefind.api.infraestructure.data.interfaces.IArticuloService;
 import io.proinstala.wherefind.shared.consts.textos.FormParametros;
 import io.proinstala.wherefind.shared.consts.textos.LocaleApp;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
+import io.proinstala.wherefind.shared.dtos.ArticuloDTO;
 import io.proinstala.wherefind.shared.dtos.MarcaDTO;
 import io.proinstala.wherefind.shared.dtos.ResponseDTO;
 import io.proinstala.wherefind.shared.services.BaseService;
@@ -20,70 +21,42 @@ import java.util.List;
  *
  * @author David
  */
-public class MarcaControllerService extends BaseService {
+public class ArticuloControllerService extends BaseService {
     
     /**
-     * Busca marcas según los parámetros de nombre y descripción proporcionados en la solicitud.
+     * Busca artículos según los parámetros de nombre y descripción proporcionados en la solicitud.
      * 
-     * <p>Obtiene los parámetros de nombre y descripción de la marca desde el controlador de acción,
-     * utiliza el servicio de marca para recuperar la lista de marcas que coinciden y devuelve
+     * <p>Obtiene los parámetros de nombre y descripción de la artículo desde el controlador de acción,
+     * utiliza el servicio de artículo para recuperar la lista de artículos que coinciden y devuelve
      * la respuesta en formato JSON.</p>
      *
      * @param actionController El controlador de acción que contiene los parámetros de la solicitud.
      */
-    public void findMarcas(ActionController actionController) {
+    public void findArticulos(ActionController actionController) {
         //Respuesta de la acción actual
         ResponseDTO responseDTO;
 
-        IMarcaService marcaServiceImp = GestorPersistencia.getMarcaService();
+        IArticuloService articuloServiceImp = GestorPersistencia.getArticuloService();
 
-        List<MarcaDTO> listaMarcaDTO = null;
+        List<ArticuloDTO> listaArticuloDTO = null;
         
-        String nombre = actionController.server().getRequestParameter(FormParametros.PARAM_MARCA_NOMBRE, "");
-        String descripcion = actionController.server().getRequestParameter(FormParametros.PARAM_MARCA_DESCRIPCION, "");
-
-        listaMarcaDTO = marcaServiceImp.findMarcas(nombre, descripcion);
-
-        if(listaMarcaDTO != null) {
-            responseDTO = getResponseOk("OK", listaMarcaDTO, 0);
-        } else {
-            //Crea la respuesta con un error
-            responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR, new ArrayList<>());
-        }
+        String nombre = actionController.server().getRequestParameter(FormParametros.PARAM_ARTICULO_NOMBRE, "");
+        String descripcion = actionController.server().getRequestParameter(FormParametros.PARAM_ARTICULO_DESCRIPCION, "");
+        String referencia = actionController.server().getRequestParameter(FormParametros.PARAM_ARTICULO_REFERENCIA, "");
+        String strIdmarca = actionController.server().getRequestParameter(FormParametros.PARAM_ARTICULO_MARCA, "");
         
-        //Devuelve la respuesta al navegador del usuario en formato json
-        responseJson(actionController.server().response(), responseDTO);
-    }
-    
-    /**
-     * Obtiene una marca por su identificador.
-     * 
-     * <p>Este método extrae el identificador de la marca del controlador de acción, utiliza el
-     * servicio de marca para recuperar los datos de la marca correspondiente, y devuelve 
-     * la respuesta en formato JSON.</p>
-     * 
-     * @param actionController El controlador de acción que contiene los parámetros de la solicitud.
-     */
-    public void getMarcaById(ActionController actionController) {
-        //Respuesta de la acción actual
-        ResponseDTO responseDTO;
-        
-        IMarcaService marcaServiceImp = GestorPersistencia.getMarcaService();
-        
-        MarcaDTO marcaDTO = null;
-
         int idMarca = -1;
         try {
-            String id = actionController.server().getRequestParameter("idMarca", "-1");
-            idMarca = Integer.parseInt(id);
+            idMarca = Integer.parseInt(strIdmarca);
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
         
-        marcaDTO = marcaServiceImp.getMarcaById(idMarca);
-        
-        if(marcaDTO != null) {
-            responseDTO = getResponseOk("OK", marcaDTO, 0);
+
+        listaArticuloDTO = articuloServiceImp.findArticulos(nombre, descripcion, referencia, idMarca);
+
+        if(listaArticuloDTO != null) {
+            responseDTO = getResponseOk("OK", listaArticuloDTO, 0);
         } else {
             //Crea la respuesta con un error
             responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR, new ArrayList<>());
@@ -94,26 +67,64 @@ public class MarcaControllerService extends BaseService {
     }
     
     /**
-     * Obtiene la lista de todos las marcas.
+     * Obtiene una artículo por su identificador.
      * 
-     * <p>Utiliza el servicio de marca para recuperar la lista completa de marcas y devuelve
+     * <p>Este método extrae el identificador de la artículo del controlador de acción, utiliza el
+     * servicio de artículo para recuperar los datos de la artículo correspondiente, y devuelve 
+     * la respuesta en formato JSON.</p>
+     * 
+     * @param actionController El controlador de acción que contiene los parámetros de la solicitud.
+     */
+    public void getArticuloById(ActionController actionController) {
+        //Respuesta de la acción actual
+        ResponseDTO responseDTO;
+        
+        IArticuloService articuloServiceImp = GestorPersistencia.getArticuloService();
+        
+        ArticuloDTO articuloDTO = null;
+
+        int idArticulo = -1;
+        try {
+            String id = actionController.server().getRequestParameter("idArticulo", "-1");
+            idArticulo = Integer.parseInt(id);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        
+        articuloDTO = articuloServiceImp.getArticuloById(idArticulo);
+        
+        if(articuloDTO != null) {
+            responseDTO = getResponseOk("OK", articuloDTO, 0);
+        } else {
+            //Crea la respuesta con un error
+            responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR, new ArrayList<>());
+        }
+        
+        //Devuelve la respuesta al navegador del usuario en formato json
+        responseJson(actionController.server().response(), responseDTO);
+    }
+    
+    /**
+     * Obtiene la lista de todos los artículos.
+     * 
+     * <p>Utiliza el servicio de artículo para recuperar la lista completa de artículos y devuelve
      * la respuesta en formato JSON.</p>
      *
      * @param actionController El controlador de acción que contiene los parámetros de la solicitud.
      */
-    public void getMarcas(ActionController actionController) {
+    public void getArticulos(ActionController actionController) {
         //Respuesta de la acción actual
         ResponseDTO responseDTO;
 
         // Conecta con el Gestor de Persistencia
-        IMarcaService marcaServiceImp = GestorPersistencia.getMarcaService();
+        IArticuloService articuloServiceImp = GestorPersistencia.getArticuloService();
 
-        List<MarcaDTO> listaMarcaDTO = null;
+        List<ArticuloDTO> listaArticuloDTO = null;
         
-        listaMarcaDTO = marcaServiceImp.getAllMarcas();
+        listaArticuloDTO = articuloServiceImp.getAllArticulos();
         
-        if (listaMarcaDTO != null) {
-            responseDTO = getResponseOk("OK", listaMarcaDTO, 0);
+        if (listaArticuloDTO != null) {
+            responseDTO = getResponseOk("OK", listaArticuloDTO, 0);
         } else {
             //Crea la respuesta con un error
             responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR, new ArrayList<>());
@@ -124,33 +135,33 @@ public class MarcaControllerService extends BaseService {
     }
     
     /**
-     * Crea una nueva marca en la base de datos.
+     * Crea una nuevo artículo en la base de datos.
      * 
-     * <p>Este método toma los datos de la nueva marca en formato JSON desde el controlador de acción,
-     * los deserializa y los envía al servicio de marca para su creación. Devuelve la respuesta en
+     * <p>Este método toma los datos del nuevo artículo en formato JSON desde el controlador de acción,
+     * los deserializa y los envía al servicio de artículo para su creación. Devuelve la respuesta en
      * formato JSON.</p>
      * 
      * @param actionController El controlador de acción que contiene los parámetros de la solicitud.
      */
-    public void createMarca(ActionController actionController) {
+    public void createArticulo(ActionController actionController) {
         //Respuesta de la acción actual
         ResponseDTO responseDTO;
         
         // Conecta con el Gestor de Persistencia
-        IMarcaService marcaServiceImp = GestorPersistencia.getMarcaService();
+        IArticuloService articuloServiceImp = GestorPersistencia.getArticuloService();
         
-        String jsonMarca = actionController.server().getRequestParameter("marcaJSON", "");
+        String jsonArticulo = actionController.server().getRequestParameter("articuloJSON", "");
         
-        MarcaDTO marcaDTO = null;
-        if(jsonMarca != null && !jsonMarca.isBlank()) {
+        ArticuloDTO articuloDTO = null;
+        if(jsonArticulo != null && !jsonArticulo.isBlank()) {
             Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
-            marcaDTO = gson.fromJson(jsonMarca, MarcaDTO.class);
+            articuloDTO = gson.fromJson(jsonArticulo, ArticuloDTO.class);
             
-            marcaDTO = marcaServiceImp.createMarca(marcaDTO);
+            articuloDTO = articuloServiceImp.createArticulo(articuloDTO);
         }
         
-        if(marcaDTO != null) {
-            responseDTO = getResponseOk(LocaleApp.INFO_CREATE_OK, marcaDTO, 0);
+        if(articuloDTO != null) {
+            responseDTO = getResponseOk(LocaleApp.INFO_CREATE_OK, articuloDTO, 0);
         } else {
             //Crea la respuesta con un error
             responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
@@ -161,15 +172,15 @@ public class MarcaControllerService extends BaseService {
     }
 
     /**
-     * Actualiza la información de una marca existente.
+     * Actualiza la información de un artículo existente.
      * 
-     * <p>Este método verifica los parámetros proporcionados para actualizar una marca en la base de
-     * datos. Utiliza el servicio de marca para realizar la actualización y devuelve la respuesta en
+     * <p>Este método verifica los parámetros proporcionados para actualizar un artículo en la base de
+     * datos. Utiliza el servicio de artículo para realizar la actualización y devuelve la respuesta en
      * formato JSON.</p>
      * 
      * @param actionController El controlador de acción que contiene los parámetros de la solicitud.
      */
-    public void updateMarca(ActionController actionController) {
+    public void updateArticulo(ActionController actionController) {
         //Respuesta de la acción actual
         ResponseDTO responseDTO;
         
@@ -196,23 +207,33 @@ public class MarcaControllerService extends BaseService {
         responseDTO = getResponseError(LocaleApp.ERROR_PARAMETRO_NO_CORRECTO);
 
         // Conecta con el Gestor de Persistencia
-        IMarcaService marcaServiceImp = GestorPersistencia.getMarcaService();
+        IArticuloService articuloServiceImp = GestorPersistencia.getArticuloService();
 
-        MarcaDTO marcaDTO = marcaServiceImp.getMarcaById(id);
+        ArticuloDTO articuloDTO = articuloServiceImp.getArticuloById(id);
 
-        if(marcaDTO != null) {
-            String nombre = actionController.server().getRequestParameter(FormParametros.PARAM_MARCA_NOMBRE, "");
-            String descripcion = actionController.server().getRequestParameter(FormParametros.PARAM_MARCA_DESCRIPCION, "");
+        if(articuloDTO != null) {
+            String nombre = actionController.server().getRequestParameter(FormParametros.PARAM_ARTICULO_NOMBRE, "");
+            String descripcion = actionController.server().getRequestParameter(FormParametros.PARAM_ARTICULO_DESCRIPCION, "");
+            String referencia = actionController.server().getRequestParameter(FormParametros.PARAM_ARTICULO_REFERENCIA, "");
+            String strIdmarca = actionController.server().getRequestParameter(FormParametros.PARAM_ARTICULO_MARCA, "");
+            String modelo = actionController.server().getRequestParameter(FormParametros.PARAM_ARTICULO_MODELO, "");
+            String stockMinimo = actionController.server().getRequestParameter(FormParametros.PARAM_ARTICULO_STOCK_MINIMO, "");
             String imagen = actionController.server().getRequestParameter(FormParametros.PARAM_MARCA_IMAGEN, "");
 
             try {
-                marcaDTO.setNombre(nombre);
-                marcaDTO.setDescripcion(descripcion);
-                marcaDTO.setImagen(imagen);
+                int idMarca = Integer.parseInt(strIdmarca);
+                
+                articuloDTO.setNombre(nombre);
+                articuloDTO.setDescripcion(descripcion);
+                articuloDTO.setReferencia(referencia);
+                articuloDTO.setMarca(MarcaDTO.builder().id(idMarca).build());
+                articuloDTO.setModelo(modelo);
+                articuloDTO.setReferencia(stockMinimo);
+                articuloDTO.setImagen(imagen);
 
-                if (marcaServiceImp.updateMarca(marcaDTO)) {
+                if (articuloServiceImp.updateArticulo(articuloDTO)) {
                      //Como la acción se ha ejecutado correctamente se crea la respuesta acorde a la misma
-                    responseDTO = getResponseOk(LocaleApp.INFO_UPDATE_OK, marcaDTO, 0);
+                    responseDTO = getResponseOk(LocaleApp.INFO_UPDATE_OK, articuloDTO, 0);
                 } else {
                     responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
                 }
@@ -228,15 +249,15 @@ public class MarcaControllerService extends BaseService {
     } 
 
     /**
-     * Elimina una marca por su identificador.
+     * Elimina una artículo por su identificador.
      * 
-     * <p>Este método extrae el identificador de la marca del controlador de acción, utiliza el
-     * servicio de marca para eliminar la marca correspondiente, y devuelve la respuesta en
+     * <p>Este método extrae el identificador del artículo del controlador de acción, utiliza el
+     * servicio de artículo para eliminar el artículo correspondiente, y devuelve la respuesta en
      * formato JSON.</p>
      * 
      * @param actionController El controlador de acción que contiene los parámetros de la solicitud.
      */
-    public void deleteMarca(ActionController actionController) {
+    public void deleteArticulo(ActionController actionController) {
         //Respuesta de la acción actual
         ResponseDTO responseDTO;
         
@@ -261,9 +282,9 @@ public class MarcaControllerService extends BaseService {
         }
         
         // Conecta con el Gestor de Persistencia
-        IMarcaService marcaServiceImp = GestorPersistencia.getMarcaService();
+        IArticuloService articuloServiceImp = GestorPersistencia.getArticuloService();
         
-        if(marcaServiceImp.deleteMarca(id)) {
+        if(articuloServiceImp.deleteArticulo(id)) {
             responseDTO = getResponseOk(LocaleApp.INFO_UPDATE_OK, id, 0);
         } else {
             responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
