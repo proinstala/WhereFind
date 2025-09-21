@@ -75,8 +75,6 @@ document.addEventListener("DOMContentLoaded", function () {
         .catch(error => {
             console.error("Error al cargar selects: ", error);
         });
-        
-        
 });
 
 function onDetectarFilaSeleccionada(hayFilaSeleccionada) {

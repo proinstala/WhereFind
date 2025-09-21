@@ -381,6 +381,26 @@
     </servlet-mapping>
     
     <servlet>
+        <servlet-name>articuloList</servlet-name>
+        <jsp-file>/App/web/articulo/articuloList.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>articuloList</servlet-name>
+        <url-pattern>/articulo/articulos</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>articuloCrear</servlet-name>
+        <jsp-file>/App/web/articulo/articuloCrear.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>articuloCrear</servlet-name>
+        <url-pattern>/articulo/articulos/crear</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
         <servlet-name>marcaList</servlet-name>
         <jsp-file>/App/web/articulo/marcaList.jsp</jsp-file>
     </servlet>

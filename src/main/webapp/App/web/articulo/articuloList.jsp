@@ -57,6 +57,17 @@
                             <input type="text" name="descripcion" id="descripcion">
                             <label for="descripcion">Descripción</label>
                         </div>
+                        
+                        <div class="form__input">
+                            <input type="text" name="referencia" id="referencia">
+                            <label for="referencia">Referencia</label>
+                        </div>
+                        
+                        <div class="form__input">
+                            <select name="marca" id="marca">
+                            </select>
+                            <label for="marca">Marca</label>
+                        </div>
 
                     </form>
                 </div>

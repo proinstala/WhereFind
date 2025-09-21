@@ -3,6 +3,7 @@ import { solicitudGet, solicitudPut, getDatosForm, addRowSelected, fillInputSele
 import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from '../alertasSweetAlert2.mjs';
 import {ROLES} from '../constantes.mjs';
 
+const idSelectMarca = "#marca";
 const idInputNombre = "#nombre";
 const idFormBusquedaArticulo = "#frmBuscarArticulo";
 const idTablaArticulos = "#tablaArticulos"; 
@@ -20,6 +21,7 @@ const User = {
 
 document.addEventListener("DOMContentLoaded", function () {
     const tablaArticulos = document.querySelector(idTablaArticulos);
+    const selectMarca = document.querySelector(idSelectMarca);
     const btnBuscar = document.querySelector(idBtnBuscar);
     const btnCrear = document.querySelector(idBtnCrear);
     const btnModificar = document.querySelector(idBtnModificar);
@@ -32,6 +34,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if(User.rol === ROLES.ADMIN || User.rol === ROLES.USER) {
         btnCrear.disabled = false;
     }
+    
+    const promesaMarca = cargarInputSelect(selectMarca, "api/marca/marcas", 'Todas', false, "");
     
     validarFormulario(idFormBusquedaArticulo);
     
@@ -60,8 +64,15 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href = "articulo";
     });
     
-    //Dispara el evento de clic en el botón para que haga una busqueda inicial.
-    btnBuscar.click();
+   
+    Promise.all([promesaMarca])
+        .then(() => {
+            //Dispara el evento de clic en el botón para que haga una busqueda inicial.
+            btnBuscar.click();
+        })
+        .catch(error => {
+            console.error("Error al cargar selects: ", error);
+        });
 });
 
 function onDetectarFilaSeleccionada(hayFilaSeleccionada) {
@@ -127,9 +138,11 @@ function rellenarTablaArticulos(articulos) {
                 <td>${articulo.id}</td>
                 <td>${articulo.nombre}</td>
                 <td>${articulo.descripcion}</td>
-                <td>${articulo.paginaWeb}</td>
-                <td>${articulo.direccion.localidad.nombre ?? ''}</td>
-                <td>${articulo.direccion.localidad.provincia.nombre ?? ''}</td>
+                <td>${articulo.referencia}</td>
+                <td>${articulo.marca.nombre}</td>
+                <td>${articulo.modelo}</td>
+                <td>${articulo.stockMinimo}</td>
+                <td>${articulo.stockActual}</td>
                 </tr>`;
     }).join('');
 

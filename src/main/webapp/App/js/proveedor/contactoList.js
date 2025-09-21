@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
         btnCrear.disabled = false;
     }
     
-    cargarInputSelect(selectProveedor, "api/proveedor/proveedores", 'Todos', false, "");
+    const promesaProveedor = cargarInputSelect(selectProveedor, "api/proveedor/proveedores", 'Todos', false, "");
     
     validarFormulario(idFormBusquedaContacto);
     
@@ -58,8 +58,14 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href = "proveedor";
     });
     
-    //Dispara el evento de clic en el botón para que haga una busqueda inicial.
-    btnBuscar.click();
+    Promise.all([promesaProveedor])
+        .then(() => {
+            //Dispara el evento de clic en el botón para que haga una busqueda inicial.
+            btnBuscar.click();
+        })
+        .catch(error => {
+            console.error("Error al cargar selects: ", error);
+        });
 });
 
 function onDetectarFilaSeleccionada(hayFilaSeleccionada) {

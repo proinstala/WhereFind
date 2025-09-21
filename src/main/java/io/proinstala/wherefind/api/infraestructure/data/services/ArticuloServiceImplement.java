@@ -33,7 +33,6 @@ public class ArticuloServiceImplement extends BaseMySql implements IArticuloServ
             FROM ARTICULO art
             INNER JOIN MARCA m ON art.marca_id = m.id
             LEFT JOIN EXISTENCIA e ON art.id = e.articulo_id AND e.disponible = true
-            GROUP BY art.id
             """;
     
     private static final String SQL_SELECT_ARTICULO_PROVEEDOR_BY_ARTICULO = 
@@ -106,7 +105,7 @@ public class ArticuloServiceImplement extends BaseMySql implements IArticuloServ
                 .proveedor(proveedorDTO)
                 .precio(rs.getDouble("art_pro.precio"))
                 .fechaPrecio(rs.getObject("art_pro.fecha_precio", LocalDate.class))
-                .disponible(rs.getBoolean("drt_pro.disponible"))
+                .disponible(rs.getBoolean("art_pro.disponible"))
                 .fechaNoDisponible(rs.getObject("art_pro.fecha_no_disponible", LocalDate.class))
                 .build();
         
@@ -166,7 +165,8 @@ public class ArticuloServiceImplement extends BaseMySql implements IArticuloServ
         ArticuloDTO articuloDTO = null;
         
         StringBuilder sql = new StringBuilder(SQL_SELECT_COMUN);
-        sql.append(" AND art.id = ?");
+        sql.append(" WHERE art.id = ?");
+        sql.append(" GROUP BY art.id");
         
         try (Connection conexion = getConnection(); 
              PreparedStatement ps = conexion.prepareStatement(sql.toString())) {
@@ -195,6 +195,7 @@ public class ArticuloServiceImplement extends BaseMySql implements IArticuloServ
         
         StringBuilder sql = new StringBuilder(SQL_SELECT_COMUN);
         sql.append(" WHERE art.activo = TRUE");
+        sql.append(" GROUP BY art.id");
         
         try (Connection conexion = getConnection(); 
              PreparedStatement ps = conexion.prepareStatement(sql.toString())) {
@@ -238,6 +239,8 @@ public class ArticuloServiceImplement extends BaseMySql implements IArticuloServ
         if (marcaId != -1) {
             sql.append(" AND art.marca_id = ?");
         }
+        
+        sql.append(" GROUP BY art.id");
         
         try (Connection conexion = getConnection(); 
              PreparedStatement ps = conexion.prepareStatement(sql.toString())) {

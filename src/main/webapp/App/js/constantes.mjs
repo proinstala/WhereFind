@@ -7,8 +7,9 @@ export const ROLES = {
 
 export const DEFAULT_IMG = {
     PROVEEDOR : "App/img/defaultProveedor.svg",
+    ARTICULO: "App/img/defaultArticulo.svg",
     MARCA : "App/img/defaultMarca.svg"
-};
+ };
 
 
 export const version = "20250414_2200";
