@@ -1,10 +1,11 @@
 
-package io.proinstala.wherefind.api.articulo.controllers;
+package io.proinstala.wherefind.api.almacen.controllers;
 
-import io.proinstala.wherefind.api.articulo.services.ArticuloControllerService;
+import io.proinstala.wherefind.api.almacen.services.ExistenciaControllerService;
 import io.proinstala.wherefind.api.identidad.UserSession;
 import io.proinstala.wherefind.shared.controllers.BaseHttpServlet;
 import static io.proinstala.wherefind.shared.controllers.BaseHttpServlet.responseError403;
+import static io.proinstala.wherefind.shared.controllers.BaseHttpServlet.responseError404;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,24 +14,24 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Controlador de solicitudes HTTP para manejar operaciones relacionadas con artículo.
+ * Controlador de solicitudes HTTP para manejar operaciones relacionadas con existencia.
  *
  * <p>Esta clase extiende {@link BaseHttpServlet} y se encarga de recibir y procesar las solicitudes HTTP 
- * relacionadas con artículo a través de la API definida. Utiliza el servicio {@link ArticuloControllerService} 
+ * relacionadas las existencias a través de la API definida. Utiliza el servicio {@link ExistenciaControllerService} 
  * para realizar las operaciones de negocio y construir las respuestas adecuadas.</p>
  *
  * <p>La clase define una enumeración interna {@link ActionType} para representar los diferentes tipos de acción 
- * que puede manejar. La base de la URL para las API de artículo se define como {@code /api/articulo}.</p>
+ * que puede manejar. La base de la URL para las API de existencia se define como {@code /api/existencia}.</p>
  */
-@WebServlet(urlPatterns = ArticuloController.BASE_API + "/*")
-public class ArticuloController extends BaseHttpServlet {
+@WebServlet(urlPatterns = ExistenciaController.BASE_API + "/*")
+public class ExistenciaController extends BaseHttpServlet {
     
     /**
      * Base de la URL para las API de localidad.
      */
-    protected static final String BASE_API = "/api/articulo";
+    protected static final String BASE_API = "/api/existencia";
     
-    private final ArticuloControllerService articuloServicio = new ArticuloControllerService();
+    private final ExistenciaControllerService existenciaServicio = new ExistenciaControllerService();
     
     @Override
     protected String getBaseApi() {
@@ -42,12 +43,14 @@ public class ArticuloController extends BaseHttpServlet {
      */
     enum ActionType {
         ERROR,
-        ARTICULO,
-        ARTICULOS,
-        FIND_ARTICULOS,
+        EXISTENCIA,
+        EXISTENCIAS,
+        FIND_EXISTENCIAS,
         UPDATE,
         CREATE,
-        DELETE
+        DELETE,
+        DISABLE,
+        ENABLE
     }
     
     /**
@@ -64,7 +67,7 @@ public class ArticuloController extends BaseHttpServlet {
             action = action.toUpperCase();
 
             // Recorre todos los ActionType
-            for (ArticuloController.ActionType accion : ArticuloController.ActionType.values()) {
+            for (ExistenciaController.ActionType accion : ExistenciaController.ActionType.values()) {
 
                 // Conprueba que action esté entre los ActionType
                 if (action.equals(accion.name())) {
@@ -75,75 +78,75 @@ public class ArticuloController extends BaseHttpServlet {
         }
 
         // Devuelve el ActionType de error por no encontrar un ActionType coincidente
-        return ArticuloController.ActionType.ERROR;
+        return ExistenciaController.ActionType.ERROR;
     }
     
     /**
-     * Maneja la solicitud para obtener un artículo específico.
+     * Maneja la solicitud para obtener una existencia específica.
      *
      * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio 
-     * de artículo para obtener un artículo por ID y devolver la respuesta en formato JSON.</p>
+     * de existencia para obtener una existencia por ID y devolver la respuesta en formato JSON.</p>
      *
      * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
      */
-    protected void apiGetArticulo(ActionController actionController) {
+    protected void apiGetExistencia(ActionController actionController) {
         // Se comprueba que el usuario está logueado
         if (!UserSession.isUserLogIn(actionController.server(), false)) {
             responseError403(actionController.server().response(), "");
             return;
         }
         
-        articuloServicio.getArticuloById(actionController);
+        existenciaServicio.getExistenciaById(actionController);
     }
     
     /**
-     * Maneja la solicitud para obtener todos los artículos.
+     * Maneja la solicitud para obtener todos las existencias.
      *
-     * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio de artículo 
-     * para obtener la lista de artículos y devolver la respuesta en formato JSON.</p>
+     * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio de existencia
+     * para obtener la lista de existencias y devolver la respuesta en formato JSON.</p>
      *
      * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
      */
-    protected void apiGetArticulos(ActionController actionController) {
+    protected void apiGetExistencias(ActionController actionController) {
         // Se comprueba que el usuario está logueado
         if (!UserSession.isUserLogIn(actionController.server(), false)) {
             responseError403(actionController.server().response(), "");
             return;
         }
         
-        articuloServicio.getArticulos(actionController);
+        //existenciaServicio.getExistencias(actionController);
     }
     
     /**
-     * Maneja la solicitud para buscar artículos.
+     * Maneja la solicitud para buscar existencias.
      *
      * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio 
-     * de artículo para buscar los artículos y devolver la respuesta en formato JSON.</p>
+     * de existencia para buscar las existencias y devolver la respuesta en formato JSON.</p>
      *
      * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
      */
-    protected void apiFindArticulos(ActionController actionController) {
+    protected void apiFindExistencias(ActionController actionController) {
         // Se comprueba que el usuario está logueado
         if (!UserSession.isUserLogIn(actionController.server(), false)) {
             responseError403(actionController.server().response(), "");
             return;
         }
         
-        articuloServicio.findArticulos(actionController);
+        existenciaServicio.findExistencias(actionController);
     }
     
     /**
-     * Maneja la creación de un nuevo artículo utilizando los datos proporcionados en la solicitud.
+     * Maneja la creación de una nueva existencia utilizando los datos proporcionados en la solicitud.
      *
      * <p>Este método primero verifica si el usuario está autenticado y tiene los permisos necesarios. 
      * Si el usuario no está logueado, se envía una respuesta de error 
      * 403 (prohibido) y se interrumpe el procesamiento. Si el usuario está autenticado y autorizado, 
-     * se llama al servicio de artículo para realizar la creación del artículo.</p>
+     * se llama al servicio de existencia para realizar la creación de la existencia.</p>
      *
      * @param actionController el controlador de acción que contiene la información de la solicitud, 
      *                         incluyendo los datos necesarios para crear un nuevo almacen.
      */
-    protected void apiCreateArticulo(ActionController actionController) {
+    protected void apiCreateExistencia(ActionController actionController) {
         // Se comprueba que el usuario está logueado
         if (!UserSession.isUserLogIn(actionController.server(), true))
         {
@@ -151,20 +154,20 @@ public class ArticuloController extends BaseHttpServlet {
             return;
         }
         
-        articuloServicio.createArticulo(actionController);
+        existenciaServicio.createExistencia(actionController);
     }
     
     /**
-     * Maneja la solicitud para elimnar la información de un artículo específico.
+     * Maneja la solicitud para deshabilitar una existencia específica.
      *
      * <p>Verifica si el usuario está autenticado y tiene los permisos necesarios. Si es así, 
-     * delega la operación al servicio de artículo para borrar(activo = false) la artículo y devolver la respuesta.</p>
+     * delega la operación al servicio de existencia para deshabilitar la existencia y devolver la respuesta.</p>
      * 
-     * EndPoint - PUT : /api/articulo/delete/{id}
+     * EndPoint - PUT : /api/existencia/disable/{id}
      *
      * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
      */
-    protected void apiDeleteArticulo(ActionController actionController) {
+    protected void apiDisableExistencia(ActionController actionController) {
         // Se comprueba que el usuario está logueado y sea administrador
         if (!UserSession.isUserLogIn(actionController.server(), true))
         {
@@ -172,24 +175,66 @@ public class ArticuloController extends BaseHttpServlet {
             return;
         }
         
-        articuloServicio.deleteArticulo(actionController);
+        //existenciaServicio.disableExistencia(actionController);
     }
     
     /**
-     * Maneja la actualización de la información de un artículo existente.
+     * Maneja la solicitud para habilitar una existencia específica.
+     *
+     * <p>Verifica si el usuario está autenticado y tiene los permisos necesarios. Si es así, 
+     * delega la operación al servicio de existencia para deshabilitar la existencia y devolver la respuesta.</p>
+     * 
+     * EndPoint - PUT : /api/existencia/enable/{id}
+     *
+     * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
+     */
+    protected void apiDisableEnable(ActionController actionController) {
+        // Se comprueba que el usuario está logueado y sea administrador
+        if (!UserSession.isUserLogIn(actionController.server(), true))
+        {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+        
+        //existenciaServicio.enableExistencia(actionController);
+    }
+    
+    /**
+     * Maneja la solicitud para elimnar la información de una existencia específica.
+     *
+     * <p>Verifica si el usuario está autenticado y tiene los permisos necesarios. Si es así, 
+     * delega la operación al servicio de existencia para borrar la existencia y devolver la respuesta.</p>
+     * 
+     * EndPoint - PUT : /api/existencia/delete/{id}
+     *
+     * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
+     */
+    protected void apiDeleteExistencia(ActionController actionController) {
+        // Se comprueba que el usuario está logueado y sea administrador
+        if (!UserSession.isUserLogIn(actionController.server(), true))
+        {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+        
+        existenciaServicio.deleteExistencia(actionController);
+    }
+    
+    /**
+     * Maneja la actualización de la información de una existencia existente.
      *
      * <p>Este método primero verifica si el usuario está autenticado y cuenta con los permisos
      * necesarios. Si el usuario no cumple con estos
      * requisitos, se envía una respuesta de error 403 (Prohibido) y se interrumpe el procesamiento.
-     * En caso contrario, delega la operación al servicio de artículo para realizar la actualización
+     * En caso contrario, delega la operación al servicio de existencia para realizar la actualización
      * correspondiente y devolver la respuesta apropiada al cliente.</p>
      *
-     * <p>EndPoint - PUT : /api/articulo/update/</p>
+     * <p>EndPoint - PUT : /api/existencia/update/</p>
      *
      * @param actionController el controlador de la acción que maneja la solicitud y la respuesta,
      *                         conteniendo la información y datos necesarios para realizar la actualización.
      */
-    protected void apiUpdateArticulo(ActionController actionController) {
+    protected void apiUpdateExistencia(ActionController actionController) {
         // Se comprueba que el usuario está logueado y sea administrador
         if (!UserSession.isUserLogIn(actionController.server(), true))
         {
@@ -197,7 +242,7 @@ public class ArticuloController extends BaseHttpServlet {
             return;
         }
         
-        articuloServicio.updateArticulo(actionController);
+        //existenciaServicio.updateExistencia(actionController);
     }
     
     
@@ -219,10 +264,10 @@ public class ArticuloController extends BaseHttpServlet {
         // Imprime en la salida del servidor el EndPoint
         System.out.println("EndPoint GET : " + actionController.parametros()[0]);
         
-        switch((ArticuloController.ActionType) actionController.actionType()) {
-            case ARTICULO -> apiGetArticulo(actionController);
-            case ARTICULOS -> apiGetArticulos(actionController);
-            case FIND_ARTICULOS -> apiFindArticulos(actionController);
+        switch((ExistenciaController.ActionType) actionController.actionType()) {
+            case EXISTENCIA -> apiGetExistencia(actionController);
+            case EXISTENCIAS -> apiGetExistencias(actionController);
+            case FIND_EXISTENCIAS -> apiFindExistencias(actionController);
               
             default -> responseError403(actionController.server().response(), "");
         }
@@ -254,12 +299,13 @@ public class ArticuloController extends BaseHttpServlet {
         System.out.println("EndPoint POST : " + actionController.parametros()[0]);
 
         // Dependiendo del ActionType, realizará una acción
-        switch((ArticuloController.ActionType) actionController.actionType()){
-            case CREATE -> apiCreateArticulo(actionController);
+        switch((ExistenciaController.ActionType) actionController.actionType()){
+            case CREATE -> apiCreateExistencia(actionController);
 
             default -> responseError404(actionController.server().response(), "");
         }
     }
+    
     
     /**
      * Maneja las solicitudes HTTP PUT para las acciones definidas.
@@ -283,13 +329,14 @@ public class ArticuloController extends BaseHttpServlet {
         // Imprime en la salida del servidor el EndPoint
         System.out.println("EndPoint PUT : " + actionController.parametros()[0]);
 
-        switch((ArticuloController.ActionType) actionController.actionType()) {
-            case UPDATE -> apiUpdateArticulo(actionController);
-            case DELETE -> apiDeleteArticulo(actionController);
+        switch((ExistenciaController.ActionType) actionController.actionType()) {
+            //case UPDATE -> apiUpdateExistencia(actionController);
+            case DELETE -> apiDeleteExistencia(actionController);
+            //CASE DISABLE -> apiDisableExistencia(actionController);
             
             default -> responseError404(actionController.server().response(), "");
         }
     }
-
+    
     
 }

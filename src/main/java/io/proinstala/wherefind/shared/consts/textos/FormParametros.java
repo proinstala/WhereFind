@@ -102,12 +102,22 @@ public class FormParametros {
     public static final String PARAM_EMPLAZAMIENTO_ALMACEN = "almacen";
     public static final String PARAM_EMPLAZAMIENTO_TIPO = "tipo";
     
+    //Existencia
+    public static final String PARAM_EXISTENCIA_ARTICULO = "articulo";
+    public static final String PARAM_EXISTENCIA_REFERENCIA = "referencia";
+    public static final String PARAM_EXISTENCIA_MARCA = "marca";
+    public static final String PARAM_EXISTENCIA_PROVEEDOR = "proveedor";
+    public static final String PARAM_EXISTENCIA_ALMACEN = "almacen";
+    public static final String PARAM_EXISTENCIA_TIPO_EPLAZAMIENTO = "tipoEmplazamiento";
+    public static final String PARAM_EXISTENCIA_NOMBRE_EPLAZAMIENTO = "nombreEmplazamiento";
+    public static final String PARAM_EXISTENCIA_DISPONIBLE = "disponible";
+    
     //Marca
     public static final String PARAM_MARCA_NOMBRE = "nombre";
     public static final String PARAM_MARCA_DESCRIPCION = "descripcion";
     public static final String PARAM_MARCA_IMAGEN = "imagenMarcaB64";
     
-    //Marca
+    //Articulo
     public static final String PARAM_ARTICULO_NOMBRE = "nombre";
     public static final String PARAM_ARTICULO_DESCRIPCION = "descripcion";
     public static final String PARAM_ARTICULO_REFERENCIA = "referencia";

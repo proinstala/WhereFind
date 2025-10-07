@@ -19,7 +19,7 @@
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >
-    <jsp:param name="titleweb" value="Modificar Proveedor" />
+    <jsp:param name="titleweb" value="WhereFind - Proveedor" />
 </jsp:include>
 
 <link href="App/css/formulario.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>

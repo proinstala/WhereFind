@@ -1,6 +1,4 @@
 
-
-
 const idBtnCancelar = "#btnCancelar";
 
 document.addEventListener("DOMContentLoaded", function () {

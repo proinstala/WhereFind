@@ -19,18 +19,6 @@ import java.util.List;
  * @author David
  */
 public class EmplazamientoServiceImplement extends BaseMySql implements IEmplazamientoService {
-    //t.id AS tipo_id, t.nombre AS tipo_nombre,
-    private static final String SQL_SELECT_COMUN2 = 
-           """                            
-           SELECT
-            e.*,
-            t.id, t.nombre,
-            a.id AS almacen_id, a.nombre AS almacen_nombre, a.descripcion AS almacen_descripcion, 
-            a.direccion_id AS almacen_direccion_id, a.activo AS almacen_activo
-           FROM EMPLAZAMIENTO e
-           INNER JOIN TIPO_EMPLAZAMIENTO t ON e.tipo_id = t.id
-           INNER JOIN ALMACEN a ON e.almacen_id = a.id
-           """;
     
     private static final String SQL_SELECT_COMUN = 
            """                            

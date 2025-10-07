@@ -402,7 +402,10 @@ function fillInputSelect(nodeInputSelect, datos, optionGenerico) {
                     const cpText = cp ? `, C.P. ${cp}` : '';
                     elementOption.textContent = `ID ${dato.id} - ${dato.calle} nº ${dato.numero}${cpText}, ${dato.localidad.nombre}, ${dato.localidad.provincia.nombre}`;
                     break;
-
+            case 'articuloProveedor':
+                elementOption.textContent = `${dato.proveedor.nombre} - precio: ${dato.precio}`;
+                elementOption.setAttribute("data-precio", dato.precio);
+                break;
             default:
                 // Para cualquier otro select, solo mostrar el nombre
                 elementOption.textContent = dato.nombre;

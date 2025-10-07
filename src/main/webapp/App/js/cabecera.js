@@ -12,7 +12,6 @@ $(document).ready(function () {
     const btnConfigAdmin = document.querySelector('#btnConfig-admin');
 
 
-
     btnEditarUsuario.addEventListener('click', () => {
         window.location.href = 'account/modificar';
     });

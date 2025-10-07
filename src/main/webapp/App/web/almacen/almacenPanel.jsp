@@ -31,7 +31,8 @@
 
     // Se agregan las tarjetas a la lista
     tarjetas.add(new CardDTO("las la-box", "Almacenes", "Gestione todos los alamcenes.", "almacen/almacenes"));
-    tarjetas.add(new CardDTO("las la-database", "Emplazamientos", "Gestione todos los emplazamientos.", "almacen/emplazamientos")); //
+    tarjetas.add(new CardDTO("las la-database", "Emplazamientos", "Gestione todos los emplazamientos.", "almacen/emplazamientos"));
+    tarjetas.add(new CardDTO("las la-puzzle-piece", "Existencias", "Gestione todos las existencias.", "almacen/existencias")); //
 
     // Se agrega la lista a los atributos de la petición
     request.setAttribute("cards", tarjetas);

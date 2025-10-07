@@ -32,7 +32,6 @@
     // Se agregan las tarjetas a la lista
     tarjetas.add(new CardDTO("las la-shapes", "Artículos", "Gestione todos los artículos.", "articulo/articulos"));
     tarjetas.add(new CardDTO("las la-copyright", "Marcas", "Gestione todas las marcas.", "articulo/marcas"));  
-    tarjetas.add(new CardDTO("las la-puzzle-piece", "Existencias", "Gestione todas las existencias.", "articulo/existencias"));  
 
     // Se agrega la lista a los atributos de la petición
     request.setAttribute("cards", tarjetas);

@@ -13,6 +13,10 @@
     border: 1px solid black; /* Define un borde sólido negro */
     padding: 5px; /* Define el padding dentro de las celdas */
     text-align: left; /* Alinea el texto a la izquierda */
+    
+    &.texto--centrado {
+        text-align: center;
+    }
 }
 
 .tabla th {

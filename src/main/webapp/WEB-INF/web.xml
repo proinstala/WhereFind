@@ -369,6 +369,36 @@
         <url-pattern>/almacen/emplazamientos/edit/*</url-pattern>
     </servlet-mapping>
     
+    <servlet>
+        <servlet-name>existenciaList</servlet-name>
+        <jsp-file>/App/web/almacen/existenciaList.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>existenciaList</servlet-name>
+        <url-pattern>/almacen/existencias</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>existenciaCrear</servlet-name>
+        <jsp-file>/App/web/almacen/existenciaCrear.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>existenciaCrear</servlet-name>
+        <url-pattern>/almacen/existencias/crear</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>existenciaEditar</servlet-name>
+        <jsp-file>/App/web/almacen/existenciaEditar.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>existenciaEditar</servlet-name>
+        <url-pattern>/almacen/existencias/edit/*</url-pattern>
+    </servlet-mapping>
+    
     <!-- Mapeo de las url referentes a Artículo -->
     <servlet>
         <servlet-name>articuloPanel</servlet-name>
@@ -393,6 +423,16 @@
     <servlet>
         <servlet-name>articuloCrear</servlet-name>
         <jsp-file>/App/web/articulo/articuloCrear.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>articuloEditar</servlet-name>
+        <url-pattern>/articulo/articulos/edit/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>articuloEditar</servlet-name>
+        <jsp-file>/App/web/articulo/articuloEditar.jsp</jsp-file>
     </servlet>
 
     <servlet-mapping>
@@ -428,6 +468,6 @@
     <servlet-mapping>
         <servlet-name>marcaEditar</servlet-name>
         <url-pattern>/articulo/marcas/edit/*</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>   
 
 </web-app>

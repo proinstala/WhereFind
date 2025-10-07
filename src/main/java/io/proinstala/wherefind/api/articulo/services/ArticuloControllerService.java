@@ -67,10 +67,10 @@ public class ArticuloControllerService extends BaseService {
     }
     
     /**
-     * Obtiene una artículo por su identificador.
+     * Obtiene un artículo por su identificador.
      * 
-     * <p>Este método extrae el identificador de la artículo del controlador de acción, utiliza el
-     * servicio de artículo para recuperar los datos de la artículo correspondiente, y devuelve 
+     * <p>Este método extrae el identificador del artículo del controlador de acción, utiliza el
+     * servicio de artículo para recuperar los datos del artículo correspondiente, y devuelve 
      * la respuesta en formato JSON.</p>
      * 
      * @param actionController El controlador de acción que contiene los parámetros de la solicitud.
@@ -217,18 +217,18 @@ public class ArticuloControllerService extends BaseService {
             String referencia = actionController.server().getRequestParameter(FormParametros.PARAM_ARTICULO_REFERENCIA, "");
             String strIdmarca = actionController.server().getRequestParameter(FormParametros.PARAM_ARTICULO_MARCA, "");
             String modelo = actionController.server().getRequestParameter(FormParametros.PARAM_ARTICULO_MODELO, "");
-            String stockMinimo = actionController.server().getRequestParameter(FormParametros.PARAM_ARTICULO_STOCK_MINIMO, "");
-            String imagen = actionController.server().getRequestParameter(FormParametros.PARAM_MARCA_IMAGEN, "");
+            String stockMinimo = actionController.server().getRequestParameter(FormParametros.PARAM_ARTICULO_STOCK_MINIMO, "0");
+            String imagen = actionController.server().getRequestParameter(FormParametros.PARAM_ARTICULO_IMAGEN, "");
 
             try {
                 int idMarca = Integer.parseInt(strIdmarca);
-                
+
                 articuloDTO.setNombre(nombre);
                 articuloDTO.setDescripcion(descripcion);
                 articuloDTO.setReferencia(referencia);
                 articuloDTO.setMarca(MarcaDTO.builder().id(idMarca).build());
                 articuloDTO.setModelo(modelo);
-                articuloDTO.setReferencia(stockMinimo);
+                articuloDTO.setStockMinimo(Integer.parseInt(stockMinimo));
                 articuloDTO.setImagen(imagen);
 
                 if (articuloServiceImp.updateArticulo(articuloDTO)) {
@@ -249,7 +249,7 @@ public class ArticuloControllerService extends BaseService {
     } 
 
     /**
-     * Elimina una artículo por su identificador.
+     * Elimina un artículo por su identificador.
      * 
      * <p>Este método extrae el identificador del artículo del controlador de acción, utiliza el
      * servicio de artículo para eliminar el artículo correspondiente, y devuelve la respuesta en
@@ -269,7 +269,7 @@ public class ArticuloControllerService extends BaseService {
             return;
         } 
             
-        // Obtiene el id del almacen desde el parámetro 1 de la lista de parámetros
+        // Obtiene el id del artículo desde el parámetro 1 de la lista de parámetros
         int id = actionController.getIntFromParametros(1);
 
         // Si el id es mayor que -1 significa que hay en principio un id válido que se puede procesar

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : articuloList
-    Created on : 18 sept 2025, 19:49:33
+    Document   : existenciaList
+    Created on : 26 sept 2025, 19:13:10
     Author     : David
 --%>
 
@@ -19,7 +19,7 @@
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >
-    <jsp:param name="titleweb" value="WhereFind - Artículo"/>
+    <jsp:param name="titleweb" value="WhereFind - Existencia"/>
 </jsp:include>
 
 <link href="App/css/formulario.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>
@@ -38,7 +38,7 @@
 
                 <div class="contenedor__formulario--cabecera conBotones">
                     <div>
-                        <h1>Artículos</h1>
+                        <h1>Existecias</h1>
                     </div>
                     <div class="form__btn_circle">
                         <button id="btnCancelar" title="Cancelar"><i class="las la-times"></i></button>
@@ -46,16 +46,11 @@
                 </div>
 
                 <div class="contenedor__formulario--main">
-                    <form class="formulario" name="frmBuscarArticulo" id="frmBuscarArticulo">
+                    <form class="formulario" name="frmBuscarExistencia" id="frmBuscarExistencia">
 
                         <div class="form__input">
-                            <input type="text" name="nombre" id="nombre">
-                            <label for="nombre">Nombre</label>
-                        </div>
-                        
-                        <div class="form__input">
-                            <input type="text" name="descripcion" id="descripcion">
-                            <label for="descripcion">Descripción</label>
+                            <input type="text" name="articulo" id="articulo">
+                            <label for="articulo">Artículo</label>
                         </div>
                         
                         <div class="form__input">
@@ -68,6 +63,26 @@
                             </select>
                             <label for="marca">Marca</label>
                         </div>
+                        
+                        <div class="form__input">
+                            <select name="almacen" id="almacen">
+                            </select>
+                            <label for="almacen">Almacén</label>
+                        </div>
+                        
+                        <div class="form__input">
+                            <input type="text" name="nombreEmplazamiento" id="nombreEmplazamiento">
+                            <label for="nombreEmplazamiento">Emplazamiento</label>
+                        </div>
+                        
+                        <div class="form__input">
+                            <select name="disponible" id="disponible">
+                                <option value="-1">Todos</option>
+                                <option value="0">No disponible</option>
+                                <option value="1">Disponible</option>
+                            </select>
+                            <label for="disponible">Disponibilidad</label>
+                        </div>
 
                     </form>
                 </div>
@@ -75,7 +90,7 @@
                 <div class="contenedor__tabla--botones">
 
                     <div class="form__btn_circle">
-                        <button form="frmBuscarArticulo" id="btnBuscar" title="Buscar" type="submit"><i class="las la-search"></i></button>
+                        <button form="frmBuscarExistencia" id="btnBuscar" title="Buscar" type="submit"><i class="las la-search"></i></button>
                     </div>
                     <div class="form__btn_circle">
                         <button id="btnCrear" title="Crear" disabled><i class="las la-plus"></i></button>
@@ -92,17 +107,17 @@
                 </div>
 
                 <div class="contenedor__tabla">
-                    <table class="tabla" id="tablaArticulos" data-rowselected = "-1">
+                    <table class="tabla" id="tablaExistencias" data-rowselected = "-1">
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Nombre</th>
+                                <th>Artículo</th>
                                 <th>Descripcion</th>
                                 <th>Referencia</th>
                                 <th>Marca</th>
-                                <th>Modelo</th>
-                                <th>Stock minimo</th>
-                                <th>Stock actual</th>
+                                <th>Almacen</th>
+                                <th>Emplazamiento</th>
+                                <th>Disponible</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -122,6 +137,6 @@
     </div>
 </div>
 
-<script src="App/js/articulo/articuloList.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
+<script src="App/js/almacen/existenciaList.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>

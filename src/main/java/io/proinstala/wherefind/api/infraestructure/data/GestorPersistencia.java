@@ -5,6 +5,7 @@ import io.proinstala.wherefind.api.infraestructure.data.interfaces.IArticuloServ
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IContactoService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IDireccionService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IEmplazamientoService;
+import io.proinstala.wherefind.api.infraestructure.data.interfaces.IExistenciaService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.ILocalidadService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IMarcaService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IProveedorService;
@@ -17,6 +18,7 @@ import io.proinstala.wherefind.api.infraestructure.data.services.ArticuloService
 import io.proinstala.wherefind.api.infraestructure.data.services.ContactoServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.DireccionServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.EmplazamientoServiceImplement;
+import io.proinstala.wherefind.api.infraestructure.data.services.ExistenciaServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.LocalidadServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.MarcaServiceImplement;
 import io.proinstala.wherefind.api.infraestructure.data.services.ProveedorServiceImplement;
@@ -162,6 +164,19 @@ public class GestorPersistencia {
      */
     public static IAlmacenService getAlmacenService() {
         return new AlmacenServiceImplement();
+    }
+    
+    /**
+     * Obtiene una instancia del servicio de existencias.
+     *
+     * <p>Este método devuelve una implementación de {@link IExistenciaService}, en este caso, 
+     * una instancia de {@link ExistenciaServiceImplement}, que maneja la lógica relacionada con 
+     * las existencias.</p>
+     *
+     * @return una instancia de {@link IExistenciaService}.
+     */
+    public static IExistenciaService getExistenciaService() {
+        return new ExistenciaServiceImplement();
     }
     
     /**

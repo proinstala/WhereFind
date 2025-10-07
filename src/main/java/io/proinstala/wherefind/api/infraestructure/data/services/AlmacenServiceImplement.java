@@ -26,8 +26,8 @@ public class AlmacenServiceImplement extends BaseMySql implements IAlmacenServic
             """
             SELECT
              a.*,
-             d.id AS d_id, d.calle AS d_calle, d.numero AS d_numero, d.codigo_postal AS d_codigo_postal, d.localidad_id AS d_localidad_id, d.activo AS d_activo,
-             l.id AS l_id, l.nombre AS l_nombre, l.provincia_id AS l_provincia_id,
+             d.calle AS d_calle, d.numero AS d_numero, d.codigo_postal AS d_codigo_postal, d.activo AS d_activo,
+             l.id AS l_id, l.nombre AS l_nombre,
              pr.id AS pr_id, pr.nombre AS pr_nombre
             FROM ALMACEN a
             LEFT JOIN DIRECCION d ON a.direccion_id = d.id
@@ -78,7 +78,7 @@ public class AlmacenServiceImplement extends BaseMySql implements IAlmacenServic
             .build();
 
         DireccionDTO direccionDTO = DireccionDTO.builder()
-            .id(rs.getInt("d_id"))
+            .id(rs.getInt("a.direccion_id"))
             .calle(rs.getString("d_calle"))
             .numero(rs.getString("d_numero"))
             .codigoPostal(rs.getInt("d_codigo_postal"))

@@ -293,7 +293,7 @@ CREATE TABLE IF NOT EXISTS ARTICULO_PROVEEDOR (
 CREATE TABLE IF NOT EXISTS EXISTENCIA (
     id INT auto_increment NOT NULL,
     articulo_id INT NOT NULL,
-    proveedor_id INT NOT NULL,
+    proveedor_id INT,
     emplazamiento_id INT NOT NULL,
     precio DOUBLE NOT NULL,
     fecha_compra DATE,
