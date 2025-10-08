@@ -30,3 +30,14 @@ export const DISPLAY_TYPES = {
   CONTENTS: "contents",
   TABLE: "table"
 };
+
+export const DISPONIBILIDAD = {
+  NO_DISPONIBLE: {
+      name: "NO_DISPONIBLE",
+      value: 0
+  },
+  DISPONIBLE: {
+      name: "DISPONIBLE",
+      value: 1
+  }
+};

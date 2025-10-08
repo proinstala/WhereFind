@@ -99,6 +99,19 @@
                             </select>
                             <label for="emplazamiento">Emplazamiento</label>
                         </div>
+                        
+                        <div class="form__input">
+                            <select name="disponibilidad" id="disponibilidad">
+                                <option value="0">No Disponible</option>
+                                <option value="1">Disponible</option>
+                            </select>
+                            <label for="disponibilidad">Disponibilidad</label>
+                        </div>
+                        
+                        <div class="form__input">
+                            <input type="date" name="fechaNoDisponible" id="fechaNoDisponible" value="">
+                            <label for="fechaNoDisponible">Fecha no disponible</label>
+                        </div>
 
                     </form>
                 </div>

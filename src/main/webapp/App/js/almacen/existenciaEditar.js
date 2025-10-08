@@ -1,17 +1,19 @@
 
 import { solicitudGet, setImageSelected, solicitudPut, getDatosForm, fillInputSelect, cargarInputSelect, seleccionarValorSelect, detectarCambiosFormulario } from '../comunes.mjs';
 import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from '../alertasSweetAlert2.mjs';
-import {DEFAULT_IMG} from '../constantes.mjs';
+import {DEFAULT_IMG, DISPONIBILIDAD} from '../constantes.mjs';
 
 const idSelectArticulo = "#articulo";
 const idSelectArticuloProveedor = "#articuloProveedor";
 const idSelectAlmacen = "#almacen";
 const idSelectEmplazamiento = "#emplazamiento";
+const idSelectDisponibilidad = "#disponibilidad";
 
 const idInputIdExistencia = "#existencia_id";
 const idInputPrecio = "#precio";
 const idInputFechaCompra = "#fechaCompra";
 const idInputComprador = "#comprador";
+const idInputFechaNoDisponible = "#fechaNoDisponible";
 const idFormExistencia = "#frmModificarExistencia";
 const idBtnGuardar = "#btnGuardar";
 const idBtnCancelar = "#btnCancelar";
@@ -61,7 +63,7 @@ $(document).ready(function () {
 
 });
 
-function onDetectarCambiosCrearExistencia(hayCambios) {
+function onDetectarCambiosModificarExistencia(hayCambios) {
     $("#btnGuardar").prop('disabled', !hayCambios);
     $("#btnDeshacerCambiosExistencia").prop('disabled', !hayCambios);
 }
@@ -87,45 +89,163 @@ function getExistencia(idExistencia) {
 
 //HAY QUE MODIFICAR ESTO PARA RELLENAR LOS DATOS DE EXISTENCIA. -------!!!!! EN CONSTRUCCIÓN.
 function fillFielsExistencia(existencia) {
-    const form = document.querySelector(idFormArticulo);
+    const form = document.querySelector(idFormExistencia);
     debugger;
-
-    const selectMarca = form.querySelector(idSelectMarca);
-    const inputNombre = form.querySelector(idInputNombre);
-    const inputDescripcion = form.querySelector(idInputDescripcion);
-    const inputReferencia = form.querySelector(idInputReferencia);
-    const inputModelo = form.querySelector(idInputModelo);
-    const inputStockMinimo = form.querySelector(idInputStockMinimo);
     
+    const selectArticulo = form.querySelector(idSelectArticulo);
+    const selectArticuloProveedor = form.querySelector(idSelectArticuloProveedor);
+    const selectAlmacen = form.querySelector(idSelectAlmacen);
+    const selectEmplazamiento = form.querySelector(idSelectEmplazamiento);
+    const selectDisponibilidad = form.querySelector(idSelectDisponibilidad);
+    const inputPrecio = form.querySelector(idInputPrecio);
+    const inputFechaCompra = form.querySelector(idInputFechaCompra);
+    const inputComprador = form.querySelector(idInputComprador);
+    
+    const inputFechaNoDisponible = form.querySelector(idInputFechaNoDisponible);
+
     const inputHideImgArticulo = form.querySelector(idInputHideImgArticulo);
     const imgArticulo = form.querySelector(idImgArticulo);
     const labelImgArticulo = document.querySelector(idLabelImgArticulo);
-   
-    inputNombre.value = articulo.nombre;
-    inputDescripcion.value = articulo.descripcion ?? "";
-    inputReferencia.value = articulo.referencia ?? "";
-    inputModelo.value = articulo.modelo ?? "";
-    inputStockMinimo.value = articulo.stockMinimo ?? "";
+    
+    inputPrecio.value = existencia.precio;
+    inputComprador.value = existencia.comprador ?? "";
+    inputFechaCompra.value = existencia.fechaCompra ?? "";
+    inputFechaNoDisponible.value = existencia.fechaNoDisponible ?? "";
+    
+    const articuloId = existencia.articulo.id;
+    const proveedorId = existencia.proveedor.id;
+    const emplazamientoId = existencia.emplazamiento.id;
+    const almacenId = existencia.emplazamiento.almacen.id;
+    const disponible = existencia.disponible === DISPONIBILIDAD.DISPONIBLE.name ? DISPONIBILIDAD.DISPONIBLE.value : DISPONIBILIDAD.NO_DISPONIBLE.value;
     
     // Imagen: usa la imagen del articulo si existe, de lo contrario la imagen por defecto
-    const imagenValida = articulo.imagen && articulo.imagen.trim() !== "";
-    inputHideImgArticulo.value = imagenValida ? articulo.imagen : "";
-    imgArticulo.src = imagenValida ? articulo.imagen : DEFAULT_IMG.ARTICULO;
+    const imagenValida = existencia.articulo.imagen && existencia.articulo.imagen.trim() !== "";
+    inputHideImgArticulo.value = imagenValida ? existencia.articulo.imagen : "";
+    imgArticulo.src = imagenValida ? existencia.articulo.imagen : DEFAULT_IMG.ARTICULO;
     
     labelImgArticulo.textContent = "";
     
-    const marcaId = articulo.marca.id;
+    seleccionarValorSelect(selectDisponibilidad, disponible);
     
-    const promesaMarca = cargarInputSelect(selectMarca, `api/marca/marcas?direccion=${marcaId}`, 'Sin Marca', marcaId, () => {});
     
-    Promise.all([promesaMarca])
+    
+    
+    const cargaImputSelectArticuloProveedor = () => {
+         solicitudGet(`api/articulo/articulo?idArticulo=${articuloId}`, "", false)
+                    .then(response => {
+                        if (response.isError === 1) {
+                            mostrarMensajeError("Se ha producido un error", response.result);
+                        } else {
+                            let articulo = response.data;
+                            console.log("articulo: ");
+                            console.log(articulo);
+                            debugger;
+                            fillInputSelect(selectArticuloProveedor, articulo.listaProveedores, '',);
+                            seleccionarValorSelect(selectArticuloProveedor, proveedorId);
+                        }
+                    })
+                    .catch(error => {
+                        // Maneja el error aquí
+                        console.error("Error:", error);
+                        mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
+                    });
+        
+    };
+    
+    
+    const promesaSelctArticulo = cargarInputSelect(selectArticulo, "api/articulo/articulos", '', articuloId, () => {
+        cargaImputSelectArticuloProveedor();
+        
+        selectArticulo.addEventListener('change', (e) => {
+            const optionSelected = e.target.selectedOptions[0]; //Obtiene la opción seleccionada del select.
+
+            solicitudGet(`api/articulo/articulo?idArticulo=${optionSelected.value}`, "", false)
+                    .then(response => {
+                        if (response.isError === 1) {
+                            mostrarMensajeError("Se ha producido un error", response.result);
+                        } else {
+                            const articulo = response.data;
+                            fillInputSelect(selectArticuloProveedor, articulo.listaProveedores, 'Seleccione un proveedor');
+
+                            // Imagen: usa la imagen del articulo si existe, de lo contrario la imagen por defecto
+                            const imagenValida = articulo.imagen && articulo.imagen.trim() !== "";
+                            inputHideImgArticulo.value = imagenValida ? articulo.imagen : "";
+                            imgArticulo.src = imagenValida ? articulo.imagen : DEFAULT_IMG.ARTICULO;
+
+                            labelImgArticulo.textContent = "";
+                        }
+                    })
+                    .catch(error => {
+                        // Maneja el error aquí
+                        console.error("Error:", error);
+                        mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
+                    });
+        });
+        
+        selectArticuloProveedor.addEventListener("change", (e) => {
+            const optionSelected = e.target.selectedOptions[0];
+            const precio = optionSelected.getAttribute("data-precio");
+            inputPrecio.value = precio || "";
+        });
+    });
+    
+    
+    
+     
+    const cargaImputSelectEmpalzamiento = () => {
+         solicitudGet(`api/almacen/almacen?idAlmacen=${almacenId}`, "", false)
+                    .then(response => {
+                        if (response.isError === 1) {
+                            mostrarMensajeError("Se ha producido un error", response.result);
+                        } else {
+                            let almacen = response.data;
+                            fillInputSelect(selectEmplazamiento, almacen.listaEmplazamientos, '',);
+                            seleccionarValorSelect(selectEmplazamiento, emplazamientoId);
+                        }
+                    })
+                    .catch(error => {
+                        // Maneja el error aquí
+                        console.error("Error:", error);
+                        mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
+                    });
+        
+    };
+    
+
+    //Carga el select articulo.
+    const promesaSelctAlmacen = cargarInputSelect(selectAlmacen, "api/almacen/almacenes", '', almacenId, () => {
+        cargaImputSelectEmpalzamiento();
+        
+        selectAlmacen.addEventListener('change', (e) => {
+            const optionSelected = e.target.selectedOptions[0]; //Obtiene la opción seleccionada del select.
+
+            solicitudGet(`api/almacen/almacen?idAlmacen=${optionSelected.value}`, "", false)
+                    .then(response => {
+                        if (response.isError === 1) {
+                            mostrarMensajeError("Se ha producido un error", response.result);
+                        } else {
+                            let almacen = response.data;
+                            fillInputSelect(selectEmplazamiento, almacen.listaEmplazamientos, 'Seleccione un emplazamiento');
+                        }
+                    })
+                    .catch(error => {
+                        // Maneja el error aquí
+                        console.error("Error:", error);
+                        mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
+                    });
+        });
+    });
+    
+    
+    Promise.all([promesaSelctArticulo, promesaSelctAlmacen])
         .then(() => {
-            onDetectarCambiosModificarArticulo(false);
-            detectarCambiosFormulario(idFormArticulo, onDetectarCambiosModificarArticulo);
+            onDetectarCambiosModificarExistencia(false);
+            detectarCambiosFormulario(idFormExistencia, onDetectarCambiosModificarExistencia);
         })
         .catch(error => {
             console.error("Error al cargar selects:", error);
         });
-    
 }
+
+
 

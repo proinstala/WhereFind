@@ -43,7 +43,7 @@ public class AlmacenServiceImplement extends BaseMySql implements IAlmacenServic
             FROM EMPLAZAMIENTO e
             INNER JOIN TIPO_EMPLAZAMIENTO t_e ON e.tipo_id = t_e.id 
             INNER JOIN ALMACEN a ON e.almacen_id = a.id
-            WHERE e.id = ? AND e.activo = 1;
+            WHERE a.id = ? AND e.activo = 1;
             """;
     
     private static final String SQL_UPDATE_ALMACEN = 
