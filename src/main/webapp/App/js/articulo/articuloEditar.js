@@ -102,7 +102,6 @@ function getArticulo(idArticulo) {
 
 function fillFielsArticulo(articulo) {
     const form = document.querySelector(idFormArticulo);
-    debugger;
 
     const selectMarca = form.querySelector(idSelectMarca);
     const inputNombre = form.querySelector(idInputNombre);

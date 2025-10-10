@@ -77,6 +77,11 @@
                             <input type="number" name="precio" id="precio" placeholder="Introduce el precio" value="">
                             <label for="precio">Precio</label>
                         </div>
+                        
+                        <div class="form__input">
+                            <input type="text" name="sku" id="sku" placeholder="Introduce un SKU para la existencia"value="">
+                            <label for="sku">SKU</label>
+                        </div>
 
                         <div class="form__input">
                             <input type="date" name="fechaCompra" id="fechaCompra" value="">
@@ -111,6 +116,11 @@
                         <div class="form__input">
                             <input type="date" name="fechaNoDisponible" id="fechaNoDisponible" value="">
                             <label for="fechaNoDisponible">Fecha no disponible</label>
+                        </div>
+                        
+                        <div class="form__input col-span-2">
+                            <input type="text" name="anotacion" id="anotacion" placeholder="Introduce una anotación para la existencia"value="">
+                            <label for="anotacion">Anotación</label>
                         </div>
 
                     </form>

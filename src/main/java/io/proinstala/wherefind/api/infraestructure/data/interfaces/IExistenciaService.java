@@ -55,13 +55,14 @@ public interface IExistenciaService {
      *
      * @param nombreArticulo el nombre o parte del nombre del artículo asociado a la existencia.
      * @param referenciaArticulo la referencia o parte de la referencia del artículo.
+     * @param sku el sku o parte del sku de la existencia.
      * @param marcaId el id de la marca del artículo asociado; <code>-1</code> para no filtrar.
      * @param almacenId el id del almacén; <code>-1</code> para no filtrar.
      * @param nombreEmplazamiento el nombre o parte del nombre del emplazamiento; <code>-1</code> para no filtrar.
      * @param disponibilidad criterio de disponibilidad: <code>-1</code>, <code>0</code> o <code>1</code>.
      * @return una lista de {@link ExistenciaDTO} que coinciden con el criterio de búsqueda, o una lista vacía si no hay coincidencias.
      */
-    public List<ExistenciaDTO> findExistencias(String nombreArticulo, String referenciaArticulo, int marcaId, int almacenId, String nombreEmplazamiento, int disponibilidad);
+    public List<ExistenciaDTO> findExistencias(String nombreArticulo, String referenciaArticulo, String sku, int marcaId, int almacenId, String nombreEmplazamiento, int disponibilidad);
     
     /**
      * Crea una nueva existencia en la base de datos.

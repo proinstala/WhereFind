@@ -34,12 +34,14 @@ public class ExistenciaServiceImplement extends BaseMySql implements IExistencia
       exi.id AS exi_id,
       exi.articulo_id AS exi_articulo_id,
       exi.proveedor_id AS exi_proveedor_id,
+      exi.sku AS exi_sku,
       exi.emplazamiento_id AS exi_emplazamiento_id,
       exi.precio AS exi_precio,
       exi.fecha_compra AS exi_fecha_compra,
       exi.comprador AS exi_comprador,
       exi.disponible AS exi_disponible,
       exi.fecha_no_disponible AS exi_fecha_no_disponible,
+      exi.anotacion AS exi_anotacion,
       
       art.id AS art_id,
       art.nombre AS art_nombre,
@@ -108,12 +110,12 @@ public class ExistenciaServiceImplement extends BaseMySql implements IExistencia
     
     private static final String SQL_UPDATE_EXISTENCIA = 
         "UPDATE EXISTENCIA SET " +
-        "articulo_id = ?, proveedor_id = ?, emplazamiento_id = ?, precio = ?, fecha_compra = ?, comprador = ?, disponible = ?, fecha_no_disponible = ? " +
+        "articulo_id = ?, proveedor_id = ?, sku = ?, emplazamiento_id = ?, precio = ?, fecha_compra = ?, comprador = ?, disponible = ?, fecha_no_disponible = ?, anotacion = ? " +
         "WHERE id = ?;";
 
     private static final String SQL_CREATE_EXISTENCIA = 
-        "INSERT INTO EXISTENCIA (articulo_id, proveedor_id, emplazamiento_id, precio, fecha_compra, comprador, disponible, fecha_no_disponible) " +
-        "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+        "INSERT INTO EXISTENCIA (articulo_id, proveedor_id, sku, emplazamiento_id, precio, fecha_compra, comprador, disponible, fecha_no_disponible, anotacion) " +
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     
     private static final String SQL_DELETE_EXISTENCIA = 
         "DELETE FROM EXISTENCIA WHERE id = ?;";
@@ -206,12 +208,14 @@ public class ExistenciaServiceImplement extends BaseMySql implements IExistencia
                 .id(rs.getInt("exi_id"))
                 .articulo(articuloDTO)
                 .proveedor(proveedorDTO)
+                .sku(rs.getString("exi_sku"))
                 .emplazamiento(emplazamientoDTO)
                 .precio(rs.getDouble("exi_precio"))
                 .fechaCompra(rs.getDate("exi_fecha_compra") != null ? rs.getDate("exi_fecha_compra").toLocalDate() : null)
                 .comprador(rs.getString("exi_comprador"))
                 .disponible(Disponibilidad.fromValue(rs.getBoolean("exi_disponible")))
                 .fechaNoDisponible(rs.getDate("exi_fecha_no_disponible") != null ? rs.getDate("exi_fecha_no_disponible").toLocalDate() : null)
+                .anotacion(rs.getString("exi_anotacion"))
                 .build();
 
         return existenciaDTO;
@@ -262,7 +266,7 @@ public class ExistenciaServiceImplement extends BaseMySql implements IExistencia
     }
 
     @Override
-    public List<ExistenciaDTO> findExistencias(String nombreArticulo, String referenciaArticulo, int marcaId, int almacenId, String nombreEmplazamiento, int disponibilidad) {
+    public List<ExistenciaDTO> findExistencias(String nombreArticulo, String referenciaArticulo, String sku, int marcaId, int almacenId, String nombreEmplazamiento, int disponibilidad) {
         List<ExistenciaDTO> listaExistencias = new ArrayList<>();
         
         StringBuilder sql = new StringBuilder(SQL_SELECT_COMUN);
@@ -272,6 +276,11 @@ public class ExistenciaServiceImplement extends BaseMySql implements IExistencia
         // Condición por referencia
         if (referenciaArticulo != null && !referenciaArticulo.trim().isEmpty()) {
             sql.append(" AND art.referencia LIKE ?");
+        }
+        
+        // Condición por sku
+        if (sku != null && !sku.trim().isEmpty()) {
+            sql.append(" AND exi.sku LIKE ?");
         }
         
         // Condición por marcaId
@@ -305,6 +314,10 @@ public class ExistenciaServiceImplement extends BaseMySql implements IExistencia
             
             if (referenciaArticulo != null && !referenciaArticulo.trim().isEmpty()) {
                 ps.setString(index++, "%" + referenciaArticulo + "%");
+            }
+            
+            if (sku != null && !sku.trim().isEmpty()) {
+                ps.setString(index++, "%" + sku + "%");
             }
             
             if (marcaId != -1) {
@@ -343,16 +356,18 @@ public class ExistenciaServiceImplement extends BaseMySql implements IExistencia
 
             ps.setInt(1, existenciaDTO.getArticulo().getId());
             ps.setObject(2, existenciaDTO.getProveedor() != null ? existenciaDTO.getProveedor().getId() : null);
-            ps.setInt(3, existenciaDTO.getEmplazamiento().getId());
-            ps.setDouble(4, existenciaDTO.getPrecio());
-            ps.setDate(5, Date.valueOf(existenciaDTO.getFechaCompra()));
-            ps.setString(6, existenciaDTO.getComprador());
-            ps.setBoolean(7, existenciaDTO.getDisponible().getValor());
-            if (existenciaDTO.getFechaNoDisponible()!= null) {
-                ps.setDate(8, java.sql.Date.valueOf(existenciaDTO.getFechaNoDisponible()));
+            ps.setObject(3, existenciaDTO.getSku() != null ? existenciaDTO.getSku() : null);
+            ps.setInt(4, existenciaDTO.getEmplazamiento().getId());
+            ps.setDouble(5, existenciaDTO.getPrecio());
+            ps.setDate(6, Date.valueOf(existenciaDTO.getFechaCompra()));
+            ps.setString(7, existenciaDTO.getComprador());
+            ps.setBoolean(8, existenciaDTO.getDisponible().getValor());
+            if (existenciaDTO.getFechaNoDisponible() != null) {
+                ps.setDate(9, java.sql.Date.valueOf(existenciaDTO.getFechaNoDisponible()));
             } else {
-                ps.setNull(8, java.sql.Types.DATE);
+                ps.setNull(9, java.sql.Types.DATE);
             }
+            ps.setObject(10, existenciaDTO.getAnotacion() != null ? existenciaDTO.getAnotacion() : null);
 
             int affectedRows = ps.executeUpdate();
 
@@ -372,7 +387,32 @@ public class ExistenciaServiceImplement extends BaseMySql implements IExistencia
 
     @Override
     public boolean updateExistencia(ExistenciaDTO existenciaDTO) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        int rowsAffected = 0;
+        try (Connection conexion = getConnection(); 
+             PreparedStatement ps = conexion.prepareStatement(SQL_UPDATE_EXISTENCIA)) {
+            
+            ps.setInt(1, existenciaDTO.getArticulo().getId());
+            ps.setObject(2, existenciaDTO.getProveedor() != null ? existenciaDTO.getProveedor().getId() : null);
+            ps.setObject(3, existenciaDTO.getSku() != null ? existenciaDTO.getSku() : null);
+            ps.setInt(4, existenciaDTO.getEmplazamiento().getId());
+            ps.setDouble(5, existenciaDTO.getPrecio());
+            ps.setDate(6, Date.valueOf(existenciaDTO.getFechaCompra()));
+            ps.setString(7, existenciaDTO.getComprador());
+            ps.setBoolean(8, existenciaDTO.getDisponible().getValor());
+            if (existenciaDTO.getFechaNoDisponible() != null) {
+                ps.setDate(9, java.sql.Date.valueOf(existenciaDTO.getFechaNoDisponible()));
+            } else {
+                ps.setNull(9, java.sql.Types.DATE);
+            }
+            ps.setObject(10, existenciaDTO.getAnotacion() != null ? existenciaDTO.getAnotacion() : null);
+            
+            ps.setInt(11, existenciaDTO.getId());
+
+            rowsAffected = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rowsAffected > 0;
     }
 
     @Override

@@ -242,7 +242,7 @@ public class ExistenciaController extends BaseHttpServlet {
             return;
         }
         
-        //existenciaServicio.updateExistencia(actionController);
+        existenciaServicio.updateExistencia(actionController);
     }
     
     
@@ -330,7 +330,7 @@ public class ExistenciaController extends BaseHttpServlet {
         System.out.println("EndPoint PUT : " + actionController.parametros()[0]);
 
         switch((ExistenciaController.ActionType) actionController.actionType()) {
-            //case UPDATE -> apiUpdateExistencia(actionController);
+            case UPDATE -> apiUpdateExistencia(actionController);
             case DELETE -> apiDeleteExistencia(actionController);
             //CASE DISABLE -> apiDisableExistencia(actionController);
             

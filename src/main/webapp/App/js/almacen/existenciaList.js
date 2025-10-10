@@ -7,6 +7,7 @@ const idSelectMarca = "#marca";
 const idSelectAlmacen = "#almacen";
 const idInputArticulo = "#articulo";
 const idInputReferencia = "#referencia";
+const idInputSku = "#sku";
 const idInputNombreEmplazamiento = "#nombreEmplazamiento";
 const idFormBusquedaExistencia = "#frmBuscarExistencia";
 const idTablaExistencias = "#tablaExistencias"; 
@@ -104,6 +105,10 @@ function validarFormulario(idForm) {
                 required: false,
                 maxlength: 100
             },
+            sku: {
+                required: false,
+                maxlength: 50
+            },
             marca: {
                 number: true,
                 min: -1,
@@ -116,8 +121,22 @@ function validarFormulario(idForm) {
             
         },//Fin de reglas ----------------
         messages: {
-            nombre: {
+            articulo: {
                 maxlength: "Longitud máx 100 caracteres."
+            },
+            referencia: {
+                maxlength: "Longitud máxima: 100 caracteres."
+            },
+            sku: {
+                maxlength: "Longitud máxima: 50 caracteres."
+            },
+            marca: {
+                number: "Debe ser un número válido.",
+                min: "El valor mínimo permitido es -1.",
+                max: "El valor máximo permitido es 2.000.000.000."
+            },
+            emplazamiento: {
+                maxlength: "Longitud máxima: 100 caracteres."
             }
         },//Fin de msg  ------------------
 
@@ -166,6 +185,7 @@ function rellenarTablaExistencias(existencias) {
                 <td>${existencia.articulo.descripcion}</td>
                 <td>${existencia.articulo.referencia}</td>
                 <td>${existencia.articulo.marca.nombre}</td>
+                <td>${existencia.sku || ''}</td>
                 <td>${existencia.emplazamiento.almacen.nombre}</td>
                 <td>${existencia.emplazamiento.nombre}</td>
                 <td class="texto--centrado">${existencia.disponible === 'DISPONIBLE' ? '<i class="las la-check" style="color: green;"></i>' : '<i class="las la-times" style="color: red;"></i>'}</td>

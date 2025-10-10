@@ -8,8 +8,10 @@ const idSelectAlmacen = "#almacen";
 const idSelectEmplazamiento = "#emplazamiento";
 
 const idInputPrecio = "#precio";
+const idInputSku = "#sku";
 const idInputFechaCompra = "#fechaCompra";
 const idInputComprador = "#comprador";
+const idInputAnotacion = "#anotacion";
 const idFormExistencia = "#frmCrearExistencia";
 const idBtnGuardar = "#btnGuardar";
 const idBtnCancelar = "#btnCancelar";
@@ -80,9 +82,6 @@ $(document).ready(function () {
     //Carga el select articulo.
     const promesaSelctArticulo = cargarInputSelect(selectArticulo, "api/articulo/articulos", 'Seleccione un articulo', false, cargaInputSelectProveedor);
     
-    
-    
-    
     //Añade un evento de cambio al select de almacén y actualiza el select de emplazamineto según el almacén seleccionado.
     const cargaInputSelectEmplazamiento = () => {
         selectAlmacen.addEventListener('change', (e) => {
@@ -93,9 +92,7 @@ $(document).ready(function () {
                         if (response.isError === 1) {
                             mostrarMensajeError("Se ha producido un error", response.result);
                         } else {
-                            debugger;
                             let almacen = response.data;
-                            //console.log(oldDireccion);
                             fillInputSelect(selectEmplazamiento, almacen.listaEmplazamientos, 'Seleccione un emplazamiento');
                         }
                     })
@@ -122,9 +119,7 @@ $(document).ready(function () {
         });
     
     
-
     validarFormulario(idFormExistencia);
-
 
     btnCancelar.addEventListener('click', () => {
         window.location.href = "almacen/existencias";
@@ -161,6 +156,9 @@ function validarFormulario(idForm) {
                 min: 0,
                 max: 2000000000
             },
+            sku: {
+                maxlength: 50
+            },
             almacen: {
                 required: true,
                 min: 1,
@@ -177,6 +175,9 @@ function validarFormulario(idForm) {
             },
             comprador: {
                 maxlength: 100
+            },
+            anotacion: {
+                maxlength: 500
             }
         },//Fin de reglas ----------------
         messages: {
@@ -188,6 +189,9 @@ function validarFormulario(idForm) {
             precio: {
                 min: "No puede introducir numeros negativos.",
                 max: "Valor introducido no válido."
+            },
+            sku: {
+                maxlength: "Longitud máx 50 caracteres."
             },
             almacen: {
                 required: "Debe seleccionar un almacén.",
@@ -205,13 +209,14 @@ function validarFormulario(idForm) {
             },
             comprador: {
                 maxlength: "Longitud máx 100 caracteres."
+            },
+            anotacion: {
+                maxlength: "Longitud máx 500 caracteres."
             }
         },//Fin de msg  ------------------
 
         submitHandler: function () {
             const existenciaJSON = getExistenciaJson();
-            //console.log(existenciaJSON);
-            //return;
             solicitudPost(`api/existencia/create`, idForm, true, existenciaJSON)
                     .then(response => {
                         if (response.isError === 1) {
@@ -241,8 +246,10 @@ function getExistenciaJson() {
     const selectAlmacen = document.querySelector(idSelectAlmacen);
     const selectEmplazamiento = document.querySelector(idSelectEmplazamiento);
     const inputPrecio = document.querySelector(idInputPrecio);
+    const inputSku = document.querySelector(idInputSku);
     const inputFechaCompra = document.querySelector(idInputFechaCompra);
     const inputComprador = document.querySelector(idInputComprador);
+    const inputAnotacion = document.querySelector(idInputAnotacion);
     
     // Obtener el valor seleccionado
     const proveedorId = parseInt(selectProveedor.value, 10);
@@ -251,8 +258,10 @@ function getExistenciaJson() {
     const existenciaJSON = {
         id: "0",
         precio: inputPrecio.value.trim() || 0,
+        sku: inputSku.value.trim() || "",
         fechaCompra: inputFechaCompra.value.trim(),
         comprador: inputComprador.value.trim() || "",
+        anotacion: inputAnotacion.value.trim() || "",
         disponible: true,
         articulo: {
             id: selectArticulo.value
@@ -263,10 +272,7 @@ function getExistenciaJson() {
         emplazamiento: {
             id: selectEmplazamiento.value
         }
-        
     };
-    
-    console.log(existenciaJSON);
 
     // Crear los datos en formato de URL usando URLSearchParams
     const data = new URLSearchParams({

@@ -18,10 +18,12 @@ public class ExistenciaDTO {
     private int id;
     private ArticuloDTO articulo;
     private ProveedorDTO proveedor;
+    private String sku;
     private EmplazamientoDTO emplazamiento;
     private double precio;
     private LocalDate fechaCompra;
     private String comprador;
     private Disponibilidad disponible;
     private LocalDate fechaNoDisponible;
+    private String anotacion;
 }

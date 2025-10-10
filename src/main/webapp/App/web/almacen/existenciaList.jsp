@@ -65,6 +65,11 @@
                         </div>
                         
                         <div class="form__input">
+                            <input type="text" name="sku" id="sku">
+                            <label for="sku">SKU (Stock Keeping Unit)</label>
+                        </div>
+                        
+                        <div class="form__input">
                             <select name="almacen" id="almacen">
                             </select>
                             <label for="almacen">Almacén</label>
@@ -76,12 +81,12 @@
                         </div>
                         
                         <div class="form__input">
-                            <select name="disponible" id="disponible">
+                            <select name="disponibilidad" id="disponibilidad">
                                 <option value="-1">Todos</option>
                                 <option value="0">No disponible</option>
                                 <option value="1">Disponible</option>
                             </select>
-                            <label for="disponible">Disponibilidad</label>
+                            <label for="disponibilidad">Disponibilidad</label>
                         </div>
 
                     </form>
@@ -115,6 +120,7 @@
                                 <th>Descripcion</th>
                                 <th>Referencia</th>
                                 <th>Marca</th>
+                                <th>SKU</th>
                                 <th>Almacen</th>
                                 <th>Emplazamiento</th>
                                 <th>Disponible</th>

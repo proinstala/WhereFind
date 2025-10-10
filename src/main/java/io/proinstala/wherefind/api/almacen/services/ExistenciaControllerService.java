@@ -4,14 +4,15 @@ package io.proinstala.wherefind.api.almacen.services;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.proinstala.wherefind.api.infraestructure.data.GestorPersistencia;
-import io.proinstala.wherefind.api.infraestructure.data.interfaces.IArticuloService;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IExistenciaService;
 import io.proinstala.wherefind.shared.consts.Disponibilidad;
 import io.proinstala.wherefind.shared.consts.textos.FormParametros;
 import io.proinstala.wherefind.shared.consts.textos.LocaleApp;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
 import io.proinstala.wherefind.shared.dtos.ArticuloDTO;
+import io.proinstala.wherefind.shared.dtos.EmplazamientoDTO;
 import io.proinstala.wherefind.shared.dtos.ExistenciaDTO;
+import io.proinstala.wherefind.shared.dtos.ProveedorDTO;
 import io.proinstala.wherefind.shared.dtos.ResponseDTO;
 import io.proinstala.wherefind.shared.services.BaseService;
 import io.proinstala.wherefind.shared.tools.DisponibilidadAdapter;
@@ -45,10 +46,11 @@ public class ExistenciaControllerService extends BaseService {
         
         String articulo = actionController.server().getRequestParameter(FormParametros.PARAM_EXISTENCIA_ARTICULO, "");
         String referencia = actionController.server().getRequestParameter(FormParametros.PARAM_EXISTENCIA_REFERENCIA, "");
+        String sku = actionController.server().getRequestParameter(FormParametros.PARAM_EXISTENCIA_SKU, "");
         String strIdMarca = actionController.server().getRequestParameter(FormParametros.PARAM_EXISTENCIA_MARCA, "");
         String strIdAlmacen = actionController.server().getRequestParameter(FormParametros.PARAM_EXISTENCIA_ALMACEN, "");
         String nombreEmplazamiento = actionController.server().getRequestParameter(FormParametros.PARAM_EXISTENCIA_NOMBRE_EPLAZAMIENTO, "");
-        String strDisponible = actionController.server().getRequestParameter(FormParametros.PARAM_EXISTENCIA_DISPONIBLE, "");
+        String strDisponible = actionController.server().getRequestParameter(FormParametros.PARAM_EXISTENCIA_DISPONIBILIDAD, "");
         
         int idMarca = -1;
         int idAlmacen = -1;
@@ -61,7 +63,7 @@ public class ExistenciaControllerService extends BaseService {
             e.printStackTrace();
         }
         
-        listaExistenciaDTO = existenciaServiceImp.findExistencias(articulo, referencia, idMarca, idAlmacen, nombreEmplazamiento,  disponible);
+        listaExistenciaDTO = existenciaServiceImp.findExistencias(articulo, referencia, sku, idMarca, idAlmacen, nombreEmplazamiento,  disponible);
 
         if(listaExistenciaDTO != null) {
             responseDTO = getResponseOk("OK", listaExistenciaDTO, 0);
@@ -195,5 +197,111 @@ public class ExistenciaControllerService extends BaseService {
 
         responseJson(actionController.server().response(), responseDTO);
     }  
+    
+    /**
+     * Actualiza la información de una existencia existente.
+     * 
+     * <p>Este método verifica los parámetros proporcionados para actualizar una existencia en la base de
+     * datos. Utiliza el servicio de existencia para realizar la actualización y devuelve la respuesta en
+     * formato JSON.</p>
+     * 
+     * @param actionController El controlador de acción que contiene los parámetros de la solicitud.
+     */
+    public void updateExistencia(ActionController actionController) {
+        //Respuesta de la acción actual
+        ResponseDTO responseDTO;
+        
+        // Comprueba que hay más de 1 parámetro
+        if (actionController.parametros().length <= 1) {
+            // Crea la respuesta con un error
+            responseDTO = getResponseError(LocaleApp.ERROR_FALTAN_PARAMETROS);
+            responseJson(actionController.server().response(), responseDTO);
+            return;
+        } 
+            
+        // Obtiene el id del alamacen desde el parámetro 1 de la lista de parámetros
+        int id = actionController.getIntFromParametros(1);
+
+        // Si el id es mayor que -1 significa que hay en principio un id válido que se puede procesar
+        // En caso de ser igual a -1 significa que el parámetro introducido no es correcto
+        if (id == -1) {
+            // Crea la respuesta con un error
+            responseDTO = getResponseError(LocaleApp.ERROR_PARAMETRO_NO_CORRECTO);
+            responseJson(actionController.server().response(), responseDTO);
+            return;
+        }
+        // Crea la respuesta con un error
+        responseDTO = getResponseError(LocaleApp.ERROR_PARAMETRO_NO_CORRECTO);
+
+        // Conecta con el Gestor de Persistencia
+        IExistenciaService existenciaServiceImp = GestorPersistencia.getExistenciaService();
+
+        ExistenciaDTO existenciaDTO = existenciaServiceImp.getExistenciaById(id);
+
+        if(existenciaDTO != null) {
+            String sku = actionController.server().getRequestParameter(FormParametros.PARAM_EXISTENCIA_SKU, "");
+            String comprador = actionController.server().getRequestParameter(FormParametros.PARAM_EXISTENCIA_COMPRADOR, "");
+            String anotacion = actionController.server().getRequestParameter(FormParametros.PARAM_EXISTENCIA_ANOTACION, "");
+            
+            String strPrecio = actionController.server().getRequestParameter(FormParametros.PARAM_EXISTENCIA_PRECIO, "");
+            String strDisponible = actionController.server().getRequestParameter(FormParametros.PARAM_EXISTENCIA_DISPONIBILIDAD, "");
+            String strFechaCompra = actionController.server().getRequestParameter(FormParametros.PARAM_EXISTENCIA_FECHA_COMPRA, "");
+            String strFechaNoDisponible = actionController.server().getRequestParameter(FormParametros.PARAM_EXISTENCIA_FECHA_NO_DISPONIBLE, "");
+            
+            String strIdArticulo = actionController.server().getRequestParameter(FormParametros.PARAM_EXISTENCIA_ARTICULO, "");
+            String strIdEmplazmiento = actionController.server().getRequestParameter(FormParametros.PARAM_EXISTENCIA_EMPLAZAMIENTO, "");
+            String strIdProveedor = actionController.server().getRequestParameter(FormParametros.PARAM_EXISTENCIA_ARTICULO_PROVEEDOR, ""); //es el id de proveedor.
+
+            try {
+                int idArticulo = Integer.parseInt(strIdArticulo);
+                int idEmplazamiento = Integer.parseInt(strIdEmplazmiento);
+                int idProveedor = Integer.parseInt(strIdProveedor);
+                
+                double precio = Double.parseDouble(strPrecio);
+                
+                LocalDate fechaCompra = LocalDate.parse(strFechaCompra);
+                
+                int disponible = Integer.parseInt(strDisponible);
+                Disponibilidad disponibilidad = Disponibilidad.fromValue(disponible > 0);
+                
+                
+                LocalDate fechaNoDisponible = null;
+                if(disponibilidad.equals(Disponibilidad.NO_DISPONIBLE) && !strFechaNoDisponible.isBlank()) {
+                    fechaNoDisponible = LocalDate.parse(strFechaCompra);
+                }
+                
+                
+                ProveedorDTO proveedorDTO = null;
+                if(idProveedor > 0) {
+                    proveedorDTO = ProveedorDTO.builder().id(idProveedor).build();
+                } 
+                
+                existenciaDTO.setArticulo(ArticuloDTO.builder().id(idArticulo).build());
+                existenciaDTO.setProveedor(proveedorDTO);
+                existenciaDTO.setSku(sku);
+                existenciaDTO.setEmplazamiento(EmplazamientoDTO.builder().id(idEmplazamiento).build());
+                existenciaDTO.setPrecio(precio);
+                existenciaDTO.setFechaCompra(fechaCompra);
+                existenciaDTO.setComprador(comprador);
+                existenciaDTO.setDisponible(disponibilidad);
+                existenciaDTO.setFechaNoDisponible(fechaNoDisponible);
+                existenciaDTO.setAnotacion(anotacion);
+
+                if (existenciaServiceImp.updateExistencia(existenciaDTO)) {
+                     //Como la acción se ha ejecutado correctamente se crea la respuesta acorde a la misma
+                    responseDTO = getResponseOk(LocaleApp.INFO_UPDATE_OK, existenciaDTO, 0);
+                } else {
+                    responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
+                }
+
+            } catch (NumberFormatException e) {
+                // Crea la respuesta con un error
+                responseDTO = getResponseError(LocaleApp.ERROR_PARAMETRO_NO_CORRECTO);
+            } catch (Exception e) {
+                responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
+            }
+        }
+        responseJson(actionController.server().response(), responseDTO);
+    } 
     
 }

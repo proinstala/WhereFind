@@ -105,12 +105,20 @@ public class FormParametros {
     //Existencia
     public static final String PARAM_EXISTENCIA_ARTICULO = "articulo";
     public static final String PARAM_EXISTENCIA_REFERENCIA = "referencia";
+    public static final String PARAM_EXISTENCIA_SKU = "sku";
+    public static final String PARAM_EXISTENCIA_PRECIO = "precio";
+    public static final String PARAM_EXISTENCIA_COMPRADOR = "comprador";
     public static final String PARAM_EXISTENCIA_MARCA = "marca";
-    public static final String PARAM_EXISTENCIA_PROVEEDOR = "proveedor";
+    public static final String PARAM_EXISTENCIA_PROVEEDOR = "proveedor"; 
+    public static final String PARAM_EXISTENCIA_ARTICULO_PROVEEDOR = "articuloProveedor";
     public static final String PARAM_EXISTENCIA_ALMACEN = "almacen";
+    public static final String PARAM_EXISTENCIA_EMPLAZAMIENTO = "emplazamiento";
     public static final String PARAM_EXISTENCIA_TIPO_EPLAZAMIENTO = "tipoEmplazamiento";
     public static final String PARAM_EXISTENCIA_NOMBRE_EPLAZAMIENTO = "nombreEmplazamiento";
-    public static final String PARAM_EXISTENCIA_DISPONIBLE = "disponible";
+    public static final String PARAM_EXISTENCIA_DISPONIBILIDAD = "disponibilidad";
+    public static final String PARAM_EXISTENCIA_FECHA_COMPRA = "fechaCompra";
+    public static final String PARAM_EXISTENCIA_FECHA_NO_DISPONIBLE = "fechaNoDisponible";
+    public static final String PARAM_EXISTENCIA_ANOTACION = "anotacion";
     
     //Marca
     public static final String PARAM_MARCA_NOMBRE = "nombre";

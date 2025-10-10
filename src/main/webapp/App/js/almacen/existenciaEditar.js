@@ -11,9 +11,11 @@ const idSelectDisponibilidad = "#disponibilidad";
 
 const idInputIdExistencia = "#existencia_id";
 const idInputPrecio = "#precio";
+const idInputSku = "#sku";
 const idInputFechaCompra = "#fechaCompra";
 const idInputComprador = "#comprador";
 const idInputFechaNoDisponible = "#fechaNoDisponible";
+const idInputAnotacion = "#anotacion";
 const idFormExistencia = "#frmModificarExistencia";
 const idBtnGuardar = "#btnGuardar";
 const idBtnCancelar = "#btnCancelar";
@@ -29,27 +31,13 @@ const fechaHoy = new Date().toISOString().split("T")[0];
 let oldExistencia;
 
 $(document).ready(function () {
-    const selectArticulo = document.querySelector(idSelectArticulo);
-    const selectArticuloProveedor = document.querySelector(idSelectArticuloProveedor);
-    const selectAlmacen = document.querySelector(idSelectAlmacen);
-    const selectEmplazamiento = document.querySelector(idSelectEmplazamiento);
     const inputIdExistencia = document.querySelector(idInputIdExistencia);
-    
-    //Imagen proveedor
-    const contenedorImgArticulo = document.querySelector(idContenedorImgArticulo);
-    const inputImgArticulo = document.querySelector(idInputImgArticulo);
-    const imgArticulo = document.querySelector(idImgArticulo);
-    const inputHideImgArticulo = document.querySelector(idInputHideImgArticulo);
-    const labelImgArticulo = document.querySelector(idLabelImgArticulo);
-    
-    const inputPrecio = document.querySelector(idInputPrecio);
-    const inputFechaCompra = document.querySelector(idInputFechaCompra);
     
     const btnDeshacerCambiosExistencia = document.querySelector(idBtnDeshacerCambiosExistencia);
     const btnCancelar = document.querySelector(idBtnCancelar);
 
-
-    //validarFormulario(idFormExistencia);
+    definicionReglaFechas();
+    validarFormulario(idFormExistencia);
 
     getExistencia(inputIdExistencia.value);
 
@@ -58,7 +46,7 @@ $(document).ready(function () {
     });
 
     btnDeshacerCambiosExistencia.addEventListener('click', () => {
-        fillFielsExistencia(oldArticulo);
+        fillFielsExistencia(oldExistencia);
     });
 
 });
@@ -86,11 +74,8 @@ function getExistencia(idExistencia) {
             });
 }
 
-
-//HAY QUE MODIFICAR ESTO PARA RELLENAR LOS DATOS DE EXISTENCIA. -------!!!!! EN CONSTRUCCIÓN.
 function fillFielsExistencia(existencia) {
     const form = document.querySelector(idFormExistencia);
-    debugger;
     
     const selectArticulo = form.querySelector(idSelectArticulo);
     const selectArticuloProveedor = form.querySelector(idSelectArticuloProveedor);
@@ -98,19 +83,22 @@ function fillFielsExistencia(existencia) {
     const selectEmplazamiento = form.querySelector(idSelectEmplazamiento);
     const selectDisponibilidad = form.querySelector(idSelectDisponibilidad);
     const inputPrecio = form.querySelector(idInputPrecio);
+    const inputSku = form.querySelector(idInputSku);
     const inputFechaCompra = form.querySelector(idInputFechaCompra);
     const inputComprador = form.querySelector(idInputComprador);
-    
     const inputFechaNoDisponible = form.querySelector(idInputFechaNoDisponible);
+    const inputAnotacion = form.querySelector(idInputAnotacion);
 
     const inputHideImgArticulo = form.querySelector(idInputHideImgArticulo);
     const imgArticulo = form.querySelector(idImgArticulo);
     const labelImgArticulo = document.querySelector(idLabelImgArticulo);
     
     inputPrecio.value = existencia.precio;
+    inputSku.value = existencia.sku ?? "";
     inputComprador.value = existencia.comprador ?? "";
     inputFechaCompra.value = existencia.fechaCompra ?? "";
     inputFechaNoDisponible.value = existencia.fechaNoDisponible ?? "";
+    inputAnotacion.value = existencia.anotacion ?? "";
     
     const articuloId = existencia.articulo.id;
     const proveedorId = existencia.proveedor.id;
@@ -127,8 +115,24 @@ function fillFielsExistencia(existencia) {
     
     seleccionarValorSelect(selectDisponibilidad, disponible);
     
+    inputFechaNoDisponible.min = inputFechaCompra.value;
+    inputFechaCompra.addEventListener('change', () => {
+        if (inputFechaCompra.value) {
+            inputFechaNoDisponible.min = inputFechaCompra.value;
+
+            // Si la fecha no disponible actual es anterior, la ajusta automáticamente
+            if (inputFechaNoDisponible.value && inputFechaNoDisponible.value < inputFechaCompra.value) {
+                //inputFechaNoDisponible.value = inputFechaCompra.value;
+            }
+        }
+    });
     
-    
+    selectDisponibilidad.addEventListener('change', () => {
+        const valor = selectDisponibilidad.value;
+        if(valor === '1') {
+            inputFechaNoDisponible.value = "";
+        } 
+    });
     
     const cargaImputSelectArticuloProveedor = () => {
          solicitudGet(`api/articulo/articulo?idArticulo=${articuloId}`, "", false)
@@ -137,11 +141,10 @@ function fillFielsExistencia(existencia) {
                             mostrarMensajeError("Se ha producido un error", response.result);
                         } else {
                             let articulo = response.data;
-                            console.log("articulo: ");
-                            console.log(articulo);
-                            debugger;
-                            fillInputSelect(selectArticuloProveedor, articulo.listaProveedores, '',);
-                            seleccionarValorSelect(selectArticuloProveedor, proveedorId);
+                            fillInputSelect(selectArticuloProveedor, articulo.listaProveedores, 'Seleccione un proveedor');
+                            if(proveedorId > 0) {
+                                seleccionarValorSelect(selectArticuloProveedor, proveedorId);
+                            }
                         }
                     })
                     .catch(error => {
@@ -189,9 +192,6 @@ function fillFielsExistencia(existencia) {
         });
     });
     
-    
-    
-     
     const cargaImputSelectEmpalzamiento = () => {
          solicitudGet(`api/almacen/almacen?idAlmacen=${almacenId}`, "", false)
                     .then(response => {
@@ -245,6 +245,154 @@ function fillFielsExistencia(existencia) {
         .catch(error => {
             console.error("Error al cargar selects:", error);
         });
+}
+
+function definicionReglaFechas() {
+    // --- Definir regla personalizada ---
+    $.validator.addMethod("fechaPosteriorA", function(value, element, params) {
+        const fechaCompra = $(params).val();
+        if (!value || !fechaCompra) return true; // Si alguno está vacío, no bloquea
+        return new Date(value) > new Date(fechaCompra);
+    }, "Fecha anterio a fecha compra.");
+}
+
+function validarFormulario(idForm) {
+    $(idForm).validate({
+        rules: {
+            articulo: {
+                required: true,
+                min: 0,
+                max: 2000000000
+            },
+            articuloProveedor: {
+                required: false,
+                min: -1,
+                max: 2000000000
+            },
+            almacen: {
+                required: true,
+                min: 1,
+                max: 2000000000
+            },
+            emplazamiento: {
+                required: true,
+                min: 1,
+                max: 2000000000
+            },
+            precio: {
+                required: true,
+                number: true,
+                min: 0,
+                max: 2000000000
+            },
+            fechaCompra: {
+                date: true
+            },
+            comprador: {
+                maxlength: 100
+            },
+            sku: {
+                maxlength: 50
+            },
+            fechaNoDisponible: {
+                required: false,
+                date: true,
+                fechaPosteriorA: "#fechaCompra"
+            },
+            anotacion: {
+                maxlength: 500
+            },
+            disponibilidad: {
+                required: true,
+                min: 0,
+                max: 1
+            }
+        },//Fin de reglas ----------------
+        messages: {
+            articulo: {
+                required: "Debe seleccionar un artículo.",
+                min: "Valor no válido.",
+                max: "Valor no válido."
+            },
+            articuloProveedor: {
+                min: "Valor no válido.",
+                max: "Valor no válido."
+            },
+            almacen: {
+                required: "Debe seleccionar un almacén.",
+                min: "Valor no válido.",
+                max: "Valor no válido."
+            },
+            emplazamiento: {
+                required: "Debe seleccionar un emplazamiento.",
+                min: "Valor no válido.",
+                max: "Valor no válido."
+            },
+            precio: {
+                required: "Debe introducir un precio.",
+                number: "Debe introducir un valor numérico.",
+                min: "El precio no puede ser negativo.",
+                max: "El valor máximo permitido es 2.000.000.000."
+            },
+            fechaCompra: {
+                date: "Debe introducir una fecha válida."
+            },
+            comprador: {
+                maxlength: "Longitud máxima: 100 caracteres."
+            },
+            sku: {
+                maxlength: "Longitud máxima: 50 caracteres."
+            },
+            fechaNoDisponible: {
+                date: "Debe introducir una fecha válida.",
+                min: "Fecha anterio a fecha compra.",
+                fechaPosteriorA: "Fecha anterio a fecha compra."
+            },
+            anotacion: {
+                maxlength: "Longitud máxima: 500 caracteres."
+            },
+            disponibilidad: {
+                required: "Debe indicar si la existencia está disponible.",
+                min: "Valor no válido.",
+                max: "Valor no válido."
+            }
+        },//Fin de msg  ------------------
+
+        submitHandler: function () {
+            mostrarMensajeOpcion("Modificar Existencia", '¿Quieres realmente modificar los datos?')
+                    .then((result) => {
+                        if (result.isConfirmed) {
+                            const existenciaIdInput = document.querySelector(idInputIdExistencia);
+                            const existenciaId = existenciaIdInput ? existenciaIdInput.value : -1;
+
+                            solicitudPut(`api/existencia/update/${existenciaId}`, idForm, true)
+                                    .then(response => {
+                                        if (response.isError === 1) {
+                                            mostrarMensajeError("No se puede actualizar los datos", response.result);
+                                        } else {
+                                            mostrarMensaje("Modificado existencia.", `Se han modificado correctamente los datos de la existencia ${response.data.id}`, "success");
+                                            oldExistencia = response.data;
+                                            onDetectarCambiosModificarExistencia(false);
+                                            detectarCambiosFormulario(idFormExistencia, onDetectarCambiosModificarExistencia);
+                                        }
+                                    })
+                                    .catch(error => {
+                                        // Maneja el error aquí
+                                        console.error("Error:", error);
+                                        mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
+                                    });
+                        } else if (result.isDenied) {
+                            //denegado
+                        } else if (result.isDismissed) {
+                            //cancelado
+                        }
+                    });
+        },
+        //Función error de respuesta
+        errorPlacement: function (error, element) {
+            error.insertAfter(element); // Esto colocará el mensaje de error después del elemento con error
+        }
+    });//Fin Validate
 }
 
 

@@ -294,12 +294,14 @@ CREATE TABLE IF NOT EXISTS EXISTENCIA (
     id INT auto_increment NOT NULL,
     articulo_id INT NOT NULL,
     proveedor_id INT,
+    sku VARCHAR(50) NULL,
     emplazamiento_id INT NOT NULL,
     precio DOUBLE NOT NULL,
     fecha_compra DATE,
     comprador VARCHAR(100),
     disponible BOOL NOT NULL,
     fecha_no_disponible DATE,
+    anotacion VARCHAR(500) NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_EXIST_ARTICULO FOREIGN KEY (articulo_id)
         REFERENCES ARTICULO(id)
@@ -312,7 +314,8 @@ CREATE TABLE IF NOT EXISTS EXISTENCIA (
     CONSTRAINT FK_EXIST_EMPLAZAMIENTO FOREIGN KEY (emplazamiento_id)
         REFERENCES EMPLAZAMIENTO(id)
         ON DELETE RESTRICT
-        ON UPDATE CASCADE
+        ON UPDATE CASCADE,
+    CONSTRAINT UC_EXIST_SKU UNIQUE (sku)
 );
 
 

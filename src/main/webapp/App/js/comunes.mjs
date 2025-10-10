@@ -407,6 +407,9 @@ function fillInputSelect(nodeInputSelect, datos, optionGenerico) {
                 elementOption.setAttribute("data-precio", dato.precio);
                 elementOption.setAttribute('value', dato.proveedor.id);
                 break;
+            case 'articulo':
+                elementOption.textContent = `${dato.nombre} [marca: ${dato.marca.nombre}] [ref: ${dato.referencia}]`;
+                break;
             default:
                 // Para cualquier otro select, solo mostrar el nombre
                 elementOption.textContent = dato.nombre;
