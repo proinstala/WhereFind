@@ -58,7 +58,7 @@
                             </div>
                         </div>
                         
-                        <div class="form__input">
+                        <div class="form__input col-span-2">
                             <input type="text" name="nombre" id="nombre" placeholder="Introduce el nombre del artículo" value="">
                             <label for="nombre">Nombre</label>
                         </div>

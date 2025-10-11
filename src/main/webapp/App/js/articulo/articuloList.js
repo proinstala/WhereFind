@@ -156,7 +156,6 @@ function rellenarTablaArticulos(articulos) {
 
 
 function borrarArticulo(articuloId) {
-    debugger;
     mostrarMensajeOpcion("Borrar Articulo", `¿Quieres realmente borrar los datos del articulo con id ${articuloId}?`)
                     .then((result) => {
                         if (result.isConfirmed) {

@@ -399,6 +399,16 @@
         <url-pattern>/almacen/existencias/edit/*</url-pattern>
     </servlet-mapping>
     
+    <servlet>
+        <servlet-name>existenciaDetalle</servlet-name>
+        <jsp-file>/App/web/almacen/existenciaDetalle.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>existenciaDetalle</servlet-name>
+        <url-pattern>/almacen/existencias/detalle/*</url-pattern>
+    </servlet-mapping>
+    
     <!-- Mapeo de las url referentes a Artículo -->
     <servlet>
         <servlet-name>articuloPanel</servlet-name>

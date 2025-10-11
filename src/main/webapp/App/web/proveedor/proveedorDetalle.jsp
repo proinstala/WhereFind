@@ -13,22 +13,12 @@
         return;
     }
 
-    int proveedor_id = -1;
-    try {
-        //direccion_id = Integer.parseInt(request.getParameter("idDireccion"));
-    } catch(Exception e) {
-        e.printStackTrace();
-    }
-
-    if (proveedor_id == -1)
-    {
-        ActionController actionController = BaseHttpServlet.getActionControllerFromJSP(request, response, "proveedor/proveedores/detalle");
-        proveedor_id = actionController.getIntFromParametros(1);
-    }
+    ActionController actionController = BaseHttpServlet.getActionControllerFromJSP(request, response, "proveedor/proveedores/detalle");
+    int proveedor_id = actionController.getIntFromParametros(1);
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >
-    <jsp:param name="titleweb" value="Detalle Proveedor" />
+    <jsp:param name="titleweb" value="WhereFind - Proveedor" />
 </jsp:include>
 
 <link href="App/css/formulario.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>
@@ -53,7 +43,7 @@
                     </div>
                 </div>
 
-                <!-- Formulario para modificar los datos de proveedor -->
+                <!-- Formulario para ver los datos de proveedor -->
                 <div class="contenedor__formulario--main">
                     <div class="formulario" name="divDetalleProveedor" id="divDetalleProveedor">
                         <input type="hidden" name="proveedor_id" id="proveedor_id" value="<%=proveedor_id%>">
@@ -74,21 +64,20 @@
                         </div>
 
                         <div class="form__input">
-                            <input type="text" name="nombre" id="nombre" placeholder="Introduce el nombre del proveedor" value="" readonly>
+                            <input type="text" name="nombre" id="nombre" value="" readonly>
                             <label for="nombre">Nombre</label>
                         </div>
                         
                         <div class="form__input col-span-2">
-                            <input type="text" name="descripcion" id="descripcion" placeholder="Introduce una descripción del proveedor" value="" readonly>
+                            <input type="text" name="descripcion" id="descripcion" value="" readonly>
                             <label for="descripcion">Descripción</label>
                         </div>
 
                         <div class="form__input">
-                            <input type="text" name="paginaWeb" id="paginaWeb" placeholder="Introduce la página web del proveedor"value="" readonly>
+                            <input type="text" name="paginaWeb" id="paginaWeb" value="" readonly>
                             <label for="paginaWeb">Página Web</label>
                         </div>
                         
-
                     </div>
                 </div>
 
@@ -125,7 +114,7 @@
                     </div>
                 </div>
 
-                <!-- Formulario para modificar los datos de direccion -->
+                <!-- Formulario para ver los datos de direccion -->
                 <div class="contenedor__formulario--main">
                     <div class="formulario" name="divDetalleDireccion" id="divDetalleDireccion">
 

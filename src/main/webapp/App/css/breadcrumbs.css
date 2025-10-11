@@ -50,6 +50,11 @@ https://icons8.com/line-awesome
     content: "\f055";
 }
 
+.breadcrumb li[data-id="detalle"] a span.icon i::before {
+    content: "\f129";
+}
+
+
 
 .breadcrumb li[data-id="direccion"] a span.icon i::before {
     content: "\f5a0";
@@ -93,6 +98,9 @@ https://icons8.com/line-awesome
 .breadcrumb li[data-id="emplazamientos"] a span.icon i::before {
     content: "\f1c0";
 }
+.breadcrumb li[data-id="existencias"] a span.icon i::before {
+    content: "\f12e";
+}
 
 /*Artículo*/
 .breadcrumb li[data-id="articulo"] a span.icon i::before {
@@ -104,9 +112,7 @@ https://icons8.com/line-awesome
 .breadcrumb li[data-id="marcas"] a span.icon i::before {
     content: "\f1f9";
 }
-.breadcrumb li[data-id="existencias"] a span.icon i::before {
-    content: "\f12e";
-}
+
 
 
 

@@ -63,7 +63,6 @@ function getAlmacen(idAlmacen) {
 
 
 function fillFielsAlmacen(almacen) {
-    debugger;
     const form = document.querySelector(idFormAlmacen);
 
     const selectDireccion = form.querySelector(idSelectDireccion);

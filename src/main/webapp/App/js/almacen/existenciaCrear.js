@@ -31,7 +31,7 @@ $(document).ready(function () {
     const selectAlmacen = document.querySelector(idSelectAlmacen);
     const selectEmplazamiento = document.querySelector(idSelectEmplazamiento);
     
-    //Imagen proveedor
+    //Imagen articulo
     const contenedorImgArticulo = document.querySelector(idContenedorImgArticulo);
     const inputImgArticulo = document.querySelector(idInputImgArticulo);
     const imgArticulo = document.querySelector(idImgArticulo);

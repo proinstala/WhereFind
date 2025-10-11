@@ -252,7 +252,7 @@ function definicionReglaFechas() {
     $.validator.addMethod("fechaPosteriorA", function(value, element, params) {
         const fechaCompra = $(params).val();
         if (!value || !fechaCompra) return true; // Si alguno está vacío, no bloquea
-        return new Date(value) > new Date(fechaCompra);
+        return new Date(value) >= new Date(fechaCompra);
     }, "Fecha anterio a fecha compra.");
 }
 

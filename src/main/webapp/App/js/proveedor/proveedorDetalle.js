@@ -18,7 +18,7 @@ const idTablaContactos = "#tablaContactos";
 
 const nameContenedorDatos = "contenedorDatos";
 const idContenedorProveedor = "#contenedorProveedor";
-const idContenedroDireccion = "#contenedorDireccion";
+const idContenedorDireccion = "#contenedorDireccion";
 const idContenedroContacto = "#contenedorContacto";
 const nameBtnProveedor = "btnProveedor";
 const nameBtnDireccion = "btnDireccion";
@@ -69,7 +69,7 @@ $(document).ready(function () {
     
     btnsDireccion.forEach(btn => {
         btn.addEventListener('click', (event) => {
-            mostrarContenedor(event, nameContenedorDatos, idContenedroDireccion);
+            mostrarContenedor(event, nameContenedorDatos, idContenedorDireccion);
         });
     });
     
@@ -147,7 +147,7 @@ function fillFielsProveedor(proveedor) {
     
     //direccion
     const direccionId = proveedor.direccion.id;
-    const divDireccion = document.querySelector(idContenedroDireccion);
+    const divDireccion = document.querySelector(idContenedorDireccion);
     const inputCalle = divDireccion.querySelector(idInputCalle);
     const inputNumero = divDireccion.querySelector(idInputNumero);
     const inputCodigoPostal = divDireccion.querySelector(idInputCodigoPostal);
@@ -207,7 +207,6 @@ function borrarContacto(contactoId) {
                                         if (response.isError === 1) {
                                             mostrarMensajeError("No se puede borrar los datos", response.result);
                                         } else {
-                                            debugger;
                                             mostrarMensaje("Contacto Borrado.", `Se han borrado correctamente los datos del contacto.`, "success");
 
                                             //Elimina la fila seleccionada de la tabla.
