@@ -2,10 +2,15 @@
 package io.proinstala.wherefind.api.infraestructure.data.services;
 
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IAlmacenService;
+import io.proinstala.wherefind.shared.consts.Disponibilidad;
 import io.proinstala.wherefind.shared.dtos.AlmacenDTO;
+import io.proinstala.wherefind.shared.dtos.ArticuloDTO;
 import io.proinstala.wherefind.shared.dtos.DireccionDTO;
 import io.proinstala.wherefind.shared.dtos.EmplazamientoDTO;
+import io.proinstala.wherefind.shared.dtos.ExistenciaDTO;
 import io.proinstala.wherefind.shared.dtos.LocalidadDTO;
+import io.proinstala.wherefind.shared.dtos.MarcaDTO;
+import io.proinstala.wherefind.shared.dtos.ProveedorDTO;
 import io.proinstala.wherefind.shared.dtos.ProvinciaDTO;
 import io.proinstala.wherefind.shared.dtos.TipoEmplazamientoDTO;
 import java.sql.Connection;
@@ -45,6 +50,52 @@ public class AlmacenServiceImplement extends BaseMySql implements IAlmacenServic
             INNER JOIN ALMACEN a ON e.almacen_id = a.id
             WHERE a.id = ? AND e.activo = 1;
             """;
+    
+    private static final String SQL_SELECT_EXISTENCIAS_BY_EMPLAZAMIENTO =
+        """
+        SELECT 
+          exi.id AS exi_id,
+          exi.articulo_id AS exi_articulo_id,
+          exi.proveedor_id AS exi_proveedor_id,
+          exi.sku AS exi_sku,
+          exi.emplazamiento_id AS exi_emplazamiento_id,
+          exi.precio AS exi_precio,
+          exi.fecha_compra AS exi_fecha_compra,
+          exi.comprador AS exi_comprador,
+          exi.disponible AS exi_disponible,
+          exi.fecha_no_disponible AS exi_fecha_no_disponible,
+          exi.anotacion AS exi_anotacion,
+
+          art.id AS art_id,
+          art.nombre AS art_nombre,
+          art.descripcion AS art_descripcion,
+          art.referencia AS art_referencia,
+          art.marca_id AS art_marca_id,
+          art.modelo AS art_modelo,
+          art.stock_minimo AS art_stock_minimo,
+          art.imagen AS art_imagen,
+          art.activo AS art_activo,
+
+          m.id AS m_id,
+          m.nombre AS m_nombre,
+          m.descripcion AS m_descripcion,
+          m.activo AS m_activo,
+
+          p.id AS p_id,
+          p.nombre AS proveedor_nombre,
+          p.descripcion AS proveedor_descripcion,
+          p.pagina_web AS proveedor_pagina_web,
+          p.activo AS proveedor_activo,
+          p.direccion_id AS p_direccion_id,
+
+        FROM EXISTENCIA exi
+        INNER JOIN ARTICULO art ON exi.articulo_id = art.id
+        LEFT JOIN MARCA m ON art.marca_id = m.id
+        LEFT JOIN PROVEEDOR p ON exi.proveedor_id = p.id
+        INNER JOIN EMPLAZAMIENTO empla ON exi.emplazamiento_id = empla.id
+        INNER JOIN ALMACEN a ON empla.almacen_id = a.id
+        WHERE exi.emplazamiento_id = ?
+        """;
     
     private static final String SQL_UPDATE_ALMACEN = 
         "UPDATE ALMACEN SET nombre = ?, descripcion = ?, direccion_id = ? " +
@@ -91,6 +142,57 @@ public class AlmacenServiceImplement extends BaseMySql implements IAlmacenServic
         return almacenDTO;
     }
     
+    private ExistenciaDTO getExistenciaFromResultSet(ResultSet rs) throws SQLException {
+    
+        MarcaDTO marcaDTO = MarcaDTO.builder()
+                .id(rs.getInt("m_id"))
+                .nombre(rs.getString("m_nombre"))
+                .descripcion(rs.getString("m_descripcion"))
+                .activo(rs.getBoolean("m_activo"))
+                .build();         
+
+        ArticuloDTO articuloDTO = ArticuloDTO.builder()
+                .id(rs.getInt("art_id"))
+                .nombre(rs.getString("art_nombre"))
+                .descripcion(rs.getString("art_descripcion"))
+                .referencia(rs.getString("art_referencia"))
+                .marca(marcaDTO)
+                .modelo(rs.getString("art_modelo"))
+                .stockMinimo(rs.getInt("art_stock_minimo"))
+                .imagen(rs.getString("art_imagen"))
+                .activo(rs.getBoolean("art_activo"))
+                .build();
+
+        DireccionDTO direccionProveedor = DireccionDTO.builder()
+                .id(rs.getInt("p_direccion_id"))
+                .build();
+
+        ProveedorDTO proveedorDTO = ProveedorDTO.builder()
+                .id(rs.getInt("exi_proveedor_id"))
+                .nombre(rs.getString("proveedor_nombre"))
+                .descripcion(rs.getString("proveedor_descripcion"))
+                .paginaWeb(rs.getString("proveedor_pagina_web"))
+                .activo(rs.getBoolean("proveedor_activo"))
+                .direccion(direccionProveedor)
+                .build();
+
+        ExistenciaDTO existenciaDTO = ExistenciaDTO.builder()
+                .id(rs.getInt("exi_id"))
+                .articulo(articuloDTO)
+                .proveedor(proveedorDTO)
+                .sku(rs.getString("exi_sku"))
+                .precio(rs.getDouble("exi_precio"))
+                .fechaCompra(rs.getDate("exi_fecha_compra") != null ? rs.getDate("exi_fecha_compra").toLocalDate() : null)
+                .comprador(rs.getString("exi_comprador"))
+                .disponible(Disponibilidad.fromValue(rs.getBoolean("exi_disponible")))
+                .fechaNoDisponible(rs.getDate("exi_fecha_no_disponible") != null ? rs.getDate("exi_fecha_no_disponible").toLocalDate() : null)
+                .anotacion(rs.getString("exi_anotacion"))
+                .build();
+
+        return existenciaDTO;
+    }
+    
+    /*
     private List<EmplazamientoDTO> getEmplazamientosByAlmacen(AlmacenDTO almacenDTO) {
         List<EmplazamientoDTO> listaEmplazamientos = new ArrayList<>();
         try (Connection conexion = getConnection(); 
@@ -122,7 +224,81 @@ public class AlmacenServiceImplement extends BaseMySql implements IAlmacenServic
         }
         return listaEmplazamientos;
     }
+    */
+    
+    private List<ExistenciaDTO> getExistenciasByEmplazamiento(Connection conexion, int idEmplazamiento) throws SQLException {
+    List<ExistenciaDTO> listaExistencias = new ArrayList<>();
 
+    try (PreparedStatement ps = conexion.prepareStatement(SQL_SELECT_EXISTENCIAS_BY_EMPLAZAMIENTO)) {
+        ps.setInt(1, idEmplazamiento);
+
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                listaExistencias.add(getExistenciaFromResultSet(rs));
+            }
+        }
+    }
+
+    return listaExistencias;
+}
+    
+    private List<EmplazamientoDTO> getEmplazamientosByAlmacen(Connection conexion, AlmacenDTO almacenDTO) throws SQLException {
+    List<EmplazamientoDTO> listaEmplazamientos = new ArrayList<>();
+        try (PreparedStatement ps = conexion.prepareStatement(SQL_SELECT_EMPLAZAMIENTOS_BY_ALMACEN)) {
+            ps.setInt(1, almacenDTO.getId());
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    TipoEmplazamientoDTO tipo = TipoEmplazamientoDTO.builder()
+                            .id(rs.getInt("e.tipo_id"))
+                            .nombre(rs.getString("t_e.nombre"))
+                            .descripcion(rs.getString("t_e.descripcion"))
+                            .build();
+
+                    EmplazamientoDTO emplazamientoDTO = EmplazamientoDTO.builder()
+                            .id(rs.getInt("e.id"))
+                            .nombre(rs.getString("e.nombre"))
+                            .descripcion(rs.getString("e.descripcion"))
+                            .tipoEmplazamiento(tipo)
+                            .build();
+
+                    emplazamientoDTO.setListaExistencias(getExistenciasByEmplazamiento(conexion, emplazamientoDTO.getId()));
+                    listaEmplazamientos.add(emplazamientoDTO);
+                }
+            }
+        }
+
+        return listaEmplazamientos;
+    }
+    
+    @Override
+    public AlmacenDTO getAlmacenById(int idAlmacen) {
+        AlmacenDTO almacenDTO = null;
+        StringBuilder sql = new StringBuilder(SQL_SELECT_COMUN);
+        sql.append(" WHERE a.activo = TRUE AND a.id = ?");
+
+        try (Connection conexion = getConnection();
+             PreparedStatement ps = conexion.prepareStatement(sql.toString())) {
+
+            ps.setInt(1, idAlmacen);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    almacenDTO = getAlmacenFromResultSet(rs);
+                }
+            }
+
+            if (almacenDTO != null) {
+                almacenDTO.setListaEmplazamientos(getEmplazamientosByAlmacen(conexion, almacenDTO));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return almacenDTO;
+    }
+
+    /*
     @Override
     public AlmacenDTO getAlmacenById(int idAlmacen) {
         AlmacenDTO almacenDTO = null;
@@ -150,6 +326,7 @@ public class AlmacenServiceImplement extends BaseMySql implements IAlmacenServic
         }
         return almacenDTO;
     }
+    */
 
     @Override
     public List<AlmacenDTO> getAllAlmacenes() {
