@@ -380,6 +380,16 @@
     </servlet-mapping>
     
     <servlet>
+        <servlet-name>emplazamientoDetalle</servlet-name>
+        <jsp-file>/App/web/almacen/emplazamientoDetalle.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>emplazamientoDetalle</servlet-name>
+        <url-pattern>/almacen/emplazamientos/detalle/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
         <servlet-name>existenciaList</servlet-name>
         <jsp-file>/App/web/almacen/existenciaList.jsp</jsp-file>
     </servlet>
@@ -444,21 +454,32 @@
         <servlet-name>articuloCrear</servlet-name>
         <jsp-file>/App/web/articulo/articuloCrear.jsp</jsp-file>
     </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>articuloCrear</servlet-name>
+        <url-pattern>/articulo/articulos/crear</url-pattern>
+    </servlet-mapping>
 
+    <servlet>
+        <servlet-name>articuloEditar</servlet-name>
+        <jsp-file>/App/web/articulo/articuloEditar.jsp</jsp-file>
+    </servlet>
+    
     <servlet-mapping>
         <servlet-name>articuloEditar</servlet-name>
         <url-pattern>/articulo/articulos/edit/*</url-pattern>
     </servlet-mapping>
     
     <servlet>
-        <servlet-name>articuloEditar</servlet-name>
-        <jsp-file>/App/web/articulo/articuloEditar.jsp</jsp-file>
+        <servlet-name>articuloDetalle</servlet-name>
+        <jsp-file>/App/web/articulo/articuloDetalle.jsp</jsp-file>
     </servlet>
-
+    
     <servlet-mapping>
-        <servlet-name>articuloCrear</servlet-name>
-        <url-pattern>/articulo/articulos/crear</url-pattern>
+        <servlet-name>articuloDetalle</servlet-name>
+        <url-pattern>/articulo/articulos/detalle/*</url-pattern>
     </servlet-mapping>
+    
     
     <servlet>
         <servlet-name>marcaList</servlet-name>

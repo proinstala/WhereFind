@@ -73,7 +73,6 @@ public class AlmacenServiceImplement extends BaseMySql implements IAlmacenServic
           art.marca_id AS art_marca_id,
           art.modelo AS art_modelo,
           art.stock_minimo AS art_stock_minimo,
-          art.imagen AS art_imagen,
           art.activo AS art_activo,
 
           m.id AS m_id,
@@ -86,7 +85,7 @@ public class AlmacenServiceImplement extends BaseMySql implements IAlmacenServic
           p.descripcion AS proveedor_descripcion,
           p.pagina_web AS proveedor_pagina_web,
           p.activo AS proveedor_activo,
-          p.direccion_id AS p_direccion_id,
+          p.direccion_id AS p_direccion_id
 
         FROM EXISTENCIA exi
         INNER JOIN ARTICULO art ON exi.articulo_id = art.id
@@ -159,7 +158,7 @@ public class AlmacenServiceImplement extends BaseMySql implements IAlmacenServic
                 .marca(marcaDTO)
                 .modelo(rs.getString("art_modelo"))
                 .stockMinimo(rs.getInt("art_stock_minimo"))
-                .imagen(rs.getString("art_imagen"))
+                //.imagen(rs.getString("art_imagen"))
                 .activo(rs.getBoolean("art_activo"))
                 .build();
 
@@ -227,23 +226,24 @@ public class AlmacenServiceImplement extends BaseMySql implements IAlmacenServic
     */
     
     private List<ExistenciaDTO> getExistenciasByEmplazamiento(Connection conexion, int idEmplazamiento) throws SQLException {
-    List<ExistenciaDTO> listaExistencias = new ArrayList<>();
+        List<ExistenciaDTO> listaExistencias = new ArrayList<>();
 
-    try (PreparedStatement ps = conexion.prepareStatement(SQL_SELECT_EXISTENCIAS_BY_EMPLAZAMIENTO)) {
-        ps.setInt(1, idEmplazamiento);
+        try (PreparedStatement ps = conexion.prepareStatement(SQL_SELECT_EXISTENCIAS_BY_EMPLAZAMIENTO)) {
+            ps.setInt(1, idEmplazamiento);
 
-        try (ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-                listaExistencias.add(getExistenciaFromResultSet(rs));
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    listaExistencias.add(getExistenciaFromResultSet(rs));
+                }
             }
         }
-    }
 
-    return listaExistencias;
-}
+        return listaExistencias;
+    }
     
     private List<EmplazamientoDTO> getEmplazamientosByAlmacen(Connection conexion, AlmacenDTO almacenDTO) throws SQLException {
-    List<EmplazamientoDTO> listaEmplazamientos = new ArrayList<>();
+        List<EmplazamientoDTO> listaEmplazamientos = new ArrayList<>();
+        
         try (PreparedStatement ps = conexion.prepareStatement(SQL_SELECT_EMPLAZAMIENTOS_BY_ALMACEN)) {
             ps.setInt(1, almacenDTO.getId());
 
@@ -293,6 +293,7 @@ public class AlmacenServiceImplement extends BaseMySql implements IAlmacenServic
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
 
         return almacenDTO;

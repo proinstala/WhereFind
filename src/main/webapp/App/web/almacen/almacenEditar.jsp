@@ -9,23 +9,14 @@
 <%@page import="io.proinstala.wherefind.shared.controllers.actions.ActionController"%>
 <%
     // Si no se está logueado se manda al usuario al login.jsp
-    if(UserSession.redireccionarIsUserNotLogIn(new ActionServer(request, response))){
+    if(UserSession.redireccionarIsUserNotLogIn(new ActionServer(request, response), true)){
         // Detiene la ejecución de este servlet
         return;
     }
 
-    int almacen_id = -1;
-    try {
-        //direccion_id = Integer.parseInt(request.getParameter("idDireccion"));
-    } catch(Exception e) {
-        e.printStackTrace();
-    }
-
-    if (almacen_id == -1)
-    {
-        ActionController actionController = BaseHttpServlet.getActionControllerFromJSP(request, response, "almacen/almacenes/edit");
-        almacen_id = actionController.getIntFromParametros(1);
-    }
+    ActionController actionController = BaseHttpServlet.getActionControllerFromJSP(request, response, "almacen/almacenes/edit");
+    int almacen_id = actionController.getIntFromParametros(1);
+    
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >

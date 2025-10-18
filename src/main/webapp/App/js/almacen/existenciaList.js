@@ -1,7 +1,7 @@
 
 import { solicitudGet, solicitudPut, getDatosForm, addRowSelected, fillInputSelect, cargarInputSelect, observeRowSelectedChange, deleteRowSelectedTable } from '../comunes.mjs?v=20241021_184300';
 import { mostrarMensaje, mostrarMensajeAdvertencia, mostrarMensajeError, mostrarMensajeOpcion } from '../alertasSweetAlert2.mjs';
-import {ROLES} from '../constantes.mjs';
+import {ROLES, ICONOS_TABLA} from '../constantes.mjs';
 
 const idSelectMarca = "#marca";
 const idSelectAlmacen = "#almacen";
@@ -188,7 +188,7 @@ function rellenarTablaExistencias(existencias) {
                 <td>${existencia.sku || ''}</td>
                 <td>${existencia.emplazamiento.almacen.nombre}</td>
                 <td>${existencia.emplazamiento.nombre}</td>
-                <td class="texto--centrado">${existencia.disponible === 'DISPONIBLE' ? '<i class="las la-check" style="color: green;"></i>' : '<i class="las la-times" style="color: red;"></i>'}</td>
+                <td class="texto--centrado">${existencia.disponible === 'DISPONIBLE' ? ICONOS_TABLA.CHECK : ICONOS_TABLA.NO_CHECK}</td>
                 </tr>`;
         return fila;
     }).join('');

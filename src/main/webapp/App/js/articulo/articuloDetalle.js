@@ -1,8 +1,8 @@
 import { solicitudGet, solicitudPut, mostrarContenedor, addRowSelected, observeRowSelectedChange, deleteRowSelectedTable, fillInputSelect } from '../comunes.mjs';
 import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from '../alertasSweetAlert2.mjs';
-import { DEFAULT_IMG, DISPLAY_TYPES } from '../constantes.mjs';
+import { DEFAULT_IMG, DISPLAY_TYPES, DISPONIBILIDAD, ROLES, ICONOS_TABLA } from '../constantes.mjs';
 
-const idInputIdExistencia = "#existencia_id";
+const idInputIdArticulo = "#articulo_id";
 
 const idInputNombreArticulo = "#nombreArticulo";
 const idInputDescripcionArticulo = "#descripcionArticulo";
@@ -10,61 +10,37 @@ const idInputMarca = "#marca";
 const idInputModelo = "#modelo";
 const idInputReferencia = "#referencia";
 
-const idInputPrecio = "#precio";
-const idInputSku = "#sku";
-const idInputFechaCompra = "#fechaCompra";
-const idInputComprador = "#comprador";
-const idInputDisponibilidad = "#disponibilidad";
-const idInputFechaNoDisponible = "#fechaNoDisponible";
-const idInputAnotacion = "#anotacion";
-
 const idContenedorImgArticulo = "#contenedorImgArticulo";
 const idInputHideImgArticulo = "#imagenArticuloB64"; //Input oculto.
 const idInputImgArticulo = "#inputImgArticulo";
 const idImgArticulo = "#imgArticulo";
 const idLabelImgArticulo = "#textoImagenArticulo";
 
-const idInputNombreAlmacen = "#nombreAlmacen";
-const idInputDescripcionAlmacen = "#descripcionAlmacen";
-const idInputDireccionAlmacen = "#direccionAlmacen";
-const idInputNombreEmplazamiento = "#nombreEmplazamiento";
-const idInputDescripcionEmplazamiento = "#descripcionEmplazamiento";
-const idInputTipoEmplazamiento = "#tipoEmplazamiento";
-
-const idInputNombreProveedor = "#nombreProveedor";
-const idInputDescripcionProveedor = "#descripcionProveedor";
-const idInputPaginaWeb = "#paginaWeb";
-
-const idContenedorImgProveedor = "#contenedorImgProveedor";
-const idInputHideImgProveedor = "#imagenProveedorB64"; //Input oculto.
-const idInputImgProveedor = "#inputImgProveedor";
-const idImgProveedor = "#imgProveedor";
-const idLabelImgProveedor = "#textoImagenProveedor";
-
 const nameContenedorDatos = "contenedorDatos";
-const idContenedorExistencia = "#contenedorExistencia";
+const idContenedorArticulo = "#contenedorArticulo";
 const idContenedorEmplazamiento = "#contenedorEmplazamiento";
 const idContenedorProveedor = "#contenedorProveedor";
-const nameBtnExistencia = "btnExistencia";
+const idTablaProveedores = "#tablaProveedores";
+const nameBtnArticulo = "btnArticulo";
 const nameBtnEmplazamiento = "btnEmplazamiento";
 const nameBtnProveedor = "btnProveedor";
 const idBtnCancelar = "#btnCancelar";
 const nameBtnCancelar = "btnCancelar";
 
-let existencia;
+let articulo;
 
 $(document).ready(function () {
-    const inputIdExistencia = document.querySelector(idInputIdExistencia);
-    const btnsExistencia = document.querySelectorAll(`[name="${nameBtnExistencia}"`);
+    const inputIdArticulo = document.querySelector(idInputIdArticulo);
+    const btnsArticulo = document.querySelectorAll(`[name="${nameBtnArticulo}"`);
     const btnsEmplazamiento = document.querySelectorAll(`[name="${nameBtnEmplazamiento}"`);
     const btnsProveedor = document.querySelectorAll(`[name="${nameBtnProveedor}"`);
     const btnsCancelar = document.querySelectorAll(`[name="${nameBtnCancelar}"]`); 
     
-    getExistencia(inputIdExistencia.value);
+    getArticulo(inputIdArticulo.value);
     
-    btnsExistencia.forEach(btn => {
+    btnsArticulo.forEach(btn => {
         btn.addEventListener('click', (event) => {
-            mostrarContenedor(event, nameContenedorDatos, idContenedorExistencia);
+            mostrarContenedor(event, nameContenedorDatos, idContenedorArticulo);
         });
     });
     
@@ -95,14 +71,14 @@ $(document).ready(function () {
   
 });
 
-function getExistencia(idExistencia) {
-    solicitudGet(`api/existencia/existencia?idExistencia=${idExistencia}`, "", true)
+function getArticulo(idArticulo) {
+    solicitudGet(`api/articulo/articulo?idArticulo=${idArticulo}`, "", true)
             .then(response => {
                 if (response.isError === 1) {
                     mostrarMensajeError("Se ha producido un error", response.result);
                 } else {
-                    existencia = response.data;
-                    fillFielsExistencia(existencia);
+                    articulo = response.data;
+                    fillFielsArticulo(articulo);
                 }
             })
             .catch(error => {
@@ -112,43 +88,26 @@ function getExistencia(idExistencia) {
             });
 }
 
-function fillFielsExistencia(existencia) {
-    const div = document.querySelector(idContenedorExistencia);
+function fillFielsArticulo(articulo) {
+    const div = document.querySelector(idContenedorArticulo);
     
     const inputNombreArticulo = div.querySelector(idInputNombreArticulo);
     const inputDescripcionArticulo = div.querySelector(idInputDescripcionArticulo);
     const inputMarca = div.querySelector(idInputMarca);
     const inputModelo = div.querySelector(idInputModelo);
     const inputReferencia = div.querySelector(idInputReferencia);
-    const inputPrecio = div.querySelector(idInputPrecio);
-    const inputSku = div.querySelector(idInputSku);
-    const inputFechaCompra = div.querySelector(idInputFechaCompra);
-    const inputComprador = div.querySelector(idInputComprador);
-    const inputFechaNoDisponible = div.querySelector(idInputFechaNoDisponible);
-    const inputAnotacion = div.querySelector(idInputAnotacion); 
-    const inputDisponibilidad = div.querySelector(idInputDisponibilidad); 
     
     const inputHideImgArticulo = div.querySelector(idInputHideImgArticulo);
     const imgArticulo = div.querySelector(idImgArticulo);
     const labelImgArticulo = document.querySelector(idLabelImgArticulo);
     
-    const articulo = existencia.articulo;
-    const proveedor = existencia.proveedor;
-    const emplazamiento = existencia.emplazamiento;
+    const listaArticuloProveedores = articulo.listaProveedores;
    
     inputNombreArticulo.value = articulo.nombre;
     inputDescripcionArticulo.value = articulo.descripcion ?? "";
     inputMarca.value = articulo.marca.nombre ?? "";
     inputModelo.value = articulo.modelo ?? "";
     inputReferencia.value = articulo.referencia ?? "";
-    
-    inputPrecio.value = existencia.precio ?? "";
-    inputSku.value = existencia.sku ?? "";
-    inputFechaCompra.value = existencia.fechaCompra;
-    inputComprador.value = existencia.comprador ?? ""; 
-    inputDisponibilidad.value = existencia.disponible;
-    inputFechaNoDisponible.value = existencia.fechaNoDisponible ?? "";
-    inputAnotacion.value = existencia.anotacion ?? "";
     
     // Imagen: usa la imagen del proveedor si existe, de lo contrario la imagen por defecto
     const imagenValida = articulo.imagen && articulo.imagen.trim() !== "";
@@ -157,8 +116,8 @@ function fillFielsExistencia(existencia) {
     
     labelImgArticulo.textContent = "";
     
-    fillFielsEmplazamiento(emplazamiento);
-    fillFielsProveedor(proveedor);
+    //fillFielsEmplazamiento(emplazamiento);
+    rellenarTablaProveedor(listaArticuloProveedores);
 }
 
 function fillFielsEmplazamiento(emplazamiento) {
@@ -188,7 +147,7 @@ function fillFielsEmplazamiento(emplazamiento) {
 
 }
 
-function fillFielsProveedor(proveedor) {
+function fillTablaProveedor(proveedor) {
     const div = document.querySelector(idContenedorProveedor);
     
     const inputNombre = div.querySelector(idInputNombreProveedor);
@@ -208,4 +167,33 @@ function fillFielsProveedor(proveedor) {
     imgProveedor.src = imagenValida ? proveedor.imagen : DEFAULT_IMG.PROVEEDOR;
     
     labelImgProveedor.textContent = "";
+}
+
+/**
+ * Función que rellena una tabla HTML con los proveedores proporcionadas.
+ * @param {Array} articuloProveedores - Un array de objetos de articuloProveedores que contiene los datos para cada fila de la tabla.
+ */
+function rellenarTablaProveedor(articuloProveedores) {
+    const tablaProveedores = document.querySelector(idTablaProveedores);
+    const cuerpoTablaProveedores = tablaProveedores.querySelector('tbody');
+    console.log(articuloProveedores);
+    tablaProveedores.setAttribute('data-rowselected', -1); //Establece a -1 el rowselected para indicar que no se ha seleccionado ninguna fila.
+
+    //Crear el contenido HTML de todas las filas a partir de los datos de provincias
+    let filasHTML = articuloProveedores.map(articuloProveedor => {
+        const proveedor = articuloProveedor.proveedor;
+        return `<tr id="${articuloProveedor.id}">
+                <td>${proveedor.nombre}</td>
+                <td>${articuloProveedor.precio}</td>
+                <td>${articuloProveedor.fechaPrecio}</td>
+                <td class="texto--centrado">${articuloProveedor.disponible === 'DISPONIBLE' ? ICONOS_TABLA.CHECK : ICONOS_TABLA.NO_CHECK}</td>
+                </tr>`;
+    }).join('');
+
+
+    //Asignar el contenido HTML generado al cuerpo de la tabla, reemplazando cualquier contenido existente
+    cuerpoTablaProveedores.innerHTML = filasHTML;
+
+    //Añadir eventos de selección de filas a la tabla recién generada
+    addRowSelected(cuerpoTablaProveedores);
 }

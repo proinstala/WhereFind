@@ -141,12 +141,11 @@ public class ArticuloServiceImplement extends BaseMySql implements IArticuloServ
         return articuloDTO;
     }
     
-    private List<ArticuloProveedorDTO> getArticuloProveedorByArticulo(ArticuloDTO articuloDTO) {
+    private List<ArticuloProveedorDTO> getArticuloProveedorByArticulo(Connection conexion , int articulo_id) {
         List<ArticuloProveedorDTO> listaArticuloProveedor = new ArrayList<>();
-        try (Connection conexion = getConnection(); 
-             PreparedStatement ps = conexion.prepareStatement(SQL_SELECT_ARTICULO_PROVEEDOR_BY_ARTICULO)) {
+        try (PreparedStatement ps = conexion.prepareStatement(SQL_SELECT_ARTICULO_PROVEEDOR_BY_ARTICULO)) {
 
-            ps.setInt(1, articuloDTO.getId());
+            ps.setInt(1, articulo_id);
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -181,10 +180,11 @@ public class ArticuloServiceImplement extends BaseMySql implements IArticuloServ
             }
 
             if (articuloDTO != null) {
-                articuloDTO.setListaProveedores(getArticuloProveedorByArticulo(articuloDTO));
+                articuloDTO.setListaProveedores(getArticuloProveedorByArticulo(conexion, articuloDTO.getId()));
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
         return articuloDTO;
     }

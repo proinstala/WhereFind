@@ -1,4 +1,5 @@
 
+<%@page import="io.proinstala.wherefind.shared.dtos.UserDTO"%>
 <%@page import="io.proinstala.wherefind.shared.config.AppSettings"%>
 <%@page import="io.proinstala.wherefind.shared.consts.urls.enums.UrlAdmin"%>
 <%@page import="io.proinstala.wherefind.shared.controllers.actions.ActionServer"%>
@@ -10,11 +11,9 @@
 <%
     String extraAdmin = "-user";
 
-    if (UserSession.isUserLogIn(new ActionServer(request, response), true))
-    {
+    if (UserSession.isUserLogIn(new ActionServer(request, response), true)) {
         extraAdmin = "-admin";
     }
-
 %>
 
 

@@ -1,7 +1,9 @@
 
 import { solicitudGet, solicitudPut, mostrarContenedor, addRowSelected, observeRowSelectedChange, deleteRowSelectedTable, fillInputSelect } from '../comunes.mjs';
 import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from '../alertasSweetAlert2.mjs';
-import {DEFAULT_IMG, DISPLAY_TYPES} from '../constantes.mjs';
+import {DEFAULT_IMG, DISPLAY_TYPES, DISPONIBILIDAD, ROLES} from '../constantes.mjs';
+
+const idInputUserRol = "#userRol";
 
 const idInputIdAlmacen = "#almacen_id";
 const idInputNombreAlmacen = "#nombreAlmacen";
@@ -30,8 +32,13 @@ const nameBtnCancelar = "btnCancelar";
 const idBtnModificar = "#btnModificar";
 const idBtnCrear = "#btnCrear";
 const idBtnEliminar = "#btnEliminar";
+const idBtnDetalla = "#btnDetalle";
 
 let almacen;
+
+const User = {
+    rol: ROLES.USER
+};
 
 $(document).ready(function () {
     const inputIdAlmacen = document.querySelector(idInputIdAlmacen);
@@ -43,7 +50,9 @@ $(document).ready(function () {
     const btnCrear = document.querySelector(idBtnCrear);
     const btnModificar = document.querySelector(idBtnModificar);
     const btnEliminar = document.querySelector(idBtnEliminar);
+    const btnDetalla = document.querySelector(idBtnDetalla);
     
+    User.rol = document.querySelector(idInputUserRol).value;
   
     getAlmacen(inputIdAlmacen.value);
     
@@ -69,7 +78,18 @@ $(document).ready(function () {
     
     btnsCancelar.forEach(btn => {
         btn.addEventListener('click', () => {
-            window.location.href = "almacen/almacenes";
+            const referrer = document.referrer;
+
+            if (referrer && referrer.includes("emplazamientos")) {
+                // Si viene desde una página que contiene "existencias"
+                window.location.href = "almacen/almacenes";
+            } else if (referrer) {
+                // Si hay referrer pero no contiene "existencias"
+                window.location.href = referrer;
+            } else {
+                // Si no hay referrer (por ejemplo, acceso directo)
+                window.location.href = "almacen/almacenes";
+            }
         });
     });
     
@@ -86,11 +106,19 @@ $(document).ready(function () {
         const idEmplazamiento = tablaEmplazamientos.getAttribute('data-rowselected'); 
         borrarEmplazamiento(idEmplazamiento);
     });
+    
+    btnDetalla.addEventListener('click', () => {
+        const idEmplazamiento = tablaEmplazamientos.getAttribute('data-rowselected'); 
+        window.location.href = (`almacen/emplazamientos/detalle/${idEmplazamiento}`);
+    });
 });
 
 function onDetectarFilaSeleccionadaEmplazamientos(hayFilaSeleccionada) {
-    $(idBtnEliminar).prop('disabled', !hayFilaSeleccionada);
-    $(idBtnModificar).prop('disabled', !hayFilaSeleccionada);
+    if(User.rol === ROLES.ADMIN) {
+        $(idBtnEliminar).prop('disabled', !hayFilaSeleccionada);
+        $(idBtnModificar).prop('disabled', !hayFilaSeleccionada);
+    }
+    $(idBtnDetalla).prop('disabled', !hayFilaSeleccionada);
 }
 
 
@@ -113,23 +141,32 @@ function getAlmacen(idAlmacen) {
 
 
 function fillFielsAlmacen(almacen) {
-    //almacen
-    debugger;
     const div = document.querySelector(idContenedorAlmacen);
     const inputNombreAlmacen = div.querySelector(idInputNombreAlmacen);
     const inputDescripcionAlmacen = div.querySelector(idInputDescripcionAlmacen);
+    const inputNumeroEmplazamientos = div.querySelector(idInputNumeroEmplazamientos);
+    const inputTotalExistencias = div.querySelector(idInputTotalExistencias);
    
+    const listaEmplazamientos = almacen.listaEmplazamientos;
+    const numEmplazamientos = listaEmplazamientos.length;
+    
+    const totalExistencias = listaEmplazamientos.reduce((total, emplazamiento) => {
+        const disponibles = emplazamiento.listaExistencias.filter(
+                existencia => existencia.disponible === DISPONIBILIDAD.DISPONIBLE.name
+        ).length;
+        return total + disponibles;
+    }, 0);
+    
     inputNombreAlmacen.value = almacen.nombre;
     inputDescripcionAlmacen.value = almacen.descripcion ?? "";
-    
-    
+    inputNumeroEmplazamientos.value = numEmplazamientos;
+    inputTotalExistencias.value = totalExistencias;
     
     fillFielsDireccion(almacen.direccion);
-    //rellenarTablaEmplazamientos(almacen.listaEmplazamientos);
+    rellenarTablaEmplazamientos(listaEmplazamientos);
 }
 
 function fillFielsDireccion(direccion) {
-    //direccion
     const direccionId = direccion.id;
     const divDireccion = document.querySelector(idContenedorDireccion);
     const inputCalle = divDireccion.querySelector(idInputCalle);
@@ -156,19 +193,24 @@ function fillFielsDireccion(direccion) {
 function rellenarTablaEmplazamientos(emplazamientos) {
     const tablaEmplazamientos = document.querySelector(idTablaEmplazamientos);
     const cuerpoTablaEmplazamientos = tablaEmplazamientos.querySelector('tbody');
-    //const inputUserRol = document.querySelector(idInputUserRol);  //Admin o User
 
     tablaEmplazamientos.setAttribute('data-rowselected', -1); //Establece a -1 el rowselected para indicar que no se ha seleccionado ninguna fila.
 
     //Crear el contenido HTML de todas las filas a partir de los datos de provincias
-    let filasHTML = emplazamientos.map(contacto => {
-        return `<tr id="${contacto.id}">
-                <td>${contacto.id}</td>
-                <td>${contacto.nombre}</td>
-                <td>${contacto.apellido}</td>
-                <td>${contacto.puestoTrabajo.nombre}</td>
-                <td>${contacto.telefono}</td>
-                <td>${contacto.email}</td>
+    let filasHTML = emplazamientos.map(emplazamiento => {
+        const totalExistencias = emplazamiento.listaExistencias.reduce((total, existencia) => {
+            if(existencia.disponible === DISPONIBILIDAD.DISPONIBLE.name) {
+                total++;
+            }
+            return total;
+        }, 0);
+        
+        return `<tr id="${emplazamiento.id}">
+                <td>${emplazamiento.id}</td>
+                <td>${emplazamiento.nombre}</td>
+                <td>${emplazamiento.descripcion}</td>
+                <td>${emplazamiento.tipoEmplazamiento.nombre}</td>
+                <td>${totalExistencias}</td>
                 </tr>`;
     }).join('');
 
@@ -181,16 +223,16 @@ function rellenarTablaEmplazamientos(emplazamientos) {
 }
 
 
-function borrarContacto(contactoId) {
-    mostrarMensajeOpcion("Borrar Contacto", `¿Quieres realmente borrar los datos del contacto con id ${contactoId}?`)
+function borrarEmplazamiento(emplazamientoId) {
+    mostrarMensajeOpcion("Deshabilitar Emplazamiento", `¿Quieres realmente deshabilitar el emplazamiento con id ${emplazamientoId}?`)
                     .then((result) => {
                         if (result.isConfirmed) {
-                            solicitudPut(`api/contacto/delete/${contactoId}`, "", true)
+                            solicitudPut(`api/emplazamiento/delete/${emplazamientoId}`, "", true)
                                     .then(response => {
                                         if (response.isError === 1) {
-                                            mostrarMensajeError("No se puede borrar los datos", response.result);
+                                            mostrarMensajeError("No se puede deshabilitar los datos", response.result);
                                         } else {
-                                            mostrarMensaje("Contacto Borrado.", `Se han borrado correctamente los datos del contacto.`, "success");
+                                            mostrarMensaje("Emplazamiento Deshabilitar.", `Se ha deshabilitar correctamente el emplazamiento.`, "success");
 
                                             //Elimina la fila seleccionada de la tabla.
                                             deleteRowSelectedTable(idTablaEmplazamientos);

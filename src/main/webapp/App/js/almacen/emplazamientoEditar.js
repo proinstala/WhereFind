@@ -35,7 +35,12 @@ $(document).ready(function () {
     });
 
     btnCancelar.addEventListener('click', () => {
-        window.location.href = "almacen/emplazamientos";
+        if (document.referrer) {
+            window.location.href = document.referrer;
+        } else {
+            // Fallback: vuelve a una página por defecto
+            window.location.href = "almacen/emplazamientos";
+        }
     });
 
 });

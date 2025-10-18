@@ -122,7 +122,12 @@ $(document).ready(function () {
     validarFormulario(idFormExistencia);
 
     btnCancelar.addEventListener('click', () => {
-        window.location.href = "almacen/existencias";
+        if (document.referrer) {
+                window.location.href = document.referrer;
+            } else {
+                // Fallback: vuelve a una página por defecto
+                window.location.href = "almacen/existencias";
+            }
     });
 
     btnDeshacerCambiosExistencia.addEventListener('click', () => {
