@@ -35,10 +35,7 @@ const idBtnEliminar = "#btnEliminar";
 const idBtnDetalla = "#btnDetalle";
 
 let almacen;
-
-const User = {
-    rol: ROLES.USER
-};
+const User = {rol: ROLES.USER};
 
 $(document).ready(function () {
     const inputIdAlmacen = document.querySelector(idInputIdAlmacen);

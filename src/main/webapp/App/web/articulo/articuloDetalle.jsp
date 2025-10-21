@@ -15,6 +15,8 @@
         // Detiene la ejecución de este servlet
         return;
     }
+    
+    UserDTO userDTO = UserSession.getUserLogin(request);
  
     ActionController actionController = BaseHttpServlet.getActionControllerFromJSP(request, response, "articulo/articulos/detalle");
     int articulo_id = actionController.getIntFromParametros(1);
@@ -32,6 +34,8 @@
         <%@ include file="../shared/cabecera.jsp" %>
 
         <div class="main">
+            
+            <input type="hidden" id="userRol" name="userRol" value="<%=userDTO.getRol()%>">
 
             <!-- Contenedor Existencia -------------------------------------------------------------------------------- -->
             <div class="contenedor__formulario formulario--3_filas max-width-120" name="contenedorDatos" id="contenedorArticulo">
@@ -99,11 +103,11 @@
                     </div>
                     
                     <div class="form__btn_circle">
-                        <button name="btnEmplazamiento" title="Ver Emplazamiento"><i class="las la-database" ></i></button>
+                        <button name="btnExistencia" title="Ver Existencias"><i class="las la-puzzle-piece" ></i></button>
                     </div>
                     
                     <div class="form__btn_circle margin-right-auto">
-                        <button name="btnProveedor" title="Ver Proveedor"><i class="las la-store" ></i></button>
+                        <button name="btnProveedor" title="Ver Proveedores"><i class="las la-store" ></i></button>
                     </div>
 
                     <div class="form__btn_circle">
@@ -114,53 +118,54 @@
             </div> <!-- Fin contenedor__formulario (articulo) -->
             
             
-            <!-- Contenedor Emplazamiento -------------------------------------------------------------------------------- -->
-            <div style="display: none;" class="contenedor__formulario formulario--3_filas max-width-120" name="contenedorDatos" id="contenedorEmplazamiento">
+            <!-- Contenedor Existencias -------------------------------------------------------------------------------- -->
+            <div style="display: none;" class="contenedor__formulario formulario--4_filas max-width-120" name="contenedorDatos" id="contenedorExistencia">
 
                 <div class="contenedor__formulario--cabecera">
                     <div>
-                        <h1>Detalle Existencia</h1>
+                        <h1>Detalle Artículo</h1>
                     </div>
                     <div>
-                        <h1>(Emplazamiento)</h1>
+                        <h1>(Existencias)</h1>
                     </div>
                 </div>
 
-                <!-- Formulario para ver los datos de proveedor -->
-                <div class="contenedor__formulario--main">
-                    <div class="formulario" name="divDetalleEmplazamiento" id="divDetalleEmplazamiento">
+                <!-- Formulario para ver los datos de existencias -->
+                <div class="contenedor__tabla--botones">
 
-                        <div class="form__input">
-                            <input type="text" name="nombreAlmacen" id="nombreAlmacen" value="" readonly>
-                            <label for="nombreAlmacen">Nombre Almacén</label>
-                        </div>
-                        
-                        <div class="form__input col-span-2">
-                            <input type="text" name="descripcionAlmacen" id="descripcionAlmacen" value="" readonly>
-                            <label for="descripcionAlmacen">Descripción Almacén</label>
-                        </div>
-
-                        <div class="form__input col-span-all">
-                            <input type="text" name="direccionAlmacen" id="direccionAlmacen" value="" readonly>
-                            <label for="direccionAlmacen">Dirección Almacen</label>
-                        </div>
-                        
-                        <div class="form__input">
-                            <input type="text" name="nombreEmplazamiento" id="nombreEmplazamiento" value="" readonly>
-                            <label for="nombreAlmacen">Nombre Emplazamiento</label>
-                        </div>
-                        
-                        <div class="form__input col-span-2">
-                            <input type="text" name="descripcionEmplazamiento" id="descripcionEmplazamiento" value="" readonly>
-                            <label for="descripcionEmplazamiento">Descripción Emplazamiento</label>
-                        </div>
-
-                        <div class="form__input">
-                            <input type="text" name="tipoEmplazamiento" id="tipoEmplazamiento" value="" readonly>
-                            <label for="tipoEmplazamiento">Tipo Emplazamiento</label>
-                        </div>
-                        
+                    <div class="form__btn_circle">
+                        <button id="btnCrearExistencia" title="Crear"><i class="las la-plus"></i></button>
                     </div>
+                    <div class="form__btn_circle">
+                        <button id="btnEliminarExistencia" title="Eliminar" disabled><i class="las la-minus"></i></button>
+                    </div>
+                    <div class="form__btn_circle">
+                        <button id="btnModificarExistencia" title="Modificar" disabled><i class="las la-pen"></i></button>
+                    </div>
+                    <div class="form__btn_circle">
+                        <button id="btnDetalleExistencia" title="Detalle" disabled><i class="las la-info"></i></button>
+                    </div>
+                </div>
+                
+                <div class="contenedor__tabla">
+                    <table class="tabla" id="tablaExistencias" data-rowselected = "-1">
+                        <thead>
+                            <tr>
+                                <th>SKU</th>
+                                <th>Proveedor</th>
+                                <th>Precio</th>
+                                <th>Fecha Compra</th>
+                                <th>Comprador</th>
+                                <th>Almacén</th>
+                                <th>Emplazamiento</th>
+                                <th>Anotación</th>
+                                <th>Disponible</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- El contenido se cargar desde javaScript -->
+                        </tbody>
+                    </table>
                 </div>
 
                 <div class="contenedor__formulario--footer">
@@ -169,11 +174,11 @@
                     </div>
                     
                     <div class="form__btn_circle">
-                        <button name="btnEmplazamiento" title="Ver Emplazamiento" class="marcado" disabled><i class="las la-database" ></i></button>
+                        <button name="btnExistencia" title="Ver Existencias" class="marcado" disabled><i class="las la-puzzle-piece" ></i></button>
                     </div>
                     
                     <div class="form__btn_circle margin-right-auto">
-                        <button name="btnProveedor" title="Ver Proveedor"><i class="las la-store" ></i></button>
+                        <button name="btnProveedor" title="Ver Proveedores"><i class="las la-store" ></i></button>
                     </div>
 
                     <div class="form__btn_circle">
@@ -181,7 +186,7 @@
                     </div>
                 </div>
 
-            </div> <!-- Fin contenedor__formulario (emplazamiento) -->
+            </div> <!-- Fin contenedor__formulario (existencias) -->
             
             
             <!-- Contenedor Proveedor -------------------------------------------------------------------------------- -->
@@ -234,11 +239,11 @@
                     </div>
                     
                     <div class="form__btn_circle">
-                        <button name="btnEmplazamiento" title="Ver Emplazamiento"><i class="las la-database" ></i></button>
+                        <button name="btnExistencia" title="Ver Existencias"><i class="las la-puzzle-piece" ></i></button>
                     </div>
                     
                     <div class="form__btn_circle margin-right-auto">
-                        <button name="btnProveedor" title="Ver Proveedor" class="marcado" disabled><i class="las la-store" ></i></button>
+                        <button name="btnProveedor" title="Ver Proveedores" class="marcado" disabled><i class="las la-store" ></i></button>
                     </div>
 
                     <div class="form__btn_circle">

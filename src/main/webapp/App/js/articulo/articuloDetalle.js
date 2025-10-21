@@ -2,6 +2,8 @@ import { solicitudGet, solicitudPut, mostrarContenedor, addRowSelected, observeR
 import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from '../alertasSweetAlert2.mjs';
 import { DEFAULT_IMG, DISPLAY_TYPES, DISPONIBILIDAD, ROLES, ICONOS_TABLA } from '../constantes.mjs';
 
+const idInputUserRol = "#userRol";
+
 const idInputIdArticulo = "#articulo_id";
 
 const idInputNombreArticulo = "#nombreArticulo";
@@ -18,25 +20,47 @@ const idLabelImgArticulo = "#textoImagenArticulo";
 
 const nameContenedorDatos = "contenedorDatos";
 const idContenedorArticulo = "#contenedorArticulo";
-const idContenedorEmplazamiento = "#contenedorEmplazamiento";
+const idContenedorExistencia = "#contenedorExistencia";
 const idContenedorProveedor = "#contenedorProveedor";
-const idTablaProveedores = "#tablaProveedores";
+
 const nameBtnArticulo = "btnArticulo";
-const nameBtnEmplazamiento = "btnEmplazamiento";
+const nameBtnExistencia = "btnExistencia";
 const nameBtnProveedor = "btnProveedor";
 const idBtnCancelar = "#btnCancelar";
 const nameBtnCancelar = "btnCancelar";
 
+const idTablaProveedores = "#tablaProveedores";
+const idBtnModificar = "#btnModificar";
+const idBtnCrear = "#btnCrear";
+const idBtnEliminar = "#btnEliminar";
+const idBtnDetalla = "#btnDetalle";
+
+const idTablaExistencias = "#tablaExistencias";
+const idBtnModificarExistencia = "#btnModificarExistencia";
+const idBtnCrearExistencia = "#btnCrearExistencia";
+const idBtnEliminarExistencia = "#btnEliminarExistencia";
+const idBtnDetallaExistencia = "#btnDetalleExistencia";
+
 let articulo;
+const User = {rol: ROLES.USER};
 
 $(document).ready(function () {
     const inputIdArticulo = document.querySelector(idInputIdArticulo);
     const btnsArticulo = document.querySelectorAll(`[name="${nameBtnArticulo}"`);
-    const btnsEmplazamiento = document.querySelectorAll(`[name="${nameBtnEmplazamiento}"`);
+    const btnsExistencia = document.querySelectorAll(`[name="${nameBtnExistencia}"`);
     const btnsProveedor = document.querySelectorAll(`[name="${nameBtnProveedor}"`);
     const btnsCancelar = document.querySelectorAll(`[name="${nameBtnCancelar}"]`); 
+    const tablaProveedores = document.querySelector(idTablaProveedores);
+    const btnCrear = document.querySelector(idBtnCrear);
+    const btnModificar = document.querySelector(idBtnModificar);
+    const btnEliminar = document.querySelector(idBtnEliminar);
+    const btnDetalla = document.querySelector(idBtnDetalla);
+    
+    User.rol = document.querySelector(idInputUserRol).value;
     
     getArticulo(inputIdArticulo.value);
+    
+    observeRowSelectedChange(tablaProveedores, onDetectarFilaSeleccionadaProveedores);
     
     btnsArticulo.forEach(btn => {
         btn.addEventListener('click', (event) => {
@@ -44,9 +68,9 @@ $(document).ready(function () {
         });
     });
     
-    btnsEmplazamiento.forEach(btn => {
+    btnsExistencia.forEach(btn => {
         btn.addEventListener('click', (event) => {
-            mostrarContenedor(event, nameContenedorDatos, idContenedorEmplazamiento);
+            mostrarContenedor(event, nameContenedorDatos, idContenedorExistencia);
         });
     });
     
@@ -66,10 +90,17 @@ $(document).ready(function () {
                 window.location.href = "almacen/existencias";
             }
         });
-        
     });
   
 });
+
+function onDetectarFilaSeleccionadaProveedores(hayFilaSeleccionada) {
+    if(User.rol === ROLES.ADMIN) {
+        $(idBtnEliminar).prop('disabled', !hayFilaSeleccionada);
+        $(idBtnModificar).prop('disabled', !hayFilaSeleccionada);
+    }
+    $(idBtnDetalla).prop('disabled', !hayFilaSeleccionada);
+}
 
 function getArticulo(idArticulo) {
     solicitudGet(`api/articulo/articulo?idArticulo=${idArticulo}`, "", true)

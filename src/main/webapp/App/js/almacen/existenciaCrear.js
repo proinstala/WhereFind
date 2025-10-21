@@ -1,6 +1,6 @@
 import {solicitudPost, solicitudGet, resetImg, fillInputSelect, cargarInputSelect, vaciarSelect, detectarCambiosFormulario, resetCamposForm } from '../comunes.mjs';
 import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from '../alertasSweetAlert2.mjs';
-import {DEFAULT_IMG} from '../constantes.mjs';
+import { DEFAULT_IMG, DISPONIBILIDAD } from '../constantes.mjs';
 
 const idSelectArticulo = "#articulo";
 const idSelectArticuloProveedor = "#articuloProveedor";
@@ -55,7 +55,8 @@ $(document).ready(function () {
                             mostrarMensajeError("Se ha producido un error", response.result);
                         } else {
                             const articulo = response.data;
-                            fillInputSelect(selectArticuloProveedor, articulo.listaProveedores, 'Seleccione un proveedor');
+                            const listaFiltrada = articulo.listaProveedores.filter(articuloProveedor => articuloProveedor.disponible === DISPONIBILIDAD.DISPONIBLE.name);
+                            fillInputSelect(selectArticuloProveedor, listaFiltrada, 'Seleccione un proveedor');
 
                             // Imagen: usa la imagen del articulo si existe, de lo contrario la imagen por defecto
                             const imagenValida = articulo.imagen && articulo.imagen.trim() !== "";

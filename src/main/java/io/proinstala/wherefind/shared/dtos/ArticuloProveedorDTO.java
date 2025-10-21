@@ -1,6 +1,7 @@
 
 package io.proinstala.wherefind.shared.dtos;
 
+import io.proinstala.wherefind.shared.consts.Disponibilidad;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +19,6 @@ public class ArticuloProveedorDTO {
     private ProveedorDTO proveedor;
     private double precio;
     private LocalDate fechaPrecio;
-    private boolean disponible;
+    private Disponibilidad disponible;
     private LocalDate fechaNoDisponible;
 }

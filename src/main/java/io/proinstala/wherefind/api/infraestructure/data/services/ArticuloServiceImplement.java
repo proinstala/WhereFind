@@ -2,6 +2,7 @@
 package io.proinstala.wherefind.api.infraestructure.data.services;
 
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IArticuloService;
+import io.proinstala.wherefind.shared.consts.Disponibilidad;
 import io.proinstala.wherefind.shared.dtos.ArticuloDTO;
 import io.proinstala.wherefind.shared.dtos.ArticuloProveedorDTO;
 import io.proinstala.wherefind.shared.dtos.DireccionDTO;
@@ -105,7 +106,7 @@ public class ArticuloServiceImplement extends BaseMySql implements IArticuloServ
                 .proveedor(proveedorDTO)
                 .precio(rs.getDouble("art_pro.precio"))
                 .fechaPrecio(rs.getObject("art_pro.fecha_precio", LocalDate.class))
-                .disponible(rs.getBoolean("art_pro.disponible"))
+                .disponible(Disponibilidad.fromValue(rs.getBoolean("art_pro.disponible")))
                 .fechaNoDisponible(rs.getObject("art_pro.fecha_no_disponible", LocalDate.class))
                 .build();
         
