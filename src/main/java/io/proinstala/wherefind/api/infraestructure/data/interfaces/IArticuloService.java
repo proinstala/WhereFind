@@ -2,6 +2,7 @@
 package io.proinstala.wherefind.api.infraestructure.data.interfaces;
 
 import io.proinstala.wherefind.shared.dtos.ArticuloDTO;
+import io.proinstala.wherefind.shared.dtos.ArticuloProveedorDTO;
 import java.util.List;
 
 /**
@@ -93,4 +94,71 @@ public interface IArticuloService {
      * @return {@code true} si el artículo fue eliminado con éxito, o {@code false} si ocurrió un error o no se eliminó ninguna fila.
      */
     public boolean deleteArticulo(int articuloId);
+    
+    
+    
+    
+    // ─────────────────────────────────────────────────────────────
+    // Métodos para la gestión de asociaciones Artículo-Proveedor
+    // ─────────────────────────────────────────────────────────────
+  
+    
+    /**
+     * Obtiene una asociación específica entre un artículo y un proveedor por su identificador.
+     *
+     * <p>Este método devuelve un objeto {@link ArticuloProveedorDTO} que representa la relación
+     * entre un artículo y un proveedor. Si no se encuentra ninguna asociación con el ID especificado,
+     * el método devuelve {@code null}. Las implementaciones deben manejar adecuadamente los casos en los
+     * que el ID no corresponde a ningún registro existente.</p>
+     *
+     * @param articuloProveedorId el identificador único de la asociación artículo-proveedor a obtener.
+     * @return el objeto {@link ArticuloProveedorDTO} correspondiente al ID proporcionado, o {@code null} si no se encuentra ninguna asociación con ese ID.
+     */
+    public ArticuloProveedorDTO getArticuloProveedorById(int articuloProveedorId);
+    
+    
+    /**
+     * Crea una nueva asociación entre un artículo y un proveedor.
+     *
+     * Este método inserta una nueva relación entre un artículo y un proveedor utilizando los valores 
+     * proporcionados en el objeto {@link ArticuloProveedorDTO}. Si la inserción es exitosa, el 
+     * objeto {@link ArticuloProveedorDTO} se devuelve con el ID generado automáticamente por la 
+     * base de datos asignado. En caso de error durante la inserción, el método devuelve {@code null}.
+     *
+     * <p>La implementación debe manejar el proceso de inserción y asignar el ID generado 
+     * al objeto {@link ArticuloProveedorDTO}. El manejo adecuado de los recursos y la captura de 
+     * excepciones son esenciales para garantizar la integridad de los datos.</p>
+     *
+     * @param articuloProveedorDTO el objeto {@link ArticuloProveedorDTO} que contiene los datos de la asociación a insertar.
+     * @return el objeto {@link ArticuloProveedorDTO} con el ID asignado si la inserción fue exitosa, 
+     *         o {@code null} si ocurrió un error durante la inserción.
+     */
+    public ArticuloProveedorDTO createArticuloProveedor(ArticuloProveedorDTO articuloProveedorDTO);
+    
+    
+    /**
+     * Actualiza la información de una asociación entre un artículo y un proveedor en la base de datos.
+     *
+     * Este método actualiza los datos de una asociación existente utilizando los valores 
+     * proporcionados en el objeto {@link ArticuloProveedorDTO}. El método devuelve {@code true} si 
+     * la actualización fue exitosa, es decir, si se afectó al menos una fila. Si ocurre un error 
+     * o no se actualiza ninguna fila, devuelve {@code false}.
+     *
+     * @param articuloProveedorDTO el objeto {@link ArticuloProveedorDTO} que contiene los datos actualizados de la asociación.
+     * @return {@code true} si la actualización se realizó con éxito, o {@code false} si ocurrió un error o no se actualizó ninguna fila.
+     */
+    public boolean updateArticuloProveedor(ArticuloProveedorDTO articuloProveedorDTO);
+    
+    
+    /**
+     * Elimina una asociación entre un artículo y un proveedor de la base de datos.
+     *
+     * Este método elimina una relación específica entre un artículo y un proveedor,
+     * devuelve {@code true} si la operación se realizó con éxito, es decir, si al menos una fila fue afectada.
+     * En caso de error o si no se afectó ninguna fila, devuelve {@code false}.
+     *
+     * @param articuloProveedorId el identificador único de la asociación artículo-proveedor a eliminar.
+     * @return {@code true} si la asociación fue eliminada con éxito, o {@code false} si ocurrió un error o no se eliminó ninguna fila.
+     */
+    public boolean deleteArticuloProveedor(int articuloProveedorId);
 }

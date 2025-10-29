@@ -17,6 +17,13 @@
     &.texto--centrado {
         text-align: center;
     }
+    
+    &.disponible {
+        color: var(--color_disponible);
+    }
+    &.no_disponible {
+        color: var(--color_no_disponible)
+    }
 }
 
 .tabla th {

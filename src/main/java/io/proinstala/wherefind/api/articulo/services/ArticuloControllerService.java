@@ -5,13 +5,16 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.proinstala.wherefind.api.infraestructure.data.GestorPersistencia;
 import io.proinstala.wherefind.api.infraestructure.data.interfaces.IArticuloService;
+import io.proinstala.wherefind.shared.consts.Disponibilidad;
 import io.proinstala.wherefind.shared.consts.textos.FormParametros;
 import io.proinstala.wherefind.shared.consts.textos.LocaleApp;
 import io.proinstala.wherefind.shared.controllers.actions.ActionController;
 import io.proinstala.wherefind.shared.dtos.ArticuloDTO;
+import io.proinstala.wherefind.shared.dtos.ArticuloProveedorDTO;
 import io.proinstala.wherefind.shared.dtos.MarcaDTO;
 import io.proinstala.wherefind.shared.dtos.ResponseDTO;
 import io.proinstala.wherefind.shared.services.BaseService;
+import io.proinstala.wherefind.shared.tools.DisponibilidadAdapter;
 import io.proinstala.wherefind.shared.tools.LocalDateAdapter;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -261,8 +264,7 @@ public class ArticuloControllerService extends BaseService {
         //Respuesta de la acción actual
         ResponseDTO responseDTO;
         
-        // Comprueba que hay más de 1 parámetro
-        if (actionController.parametros().length <= 1) {
+        if (actionController.parametros().length == 1) {
             // Crea la respuesta con un error
             responseDTO = getResponseError(LocaleApp.ERROR_FALTAN_PARAMETROS);
             responseJson(actionController.server().response(), responseDTO);
@@ -292,5 +294,183 @@ public class ArticuloControllerService extends BaseService {
 
         responseJson(actionController.server().response(), responseDTO);
     }  
+    
+    /**
+     * Obtiene una asociación artículo-proveedor por su identificador.
+     * 
+     * <p>Este método extrae el identificador del registro artículo-proveedor desde el controlador de acción,
+     * utiliza el servicio de persistencia para obtener sus datos completos (incluyendo la información
+     * del artículo y del proveedor) y devuelve la respuesta en formato JSON.</p>
+     *
+     * @param actionController El controlador de acción que contiene los parámetros de la solicitud.
+     */
+    public void getArticuloProveedorById(ActionController actionController) {
+        ResponseDTO responseDTO;
+        
+        IArticuloService articuloServiceImp = GestorPersistencia.getArticuloService();
+        
+        ArticuloProveedorDTO articuloProveedorDTO = null;
+
+        int idArticuloProveedor = -1;
+        try {
+            String id = actionController.server().getRequestParameter("idArticuloProveedor", "-1");
+            idArticuloProveedor = Integer.parseInt(id);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        
+        articuloProveedorDTO = articuloServiceImp.getArticuloProveedorById(idArticuloProveedor);
+        
+        if(articuloProveedorDTO != null) {
+            responseDTO = getResponseOk("OK", articuloProveedorDTO, 0);
+        } else {
+            //Crea la respuesta con un error
+            responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR, new ArrayList<>());
+        }
+        
+        //Devuelve la respuesta al navegador del usuario en formato json
+        responseJson(actionController.server().response(), responseDTO);
+    }
+    
+    /**
+     * Crea una nueva asociacion proveedor artículo en la base de datos.
+     *
+     * <p>Este método recibe los datos del proveedor-artículo en formato JSON, los deserializa a un objeto
+     * {@link ArticuloProveedorDTO}, y delega la operación al servicio de persistencia. Devuelve la respuesta
+     * al cliente en formato JSON.</p>
+     *
+     * @param actionController el controlador de la acción que contiene los parámetros de la solicitud.
+     */
+    public void createArticuloProveedor(ActionController actionController) {
+        ResponseDTO responseDTO;
+
+        IArticuloService articuloServiceImp = GestorPersistencia.getArticuloService();
+
+        String jsonProveedor = actionController.server().getRequestParameter("articuloProveedorJSON", "");
+        ArticuloProveedorDTO articuloProveedorDTO = null;
+
+        if (jsonProveedor != null && !jsonProveedor.isBlank()) {
+            Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).registerTypeAdapter(Disponibilidad.class, new DisponibilidadAdapter()).create();
+            articuloProveedorDTO = gson.fromJson(jsonProveedor, ArticuloProveedorDTO.class);
+
+            articuloProveedorDTO = articuloServiceImp.createArticuloProveedor(articuloProveedorDTO);
+        }
+
+        if (articuloProveedorDTO != null) {
+            responseDTO = getResponseOk(LocaleApp.INFO_CREATE_OK, articuloProveedorDTO, 0);
+        } else {
+            responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
+        }
+
+        responseJson(actionController.server().response(), responseDTO);
+    }
+
+    /**
+     * Actualiza la información de una asociacion de proveedor artículo.
+     *
+     * <p>Obtiene el identificador del proveedor-artículo y los nuevos datos desde la solicitud.
+     * Si los parámetros son válidos, actualiza la información mediante el servicio de persistencia.</p>
+     *
+     * @param actionController el controlador de la acción que contiene los parámetros de la solicitud.
+     */
+    public void updateArticuloProveedor(ActionController actionController) {
+        ResponseDTO responseDTO;
+
+        if (actionController.parametros().length <= 1) {
+            responseDTO = getResponseError(LocaleApp.ERROR_FALTAN_PARAMETROS);
+            responseJson(actionController.server().response(), responseDTO);
+            return;
+        }
+
+        int id = actionController.getIntFromParametros(1);
+        if (id == -1) {
+            responseDTO = getResponseError(LocaleApp.ERROR_PARAMETRO_NO_CORRECTO);
+            responseJson(actionController.server().response(), responseDTO);
+            return;
+        }
+
+        IArticuloService articuloServiceImp = GestorPersistencia.getArticuloService();
+        ArticuloProveedorDTO articuloProveedorDTO = articuloServiceImp.getArticuloProveedorById(id);
+
+        if (articuloProveedorDTO != null) {
+            String strPrecio = actionController.server().getRequestParameter(FormParametros.PARAM_ARTICULO_PROVEEDOR_PRECIO, "0");
+            String strFechaPrecio = actionController.server().getRequestParameter(FormParametros.PARAM_ARTICULO_PROVEEDOR_FECHA_PRECIO, "");
+            String strDisponible = actionController.server().getRequestParameter(FormParametros.PARAM_ARTICULO_PROVEEDOR_DISPONIBILIDAD, "");
+            String strFechaNoDisponible = actionController.server().getRequestParameter(FormParametros.PARAM_ARTICULO_PROVEEDOR_FECHA_NO_DISPONIBLE, "");
+
+            try {
+                double precio = Double.parseDouble(strPrecio);
+                
+                LocalDate fechaPrecio = null;
+                if(!strFechaPrecio.isBlank()) {
+                    fechaPrecio = LocalDate.parse(strFechaPrecio);
+                }
+                
+                
+                int disponible = Integer.parseInt(strDisponible);
+                Disponibilidad disponibilidad = Disponibilidad.fromValue(disponible > 0);
+                
+                
+                LocalDate fechaNoDisponible = null;
+                if(disponibilidad.equals(Disponibilidad.NO_DISPONIBLE) && !strFechaNoDisponible.isBlank()) {
+                    fechaNoDisponible = LocalDate.parse(strFechaNoDisponible);
+                }
+                
+                articuloProveedorDTO.setPrecio(precio);
+                articuloProveedorDTO.setFechaPrecio(fechaPrecio);
+                articuloProveedorDTO.setDisponible(disponibilidad);
+                articuloProveedorDTO.setFechaNoDisponible(fechaNoDisponible);
+
+                if (articuloServiceImp.updateArticuloProveedor(articuloProveedorDTO)) {
+                    responseDTO = getResponseOk(LocaleApp.INFO_UPDATE_OK, articuloProveedorDTO, 0);
+                } else {
+                    responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
+                }
+
+            } catch (NumberFormatException e) {
+                responseDTO = getResponseError(LocaleApp.ERROR_PARAMETRO_NO_CORRECTO);
+            }
+        } else {
+            responseDTO = getResponseError(LocaleApp.ERROR_NO_EXISTE_ELEMENTO);
+        }
+
+        responseJson(actionController.server().response(), responseDTO);
+    }
+
+    /**
+     * Elimina una asociacion de proveedor artículo.
+     *
+     * <p>Este método obtiene el identificador del registro proveedor-artículo y solicita su eliminación
+     * a través del servicio de persistencia. Devuelve una respuesta indicando el resultado de la operación.</p>
+     *
+     * @param actionController el controlador de la acción que maneja la solicitud.
+     */
+    public void deleteArticuloProveedor(ActionController actionController) {
+        ResponseDTO responseDTO;
+
+        if (actionController.parametros().length <= 1) {
+            responseDTO = getResponseError(LocaleApp.ERROR_FALTAN_PARAMETROS);
+            responseJson(actionController.server().response(), responseDTO);
+            return;
+        }
+
+        int id = actionController.getIntFromParametros(1);
+        if (id == -1) {
+            responseDTO = getResponseError(LocaleApp.ERROR_PARAMETRO_NO_CORRECTO);
+            responseJson(actionController.server().response(), responseDTO);
+            return;
+        }
+
+        IArticuloService articuloServiceImp = GestorPersistencia.getArticuloService();
+
+        if (articuloServiceImp.deleteArticuloProveedor(id)) {
+            responseDTO = getResponseOk(LocaleApp.INFO_UPDATE_OK, id, 0);
+        } else {
+            responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR);
+        }
+
+        responseJson(actionController.server().response(), responseDTO);
+    }
+
     
 }

@@ -1,6 +1,6 @@
 import { solicitudGet, solicitudPut, mostrarContenedor, addRowSelected, observeRowSelectedChange, deleteRowSelectedTable, fillInputSelect } from '../comunes.mjs';
 import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from '../alertasSweetAlert2.mjs';
-import { DEFAULT_IMG, DISPLAY_TYPES } from '../constantes.mjs';
+import { DEFAULT_IMG, DISPLAY_TYPES, DISPONIBILIDAD } from '../constantes.mjs';
 
 const idInputIdExistencia = "#existencia_id";
 
@@ -90,7 +90,6 @@ $(document).ready(function () {
                 window.location.href = "almacen/existencias";
             }
         });
-        
     });
   
 });
@@ -156,6 +155,12 @@ function fillFielsExistencia(existencia) {
     imgArticulo.src = imagenValida ?  articulo.imagen : DEFAULT_IMG.ARTICULO;
     
     labelImgArticulo.textContent = "";
+    
+    if(existencia.disponible === DISPONIBILIDAD.DISPONIBLE.name) {
+        inputDisponibilidad.classList.add('disponible');
+    } else {
+        inputDisponibilidad.classList.add('no_disponible');
+    }
     
     fillFielsEmplazamiento(emplazamiento);
     fillFielsProveedor(proveedor);

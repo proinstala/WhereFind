@@ -77,6 +77,54 @@ public class ExistenciaControllerService extends BaseService {
     }
     
     /**
+     * Busca todas las existencias asociadas a un artículo específico.
+     * 
+     * <p>Este método obtiene el identificador del artículo desde los parámetros
+     * de la solicitud proporcionados por el {@link ActionController}, y utiliza
+     * el servicio de existencias para recuperar todas las existencias vinculadas
+     * a dicho artículo.  
+     * 
+     * <p>Los resultados se devuelven al cliente en formato JSON, conteniendo una
+     * lista de objetos {@link ExistenciaDTO}.  
+     * En caso de que no existan registros o se produzca un error durante la búsqueda,
+     * se devuelve una respuesta de error estandarizada.</p>
+     * 
+     * @param actionController el controlador de acción que contiene los parámetros de la solicitud.
+     * 
+     * @see IExistenciaService#findExistenciasByArticulo(int)
+     * @see ExistenciaDTO
+     */
+    public void findExistenciasByArticulo(ActionController actionController) {
+        //Respuesta de la acción actual
+        ResponseDTO responseDTO;
+
+        IExistenciaService existenciaServiceImp = GestorPersistencia.getExistenciaService();
+
+        List<ExistenciaDTO> listaExistenciaDTO = null;
+        
+        String strIdArticulo = actionController.server().getRequestParameter(FormParametros.PARAM_EXISTENCIA_ARTICULO_ID, "");
+        
+        int idArticulo = -1;
+        try {
+            idArticulo = Integer.parseInt(strIdArticulo);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        
+        listaExistenciaDTO = existenciaServiceImp.findExistenciasByArticulo(idArticulo);
+
+        if(listaExistenciaDTO != null) {
+            responseDTO = getResponseOk("OK", listaExistenciaDTO, 0);
+        } else {
+            //Crea la respuesta con un error
+            responseDTO = getResponseError(LocaleApp.ERROR_SE_HA_PRODUCIDO_UN_ERROR, new ArrayList<>());
+        }
+        
+        //Devuelve la respuesta al navegador del usuario en formato json
+        responseJson(actionController.server().response(), responseDTO);
+    }
+    
+    /**
      * Obtiene una existencia por su identificador.
      * 
      * <p>Este método extrae el identificador de la existencia del controlador de acción, utiliza el
@@ -267,7 +315,7 @@ public class ExistenciaControllerService extends BaseService {
                 
                 LocalDate fechaNoDisponible = null;
                 if(disponibilidad.equals(Disponibilidad.NO_DISPONIBLE) && !strFechaNoDisponible.isBlank()) {
-                    fechaNoDisponible = LocalDate.parse(strFechaCompra);
+                    fechaNoDisponible = LocalDate.parse(strFechaNoDisponible);
                 }
                 
                 

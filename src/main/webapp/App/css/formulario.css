@@ -170,6 +170,27 @@
                 color: var(--texto_medio);
             }
         }
+        
+        &.disponible {
+            color: var(--color_disponible);
+        }
+        &.no_disponible {
+            color: var(--color_no_disponible);
+        }
+        
+
+        option {
+            &.disponible {
+                color: var(--color_disponible);
+            }
+
+            &.no_disponible {
+                color: var(--color_no_disponible);
+            }
+
+        }
+        
+
     }
     
     

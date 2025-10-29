@@ -445,6 +445,11 @@ function seleccionarValorSelect(selectNode, value) {
 
         if (optionToSelect) {
             selectNode.value = value;
+            
+            //Disparar evento 'change' para que los listeners reaccionen
+            const event = new Event('change', { bubbles: true });
+            selectNode.dispatchEvent(event);
+            
             resolve(); // Resuelve la promesa si el valor fue seleccionado correctamente
         } else {
             reject(new Error(`El valor "${value}" no se encontró en el select ${selectNode.name}`));

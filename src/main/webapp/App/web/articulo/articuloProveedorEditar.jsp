@@ -1,15 +1,14 @@
 <%-- 
-    Document   : existenciaEditar
-    Created on : 26 sept 2025, 19:16:57
+    Document   : articuloProveedorEditar
+    Created on : 25 oct 2025, 8:32:35
     Author     : David
 --%>
 
-
 <%@page import="io.proinstala.wherefind.shared.controllers.BaseHttpServlet"%>
 <%@page import="io.proinstala.wherefind.shared.controllers.actions.ActionController"%>
-<%@page import="io.proinstala.wherefind.shared.dtos.UserDTO"%>
+<%@page import="io.proinstala.wherefind.shared.controllers.actions.ActionServer"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="io.proinstala.wherefind.api.identidad.UserSession"%>
+<!DOCTYPE html>
 <%
     // Si no se está logueado se manda al usuario al login.jsp
     if(UserSession.redireccionarIsUserNotLogIn(new ActionServer(request, response))){
@@ -17,15 +16,18 @@
         return;
     }
 
-    ActionController actionController = BaseHttpServlet.getActionControllerFromJSP(request, response, "almacen/existencias/edit");
-    int existencia_id = actionController.getIntFromParametros(1);
+    UserDTO userDTO = UserSession.getUserLogin(request);
+    
+    ActionController actionController = BaseHttpServlet.getActionControllerFromJSP(request, response, "articulo/articulos/articuloProveedorEditar");
+    int articuloProveedor_id = actionController.getIntFromParametros(1);
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >
-    <jsp:param name="titleweb" value="WherFind - Existencia"/>
+    <jsp:param name="titleweb" value="WhereFind - Articulo"/>
 </jsp:include>
 
 <link href="App/css/formulario.css?v=<%=AppSettings.APP_VERSION_CSS%>" rel="stylesheet" type="text/css"/>
+
 <div class="contenedor__general">
     <div class="contenedor">
 
@@ -33,18 +35,18 @@
 
         <div class="main">
 
-            <div class="contenedor__formulario formulario--3_filas max-width-100" id="form_existencia">
+            <div class="contenedor__formulario formulario--3_filas max-width-100" id="form_contacto">
+                <input type="hidden" name="articuloProveedor_id" id="articuloProveedor_id" value="<%=articuloProveedor_id%>">
 
                 <div class="contenedor__formulario--cabecera">
                     <div>
-                        <h1>Editar Existencia</h1>
+                        <h1>Editar Artículo -> Proveedor</h1>
                     </div>
                 </div>
 
-                <!-- Formulario para modificar los datos de direccion -->
+                <!-- Formulario -->
                 <div class="contenedor__formulario--main">
-                    <form class="formulario" name="frmModificarExistencia" id="frmModificarExistencia">
-                        <input type="hidden" name="existencia_id" id="existencia_id" value="<%=existencia_id%>">
+                    <form class="formulario" name="frmEditarArticuloProveedor" id="frmEditarArticuloProveedor">
                         
                         <div class="form__input grid-row-span-2">
                             <div id="contenedorImgArticulo">
@@ -62,47 +64,48 @@
                         </div>
                         
                         <div class="form__input col-span-2">
-                            <select name="articulo" id="articulo">
-                            </select>
-                            <label for="articulo">Artículo</label>
+                            <input type="text" name="articulo" id="articulo" value="" readonly>
+                            <label for="articulo">Articulo</label>
+                        </div>
+                        
+                        <div class="form__input col-span-2">
+                            <input type="text" name="descripcionArticulo" id="descripcionArticulo" value="" readonly>
+                            <label for="descripcionArticulo">Descripción Artículo</label>
+                        </div>
+                        
+                        <div class="form__input grid-row-span-2">
+                            <div id="contenedorImgProveedor">
+                                <input type="hidden" name="imagenProveedorB64" id="imagenProveedorB64">
+                                <div class="contenedor__formulario--imagen">
+                                    <img src="App/img/defaultProveedor.svg" id="imgProveedor" alt="imagen proveedor">
+                                </div>
+
+                                <label for="inputImgProveedor" class="input_foto">
+                                    <input type="file" name="inputImgProveedor" id="inputImgProveedor" accept="image/*" disabled>
+                                    <i class="las la-camera"></i>
+                                    <span id="textoImagenProveedor"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form__input col-span-2">
+                            <input type="text" name="proveedor" id="proveedor" value="" readonly>
+                            <label for="proveedor">Proveedor</label>
+                        </div>
+                        
+                        <div class="form__input col-span-2">
+                            <input type="text" name="descripcionProveedor" id="descripcionProveedor" value="" readonly>
+                            <label for="descripcionProveedor">Descripción Proveedor</label>
                         </div>
                         
                         <div class="form__input">
-                            <select name="articuloProveedor" id="articuloProveedor">
-                            </select>
-                            <label for="articuloProveedor">Proveedor</label>
-                        </div>
-
-                        <div class="form__input">
-                            <input type="number" name="precio" id="precio" placeholder="Introduce el precio" value="">
+                            <input type="number" name="precio" id="precio" placeholder="Introduce el precio del artículo" value="" min="0">
                             <label for="precio">Precio</label>
                         </div>
                         
                         <div class="form__input">
-                            <input type="text" name="sku" id="sku" placeholder="Introduce un SKU para la existencia"value="">
-                            <label for="sku">SKU</label>
-                        </div>
-
-                        <div class="form__input">
-                            <input type="date" name="fechaCompra" id="fechaCompra" value="">
-                            <label for="fechaCompra">Fecha de Compra</label>
-                        </div>
-
-                        <div class="form__input">
-                            <input type="text" name="comprador" id="comprador" placeholder="Introduce el nombre del comprador"value="">
-                            <label for="comprador">Comprador</label>
-                        </div>
-
-                        <div class="form__input">
-                            <select name="almacen" id="almacen">
-                            </select>
-                            <label for="almacen">Almacén</label>
-                        </div>
-
-                        <div class="form__input">
-                            <select name="emplazamiento" id="emplazamiento">
-                            </select>
-                            <label for="emplazamiento">Emplazamiento</label>
+                            <input type="date" name="fechaPrecio" id="fechaPrecio" value="">
+                            <label for="fechaPrecio">Fecha Precio</label>
                         </div>
                         
                         <div class="form__input">
@@ -118,21 +121,16 @@
                             <label for="fechaNoDisponible">Fecha no disponible</label>
                         </div>
                         
-                        <div class="form__input col-span-2">
-                            <input type="text" name="anotacion" id="anotacion" placeholder="Introduce una anotación para la existencia"value="">
-                            <label for="anotacion">Anotación</label>
-                        </div>
-
                     </form>
                 </div>
 
                 <div class="contenedor__formulario--footer">
                     <div class="form__btn_circle">
-                        <button form="frmModificarExistencia" id="btnGuardar" title="Guardar" type="submit" disabled><i class="las la-save"></i></button>
+                        <button form="frmEditarArticuloProveedor" id="btnGuardar" title="Guardar" type="submit" disabled><i class="las la-save"></i></button>
                     </div>
 
                     <div class="form__btn_circle">
-                        <button id="btnDeshacerCambiosExistencia" title="Deshacer cambios" disabled><i class="las la-redo-alt" ></i></button>
+                        <button id="btnDeshacerCambiosArticuloProveedor" title="Deshacer cambios" disabled><i class="las la-redo-alt" ></i></button>
                     </div>
 
                     <div class="form__btn_circle">
@@ -140,7 +138,7 @@
                     </div>
                 </div>
 
-            </div> <!-- Fin contenedor__formulario (direccion)-->
+            </div> <!-- Fin contenedor__formulario -->
 
         </div> <!-- Fin main -->
 
@@ -152,6 +150,6 @@
 </div>
 
 
-<script src="App/js/almacen/existenciaEditar.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
+<script src="App/js/articulo/articuloProveedorEditar.js?v=<%=AppSettings.APP_VERSION_JS%>" type="module" defer></script>
 
 <%@ include file="/App/web/shared/foot.jsp" %>

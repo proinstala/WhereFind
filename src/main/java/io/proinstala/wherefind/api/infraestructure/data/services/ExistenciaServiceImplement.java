@@ -347,6 +347,33 @@ public class ExistenciaServiceImplement extends BaseMySql implements IExistencia
         }
         return listaExistencias;
     }
+    
+    @Override
+    public List<ExistenciaDTO> findExistenciasByArticulo(int articuloId) {
+        List<ExistenciaDTO> listaExistencias = new ArrayList<>();
+
+        // Construimos la consulta base
+        StringBuilder sql = new StringBuilder(SQL_SELECT_COMUN);
+        sql.append(" WHERE art.id = ?");
+
+        try (Connection conexion = getConnection();
+             PreparedStatement ps = conexion.prepareStatement(sql.toString())) {
+
+            ps.setInt(1, articuloId);
+
+            try (ResultSet resultSet = ps.executeQuery()) {
+                while (resultSet.next()) {
+                    ExistenciaDTO existenciaDTO = getExistenciaFromResultSet(resultSet);
+                    listaExistencias.add(existenciaDTO);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return listaExistencias;
+    }
 
     @Override
     public ExistenciaDTO createExistencia(ExistenciaDTO existenciaDTO) {
@@ -356,7 +383,7 @@ public class ExistenciaServiceImplement extends BaseMySql implements IExistencia
 
             ps.setInt(1, existenciaDTO.getArticulo().getId());
             ps.setObject(2, existenciaDTO.getProveedor() != null ? existenciaDTO.getProveedor().getId() : null);
-            ps.setObject(3, existenciaDTO.getSku() != null ? existenciaDTO.getSku() : null);
+            ps.setObject(3, existenciaDTO.getSku() != null && !existenciaDTO.getSku().isBlank() ? existenciaDTO.getSku() : null);
             ps.setInt(4, existenciaDTO.getEmplazamiento().getId());
             ps.setDouble(5, existenciaDTO.getPrecio());
             ps.setDate(6, Date.valueOf(existenciaDTO.getFechaCompra()));
@@ -393,7 +420,7 @@ public class ExistenciaServiceImplement extends BaseMySql implements IExistencia
             
             ps.setInt(1, existenciaDTO.getArticulo().getId());
             ps.setObject(2, existenciaDTO.getProveedor() != null ? existenciaDTO.getProveedor().getId() : null);
-            ps.setObject(3, existenciaDTO.getSku() != null ? existenciaDTO.getSku() : null);
+            ps.setObject(3, existenciaDTO.getSku() != null && !existenciaDTO.getSku().isBlank() ? existenciaDTO.getSku() : null);
             ps.setInt(4, existenciaDTO.getEmplazamiento().getId());
             ps.setDouble(5, existenciaDTO.getPrecio());
             ps.setDate(6, Date.valueOf(existenciaDTO.getFechaCompra()));

@@ -1,6 +1,8 @@
-import {solicitudPost, solicitudGet, resetImg, fillInputSelect, cargarInputSelect, vaciarSelect, detectarCambiosFormulario, resetCamposForm } from '../comunes.mjs';
+import {solicitudPost, solicitudGet, resetImg, fillInputSelect, seleccionarValorSelect, cargarInputSelect, vaciarSelect, detectarCambiosFormulario, resetCamposForm } from '../comunes.mjs';
 import { mostrarMensaje, mostrarMensajeError, mostrarMensajeOpcion } from '../alertasSweetAlert2.mjs';
 import { DEFAULT_IMG, DISPONIBILIDAD } from '../constantes.mjs';
+
+const idInputArticulo = "#articulo_id";
 
 const idSelectArticulo = "#articulo";
 const idSelectArticuloProveedor = "#articuloProveedor";
@@ -26,6 +28,8 @@ const idLabelImgArticulo = "#textoImagenArticulo";
 const fechaHoy = new Date().toISOString().split("T")[0];
 
 $(document).ready(function () {
+    const inputIdArticulo = document.querySelector(idInputArticulo);
+    
     const selectArticulo = document.querySelector(idSelectArticulo);
     const selectArticuloProveedor = document.querySelector(idSelectArticuloProveedor);
     const selectAlmacen = document.querySelector(idSelectAlmacen);
@@ -114,6 +118,11 @@ $(document).ready(function () {
         .then(() => {
             onDetectarCambiosCrearExistencia(false);
             detectarCambiosFormulario(idFormExistencia, onDetectarCambiosCrearExistencia);
+            
+            const idArticulo = inputIdArticulo.value;
+            if(idArticulo !== "-1") {
+                seleccionarValorSelect(selectArticulo, idArticulo);
+            }
         })
         .catch(error => {
             console.error("Error al cargar selects:", error);
@@ -123,12 +132,7 @@ $(document).ready(function () {
     validarFormulario(idFormExistencia);
 
     btnCancelar.addEventListener('click', () => {
-        if (document.referrer) {
-                window.location.href = document.referrer;
-            } else {
-                // Fallback: vuelve a una página por defecto
-                window.location.href = "almacen/existencias";
-            }
+        window.location.href = obtenerReferenciaRedireccionar();
     });
 
     btnDeshacerCambiosExistencia.addEventListener('click', () => {
@@ -147,6 +151,15 @@ $(document).ready(function () {
 function onDetectarCambiosCrearExistencia(hayCambios) {
     $("#btnGuardar").prop('disabled', !hayCambios);
     $("#btnDeshacerCambiosExistencia").prop('disabled', !hayCambios);
+}
+
+function obtenerReferenciaRedireccionar() {
+    if (document.referrer) {
+        return window.location.href = document.referrer;
+    } else {
+        // Fallback: vuelve a una página por defecto
+        return window.location.href = "almacen/existencias";
+    }
 }
 
 
@@ -228,7 +241,7 @@ function validarFormulario(idForm) {
                         if (response.isError === 1) {
                             mostrarMensajeError("No se puede crear los datos", response.result);
                         } else {
-                            const redireccionar = () => window.location.href = "almacen/existencias";
+                            const redireccionar = () => window.location.href = obtenerReferenciaRedireccionar();
                             mostrarMensaje("Existencia Creada.", `Se ha creado la existencia con id "${response.data.id}" correctamente`, "success", redireccionar);
                         }
                     })

@@ -44,6 +44,6 @@ export const DISPONIBILIDAD = {
 
 
 export const ICONOS_TABLA = {
-    CHECK : '<i class="las la-check" style="color: green;"></i>',
-    NO_CHECK: '<i class="las la-times" style="color: red;"></i>'
+    CHECK : '<i class="las la-check"></i>',
+    NO_CHECK: '<i class="las la-times"></i>'
  };

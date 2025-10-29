@@ -45,6 +45,10 @@ public class ArticuloController extends BaseHttpServlet {
         ARTICULO,
         ARTICULOS,
         FIND_ARTICULOS,
+        PROVEEDOR,
+        PROVEEDOR_CREATE,
+        PROVEEDOR_UPDATE,
+        PROVEEDOR_DELETE,
         UPDATE,
         CREATE,
         DELETE
@@ -200,6 +204,83 @@ public class ArticuloController extends BaseHttpServlet {
         articuloServicio.updateArticulo(actionController);
     }
     
+    /**
+     * Maneja la solicitud para obtener un artículo proveedor específico.
+     *
+     * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio 
+     * de artículo para obtener un artículo proveedor por ID y devolver la respuesta en formato JSON.</p>
+     *
+     * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
+     */
+    protected void apiGetArticuloProveedor(ActionController actionController) {
+        // Se comprueba que el usuario está logueado
+        if (!UserSession.isUserLogIn(actionController.server(), false)) {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+        
+        articuloServicio.getArticuloProveedorById(actionController);
+    }
+    
+    /**
+     * Maneja la creación de una nueva asociación entre un artículo y un proveedor.
+     *
+     * <p>Verifica si el usuario está autenticado y tiene permisos de administrador. 
+     * Si la autenticación falla, se envía una respuesta de error 403 (Prohibido). 
+     * Si la autenticación es válida, se delega la operación al servicio de artículo 
+     * para crear la asociación artículo-proveedor.</p>
+     *
+     * <p>EndPoint - POST : /api/articulo/proveedor_create</p>
+     *
+     * @param actionController el controlador de acción que contiene la información de la solicitud, 
+     *                         incluyendo los datos necesarios para crear la asociación.
+     */
+    protected void apiProveedorCreate(ActionController actionController) {
+        if (!UserSession.isUserLogIn(actionController.server(), true)) {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+        articuloServicio.createArticuloProveedor(actionController);
+    }
+
+    /**
+     * Maneja la actualización de los datos de la asociación entre un artículo y un proveedor.
+     *
+     * <p>Este método verifica si el usuario está autenticado y cuenta con los permisos necesarios. 
+     * Si no es así, se envía una respuesta de error 403 (Prohibido). 
+     * Si el usuario está autorizado, se delega la actualización al servicio de artículo.</p>
+     *
+     * <p>EndPoint - PUT : /api/articulo/proveedor_update</p>
+     *
+     * @param actionController el controlador de acción que maneja la solicitud y respuesta.
+     */
+    protected void apiProveedorUpdate(ActionController actionController) {
+        if (!UserSession.isUserLogIn(actionController.server(), true)) {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+        articuloServicio.updateArticuloProveedor(actionController);
+    }
+
+    /**
+     * Maneja la eliminación (desactivación lógica) de la asociación entre un artículo y un proveedor.
+     *
+     * <p>Verifica si el usuario está autenticado y autorizado. Si no cumple con los requisitos,
+     * se envía una respuesta 403 (Prohibido). Si el usuario tiene permisos válidos, 
+     * se delega la operación al servicio de artículo para eliminar la asociación.</p>
+     *
+     * <p>EndPoint - PUT : /api/articulo/proveedor_delete/{id}</p>
+     *
+     * @param actionController el controlador de acción que maneja la solicitud y respuesta.
+     */
+    protected void apiProveedorDelete(ActionController actionController) {
+        if (!UserSession.isUserLogIn(actionController.server(), true)) {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+        articuloServicio.deleteArticuloProveedor(actionController);
+    }
+    
     
     /**
      * Maneja las solicitudes HTTP GET para las acciones definidas.
@@ -223,6 +304,7 @@ public class ArticuloController extends BaseHttpServlet {
             case ARTICULO -> apiGetArticulo(actionController);
             case ARTICULOS -> apiGetArticulos(actionController);
             case FIND_ARTICULOS -> apiFindArticulos(actionController);
+            case PROVEEDOR -> apiGetArticuloProveedor(actionController);
               
             default -> responseError403(actionController.server().response(), "");
         }
@@ -256,6 +338,7 @@ public class ArticuloController extends BaseHttpServlet {
         // Dependiendo del ActionType, realizará una acción
         switch((ArticuloController.ActionType) actionController.actionType()){
             case CREATE -> apiCreateArticulo(actionController);
+            case PROVEEDOR_CREATE -> apiProveedorCreate(actionController);
 
             default -> responseError404(actionController.server().response(), "");
         }
@@ -286,6 +369,8 @@ public class ArticuloController extends BaseHttpServlet {
         switch((ArticuloController.ActionType) actionController.actionType()) {
             case UPDATE -> apiUpdateArticulo(actionController);
             case DELETE -> apiDeleteArticulo(actionController);
+            case PROVEEDOR_UPDATE -> apiProveedorUpdate(actionController);
+            case PROVEEDOR_DELETE -> apiProveedorDelete(actionController);
             
             default -> responseError404(actionController.server().response(), "");
         }

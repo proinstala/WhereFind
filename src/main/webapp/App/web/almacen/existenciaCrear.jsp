@@ -4,6 +4,8 @@
     Author     : David
 --%>
 
+<%@page import="io.proinstala.wherefind.shared.controllers.BaseHttpServlet"%>
+<%@page import="io.proinstala.wherefind.shared.controllers.actions.ActionController"%>
 <%@page import="io.proinstala.wherefind.shared.config.AppSettings"%>
 <%@page import="io.proinstala.wherefind.shared.dtos.UserDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -17,6 +19,11 @@
     }
 
     UserDTO userDTO = UserSession.getUserLogin(request);
+    
+    ActionController actionController = BaseHttpServlet.getActionControllerFromJSP(request, response, "almacen/existencias/crear");
+    //int articulo_id = actionController.getIntFromParametros(1);
+    int articulo_id = -1;
+    articulo_id = actionController.getIntFromParametros(1);
 %>
 
 <jsp:include page="/App/web/shared/head.jsp" >
@@ -32,6 +39,7 @@
         <div class="main">
 
             <div class="contenedor__formulario formulario--3_filas max-width-100" id="form_existencia">
+                <input type="hidden" name="articulo_id" id="articulo_id" value="<%=articulo_id%>">
 
                 <div class="contenedor__formulario--cabecera">
                     <div>

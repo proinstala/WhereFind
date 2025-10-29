@@ -155,7 +155,6 @@
                                 <th>Proveedor</th>
                                 <th>Precio</th>
                                 <th>Fecha Compra</th>
-                                <th>Comprador</th>
                                 <th>Almacén</th>
                                 <th>Emplazamiento</th>
                                 <th>Anotación</th>
@@ -202,18 +201,14 @@
                 </div>
 
                 <div class="contenedor__tabla--botones">
-
                     <div class="form__btn_circle">
-                        <button id="btnCrear" title="Crear"><i class="las la-plus"></i></button>
+                        <button id="btnCrearProveedor" title="Crear"><i class="las la-plus"></i></button>
                     </div>
                     <div class="form__btn_circle">
-                        <button id="btnEliminar" title="Eliminar" disabled><i class="las la-minus"></i></button>
+                        <button id="btnEliminarProveedor" title="Eliminar" disabled><i class="las la-minus"></i></button>
                     </div>
                     <div class="form__btn_circle">
-                        <button id="btnModificar" title="Modificar" disabled><i class="las la-pen"></i></button>
-                    </div>
-                    <div class="form__btn_circle">
-                        <button id="btnDetalle" title="Detalle" disabled><i class="las la-info"></i></button>
+                        <button id="btnModificarProveedor" title="Modificar" disabled><i class="las la-pen"></i></button>
                     </div>
                 </div>
                 

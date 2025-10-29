@@ -20,6 +20,10 @@ public class LocaleApp {
 
     /** Mensaje para indicar que una acción no está permitida. */
     public static final String ERROR_ACCION_NO_PERMITIDA = "Acción no permitida.";
+    
+    /** Mensaje para indicar que una no hay datos persistidos del elemento. */
+    public static final String ERROR_NO_EXISTE_ELEMENTO = "No existe datos del elemnto en la BD.";
+   
 
     // Mensajes de información
     /** Mensaje para indicar que un usuario ha sido creado correctamente. */

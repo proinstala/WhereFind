@@ -54,6 +54,14 @@ https://icons8.com/line-awesome
     content: "\f129";
 }
 
+.breadcrumb li[data-id="articuloProveedorAsociar"] a span.icon i::before {
+    content: "\f248";
+}
+
+.breadcrumb li[data-id="articuloProveedorEditar"] a span.icon i::before {
+    content: "\f303";
+}
+
 
 
 .breadcrumb li[data-id="direccion"] a span.icon i::before {

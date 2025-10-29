@@ -53,6 +53,35 @@ public class ArticuloServiceImplement extends BaseMySql implements IArticuloServ
             LEFT JOIN PROVINCIA pr ON l.provincia_id = pr.id
             WHERE art_pro.articulo_id = ?
             """;
+    
+   
+    private static final String SQL_SELECT_ARTICULO_PROVEEDOR_BY_ID =
+        """
+        SELECT
+            art_pro.*,
+            p.nombre AS proveedor_nombre, p.descripcion AS proveedor_descripcion,
+            p.pagina_web AS proveedor_pagina_web, p.imagen AS proveedor_imagen, 
+            p.activo AS proveedor_activo,
+            d.id AS d_id, d.calle AS d_calle, d.numero AS d_numero, d.codigo_postal AS d_codigo_postal, d.localidad_id AS d_localidad_id, d.activo AS d_activo,
+            l.id AS l_id, l.nombre AS l_nombre, l.provincia_id AS l_provincia_id,
+            pr.id AS pr_id, pr.nombre AS pr_nombre,
+
+            art.*,
+            m.id AS m_id, m.nombre AS m_nombre, m.descripcion AS m_descripcion, 
+            m.imagen AS m_imagen, m.activo AS m_activo,
+            COUNT(e.id) AS art_stock_actual
+
+        FROM ARTICULO_PROVEEDOR art_pro
+        INNER JOIN PROVEEDOR p ON art_pro.proveedor_id = p.id
+        LEFT JOIN DIRECCION d ON p.direccion_id = d.id
+        LEFT JOIN LOCALIDAD l ON d.localidad_id = l.id
+        LEFT JOIN PROVINCIA pr ON l.provincia_id = pr.id
+        INNER JOIN ARTICULO art ON art_pro.articulo_id = art.id
+        INNER JOIN MARCA m ON art.marca_id = m.id
+        LEFT JOIN EXISTENCIA e ON art.id = e.articulo_id AND e.disponible = true
+        WHERE art_pro.id = ?
+        GROUP BY art_pro.id;
+        """;
    
     
     private static final String SQL_UPDATE_ARTICULO = 
@@ -66,6 +95,17 @@ public class ArticuloServiceImplement extends BaseMySql implements IArticuloServ
     
     private static final String SQL_DELETE_ARTICULO = 
         "UPDATE ARTICULO SET activo = FALSE WHERE id = ?;";
+    
+    private static final String SQL_CREATE_ARTICULO_PROVEEDOR = 
+        "INSERT INTO ARTICULO_PROVEEDOR (articulo_id, proveedor_id, precio, fecha_precio, disponible, fecha_no_disponible) " +
+        "VALUES (?, ?, ?, ?, ?, ?);";
+    
+    private static final String SQL_UPDATE_ARTICULO_PROVEEDOR = 
+        "UPDATE ARTICULO_PROVEEDOR SET articulo_id = ?, proveedor_id = ?, precio = ?, fecha_precio = ?, disponible = ?, fecha_no_disponible = ? " +
+        "WHERE id = ?;";
+    
+    private static final String SQL_DELETE_ARTICULO_PROVEEDOR = 
+        "DELETE FROM ARTICULO_PROVEEDOR WHERE id = ?;";
     
     
     private static ArticuloProveedorDTO getArticuloProveedorFromResultSet(ResultSet rs) throws SQLException {
@@ -334,6 +374,103 @@ public class ArticuloServiceImplement extends BaseMySql implements IArticuloServ
              PreparedStatement ps = conexion.prepareStatement(SQL_DELETE_ARTICULO)) {
 
             ps.setInt(1, articuloId);
+            rowsAffected = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rowsAffected > 0;
+    }
+    
+    @Override
+    public ArticuloProveedorDTO getArticuloProveedorById(int articuloProveedorId) {
+        ArticuloProveedorDTO articuloProveedorDTO = null;
+
+        try (Connection conexion = getConnection();
+             PreparedStatement ps = conexion.prepareStatement(SQL_SELECT_ARTICULO_PROVEEDOR_BY_ID)) {
+
+            ps.setInt(1, articuloProveedorId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    articuloProveedorDTO = getArticuloProveedorFromResultSet(rs);
+                    ArticuloDTO articuloDTO = getArticuloFromResultSet(rs);
+                    articuloProveedorDTO.setArticulo(articuloDTO);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return articuloProveedorDTO;
+    }
+    
+    
+    @Override
+    public ArticuloProveedorDTO createArticuloProveedor(ArticuloProveedorDTO articuloProveedorDTO) {
+        try (Connection conexion = getConnection(); 
+             PreparedStatement ps = conexion.prepareStatement(SQL_CREATE_ARTICULO_PROVEEDOR, Statement.RETURN_GENERATED_KEYS)) {
+
+            ps.setInt(1, articuloProveedorDTO.getArticulo().getId());
+            ps.setInt(2, articuloProveedorDTO.getProveedor().getId());
+            ps.setDouble(3, articuloProveedorDTO.getPrecio());
+            ps.setObject(4, articuloProveedorDTO.getFechaPrecio());
+            ps.setBoolean(5, articuloProveedorDTO.getDisponible().getValor());
+            if (articuloProveedorDTO.getFechaNoDisponible() != null) {
+                ps.setDate(6, java.sql.Date.valueOf(articuloProveedorDTO.getFechaNoDisponible()));
+            } else {
+                ps.setNull(6, java.sql.Types.DATE);
+            }
+
+            int affectedRows = ps.executeUpdate();
+
+            if (affectedRows > 0) {
+                try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        articuloProveedorDTO.setId(generatedKeys.getInt(1));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return articuloProveedorDTO;
+    }
+
+    @Override
+    public boolean updateArticuloProveedor(ArticuloProveedorDTO articuloProveedorDTO) {
+        int rowsAffected = 0;
+        try (Connection conexion = getConnection(); 
+             PreparedStatement ps = conexion.prepareStatement(SQL_UPDATE_ARTICULO_PROVEEDOR)) {
+
+            ps.setInt(1, articuloProveedorDTO.getArticulo().getId());
+            ps.setInt(2, articuloProveedorDTO.getProveedor().getId());
+            ps.setDouble(3, articuloProveedorDTO.getPrecio());
+            ps.setObject(4, articuloProveedorDTO.getFechaPrecio());
+            ps.setBoolean(5, articuloProveedorDTO.getDisponible().getValor());
+            if (articuloProveedorDTO.getFechaNoDisponible() != null) {
+                ps.setDate(6, java.sql.Date.valueOf(articuloProveedorDTO.getFechaNoDisponible()));
+            } else {
+                ps.setNull(6, java.sql.Types.DATE);
+            }
+            ps.setInt(7, articuloProveedorDTO.getId());
+
+            rowsAffected = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rowsAffected > 0;
+    }
+
+    @Override
+    public boolean deleteArticuloProveedor(int articuloProveedorId) {
+        int rowsAffected = 0;
+        try (Connection conexion = getConnection(); 
+             PreparedStatement ps = conexion.prepareStatement(SQL_DELETE_ARTICULO_PROVEEDOR)) {
+
+            ps.setInt(1, articuloProveedorId);
             rowsAffected = ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

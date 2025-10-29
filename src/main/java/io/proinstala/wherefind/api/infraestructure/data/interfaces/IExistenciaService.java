@@ -65,6 +65,21 @@ public interface IExistenciaService {
     public List<ExistenciaDTO> findExistencias(String nombreArticulo, String referenciaArticulo, String sku, int marcaId, int almacenId, String nombreEmplazamiento, int disponibilidad);
     
     /**
+     * Busca todas las existencias asociadas a un artículo específico.
+     *
+     * Este método devuelve una lista de objetos {@link ExistenciaDTO} que pertenecen
+     * al artículo identificado por el ID proporcionado.
+     * 
+     * Las implementaciones deben manejar adecuadamente los casos en los que el ID no 
+     * corresponda a ningún artículo registrado, devolviendo una lista vacía.
+     *
+     * @param idArticulo el identificador único del artículo cuyas existencias se desean obtener.
+     * @return una lista de {@link ExistenciaDTO} asociadas al artículo indicado,
+     *         o una lista vacía si no existen registros para dicho artículo.
+     */
+    public List<ExistenciaDTO> findExistenciasByArticulo(int idArticulo);
+    
+    /**
      * Crea una nueva existencia en la base de datos.
      *
      * Este método inserta una nueva existencia en la base de datos utilizando los valores 

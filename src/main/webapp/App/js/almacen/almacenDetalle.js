@@ -78,7 +78,7 @@ $(document).ready(function () {
             const referrer = document.referrer;
 
             if (referrer && referrer.includes("emplazamientos")) {
-                // Si viene desde una página que contiene "existencias"
+                // Si viene desde una página que contiene "emplazamientos"
                 window.location.href = "almacen/almacenes";
             } else if (referrer) {
                 // Si hay referrer pero no contiene "existencias"

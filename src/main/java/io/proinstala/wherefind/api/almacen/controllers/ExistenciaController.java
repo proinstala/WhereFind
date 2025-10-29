@@ -46,6 +46,7 @@ public class ExistenciaController extends BaseHttpServlet {
         EXISTENCIA,
         EXISTENCIAS,
         FIND_EXISTENCIAS,
+        FIND_EXISTENCIAS_ARTICULO,
         UPDATE,
         CREATE,
         DELETE,
@@ -133,6 +134,25 @@ public class ExistenciaController extends BaseHttpServlet {
         }
         
         existenciaServicio.findExistencias(actionController);
+    }
+    
+    
+    /**
+     * Maneja la solicitud para buscar existencias.
+     *
+     * <p>Verifica si el usuario está autenticado. Si es así, delega la operación al servicio 
+     * de existencia para buscar las existencias y devolver la respuesta en formato JSON.</p>
+     *
+     * @param actionController el controlador de la acción que maneja la solicitud y respuesta.
+     */
+    protected void apiFindExistenciasByArticulo(ActionController actionController) {
+        // Se comprueba que el usuario está logueado
+        if (!UserSession.isUserLogIn(actionController.server(), false)) {
+            responseError403(actionController.server().response(), "");
+            return;
+        }
+        
+        existenciaServicio.findExistenciasByArticulo(actionController);
     }
     
     /**
@@ -268,6 +288,7 @@ public class ExistenciaController extends BaseHttpServlet {
             case EXISTENCIA -> apiGetExistencia(actionController);
             case EXISTENCIAS -> apiGetExistencias(actionController);
             case FIND_EXISTENCIAS -> apiFindExistencias(actionController);
+            case FIND_EXISTENCIAS_ARTICULO -> apiFindExistenciasByArticulo(actionController);
               
             default -> responseError403(actionController.server().response(), "");
         }

@@ -118,8 +118,6 @@ function fillFielsExistencia(existencia) {
     
     labelImgArticulo.textContent = "";
     
-    seleccionarValorSelect(selectDisponibilidad, disponible);
-    
     inputFechaNoDisponible.min = inputFechaCompra.value;
     inputFechaCompra.addEventListener('change', () => {
         if (inputFechaCompra.value) {
@@ -131,13 +129,24 @@ function fillFielsExistencia(existencia) {
             }
         }
     });
-    
+   
     selectDisponibilidad.addEventListener('change', () => {
         const valor = selectDisponibilidad.value;
-        if(valor === '1') {
+        
+        // eliminar clases anteriores
+        selectDisponibilidad.classList.remove('disponible', 'no_disponible');
+        
+        if(valor === '0') {
+            selectDisponibilidad.classList.add('no_disponible');
+        } else {
+            selectDisponibilidad.classList.add('disponible');
             inputFechaNoDisponible.value = "";
-        } 
+        }
     });
+     
+    
+    
+    const promesaDisponible = seleccionarValorSelect(selectDisponibilidad, disponible);
     
     const cargaImputSelectArticuloProveedor = () => {
          solicitudGet(`api/articulo/articulo?idArticulo=${articuloId}`, "", false)
@@ -150,6 +159,7 @@ function fillFielsExistencia(existencia) {
                             if(proveedorId > 0) {
                                 seleccionarValorSelect(selectArticuloProveedor, proveedorId);
                             }
+                            console.log("cargaImputSelectArticuloProveedor");
                         }
                     })
                     .catch(error => {
@@ -181,6 +191,7 @@ function fillFielsExistencia(existencia) {
                             imgArticulo.src = imagenValida ? articulo.imagen : DEFAULT_IMG.ARTICULO;
 
                             labelImgArticulo.textContent = "";
+                            console.log("promesaSelctArticulo - 1.1");
                         }
                     })
                     .catch(error => {
@@ -195,6 +206,8 @@ function fillFielsExistencia(existencia) {
             const precio = optionSelected.getAttribute("data-precio");
             inputPrecio.value = precio || "";
         });
+        
+        console.log("promesaSelctArticulo - 1");
     });
     
     const cargaImputSelectEmpalzamiento = () => {
@@ -206,6 +219,7 @@ function fillFielsExistencia(existencia) {
                             let almacen = response.data;
                             fillInputSelect(selectEmplazamiento, almacen.listaEmplazamientos, '',);
                             seleccionarValorSelect(selectEmplazamiento, emplazamientoId);
+                            console.log("cargaImputSelectEmpalzamiento");
                         }
                     })
                     .catch(error => {
@@ -231,6 +245,7 @@ function fillFielsExistencia(existencia) {
                         } else {
                             let almacen = response.data;
                             fillInputSelect(selectEmplazamiento, almacen.listaEmplazamientos, 'Seleccione un emplazamiento');
+                            console.log("promesaSelctAlmacen - 2.1");
                         }
                     })
                     .catch(error => {
@@ -239,11 +254,13 @@ function fillFielsExistencia(existencia) {
                         mostrarMensajeError("Error", "No se ha podido realizar la acción por un error en el servidor.");
                     });
         });
+        console.log("promesaSelctAlmacen - 2");
     });
     
     
     Promise.all([promesaSelctArticulo, promesaSelctAlmacen])
         .then(() => {
+            console.log("promesas");
             onDetectarCambiosModificarExistencia(false);
             detectarCambiosFormulario(idFormExistencia, onDetectarCambiosModificarExistencia);
         })

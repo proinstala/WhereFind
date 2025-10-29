@@ -406,7 +406,7 @@
 
     <servlet-mapping>
         <servlet-name>existenciaCrear</servlet-name>
-        <url-pattern>/almacen/existencias/crear</url-pattern>
+        <url-pattern>/almacen/existencias/crear/*</url-pattern>
     </servlet-mapping>
     
     <servlet>
@@ -478,6 +478,26 @@
     <servlet-mapping>
         <servlet-name>articuloDetalle</servlet-name>
         <url-pattern>/articulo/articulos/detalle/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>articuloProveedorCrear</servlet-name>
+        <jsp-file>/App/web/articulo/articuloProveedorAsociar.jsp</jsp-file>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>articuloProveedorCrear</servlet-name>
+        <url-pattern>/articulo/articulos/articuloProveedorAsociar/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>articuloProveedorEditar</servlet-name>
+        <jsp-file>/App/web/articulo/articuloProveedorEditar.jsp</jsp-file>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>articuloProveedorEditar</servlet-name>
+        <url-pattern>/articulo/articulos/articuloProveedorEditar/*</url-pattern>
     </servlet-mapping>
     
     

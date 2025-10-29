@@ -19,14 +19,14 @@ public record ActionController(String fullUri, String uri, Object actionType, St
      */
     public int getIntFromParametros(int index)
     {
-        int id;
-        try
-        {
-            id = Integer.parseInt(parametros[index]);
-        }
-        catch (NumberFormatException e)
-        {
-            id = -1;
+        int id = -1;
+        try {
+            if(parametros != null && parametros.length > index) {
+                id = Integer.parseInt(parametros[index]);
+            }
+            
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
 
         return id;
